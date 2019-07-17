@@ -85,3 +85,11 @@ _build-RELEASE_tmp/
 src/ZMPRefTrajectoryGeneration/nmpc_generatorMaster.cpp
 src/ZMPRefTrajectoryGeneration/nmpc_generatorMaster.hh
 tmp/
+_build/*
+test_result/*.dat
+test_result/*.txt
+test_result/*.hip
+test_result/*.pos
+test_result/*.waist
+test_result/*.zmp
+
