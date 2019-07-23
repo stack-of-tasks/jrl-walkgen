@@ -536,9 +536,9 @@ protected:
 	aof.precision(8);
 	aof.setf(ios::scientific, ios::floatfield);
 	m_OneStep.fillInDebugFileContent(aof);
-	aof    << filterprecision(zmpmb[0]) << " "                            // 45
-	       << filterprecision(zmpmb[1]) << " "                            // 46
-	    << filterprecision(zmpmb[2]) << " "                           ;// 47
+	aof    << filterprecision(zmpmb[0]) << " "   // 45
+	       << filterprecision(zmpmb[1]) << " "   // 46
+	    << filterprecision(zmpmb[2]) << " "     ;// 47
 	for(unsigned int k = 0 ; k < m_conf.size() ; k++){ // 48-53 -> 54-83
 	  aof << filterprecision( m_conf(k) ) << " "  ;
 	}
@@ -559,10 +559,10 @@ protected:
     localEvent events[8] =
       {
 	{1*200,&TestObject::walkForwardSlow},
+	{2*200,&TestObject::startTurningRight2},
 	{10*200,&TestObject::walkForward2m_s},
 	{20*200,&TestObject::walkSidewards2m_s},
 	{30*200,&TestObject::walkX05Y04},
-	{40*200,&TestObject::startTurningRight2},
 	{50*200,&TestObject::walkOnSpot},
 	{66*200,&TestObject::stop},
 	{76*200,&TestObject::stopOnLineWalking}
@@ -782,7 +782,8 @@ int PerformTests(int argc, char *argv[])
     {
       std::cerr << "CompleteName: " << CompleteName << std::endl;
       std::cerr<< " TestName: " << TestName <<std::endl;
-      std::cerr<< "Failure to find the proper indexFile:" << TestName.substr(14,6) << endl;
+      std::cerr<< "Failure to find the proper indexFile:"
+	       << TestName.substr(14,6) << endl;
       exit(-1);
     }
   else
