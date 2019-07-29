@@ -60,16 +60,19 @@ namespace PatternGeneratorJRL
     /*! \brief Interpolation during a simulation period with control parameters.
       \param[out]: NewFinalZMPPositions: queue of ZMP positions interpolated.
       \param[out]: COMStates: queue of COM positions interpolated.
-      \param[in]: ZMPRefPositions: Reference positions of ZMP (Kajita's heuristic every 5 ms).
-      \param[in]: CurrentPosition: index of the current position of the ZMP reference
-      (this allow to propagate some parameters define by a heuristic to the CoM positions).
+      \param[in]: ZMPRefPositions: Reference positions of ZMP 
+      (Kajita's heuristic every 5 ms).
+      \param[in]: CurrentPosition: index of the current position of 
+      the ZMP reference
+      (this allow to propagate some parameters define by a heuristic 
+      to the CoM positions).
       \param[in]: CX: command parameter in the forward direction.
       \param[in]: CY: command parameter in the perpendicular direction.
     */
     int Interpolation(std::deque<COMState> &COMStates,
-		      std::deque<ZMPPosition> &ZMPRefPositions,
-		      int CurrentPosition,
-		      double CX, double CY);
+                      std::deque<ZMPPosition> &ZMPRefPositions,
+                      int CurrentPosition,
+                      double CX, double CY);
 
 
     /*! \brief Simulate one iteration of the LIPM
@@ -143,18 +146,24 @@ namespace PatternGeneratorJRL
 
     /// \brief Accessor
     inline const com_t operator ()() const
-    {return m_CoM;};
+    {
+      return m_CoM;
+    };
 
     /// \brief Accessor
     inline void operator ()( com_t CoM )
-    {m_CoM = CoM;};
+    {
+      m_CoM = CoM;
+    };
 
     /*! Get state. */
     void GetState(Eigen::VectorXd &lxk);
     COMState GetState();
 
     inline com_t getState()
-    {return m_CoM ;}
+    {
+      return m_CoM ;
+    }
 
     /*! Set state. */
     void setState(com_t aCoM);

@@ -25,7 +25,8 @@
  *  Joint Japanese-French Robotics Laboratory (JRL)
  */
 /** \file StepOverPolynome.h
-    \brief Polynomes object for generating foot and hip trajectories while stepping over. */
+    \brief Polynomes object for generating foot and hip trajectories 
+    while stepping over. */
 
 
 #ifndef _STEPOVER_POLYNOME_H_
@@ -45,13 +46,15 @@ namespace PatternGeneratorJRL
   {
   public:
     /*! Constructor:
-      boundCond: the different boundary conditions begin, intermediate and end of polynomial
-      timeDistr: vector with time instants for intermediate boundary conditions and end time */
+      boundCond: the different boundary conditions begin, 
+      intermediate and end of polynomial
+      timeDistr: vector with time instants for 
+      intermediate boundary conditions and end time */
     StepOverPolynomeFoot();
 
     /*! Set the parameters */
     void SetParameters(Eigen::VectorXd boundCond,
-		       std::vector<double> timeDistr);
+                       std::vector<double> timeDistr);
 
     /*! Destructor. */
     ~StepOverPolynomeFoot();
@@ -71,7 +74,7 @@ namespace PatternGeneratorJRL
 
     /*! Set the parameters */
     void SetParameters(Eigen::VectorXd Zpos,
-		       std::vector<double> Xpos);
+                       std::vector<double> Xpos);
 
     /*! Destructor. */
     ~StepOverPolynomeFootZtoX();
@@ -90,7 +93,7 @@ namespace PatternGeneratorJRL
 
     /*! Set the parameters */
     void SetParameters(Eigen::VectorXd Xbound,
-		       std::vector<double> timedistr);
+                       std::vector<double> timedistr);
 
     /*! Destructor. */
     ~StepOverPolynomeFootXtoTime();
@@ -103,14 +106,16 @@ namespace PatternGeneratorJRL
   {
   public:
     /*! Constructor:
-      boundCond: the different boundary conditions begin, intermediate and end of polynomial
-      timeDistr: vector with time instants for intermediate boundary conditions and end time
+      boundCond: the different boundary conditions begin, 
+      intermediate and end of polynomial
+      timeDistr: vector with time instants for intermediate 
+      boundary conditions and end time
     */
     StepOverPolynomeHip4();
 
     // Set the parameters
     void SetParameters(Eigen::VectorXd boundCond,
-		       std::vector<double> timeDistr);
+                       std::vector<double> timeDistr);
 
     /*! Destructor. */
     ~StepOverPolynomeHip4();
@@ -132,7 +137,7 @@ namespace PatternGeneratorJRL
     void SetParameters(Eigen::VectorXd Points);
 
     double GetValueSpline(Eigen::VectorXd TimePoints,
-			  double CurrentLocalTime);
+                          double CurrentLocalTime);
 
     void print();
 
@@ -154,11 +159,11 @@ namespace PatternGeneratorJRL
 
     /*! Set the parameters */
     void SetParameters(Eigen::VectorXd Points,
-		       Eigen::VectorXd TimePoints,
-		       Eigen::VectorXd DerivativeEndPoints);
+                       Eigen::VectorXd TimePoints,
+                       Eigen::VectorXd DerivativeEndPoints);
 
     double GetValueSpline(Eigen::VectorXd TimePoints,
-			  double CurrentLocalTime);
+                          double CurrentLocalTime);
 
     void print();
     /*! Destructor. */

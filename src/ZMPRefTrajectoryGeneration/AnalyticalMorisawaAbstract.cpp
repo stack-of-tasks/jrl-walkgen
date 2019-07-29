@@ -42,7 +42,8 @@ namespace PatternGeneratorJRL
 {
 
 
-  AnalyticalMorisawaAbstract::AnalyticalMorisawaAbstract(SimplePluginManager *lSPM)
+  AnalyticalMorisawaAbstract::AnalyticalMorisawaAbstract(SimplePluginManager
+                                                         *lSPM)
     : ZMPRefTrajectoryGeneration(lSPM)
   {
     m_NumberOfStepsInAdvance = 0;
@@ -60,7 +61,9 @@ namespace PatternGeneratorJRL
   }
 
 
-  bool AnalyticalMorisawaAbstract::SetNumberOfStepsInAdvance(int lNumberOfStepsInAdvance)
+  bool AnalyticalMorisawaAbstract::
+  SetNumberOfStepsInAdvance
+  (int lNumberOfStepsInAdvance)
   {
     m_NumberOfStepsInAdvance = lNumberOfStepsInAdvance;
     return true;
@@ -95,21 +98,24 @@ namespace PatternGeneratorJRL
     return 0;
   }
 
-  bool AnalyticalMorisawaAbstract::GetPolynomialWeights(vector<double> &PolynomialWeights)
+  bool AnalyticalMorisawaAbstract::GetPolynomialWeights(vector<double>
+                                                        &PolynomialWeights)
   {
     unsigned int r = (unsigned int) m_y.size();
     PolynomialWeights.resize(r);
-    for(unsigned int i=0;i<r;++i)
+    for(unsigned int i=0; i<r; ++i)
       PolynomialWeights[i] = m_y[i];
     return true;
   }
 
-  void AnalyticalMorisawaAbstract::GetPolynomialDegrees(vector<unsigned int> &lPolynomialDegrees)
+  void AnalyticalMorisawaAbstract::GetPolynomialDegrees(vector<unsigned int>
+                                                        &lPolynomialDegrees)
   {
     lPolynomialDegrees = m_PolynomialDegrees;
   }
 
-  std::ostream & operator<<(std::ostream &os, const AnalyticalMorisawaAbstract &obj)
+  std::ostream & operator<<(std::ostream &os,
+                            const AnalyticalMorisawaAbstract &obj)
   {
     os << "Matrix Z:" << endl;
     os << obj.m_Z << endl;
@@ -121,17 +127,17 @@ namespace PatternGeneratorJRL
     os << obj.m_y << endl;
 
     os << "Time intervals:" << endl;
-    for(unsigned int i=0;i<obj.m_DeltaTj.size();i++)
+    for(unsigned int i=0; i<obj.m_DeltaTj.size(); i++)
       os << obj.m_DeltaTj[i] << " ";
     os << endl;
 
     os << "Step Types:" << endl;
-    for(unsigned int i=0;i<obj.m_StepTypes.size();i++)
+    for(unsigned int i=0; i<obj.m_StepTypes.size(); i++)
       os << obj.m_StepTypes[i] << " ";
     os << endl;
 
     os << "Omegaj:" << endl;
-    for(unsigned int i=0;i<obj.m_Omegaj.size();i++)
+    for(unsigned int i=0; i<obj.m_Omegaj.size(); i++)
       os << obj.m_Omegaj[i] << " ";
     os << endl;
     return os;
@@ -141,24 +147,24 @@ namespace PatternGeneratorJRL
   {
     aos << "AnalyticalMorisawaCompact:";
     for(unsigned int li=0;
-	li < m_DeltaTj.size();
-	li++)
+        li < m_DeltaTj.size();
+        li++)
       {
-	aos << m_DeltaTj[li] ;
-	if (li < m_DeltaTj.size()-1)
-	  aos << " ";
+        aos << m_DeltaTj[li] ;
+        if (li < m_DeltaTj.size()-1)
+          aos << " ";
       }
     aos << endl;
   }
 
   void AnalyticalMorisawaAbstract::GetIsStepStairOn(int &isStepStairOn)
   {
-      isStepStairOn = m_isStepStairOn;
+    isStepStairOn = m_isStepStairOn;
   }
 
   void AnalyticalMorisawaAbstract::SetIsStepStairOn(int isStepStairOn)
   {
-      m_isStepStairOn = isStepStairOn;
+    m_isStepStairOn = isStepStairOn;
   }
 
 }

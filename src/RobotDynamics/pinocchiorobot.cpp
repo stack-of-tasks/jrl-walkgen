@@ -15,13 +15,19 @@ class Joint_shortname : public boost::static_visitor<std::string>
 public:
   template<typename D>
   std::string operator()(const pinocchio::JointModelBase<D> & jmodel) const
-  { return jmodel.shortname(); }
+  {
+    return jmodel.shortname();
+  }
 
   static std::string run( const pinocchio::JointModelVariant & jmodel)
-  { return boost::apply_visitor( Joint_shortname(), jmodel ); }
+  {
+    return boost::apply_visitor( Joint_shortname(), jmodel );
+  }
 };
 inline std::string shortname(const pinocchio::JointModelVariant & jmodel)
-{ return Joint_shortname::run(jmodel); }
+{
+  return Joint_shortname::run(jmodel);
+}
 
 PinocchioRobot::PinocchioRobot()
 {
@@ -33,8 +39,8 @@ PinocchioRobot::PinocchioRobot()
   // init quaternion as unit zero rotation
   m_quat = Eigen::
     Quaterniond(Eigen::AngleAxisd(0.0, Eigen::Vector3d::UnitZ()) *
-		Eigen::AngleAxisd(0.0, Eigen::Vector3d::UnitY()) *
-		Eigen::AngleAxisd(0.0, Eigen::Vector3d::UnitX()) ) ;
+                Eigen::AngleAxisd(0.0, Eigen::Vector3d::UnitY()) *
+                Eigen::AngleAxisd(0.0, Eigen::Vector3d::UnitX()) ) ;
 
   m_quat.normalize();
   // resize by default
@@ -145,13 +151,13 @@ void PinocchioRobot::ComputeRootSize()
       i++)
     {
       if (0== m_robotModel->parents[i])
-	{
-	  if (m_robotModel->names[i]=="root_joint")
-	    {
-	      m_PinoFreeFlyerSize=pinocchio::nq(m_robotModel->joints[i]);
-	      m_PinoFreeFlyerVelSize=pinocchio::nv(m_robotModel->joints[i]);
-	    }
-	}
+        {
+          if (m_robotModel->names[i]=="root_joint")
+            {
+              m_PinoFreeFlyerSize=pinocchio::nq(m_robotModel->joints[i]);
+              m_PinoFreeFlyerVelSize=pinocchio::nv(m_robotModel->joints[i]);
+            }
+        }
     }
 }
 
@@ -202,12 +208,12 @@ initializeRobotModelAndData
   m_vpino.setZero();
   m_vrpy.resize(m_robotModel->nv);
   m_vrpy.setZero();
-  
+
   m_apino.resize(m_robotModel->nv);
   m_apino.setZero();
   m_arpy.resize(m_robotModel->nv);
   m_arpy.setZero();
-  
+
   m_tau.resize(m_robotModel->nv);
   m_tau.setZero();
   pinocchio::forwardKinematics
@@ -268,15 +274,15 @@ testOneModeOfLegsInverseKinematics
   for (unsigned  i=0 ; i<leftLegJointName.size() ; ++i)
     {
       std::string shortName =
-	boost::apply_visitor(Joint_shortname(),
-			     m_robotModel->joints[leftLeg[i]]);
+        boost::apply_visitor(Joint_shortname(),
+                             m_robotModel->joints[leftLeg[i]]);
       lisLegInverseKinematic &= (shortName == leftLegJointName[i]);
     }
   for (unsigned  i=0 ; i<rightLegJointName.size() ; ++i)
     {
       std::string shortName =
-	boost::apply_visitor(Joint_shortname(),
-			     m_robotModel->joints[rightLeg[i]]);
+        boost::apply_visitor(Joint_shortname(),
+                             m_robotModel->joints[rightLeg[i]]);
       lisLegInverseKinematic &= (shortName == rightLegJointName[i]);
     }
 
@@ -307,7 +313,7 @@ bool PinocchioRobot::testLegsInverseKinematics()
 
 
   if (testOneModeOfLegsInverseKinematics(leftLegJointName,
-					 rightLegJointName))
+                                         rightLegJointName))
     {
       m_isLegInverseKinematic=true;
       m_modeLegInverseKinematic=0;
@@ -324,11 +330,11 @@ bool PinocchioRobot::testLegsInverseKinematics()
       rightLegJointName[3] = "JointModelRZ";
 
       if (testOneModeOfLegsInverseKinematics(leftLegJointName,
-					     rightLegJointName))
-	{
-	  m_isLegInverseKinematic=true;
-	  m_modeLegInverseKinematic=1;
-	}
+                                             rightLegJointName))
+        {
+          m_isLegInverseKinematic=true;
+          m_modeLegInverseKinematic=1;
+        }
     }
   return m_isLegInverseKinematic;
 }
@@ -361,15 +367,15 @@ bool PinocchioRobot::testArmsInverseKinematics()
   for (unsigned  i=0 ; i<leftArmJointName.size() ; ++i)
     {
       std::string shortName =
-	boost::apply_visitor(Joint_shortname(),
-			     m_robotModel->joints[leftArm[i]]);
+        boost::apply_visitor(Joint_shortname(),
+                             m_robotModel->joints[leftArm[i]]);
       m_isArmInverseKinematic &= (shortName == leftArmJointName[i]);
     }
   for (unsigned  i=0 ; i<rightArmJointName.size() ; ++i)
     {
       std::string shortName =
-	boost::apply_visitor(Joint_shortname(),
-			     m_robotModel->joints[rightArm[i]]);
+        boost::apply_visitor(Joint_shortname(),
+                             m_robotModel->joints[rightArm[i]]);
       m_isArmInverseKinematic &= (shortName == rightArmJointName[i]);
     }
   return m_isArmInverseKinematic;
@@ -384,7 +390,7 @@ void PinocchioRobot::initializeLegsInverseKinematics()
 
   m_leftDt.Zero();
   m_rightDt.Zero();
-  pinocchio::SE3 waist_M_leftHip , waist_M_rightHip ;
+  pinocchio::SE3 waist_M_leftHip, waist_M_rightHip ;
 
   waist_M_leftHip = m_robotModel->jointPlacements[leftLeg[0]].
     act(m_robotModel->jointPlacements[leftLeg[1]]).
@@ -408,7 +414,7 @@ void PinocchioRobot::initializeLegsInverseKinematics()
   if (m_femurLength==0)
     {
       m_femurLength = m_robotModel->jointPlacements[rightLeg[5]]
-	.translation().norm();
+        .translation().norm();
     }
 
   m_tibiaLengthY =
@@ -439,13 +445,16 @@ RPYToSpatialFreeFlyer
 {
   quat = Eigen::
     Quaterniond(Eigen::AngleAxisd(rpy(2), Eigen::Vector3d::UnitZ()) *
-		Eigen::AngleAxisd(rpy(1), Eigen::Vector3d::UnitY()) *
-		Eigen::AngleAxisd(rpy(0), Eigen::Vector3d::UnitX()) ) ;
+                Eigen::AngleAxisd(rpy(1), Eigen::Vector3d::UnitY()) *
+                Eigen::AngleAxisd(rpy(0), Eigen::Vector3d::UnitX()) ) ;
 
   quat.normalize();
-  double c0,s0; pinocchio::SINCOS (rpy(2), &s0, &c0);
-  double c1,s1; pinocchio::SINCOS (rpy(1), &s1, &c1);
-  double c2,s2; pinocchio::SINCOS (rpy(0), &s2, &c2);
+  double c0,s0;
+  pinocchio::SINCOS (rpy(2), &s0, &c0);
+  double c1,s1;
+  pinocchio::SINCOS (rpy(1), &s1, &c1);
+  double c2,s2;
+  pinocchio::SINCOS (rpy(0), &s2, &c2);
   m_S << -s1, 0., 1., c1 * s2, c2, 0, c1 * c2, -s2, 0;
   omega = m_S * drpy ;
   domega = m_S * ddrpy ;
@@ -480,7 +489,7 @@ currentRPYConfiguration
      Eigen::AngleAxisd(conf(4), Eigen::Vector3d::UnitY()) *
      Eigen::AngleAxisd(conf(3), Eigen::Vector3d::UnitX()) ) ;
   m_quat.normalize();
-  
+
   for(unsigned i=0; i<3 ; ++i)
     {
       m_qpino(i) = conf(i);
@@ -494,7 +503,7 @@ currentRPYConfiguration
   for(unsigned i=6; i<conf.size() ; ++i)
     {
       m_qpino(i+1) = conf(i);
-    }  
+    }
 }
 
 void PinocchioRobot::computeInverseDynamics()
@@ -575,11 +584,11 @@ std::vector<pinocchio::JointIndex> PinocchioRobot::jointsBetween
   for(unsigned k=1 ; k<minChainLength ; ++k)
     {
       if(fromRootToFirst[k] == fromRootToSecond[k])
-	++lastCommonRank;
+        ++lastCommonRank;
     }
 
   for(std::vector<pinocchio::JointIndex>::size_type
-	k=fromRootToFirst.size()-1;
+        k=fromRootToFirst.size()-1;
       k>lastCommonRank ; --k)
     {
       out.push_back(fromRootToFirst[k]);
@@ -612,44 +621,45 @@ ComputeSpecializedInverseKinematics
   if (jointRoot==m_waist)
     {
       if(!m_isLegInverseKinematic)
-	return false ;
+        return false ;
 
       /* Consider here the legs. */
       if (jointEnd==m_leftFoot.associatedAnkle)
-	{
-	  getWaistFootKinematics(jointRootPosition, jointEndPosition,
-				 q, m_leftDt);
-	  return true;
-	}
+        {
+          getWaistFootKinematics(jointRootPosition, jointEndPosition,
+                                 q, m_leftDt);
+          return true;
+        }
       else if (jointEnd==m_rightFoot.associatedAnkle)
-	{
-	  getWaistFootKinematics(jointRootPosition, jointEndPosition,
-				 q, m_rightDt);
-	  return true;
-	}else
-	{
-	  return false ;
-	}
+        {
+          getWaistFootKinematics(jointRootPosition, jointEndPosition,
+                                 q, m_rightDt);
+          return true;
+        }
+      else
+        {
+          return false ;
+        }
     }
   else
     {
       if(!m_isArmInverseKinematic)
-	return false ;
+        return false ;
 
       if ( (m_leftShoulder==0) || (m_rightShoulder==0) )
-	DetectAutomaticallyShoulders();
+        DetectAutomaticallyShoulders();
 
       /* Here consider the arms */
       if (jointRoot==m_leftShoulder && jointEnd==m_leftWrist)
-	{
-	  getShoulderWristKinematics(jointRootPosition,jointEndPosition,q,1);
-	  return true;
-	}
+        {
+          getShoulderWristKinematics(jointRootPosition,jointEndPosition,q,1);
+          return true;
+        }
       if (jointRoot==m_rightShoulder && jointEnd==m_rightWrist)
-	{
-	  getShoulderWristKinematics(jointRootPosition,jointEndPosition,q,-1);
-	  return true;
-	}
+        {
+          getShoulderWristKinematics(jointRootPosition,jointEndPosition,q,-1);
+          return true;
+        }
     }
   return false;
 }
@@ -675,13 +685,13 @@ getWaistFootKinematics
   /* Build sub-matrices */
   Eigen::Matrix3d Foot_R,Body_R;
   Eigen::Vector3d Foot_P,Body_P;
-  for(unsigned int i=0;i<3;i++)
+  for(unsigned int i=0; i<3; i++)
     {
-      for(unsigned int j=0;j<3;j++)
-	{
-	  Body_R(i,j) = jointRootPosition(i,j);
-	  Foot_R(i,j) = jointEndPosition(i,j);
-	}
+      for(unsigned int j=0; j<3; j++)
+        {
+          Body_R(i,j) = jointRootPosition(i,j);
+          Foot_R(i,j) = jointEndPosition(i,j);
+        }
       Body_P(i) = jointRootPosition(i,3);
       Foot_P(i) = jointEndPosition(i,3);
     }
@@ -693,7 +703,7 @@ getWaistFootKinematics
   if (q.size()!=6)
     q.resize(6);
 
-  for(unsigned int i=0;i<6;i++)
+  for(unsigned int i=0; i<6; i++)
     q(i)=0.0;
 
   // if Dt(1)<0.0 then Opp=1.0 else Opp=-1.0
@@ -822,7 +832,7 @@ getShoulderWristKinematics
     q.resize(6);
 
   double Alpha,Beta;
-  for(unsigned int i=0;i<6;i++)
+  for(unsigned int i=0; i<6; i++)
     q(i)=0.0;
 
   double X = jointEndPosition(0,3)
@@ -886,17 +896,17 @@ DetectAutomaticallyOneShoulder
   while(itJoint!=FromRootToJoint.end())
     {
       std::vector<pinocchio::JointIndex>::iterator
-	current = itJoint;
+        current = itJoint;
       if (*current==m_chest)
-	found=true;
+        found=true;
       else
-	{
-	  if (found)
-	    {
-	      aShoulder = *current;
-	      return;
-	    }
-	}
+        {
+          if (found)
+            {
+              aShoulder = *current;
+              return;
+            }
+        }
       itJoint++;
     }
 }

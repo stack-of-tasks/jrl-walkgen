@@ -36,8 +36,6 @@
 #include <ZMPRefTrajectoryGeneration/nmpc_generator.hh>
 #include <ZMPRefTrajectoryGeneration/DynamicFilter.hh>
 
-//#include </home/mnaveau/devel/ros_unstable/src/jrl/jrl-walkgen/tests/ClockCPUTime.hh>
-
 namespace PatternGeneratorJRL
 {
 
@@ -51,7 +49,7 @@ namespace PatternGeneratorJRL
   public:
 
     ZMPVelocityReferencedSQP(SimplePluginManager *SPM, string DataFile,
-                            PinocchioRobot *aPR=0 );
+                             PinocchioRobot *aPR=0 );
 
     ~ZMPVelocityReferencedSQP();
 
@@ -59,28 +57,30 @@ namespace PatternGeneratorJRL
     /// \brief Handle plugins (SimplePlugin interface)
     void CallMethod(std::string &Method, std::istringstream &strm);
 
-    /*! \name Call method to handle on-line generation of ZMP reference trajectory.
+    /*! \name Call method to handle on-line generation of ZMP 
+      reference trajectory.
       @{*/
 
     /*! Methods for on-line generation. (First version!)
       The queues will be updated as follows:
       - The first values necessary to start walking will be inserted.
       - The initial positions of the feet will be taken into account
-      according to InitLeftFootAbsolutePosition and InitRightFootAbsolutePosition.
+      according to InitLeftFootAbsolutePosition and 
+      InitRightFootAbsolutePosition.
       - The RelativeFootPositions stack will NOT be taken into account,
       - The starting COM Position will NOT be taken into account.
       Returns the number of steps which has been completely put inside
       the queue of ZMP, and foot positions.
     */
     std::size_t InitOnLine(deque<ZMPPosition> & FinalZMPPositions,
-			   deque<COMState> & FinalCoMPositions_deq,
-			   deque<FootAbsolutePosition> & FinalLeftFootTraj_deq,
-			   deque<FootAbsolutePosition> & FinalRightFootTraj_deq,
-			   FootAbsolutePosition & InitLeftFootAbsolutePosition,
-			   FootAbsolutePosition & InitRightFootAbsolutePosition,
-			   deque<RelativeFootPosition> &RelativeFootPositions,
-			   COMState & lStartingCOMState,
-			   Eigen::Vector3d & lStartingZMPPosition);
+                           deque<COMState> & FinalCoMPositions_deq,
+                           deque<FootAbsolutePosition> & FinalLeftFootTraj_deq,
+                           deque<FootAbsolutePosition> & FinalRightFootTraj_deq,
+                           FootAbsolutePosition & InitLeftFootAbsolutePosition,
+                           FootAbsolutePosition & InitRightFootAbsolutePosition,
+                           deque<RelativeFootPosition> &RelativeFootPositions,
+                           COMState & lStartingCOMState,
+                           Eigen::Vector3d & lStartingZMPPosition);
 
     int UpdateCurrentPos(ZMPPosition initZMP,
                          COMState initCOM,
@@ -111,8 +111,8 @@ namespace PatternGeneratorJRL
     {
       initCOM_.x[0] = initCOM.x[0] ;
       initCOM_.y[0] = initCOM.y[0] ;
-//      initCOM_.x[1] = initCOM.x[1] ;
-//      initCOM_.y[1] = initCOM.y[1] ;
+      //      initCOM_.x[1] = initCOM.x[1] ;
+      //      initCOM_.y[1] = initCOM.y[1] ;
       initCOM_.y[2] = initCOM.y[2] ;
       initCOM_.x[2] = initCOM.x[2] ;
 
@@ -133,7 +133,8 @@ namespace PatternGeneratorJRL
 
     /// \name Accessors and mutators
     /// \{
-    /// \brief Set the reference (velocity only as for now) through the Interface (slow)
+    /// \brief Set the reference (velocity only as for now) through the
+    /// Interface (slow)
     void Reference(istringstream &strm)
     {
       strm >> NewVelRef_.Local.X;
@@ -148,24 +149,34 @@ namespace PatternGeneratorJRL
     }
 
     inline bool Running()
-    { return Running_; }
+    {
+      return Running_;
+    }
 
     inline void UpperTimeLimitToUpdate(double UpperTimeLimitToUpdate)
-    {UpperTimeLimitToUpdate_=UpperTimeLimitToUpdate ;}
+    {
+      UpperTimeLimitToUpdate_=UpperTimeLimitToUpdate ;
+    }
 
     /// \brief Set the final-stage trigger
     inline void EndingPhase(bool EndingPhase)
-    { EndingPhase_ = EndingPhase;}
+    {
+      EndingPhase_ = EndingPhase;
+    }
 
     void setCoMPerturbationForce(double x,double y);
     void setCoMPerturbationForce(istringstream &strm);
 
     inline const int & SQP_N(void) const
-    { return SQP_N_; }
+    {
+      return SQP_N_;
+    }
 
     /// \brief Setter and getter for the ComAndZMPTrajectoryGeneration.
     inline ComAndFootRealization * getComAndFootRealization()
-    { return dynamicFilter_->getComAndFootRealization();}
+    {
+      return dynamicFilter_->getComAndFootRealization();
+    }
     /// \}
 
     //
@@ -213,8 +224,6 @@ namespace PatternGeneratorJRL
 
     /// \brief Nb. foot support inside preview window
     int SQP_nf_;
-
-
 
     /// \brief 2D LIPM to simulate the evolution of the robot's CoM.
     LinearizedInvertedPendulum2D LIPM_ ;
@@ -267,9 +276,11 @@ namespace PatternGeneratorJRL
 
     /// \brief Size of the output preview
     unsigned NbSampleOutput_ ;
-    /// \brief Number of interpolated point needed for control computed during SQP_T_
+    /// \brief Number of interpolated point needed for control
+    /// computed during SQP_T_
     unsigned NbSampleControl_ ;
-    /// \brief Number of interpolated point needed for the dynamic filter computed during SQP_T_
+    /// \brief Number of interpolated point needed for the dynamic
+    /// filter computed during SQP_T_
     unsigned NbSampleInterpolation_ ;
     /// \brief Size of the preview for filtering
     unsigned previewSize_ ;
@@ -282,10 +293,10 @@ namespace PatternGeneratorJRL
     double InterpolationPeriod_ ;
     /// \brief Step Period of the robot
     double StepPeriod_ ;
-//    /// \brief Period where the robot is on ONE feet
-//    double SSPeriod_ ;
-//    /// \brief Period where the robot is on TWO feet
-//    double DSPeriod_ ;
+    //    /// \brief Period where the robot is on ONE feet
+    //    double SSPeriod_ ;
+    //    /// \brief Period where the robot is on TWO feet
+    //    double DSPeriod_ ;
     /// \brief Maximum distance between the feet
     double FeetDistance_ ;
     /// \brief Maximum height of the feet
@@ -295,23 +306,25 @@ namespace PatternGeneratorJRL
 
   public:
 
-    void GetZMPDiscretization(std::deque<ZMPPosition> & ZMPPositions,
-                              std::deque<COMState> & COMStates,
-                              std::deque<RelativeFootPosition> &RelativeFootPositions,
-                              std::deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-                              std::deque<FootAbsolutePosition> &RightFootAbsolutePositions,
-                              double Xmax,
-                              COMState & lStartingCOMState,
-                              Eigen::Vector3d & lStartingZMPPosition,
-                              FootAbsolutePosition & InitLeftFootAbsolutePosition,
-                              FootAbsolutePosition & InitRightFootAbsolutePosition);
-
-    void OnLineAddFoot(RelativeFootPosition & NewRelativeFootPosition,
-                       std::deque<ZMPPosition> & FinalZMPPositions,
-                       std::deque<COMState> & COMStates,
-                       std::deque<FootAbsolutePosition> & FinalLeftFootTraj_deq,
-                       std::deque<FootAbsolutePosition> & FinalRightFootTraj_deq,
-                       bool EndSequence);
+    void GetZMPDiscretization
+    (std::deque<ZMPPosition> & ZMPPositions,
+     std::deque<COMState> & COMStates,
+     std::deque<RelativeFootPosition> &RelativeFootPositions,
+     std::deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+     std::deque<FootAbsolutePosition> &RightFootAbsolutePositions,
+     double Xmax,
+     COMState & lStartingCOMState,
+     Eigen::Vector3d & lStartingZMPPosition,
+     FootAbsolutePosition & InitLeftFootAbsolutePosition,
+     FootAbsolutePosition & InitRightFootAbsolutePosition);
+    
+    void OnLineAddFoot
+    (RelativeFootPosition & NewRelativeFootPosition,
+     std::deque<ZMPPosition> & FinalZMPPositions,
+     std::deque<COMState> & COMStates,
+     std::deque<FootAbsolutePosition> & FinalLeftFootTraj_deq,
+     std::deque<FootAbsolutePosition> & FinalRightFootTraj_deq,
+     bool EndSequence);
 
     int OnLineFootChange(double time,
                          FootAbsolutePosition & aFootAbsolutePosition,
@@ -321,25 +334,28 @@ namespace PatternGeneratorJRL
                          deque<FootAbsolutePosition> & FinalRightFootTraj_deq,
                          StepStackHandler * aStepStackHandler);
 
-    void EndPhaseOfTheWalking(deque<ZMPPosition> & ZMPPositions,
-                              deque<COMState> & FinalCOMTraj_deq,
-                              deque<FootAbsolutePosition> & LeftFootAbsolutePositions,
-                              deque<FootAbsolutePosition> & RightFootAbsolutePositions);
-
+    void EndPhaseOfTheWalking
+    (deque<ZMPPosition> & ZMPPositions,
+     deque<COMState> & FinalCOMTraj_deq,
+     deque<FootAbsolutePosition> & LeftFootAbsolutePositions,
+     deque<FootAbsolutePosition> & RightFootAbsolutePositions);
+    
     int ReturnOptimalTimeToRegenerateAStep();
 
-    /// \brief Interpolate just enough data to pilot the robot (period of interpolation = QP_T_)
+    /// \brief Interpolate just enough data to pilot the robot (period of
+    /// interpolation = QP_T_)
     /// uses
     void FullTrajectoryInterpolation(double time); // INPUT
-    /// \brief Interpolation form the com jerk the position of the com and the zmp corresponding to the kart table model
-    void CoMZMPInterpolation(
-        std::vector<double> &JerkX,           // INPUT
-        std::vector<double> &JerkY,           // INPUT
-        LinearizedInvertedPendulum2D * LIPM, // INPUT/OUTPUT
-        const unsigned numberOfSample,       // INPUT
-        const int IterationNumber,           // INPUT
-        const unsigned int currentIndex,     // INPUT
-        const std::deque<support_state_t> & SupportStates_deq );// INPUT
+    /// \brief Interpolation form the com jerk the position of the com
+    /// and the zmp corresponding to the kart table model
+    void CoMZMPInterpolation
+    (std::vector<double> &JerkX,           // INPUT
+     std::vector<double> &JerkY,           // INPUT
+     LinearizedInvertedPendulum2D * LIPM, // INPUT/OUTPUT
+     const unsigned numberOfSample,       // INPUT
+     const int IterationNumber,           // INPUT
+     const unsigned int currentIndex,     // INPUT
+     const std::deque<support_state_t> & SupportStates_deq );// INPUT
   };
 }
 
