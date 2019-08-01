@@ -220,13 +220,14 @@ namespace PatternGeneratorJRL {
 	    }
 	}
 
-      const char * docInit2[2] =
-	{ "ZMP Target X - world ref", " ZMP Target Y - world ref" };
+      const char * docInit2[3] =
+	{ "ZMP Target X - world ref", "ZMP Target Y - world ref", "q" };
 
       for (std::size_t i =0;
-	   i<2;
-	   i++)
-	m_DebugStrings.push_back(docInit2[i]);
+	    i<3;
+	    i++){
+	      m_DebugStrings.push_back(docInit2[i]);
+      }
 
       if (m_PR!=0)
 	{
@@ -299,7 +300,6 @@ namespace PatternGeneratorJRL {
       fillInDebugVectorFoot(m_LeftFootPosition,lindex);
       /// Right Foot position
       fillInDebugVectorFoot(m_RightFootPosition,lindex);
-
       assert(m_PR!=NULL);
 
       /// ZMP Target in absolute reference
@@ -309,7 +309,6 @@ namespace PatternGeneratorJRL {
       m_DebugVector[lindex++] = m_ZMPTarget(0)*sin(currentConfiguration(5)) +
 	m_ZMPTarget(1)*cos(currentConfiguration(5))
 	+currentConfiguration(1);
-
       /// Saving configuration
       for (unsigned int i = 0 ;
 	   i < currentConfiguration.size() ;

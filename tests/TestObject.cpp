@@ -525,7 +525,7 @@ namespace PatternGeneratorJRL
     void TestObject::fillInDebugFiles( )
     {
       if (m_DebugFGPI)
-	m_OneStep.fillInDebugFile();
+	      m_OneStep.fillInDebugFile();
     }
 
     void TestObject::fillInDebugFilesFull( )
@@ -548,8 +548,8 @@ namespace PatternGeneratorJRL
         aof.open(aFileName.c_str(),ofstream::app);
         aof.precision(8);
         aof.setf(ios::scientific, ios::floatfield);
-	m_OneStep.fillInDebugFileContent(aof);
-	aof << " "
+      	m_OneStep.fillInDebugFileContent(aof);
+      	aof << " "
             << filterprecision(zmpmb(0)) << " "                            // 45
             << filterprecision(zmpmb(1)) << " "                            // 46
             << filterprecision(zmpmb(2)) << " "                           ;// 47

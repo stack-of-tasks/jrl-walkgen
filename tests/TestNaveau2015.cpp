@@ -230,7 +230,7 @@ protected:
   void analyticalInverseKinematics(Eigen::VectorXd & conf,
                                    Eigen::VectorXd & vel,
                                    Eigen::VectorXd & acc)
-  {
+  { 
     /// \brief calculate, from the CoM of computed by the preview control,
     ///    the corresponding articular position, velocity and acceleration
     /// ------------------------------------------------------------------
@@ -397,84 +397,85 @@ protected:
     aof.close();
   }
 
-  void prepareDebugFiles()
-  {
-    TestObject::prepareDebugFiles() ;
-    if (m_DebugFGPIFull)
-      {
-	ofstream aof;
-	string aFileName;
+  // void prepareDebugFiles()
+  // {
+  //   TestObject::prepareDebugFiles() ;
+  //   if (m_DebugFGPIFull)
+  //   {
+  //   	ofstream aof;
+  //   	string aFileName;
 
-	aFileName = m_TestName;
-        aFileName += "TestFGPIFull_description.dat";
+  //   	aFileName = m_TestName;
+  //     aFileName += "TestFGPIFull_description.dat";
 
-        aof.open(aFileName.c_str(),ofstream::out);
+  //     aof.open(aFileName.c_str(),ofstream::out);
 
-        string Titles[51] =
-	  { "Time",                          // 1
-	    "Com X",                         // 2
-	    "Com Y" ,                        // 3
-	    "Com Z" ,                        // 4
-	    "Com Yaw",                       // 5
-	    "Com dX" ,                       // 6
-	    "Com dY" ,                       // 7
-	    "Com dZ" ,                       // 8
-	    "Com dYaw",	                     // 9
-	    "Com ddX" ,                      // 10
-	    "Com ddY" ,                      // 11
-	    "Com ddZ" ,                      // 12
-	    "Com ddYaw",                     // 13
-	    "ZMP X (world ref.)" ,           // 14
-	    "ZMP Y (world ref.)" ,           // 15
-	    "ZMP Z (world ref.)" ,	     // 16
-	    "Left Foot X" ,                  // 17
-	    "Left Foot Y" ,                  // 18
-	    "Left Foot Z" ,                  // 19
-	    "Left Foot dX" ,                 // 20
-	    "Left Foot dY" ,                 // 21
-	    "Left Foot dZ" ,                 // 22
-	    "Left Foot ddX" ,                // 23
-	    "Left Foot ddY" ,                // 24
-	    "Left Foot ddZ" ,                // 25
-	    "Left Foot Theta" ,              // 26
-	    "Left Foot dTheta" ,             // 27
-	    "Left Foot ddTheta" ,	     // 28
-	    "Left Foot Omega" ,              // 29
-	    "Left Foot Omega2" ,             // 30
-	    "Right Foot X" ,                 // 31
-	    "Right Foot Y" ,                 // 32
-	    "Right Foot Z" ,                 // 33
-	    "Right Foot dX" ,                // 34
-	    "Right Foot dY" ,                // 35
-	    "Right Foot dZ" ,                // 36
-	    "Right Foot ddX" ,               // 37
-	    "Right Foot ddY" ,               // 38
-	    "Right Foot ddZ" ,               // 39
-	    "Right Foot Theta" ,             // 40
-	    "Right Foot dTheta" ,            // 41
-	    "Right Foot ddTheta" ,	     // 42
-	    "Right Foot Omega" ,             // 43
-	    "Right Foot Omega2" ,            // 44
-	    "ZMP MB X " ,                    // 45
-	    "ZMP MB Y " ,                    // 46
-	    "ZMP MB Z " ,	             // 47
-	    "q " ,                           // 48
-	    "dq" ,                           // 48 + nq
-	    "ddq "};                         // 48 + nq + nv
-        for(unsigned int i=0;i<51;i++)
-          aof << i+1 << ". " <<Titles[i] <<std::endl;
+  //     string Titles[51] =
+  // 	  { "Time",                          // 1
+  // 	    "Com X",                         // 2
+  // 	    "Com Y" ,                        // 3
+  // 	    "Com Z" ,                        // 4
+  // 	    "Com Yaw",                       // 5
+  // 	    "Com dX" ,                       // 6
+  // 	    "Com dY" ,                       // 7
+  // 	    "Com dZ" ,                       // 8
+  // 	    "Com dYaw",	                     // 9
+  // 	    "Com ddX" ,                      // 10
+  // 	    "Com ddY" ,                      // 11
+  // 	    "Com ddZ" ,                      // 12
+  // 	    "Com ddYaw",                     // 13
+  // 	    "ZMP X (world ref.)" ,           // 14
+  // 	    "ZMP Y (world ref.)" ,           // 15
+  // 	    "ZMP Z (world ref.)" ,	     // 16
+  // 	    "Left Foot X" ,                  // 17
+  // 	    "Left Foot Y" ,                  // 18
+  // 	    "Left Foot Z" ,                  // 19
+  // 	    "Left Foot dX" ,                 // 20
+  // 	    "Left Foot dY" ,                 // 21
+  // 	    "Left Foot dZ" ,                 // 22
+  // 	    "Left Foot ddX" ,                // 23
+  // 	    "Left Foot ddY" ,                // 24
+  // 	    "Left Foot ddZ" ,                // 25
+  // 	    "Left Foot Theta" ,              // 26
+  // 	    "Left Foot dTheta" ,             // 27
+  // 	    "Left Foot ddTheta" ,	     // 28
+  // 	    "Left Foot Omega" ,              // 29
+  // 	    "Left Foot Omega2" ,             // 30
+  // 	    "Right Foot X" ,                 // 31
+  // 	    "Right Foot Y" ,                 // 32
+  // 	    "Right Foot Z" ,                 // 33
+  // 	    "Right Foot dX" ,                // 34
+  // 	    "Right Foot dY" ,                // 35
+  // 	    "Right Foot dZ" ,                // 36
+  // 	    "Right Foot ddX" ,               // 37
+  // 	    "Right Foot ddY" ,               // 38
+  // 	    "Right Foot ddZ" ,               // 39
+  // 	    "Right Foot Theta" ,             // 40
+  // 	    "Right Foot dTheta" ,            // 41
+  // 	    "Right Foot ddTheta" ,	     // 42
+  // 	    "Right Foot Omega" ,             // 43
+  // 	    "Right Foot Omega2" ,            // 44
+  // 	    "ZMP MB X " ,                    // 45
+  // 	    "ZMP MB Y " ,                    // 46
+  // 	    "ZMP MB Z " ,	             // 47
+  // 	    "q " ,                           // 48
+  // 	    "dq" ,                           // 48 + nq
+  // 	    "ddq "};                         // 48 + nq + nv
+  //     for(unsigned int i=0;i<51;i++)
+  //     {
+  //       aof << i+1 << ". " <<Titles[i] <<std::endl;
+  //     }
+  //     aof.close();
 
-        aof.close();
+  //   	aFileName = m_TestName;
+  //   	aFileName += "TestFGPIFull.dat";
+  //   	if (m_OneStep.m_NbOfIt==1)
+  // 	  {
+  // 	    aof.open(aFileName.c_str(),ofstream::out);
+  // 	  }
 
-	aFileName = m_TestName;
-	aFileName += "TestFGPIFull.dat";
-	if (m_OneStep.m_NbOfIt==1)
-	  {
-	    aof.open(aFileName.c_str(),ofstream::out);
-	  }
-
-      }
-  }
+  //   }
+  // }
 
 
 
@@ -485,72 +486,74 @@ protected:
     Eigen::VectorXd & currentConfiguration =
       m_PR->currentRPYConfiguration();
 
-    if ( iteration == 0 ){
+    if ( iteration == 0 )
+    {
       m_DumpReferencesObjects.
-	setAnklePositions
-	(m_PR->rightFoot()->anklePosition,
-	 m_PR->leftFoot()->anklePosition);
+	        setAnklePositions
+      	  (m_PR->rightFoot()->anklePosition,
+      	  m_PR->leftFoot()->anklePosition);
     }
 
     m_DumpReferencesObjects.fillInTests(m_TestName,
 					m_OneStep,
 					currentConfiguration);
     if(m_DebugFGPIFull)
-      {
-	analyticalInverseKinematics(currentConfiguration,
-				    m_CurrentVelocity,
-				    m_CurrentAcceleration);
-	if(iteration==0)
-	  {
+    {
+    	analyticalInverseKinematics(currentConfiguration,
+    				    m_CurrentVelocity,
+    				    m_CurrentAcceleration);
+    	if(iteration==0)
+    	  {
 
-	    //        cout << endl ;
-	    //        cout << m_conf << endl ;
-	    //        cout << m_HalfSitting << endl ;
-	    //        cout << std::boolalpha << isHalfsitting << endl ;
-	    //        assert(isHalfsitting);
-	  }
+    	    //        cout << endl ;
+    	    //        cout << m_conf << endl ;
+    	    //        cout << m_HalfSitting << endl ;
+    	    //        cout << std::boolalpha << isHalfsitting << endl ;
+    	    //        assert(isHalfsitting);
+    	  }
 
-	m_DebugPR->computeInverseDynamics(currentConfiguration,
-					  m_CurrentVelocity,
-					  m_CurrentAcceleration);
-	Eigen::Vector3d com, dcom, ddcom;
-	m_DebugPR->CenterOfMass(com, dcom, ddcom);
-	createOpenHRPFiles();
-	Eigen::Vector3d zmpmb;
-	m_DebugPR->zeroMomentumPoint(zmpmb);
-	m_err_zmp_x.push_back(zmpmb[0]-m_OneStep.m_ZMPTarget(0)) ;
-	m_err_zmp_y.push_back(zmpmb[1]-m_OneStep.m_ZMPTarget(1)) ;
+    	m_DebugPR->computeInverseDynamics(currentConfiguration,
+    					  m_CurrentVelocity,
+    					  m_CurrentAcceleration);
+    	Eigen::Vector3d com, dcom, ddcom;
+    	m_DebugPR->CenterOfMass(com, dcom, ddcom);
+    	createOpenHRPFiles();
+    	Eigen::Vector3d zmpmb;
+    	m_DebugPR->zeroMomentumPoint(zmpmb);
+    	m_err_zmp_x.push_back(zmpmb[0]-m_OneStep.m_ZMPTarget(0)) ;
+    	m_err_zmp_y.push_back(zmpmb[1]-m_OneStep.m_ZMPTarget(1)) ;
 
-	++iteration;
+    	++iteration;
 
-	ofstream aof;
-	string aFileName;
-	aFileName = m_TestName;
-	aFileName += "TestFGPIFull.dat";
-	if (m_OneStep.m_NbOfIt==1)
-	  {
-	    aof.open(aFileName.c_str(),ofstream::out);
-	  }
-	resetfiles = 1;
-	aof.open(aFileName.c_str(),ofstream::app);
-	aof.precision(8);
-	aof.setf(ios::scientific, ios::floatfield);
-	m_OneStep.fillInDebugFileContent(aof);
-	aof    << filterprecision(zmpmb[0]) << " "   // 45
-	       << filterprecision(zmpmb[1]) << " "   // 46
-	    << filterprecision(zmpmb[2]) << " "     ;// 47
-	for(unsigned int k = 0 ; k < m_conf.size() ; k++){ // 48-53 -> 54-83
-	  aof << filterprecision( m_conf(k) ) << " "  ;
-	}
-	for(unsigned int k = 0 ; k < m_vel.size() ; k++){ // 84-89 -> 90-118
-	  aof << filterprecision( m_vel(k) ) << " "  ;
-	}
-	for(unsigned int k = 0 ; k < m_acc.size() ; k++){ // 119-125 -> 125-155
-	  aof << filterprecision( m_acc(k) ) << " "  ;
-	}
-	aof << endl;
-	aof.close();
-      }
+      //Eigen::VectorXd m_conf = currentConfiguration;
+      Eigen::VectorXd m_vel = m_CurrentVelocity;
+      Eigen::VectorXd m_acc = m_CurrentAcceleration;
+
+    	ofstream aof; 
+      ofstream aof_test;   
+    	string aFileName;
+    	aFileName = m_TestName;
+    	aFileName += "TestFGPIFull.dat";
+    	if (m_OneStep.m_NbOfIt==1)
+    	  {
+    	    aof.open(aFileName.c_str(),ofstream::out);     
+    	  }
+    	resetfiles = 1;
+    	aof.open(aFileName.c_str(),ofstream::app); 
+    	aof.precision(8);
+    	aof.setf(ios::scientific, ios::floatfield);
+    	m_OneStep.fillInDebugFileContent(aof); 
+    	aof    << filterprecision(zmpmb[0]) << " "   // 83
+    	       << filterprecision(zmpmb[1]) << " "   // 84
+    	    << filterprecision(zmpmb[2]) << " "     ;// 85
+    	for(unsigned int k = 0 ; k < m_vel.size() ; k++){ // 86 -> 123
+    	}
+    	for(unsigned int k = 0 ; k < m_acc.size() ; k++){ // 124 -> 161
+    	  aof << filterprecision( m_acc(k) ) << " "  ;
+    	}
+    	aof << endl;
+    	aof.close();
+    }
   }
 
   void createFullEventsForHRP2()
@@ -558,18 +561,20 @@ protected:
     ODEBUG("createFullEventsForHRP2");
     localEvent events[8] =
       {
-	{1*200,&TestObject::walkForwardSlow},
-	{2*200,&TestObject::startTurningRight2},
-	{10*200,&TestObject::walkForward2m_s},
-	{20*200,&TestObject::walkSidewards2m_s},
-	{30*200,&TestObject::walkX05Y04},
-	{50*200,&TestObject::walkOnSpot},
-	{66*200,&TestObject::stop},
-	{76*200,&TestObject::stopOnLineWalking}
+      	{1*200,&TestObject::walkForwardSlow},
+      	{2*200,&TestObject::startTurningRight2},
+      	{10*200,&TestObject::walkForward2m_s},
+      	{20*200,&TestObject::walkSidewards2m_s},
+      	{30*200,&TestObject::walkX05Y04},
+      	{50*200,&TestObject::walkOnSpot},
+      	{66*200,&TestObject::stop},
+      	{76*200,&TestObject::stopOnLineWalking}
       };
 
     if (m_setOfLocalEvents!=0)
+    {
       m_setOfLocalEvents->initVecOfLocalEvents(events,8);
+    }
   }
 
   void createSimpleEventsForHRP2()
