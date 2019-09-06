@@ -32,6 +32,8 @@ build/
 *.swp
 _build-DEBUG/
 _build-RELEASE/
+_build/
+_build_integration_tests
 src/Mathematics/PolynomeFoot_backup.cpp
 src/Mathematics/PolynomeFoot_backup.hh
 tests/CMakeCache.txt

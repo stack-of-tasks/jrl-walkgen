@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 #FPGI = np.transpose(np.loadtxt('Kajita/TestKajita2003StraightWalking64TestFGPI.dat'))
-FPGI = np.transpose(np.loadtxt('10cm/TestNaveau2015Online64TestFGPIFull.dat'))
+FPGI = np.transpose(np.loadtxt('Naveau10cm/TestNaveau2015Online64TestFGPIFull.dat'))
 
 print(len(FPGI))
 # print(len(np.transpose(np.loadtxt('TestNaveau2015Online64TestFGPI.dat'))))

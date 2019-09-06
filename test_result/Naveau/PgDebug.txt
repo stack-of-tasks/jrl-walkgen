@@ -1,0 +1,602 @@
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :walkmode : 1
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :walkmode for plugin :0xe488c0
+ Buffer:  0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:RegisterMethod(#108):Registered method :armparameters for plugin 0xe4fb90
+
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:RegisterMethod(#108):Registered method :UpperBodyMotionParameters for plugin 0xe4fb90
+
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:RegisterMethod(#108):Registered method :samplingperiod for plugin 0xe4fb90
+
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:RegisterMethod(#108):Registered method :walkmode for plugin 0xe50650
+
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:RegisterMethod(#108):Registered method :singlesupporttime for plugin 0xe50650
+
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:RegisterMethod(#108):Registered method :doublesupporttime for plugin 0xe50650
+
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:RegisterMethod(#108):Registered method :supportfoot for plugin 0xe50650
+
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:RegisterMethod(#108):Registered method :lastsupport for plugin 0xe50650
+
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:RegisterMethod(#108):Registered method :arc for plugin 0xe50650
+
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:RegisterMethod(#108):Registered method :addstandardonlinestep for plugin 0xe50650
+
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :comheight : 16
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xdafc90
+ Buffer:  0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xd40a30
+ Buffer:  0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xdb17a0
+ Buffer:  0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xdc9ab0
+ Buffer:  0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xdc9ee0
+ Buffer:  0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xdd24a0
+ Buffer:  0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xde4490
+ Buffer:  0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe0c3d0
+ Buffer:  0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe21720
+ Buffer:  0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe28720
+ Buffer:  0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe43530
+ Buffer:  0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe45270
+ Buffer:  0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe47c90
+ Buffer:  0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe485f0
+ Buffer:  0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe4c130
+ Buffer:  0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe4d370
+ Buffer:  0.876681
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :samplingperiod : 24
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xdaf5e0
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xdafc90
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xd40a30
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xdb17a0
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xdc9ab0
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xdc9ee0
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xdd24a0
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xde3000
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xde4490
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xe0c3d0
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xe21720
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xe27450
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xe28720
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xe43530
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xe45270
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xe45970
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xe45be0
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xe468d0
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xe47c90
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xe485f0
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xe4c130
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xe4d370
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xe4c020
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :samplingperiod for plugin :0xdae3f8
+ Buffer:  0.005
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :previewcontroltime : 15
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 1.6
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :previewcontroltime for plugin :0xdafc90
+ Buffer:  1.6
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :previewcontroltime for plugin :0xdb17a0
+ Buffer:  1.6
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :previewcontroltime for plugin :0xdc9ee0
+ Buffer:  1.6
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :previewcontroltime for plugin :0xde4490
+ Buffer:  1.6
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :previewcontroltime for plugin :0xdd24a0
+ Buffer:  1.6
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :previewcontroltime for plugin :0xe28720
+ Buffer:  1.6
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :previewcontroltime for plugin :0xe0c3d0
+ Buffer:  1.6
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :previewcontroltime for plugin :0xe45270
+ Buffer:  1.6
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :previewcontroltime for plugin :0xe45970
+ Buffer:  1.6
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :previewcontroltime for plugin :0xe45be0
+ Buffer:  1.6
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :previewcontroltime for plugin :0xe47c90
+ Buffer:  1.6
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :previewcontroltime for plugin :0xe485f0
+ Buffer:  1.6
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :previewcontroltime for plugin :0xe4c130
+ Buffer:  1.6
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :previewcontroltime for plugin :0xe4d370
+ Buffer:  1.6
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :previewcontroltime for plugin :0xe4c020
+ Buffer:  1.6
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :omega : 18
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xd3fea0
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xdafc90
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xc3b670
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xd40a30
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xdb17a0
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xdb2290
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xdc9ab0
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xdc9ee0
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xdca530
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xdd24a0
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xdd4a20
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xe0c3d0
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xe12f50
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xe21720
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xe224d0
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xe241e0
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xe43530
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :omega for plugin :0xe4d8b0
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :stepheight : 18
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xd3fea0
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xdafc90
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xc3b670
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xd40a30
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xdb17a0
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xdb2290
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xdc9ab0
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xdc9ee0
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xdca530
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xdd24a0
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xdd4a20
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xe0c3d0
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xe12f50
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xe21720
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xe224d0
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xe241e0
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xe43530
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xe4d8b0
+ Buffer:  0.07
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :singlesupporttime : 21
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xd3fea0
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xdafc90
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xc3b670
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xd40a30
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xdb17a0
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xdb2290
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xdc9ab0
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xdc9ee0
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xdca530
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xdd24a0
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xdd4a20
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe0c3d0
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe12f50
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe21720
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe224d0
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe241e0
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe43530
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe45970
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe45be0
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe488c0
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe4d8b0
+ Buffer:  0.78
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :doublesupporttime : 19
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xd3fea0
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xdafc90
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xc3b670
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xd40a30
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xdb17a0
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xdb2290
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xdc9ab0
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xdc9ee0
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xdca530
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xdd24a0
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xdd4a20
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xe0c3d0
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xe12f50
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xe21720
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xe224d0
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xe241e0
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xe43530
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xe488c0
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xe4d8b0
+ Buffer:  0.02
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :armparameters : 4
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 0.5
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :armparameters for plugin :0xdaf5e0
+ Buffer:  0.5
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :armparameters for plugin :0xde3000
+ Buffer:  0.5
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :armparameters for plugin :0xe27450
+ Buffer:  0.5
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :armparameters for plugin :0xe468d0
+ Buffer:  0.5
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :LimitsFeasibility : 1
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :LimitsFeasibility for plugin :0xdae3f8
+ Buffer:  0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :ZMPShiftParameters : 1
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 0.015 0.015 0.015 0.015
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :ZMPShiftParameters for plugin :0xdae3f8
+ Buffer:  0.015 0.015 0.015 0.015
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :TimeDistributionParameters : 1
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 2.0 3.7 1.7 3.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :TimeDistributionParameters for plugin :0xdae3f8
+ Buffer:  2.0 3.7 1.7 3.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :UpperBodyMotionParameters : 4
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): -0.1 -1.0 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :UpperBodyMotionParameters for plugin :0xdaf5e0
+ Buffer:  -0.1 -1.0 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :UpperBodyMotionParameters for plugin :0xde3000
+ Buffer:  -0.1 -1.0 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :UpperBodyMotionParameters for plugin :0xe27450
+ Buffer:  -0.1 -1.0 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :UpperBodyMotionParameters for plugin :0xe468d0
+ Buffer:  -0.1 -1.0 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :useDynamicFilter : 3
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): false
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :useDynamicFilter for plugin :0xde24f0
+ Buffer:  false
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :useDynamicFilter for plugin :0xe26c30
+ Buffer:  false
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :useDynamicFilter for plugin :0xe45dc0
+ Buffer:  false
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :comheight : 16
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xdafc90
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xd40a30
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xdb17a0
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xdc9ab0
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xdc9ee0
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xdd24a0
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xde4490
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe0c3d0
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe21720
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe28720
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe43530
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe45270
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe47c90
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe485f0
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe4c130
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe4d370
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :setDSFeetDistance : 0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 0.162
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :SetAlgoForZmpTrajectory : 2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): Naveau
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :SetAlgoForZmpTrajectory for plugin :0xe4c020
+ Buffer:  Naveau
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :SetAlgoForZmpTrajectory for plugin :0xdae3f8
+ Buffer:  Naveau
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :singlesupporttime : 21
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xd3fea0
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xdafc90
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xc3b670
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xd40a30
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xdb17a0
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xdb2290
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xdc9ab0
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xdc9ee0
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xdca530
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xdd24a0
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xdd4a20
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe0c3d0
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe12f50
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe21720
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe224d0
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe241e0
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe43530
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe45970
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe45be0
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe488c0
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :singlesupporttime for plugin :0xe4d8b0
+ Buffer:  1.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :doublesupporttime : 19
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xd3fea0
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xdafc90
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xc3b670
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xd40a30
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xdb17a0
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xdb2290
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xdc9ab0
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xdc9ee0
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xdca530
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xdd24a0
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xdd4a20
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xe0c3d0
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xe12f50
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xe21720
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xe224d0
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xe241e0
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xe43530
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xe488c0
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :doublesupporttime for plugin :0xe4d8b0
+ Buffer:  0.2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :NaveauOnline : 1
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143):
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :NaveauOnline for plugin :0xdae3f8
+ Buffer: 
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :comheight : 16
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xdafc90
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xd40a30
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xdb17a0
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xdc9ab0
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xdc9ee0
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xdd24a0
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xde4490
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe0c3d0
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe21720
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe28720
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe43530
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe45270
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe47c90
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe485f0
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe4c130
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :comheight for plugin :0xe4d370
+ Buffer:  0.876684
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :numberstepsbeforestop : 2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :numberstepsbeforestop for plugin :0xdd24a0
+ Buffer:  2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :numberstepsbeforestop for plugin :0xe0c3d0
+ Buffer:  2
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :setfeetconstraint : 4
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): XY 0.091 0.0489
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :setfeetconstraint for plugin :0xdd5320
+ Buffer:  XY 0.091 0.0489
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :setfeetconstraint for plugin :0xdd24a0
+ Buffer:  XY 0.091 0.0489
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :setfeetconstraint for plugin :0xe0f700
+ Buffer:  XY 0.091 0.0489
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :setfeetconstraint for plugin :0xe0c3d0
+ Buffer:  XY 0.091 0.0489
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :stepheight : 18
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xd3fea0
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xdafc90
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xc3b670
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xd40a30
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xdb17a0
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xdb2290
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xdc9ab0
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xdc9ee0
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xdca530
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xdd24a0
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xdd4a20
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xe0c3d0
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xe12f50
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xe21720
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xe224d0
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xe241e0
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xe43530
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :stepheight for plugin :0xe4d8b0
+ Buffer:  0.05
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :deleteallobstacles : 1
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143):
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :deleteallobstacles for plugin :0xdd24a0
+ Buffer: 
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :feedBackControl : 1
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): false
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :feedBackControl for plugin :0xdae3f8
+ Buffer:  false
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :useDynamicFilter : 3
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): true
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :useDynamicFilter for plugin :0xde24f0
+ Buffer:  true
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :useDynamicFilter for plugin :0xe26c30
+ Buffer:  true
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :useDynamicFilter for plugin :0xe45dc0
+ Buffer:  true
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :setVelReference : 1
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143):  0.0001 0.0 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :setVelReference for plugin :0xdae3f8
+ Buffer:   0.0001 0.0 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :setVelReference : 1
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143):  0.2 0.0 -0.14
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :setVelReference for plugin :0xdae3f8
+ Buffer:   0.2 0.0 -0.14
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :setVelReference : 1
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143):  0.2 0.0 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :setVelReference for plugin :0xdae3f8
+ Buffer:   0.2 0.0 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :setVelReference : 1
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143):  0.0 -0.2 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :setVelReference for plugin :0xdae3f8
+ Buffer:   0.0 -0.2 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :setVelReference : 1
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143):  0.5 0.4 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :setVelReference for plugin :0xdae3f8
+ Buffer:   0.5 0.4 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :setVelReference : 1
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143):  0.0001 0.0 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :setVelReference for plugin :0xdae3f8
+ Buffer:   0.0001 0.0 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#130):Size of SimplePlugins: 194 Found for :setVelReference : 1
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#143): 0.0 0.0 0.0
+/local/imaroger/jrl-walkgen/src/SimplePluginManager.cpp:CallMethod(#155):Found the method :setVelReference for plugin :0xdae3f8
+ Buffer:  0.0 0.0 0.0
