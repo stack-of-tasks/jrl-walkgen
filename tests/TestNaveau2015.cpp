@@ -561,12 +561,13 @@ protected:
     ODEBUG("createFullEventsForHRP2");
     localEvent events[8] =
       {
-      	{1*200,&TestObject::walkForwardSlow},
-      	{2*200,&TestObject::startTurningRight2},
-      	{10*200,&TestObject::walkForward2m_s},
-      	{20*200,&TestObject::walkSidewards2m_s},
-      	{30*200,&TestObject::walkX05Y04},
-      	{50*200,&TestObject::walkOnSpot},
+        {5*200,&TestObject::walkForward1m_s},
+      	// {1*200,&TestObject::walkForwardSlow},
+      	// {2*200,&TestObject::startTurningRight2},
+      	// {10*200,&TestObject::walkForward2m_s},
+      	// {20*200,&TestObject::walkSidewards2m_s},
+      	// {30*200,&TestObject::walkX05Y04},
+      	// {50*200,&TestObject::walkOnSpot},
       	{66*200,&TestObject::stop},
       	{76*200,&TestObject::stopOnLineWalking}
       };
@@ -581,8 +582,8 @@ protected:
   {
     localEvent events[2] =
       {
-	{1*200,&TestObject::walkOnSpot},
-	{5*200,&TestObject::stop},
+      	{1*200,&TestObject::walkOnSpot},
+      	{5*200,&TestObject::stop},
       };
 
     if (m_setOfLocalEvents!=0)

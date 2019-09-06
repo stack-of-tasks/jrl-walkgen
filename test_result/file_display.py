@@ -2,21 +2,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-FPGI = 1
+FPGI = 0
 
 if FPGI == 0:
-	lf = np.transpose(np.loadtxt('NaveauWithoutDF/TestNaveau2015Online64LeftFoot.dat'))
-	rf = np.transpose(np.loadtxt('NaveauWithoutDF/TestNaveau2015Online64RightFoot.dat'))
-	com = np.transpose(np.loadtxt('NaveauWithoutDF/TestNaveau2015Online64CoM.dat'))
-	waist = np.transpose(np.loadtxt('NaveauWithoutDF/TestNaveau2015Online64WaistOrientation.dat'))
+	lf = np.transpose(np.loadtxt('Naveau/TestNaveau2015Online64LeftFoot.dat'))
+	rf = np.transpose(np.loadtxt('Naveau/TestNaveau2015Online64RightFoot.dat'))
+	com = np.transpose(np.loadtxt('Naveau/TestNaveau2015Online64CoM.dat'))
+	waist = np.transpose(np.loadtxt('Naveau/TestNaveau2015Online64WaistOrientation.dat'))
 
-	lf2 = np.transpose(np.loadtxt('NaveauWithDF/TestNaveau2015Online64LeftFoot.dat'))
-	rf2 = np.transpose(np.loadtxt('NaveauWithDF/TestNaveau2015Online64RightFoot.dat'))
-	com2 = np.transpose(np.loadtxt('NaveauWithDF/TestNaveau2015Online64CoM.dat'))
-	waist = np.transpose(np.loadtxt('NaveauWithDF/TestNaveau2015Online64WaistOrientation.dat'))
+	# lf2 = np.transpose(np.loadtxt('NaveauWithDF/TestNaveau2015Online64LeftFoot.dat'))
+	# rf2 = np.transpose(np.loadtxt('NaveauWithDF/TestNaveau2015Online64RightFoot.dat'))
+	# com2 = np.transpose(np.loadtxt('NaveauWithDF/TestNaveau2015Online64CoM.dat'))
+	# waist = np.transpose(np.loadtxt('NaveauWithDF/TestNaveau2015Online64WaistOrientation.dat'))
 
 	time = np.arange(0,len(lf[0]),1)*0.001
-
+	timew = np.arange(0,len(waist[0]),1)*0.001
 	lfX = lf[0]#data[15]
 	rfX = rf[0]#data[29]
 	comX = com[0]#data[1]
@@ -35,6 +35,10 @@ if FPGI == 0:
 	rfYaw = rf[3]#data[38]
 	rfPitch = rf[4]#data[42]
 	rfRoll = rf[5]#data[41]	
+
+	wRoll = waist[0]
+	wPitch = waist[1]
+	wYaw = waist[2]		
 else:
 	data = np.transpose(np.loadtxt('NaveauWithDF/TestNaveau2015Online64TestFGPI.dat'))
 	data2 = np.transpose(np.loadtxt('NaveauWithoutDF/TestNaveau2015Online64TestFGPI.dat'))
@@ -75,21 +79,21 @@ else:
 # plt.title("Fichier Kajita généré avant")
 
 plt.subplot(121) 
-plt.plot(time,zmpX,'r',label='zmp X')
-plt.plot(time,zmpY,'r--',label='zmp Y')
+# plt.plot(time,zmpX,'r',label='zmp X')
+# plt.plot(time,zmpY,'r--',label='zmp Y')
 plt.plot(time,comX,'b',label='com X')
 plt.plot(time,comY,'b--',label='com Y')
 legend = plt.legend(loc='upper left')
 plt.title("Zmp et Com")
 #plt.show()
 
-plt.subplot(122) 
-plt.plot(time,zmpX2,'r',label='zmp X')
-plt.plot(time,zmpY2,'r--',label='zmp Y')
-plt.plot(time,comX2,'b',label='com X')
-plt.plot(time,comY2,'b--',label='com Y')
-legend = plt.legend(loc='upper left')
-plt.title("Zmp et Com without DF")
+# plt.subplot(122) 
+# plt.plot(time,zmpX2,'r',label='zmp X')
+# plt.plot(time,zmpY2,'r--',label='zmp Y')
+# plt.plot(time,comX2,'b',label='com X')
+# plt.plot(time,comY2,'b--',label='com Y')
+# legend = plt.legend(loc='upper left')
+# plt.title("Zmp et Com without DF")
 
 # plt.subplot(222) 
 # plt.plot(t,lf[0],'r',label='Left foot X')
@@ -118,7 +122,7 @@ plt.title("Zmp et Com without DF")
 # plt.title("Pieds")
 plt.show()
 
-plt.subplot(311)
+plt.subplot(131)
 plt.plot(time,lfYaw,'r',label='Left foot Yaw')
 plt.plot(time,rfYaw,'b',label='Right foot Yaw')
 legend = plt.legend(loc='upper left')
@@ -127,7 +131,7 @@ legend = plt.legend(loc='upper left')
 # plt.plot(t,rf[3],'b--',label='Right foot Yaw')
 legend = plt.legend(loc='upper left')
 
-plt.subplot(312)
+plt.subplot(132)
 plt.plot(time,lfPitch,'r',label='Left foot Pitch')
 plt.plot(time,rfPitch,'b',label='Right foot Pitch')
 legend = plt.legend(loc='upper left')
@@ -136,7 +140,7 @@ legend = plt.legend(loc='upper left')
 # plt.plot(t,rf[4],'b--',label='Right foot Pitch')
 legend = plt.legend(loc='upper left')
 
-plt.subplot(313)
+plt.subplot(133)
 plt.plot(time,lfRoll,'r',label='Left foot Roll')
 plt.plot(time,rfRoll,'b',label='Right foot Roll')
 legend = plt.legend(loc='upper left')
@@ -154,6 +158,21 @@ ax = fig.add_subplot(111, projection='3d')
 ax.plot3D(lfX, lfY, lfZ, 'r',label='Left foot')
 ax.plot3D(rfX, rfY, rfZ, 'b',label='Right foot')
 ax.plot3D(comX, comY, comZ, 'g',label='CoM')
+legend = plt.legend(loc='upper left')
+
+plt.show()
+
+plt.subplot(131)
+plt.plot(timew,wRoll,'r',label='Waist Roll')
+legend = plt.legend(loc='upper left')
+
+
+plt.subplot(132)
+plt.plot(timew,wPitch,'r',label='Waist Pitch')
+legend = plt.legend(loc='upper left')
+
+plt.subplot(133)
+plt.plot(timew,wYaw,'r',label='Waist Yaw')
 legend = plt.legend(loc='upper left')
 
 plt.show()
