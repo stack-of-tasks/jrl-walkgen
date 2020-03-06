@@ -19,17 +19,13 @@ SET(DOXYGEN_USE_MATHJAX YES)
 INCLUDE(cmake/base.cmake)
 
 # Specify the project.
-cmake_policy(SET CMP0048 NEW)
-PROJECT(${PROJECT_NAME}
-  LANGUAGES
-  CXX C
-  VERSION
-  ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}
-  )
+COMPUTE_PROJECT_ARGS(PROJECT_ARGS LANGUAGES CXX C)
+PROJECT(${PROJECT_NAME} ${PROJECT_ARGS})
 
 find_package (Boost REQUIRED
   filesystem system unit_test_framework program_options regex)
 find_package (Eigen3 REQUIRED NO_MODULE)
+ADD_REQUIRED_DEPENDENCY(eigen3)
 
 #ADD_PROJECT_DEPENDENCY(lapack REQUIRED)
 #Include(LAPACK)
@@ -107,7 +103,5 @@ foreach (_variableName ${_variableNames})
   list(APPEND LOGGING_WATCHED_VARIABLES ${_variableName})
 endforeach()
 
-# Ask to generate the final steps.
-SETUP_PROJECT_PACKAGE_FINALIZE()
 
 
