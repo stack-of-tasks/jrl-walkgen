@@ -77,6 +77,7 @@ ADD_EXECUTABLE(TestRiccatiEquation
   TestRiccatiEquation.cpp
   ../src/PreviewControl/OptimalControllerSolver.cpp
   )
+PKG_CONFIG_USE_DEPENDENCY(TestRiccatiEquation eigen3)
 
 # Add test on the ricatti equation
 ADD_TEST(TestRiccatiEquation TestRiccatiEquation)
