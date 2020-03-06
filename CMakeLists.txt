@@ -90,13 +90,22 @@ SET(${PROJECT_NAME}_HEADERS
   include/jrl/walkgen/pinocchiorobot.hh
 )
 
+
 # Define subdirectories to explore for cmake
 ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(tests)
 
+target_include_directories(${PROJECT_NAME}
+  PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
+  $<BUILD_INTERFACE:${EIGEN3_INCLUDE_DIRS}>
+  INTERFACE ${EIGEN3_INCLUDE_DIRS}
+  $<INSTALL_INTERFACE:include>
+  )
+
 # Generate dependency to jrl-walkgen in pc file
 PKG_CONFIG_APPEND_LIBS("jrl-walkgen")
-
+  
 get_cmake_property(_variableNames VARIABLES)
 list (SORT _variableNames)
 foreach (_variableName ${_variableNames})
