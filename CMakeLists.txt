@@ -154,7 +154,7 @@ IF(SUFFIX_SO_VERSION)
 ENDIF(SUFFIX_SO_VERSION)
 
 SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES
-  COMPILE_FLAGS "-msse -msse2 -msse3 -march=core2 -mfpmath=sse -fivopts -ftree-loop-im -fipa-pta -std=c++11")
+  COMPILE_FLAGS "-msse -msse2 -msse3 -march=core2 -mfpmath=sse -fivopts -ftree-loop-im -fipa-pta ")
 
 IF(USE_LSSOL)
   PKG_CONFIG_USE_DEPENDENCY(${PROJECT_NAME} lssol)
