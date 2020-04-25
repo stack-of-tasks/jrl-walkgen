@@ -37,7 +37,6 @@
 namespace PatternGeneratorJRL {
 class ZMPDiscretization;
 class ZMPConstrainedQPFastFormulation : public ZMPRefTrajectoryGeneration {
-
 public:
   /* Default constructor. */
   ZMPConstrainedQPFastFormulation(SimplePluginManager *lSPM, string DataFile,

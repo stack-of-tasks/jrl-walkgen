@@ -121,7 +121,6 @@ void ClockCPUTime::writeBuffer(string &aFileName) {
 }
 
 void ClockCPUTime::displayStatistics(ostream &os, struct OneStep &OneStep) {
-
   os << " === " << endl;
   os << "Number of iterations " << OneStep.m_NbOfIt << endl
      << "Number of iterations above 300 us:" << m_NbOfItToCompute << endl;

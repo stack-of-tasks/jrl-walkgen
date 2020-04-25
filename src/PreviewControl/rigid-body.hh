@@ -81,7 +81,6 @@ typedef linear_dynamics_s linear_dynamics_t;
 /// \}
 
 class RigidBody {
-
   //
   // Public methods
   //

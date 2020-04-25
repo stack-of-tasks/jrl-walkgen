@@ -39,7 +39,6 @@ enum Profiles_t {
 };
 
 class TestHerdt2010 : public TestObject {
-
 private:
 public:
   TestHerdt2010(int argc, char *argv[], string &aString, int TestProfile)
@@ -188,9 +187,7 @@ protected:
   }
 
   void chooseTestProfile() {
-
     switch (m_TestProfile) {
-
     case PROFIL_HERDT_ONLINE_WALKING:
       startOnLineWalking(*m_PGI);
       break;
@@ -204,7 +201,6 @@ protected:
   }
 
   void generateEventOnLineWalking() {
-
     struct localEvent {
       unsigned time;
       localeventHandler_t Handler;
@@ -235,7 +231,6 @@ protected:
   }
 
   void generateEventEmergencyStop() {
-
 #define localNbOfEventsEMS 4
     struct localEvent events[localNbOfEventsEMS] = {
         {5 * 200, &TestHerdt2010::startTurningLeft2},

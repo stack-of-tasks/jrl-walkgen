@@ -339,7 +339,6 @@ void PatternGeneratorInterfacePrivate::InterObjectRelationInitialization() {
 }
 
 PatternGeneratorInterfacePrivate::~PatternGeneratorInterfacePrivate() {
-
   ODEBUG4("Destructor: Start", "DebugPGI.txt");
 
   if (m_StOvPl != 0)
@@ -498,7 +497,6 @@ void PatternGeneratorInterfacePrivate::setCoMPerturbationForce(
 }
 
 void PatternGeneratorInterfacePrivate::initOnlineHerdt() {
-
   // TODO : The common part has to be shared,
   // and the specific part send back to the algorithm implementation.
 
@@ -532,7 +530,6 @@ void PatternGeneratorInterfacePrivate::initOnlineHerdt() {
 }
 
 void PatternGeneratorInterfacePrivate::initOnlineNaveau() {
-
   // TODO : The common part has to be shared,
   // and the specific part send back to the algorithm implementation.
 
@@ -567,7 +564,6 @@ void PatternGeneratorInterfacePrivate::initOnlineNaveau() {
 }
 
 void PatternGeneratorInterfacePrivate::m_StepSequence(istringstream &strm) {
-
   ODEBUG("Step Sequence");
   ofstream DebugFile;
   ReadSequenceOfSteps(strm);
@@ -578,7 +574,6 @@ void PatternGeneratorInterfacePrivate::m_StepSequence(istringstream &strm) {
 
 void PatternGeneratorInterfacePrivate::m_StepStairSequence(
     istringstream &strm) {
-
   ODEBUG("Step Sequence");
   ofstream DebugFile;
   m_StepStackHandler->ReadStepStairSequenceAccordingToWalkMode(strm);
@@ -773,7 +768,6 @@ void PatternGeneratorInterfacePrivate::CommonInitializationOfWalking(
   //    m_HumanoidDynamicRobot->setProperty(aProperty,aValue);
   // TODO check if an iteration number is needed in the PinocchioRobot class
   if (0) {
-
     ofstream aof;
     aof.open("/tmp/output.txt", ofstream::out);
     if (aof.is_open()) {
@@ -990,7 +984,6 @@ void PatternGeneratorInterfacePrivate::FinishAndRealizeStepSequence() {
 
 void PatternGeneratorInterfacePrivate::m_ReadFileFromKineoWorks(
     istringstream &strm) {
-
   string aPartialModel = "PartialModel.dat";
   string aKWPath = "KWBarPath.pth";
 
@@ -1041,7 +1034,6 @@ void PatternGeneratorInterfacePrivate::ChangeOnLineStep(istringstream &strm,
 
 void PatternGeneratorInterfacePrivate::CallMethod(string &aCmd,
                                                   istringstream &strm) {
-
   ODEBUG("PGI:ParseCmd: Commande: " << aCmd);
 
   if (aCmd == ":ChangeNextStep") {
@@ -1216,7 +1208,6 @@ bool PatternGeneratorInterfacePrivate::RunOneStepOfTheControlLoop(
     FootAbsolutePosition &RightFootPosition) {
   m_InternalClock += m_SamplingPeriod;
   if ((!m_ShouldBeRunning) || (m_GlobalStrategyManager->EndOfMotion() < 0)) {
-
     ODEBUG(" m_ShoulBeRunning " << m_ShouldBeRunning << endl
                                 << " m_ZMPPositions " << m_ZMPPositions.size()
                                 << endl
@@ -1366,7 +1357,6 @@ bool PatternGeneratorInterfacePrivate::RunOneStepOfTheControlLoop(
         // *** WARNING THIS IS THE TIME CONSUMING PART ***
         if (m_AlgorithmforZMPCOM == ZMPCOM_WIEBER_2006) {
         } else if (m_AlgorithmforZMPCOM == ZMPCOM_KAJITA_2003) {
-
           m_ZMPD->OnLineAddFoot(lRelativeFootPositions, m_ZMPPositions,
                                 m_COMBuffer, m_LeftFootPositions,
                                 m_RightFootPositions, EndSequence);
@@ -1492,7 +1482,6 @@ void PatternGeneratorInterfacePrivate::m_PartialStepSequence(
 
 void PatternGeneratorInterfacePrivate::GetLegJointVelocity(
     Eigen::VectorXd &dqr, Eigen::VectorXd &dql) const {
-
   // TO DO: take the joint specific to the legs
   // and create the appropriate vector.
   for (int i = 0; i < 6; i++) {

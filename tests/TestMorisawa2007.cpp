@@ -54,7 +54,6 @@ double OnLineFootSteps[NBOFPREDEFONLINEFOOTSTEPS][4] = {
     {0.05, 0.0, 0.0, 0.0}, {0.05, 0.0, 0.0, 0.0}};
 
 class TestMorisawa2007 : public TestObject {
-
 private:
   bool m_TestChangeFoot;
   unsigned long int m_NbStepsModified;
@@ -506,7 +505,6 @@ protected:
   }
 
   void chooseTestProfile() {
-
     switch (m_TestProfile) {
     case PROFIL_ANALYTICAL_SHORT_STRAIGHT_WALKING:
       AnalyticalShortStraightWalking(*m_PGI);

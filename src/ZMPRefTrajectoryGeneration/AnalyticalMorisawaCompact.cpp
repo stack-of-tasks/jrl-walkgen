@@ -78,7 +78,6 @@ namespace PatternGeneratorJRL {
 AnalyticalMorisawaCompact::AnalyticalMorisawaCompact(SimplePluginManager *lSPM,
                                                      PinocchioRobot *aPR)
     : AnalyticalMorisawaAbstract(lSPM) {
-
   RegisterMethods();
   m_OnLineMode = false;
   m_EndPhase = false;
@@ -328,7 +327,6 @@ int AnalyticalMorisawaCompact::BuildAndSolveCOMZMPForASetOfSteps(
     FootAbsolutePosition &LeftFootInitialPosition,
     FootAbsolutePosition &RightFootInitialPosition,
     bool IgnoreFirstRelativeFoot, bool DoNotPrepareLastFoot) {
-
   if (m_RelativeFootPositions.size() == 0)
     return -2;
 
@@ -783,7 +781,6 @@ void AnalyticalMorisawaCompact::OnLine(
   if (time < m_UpperTimeLimitToUpdateStacks) {
     if (m_AnalyticalZMPCoGTrajectoryX->GetIntervalIndexFromTime(
             time, lIndexInterval)) {
-
       ZMPPosition aZMPPos;
       memset(&aZMPPos, 0, sizeof(aZMPPos));
       COMState aCOMPos;
@@ -1197,7 +1194,6 @@ void AnalyticalMorisawaCompact::ComputeZm(unsigned intervalindex,
 }
 void AnalyticalMorisawaCompact::BuildingTheZMatrix(vector<double> &lCoM,
                                                    vector<double> &lZMP) {
-
   if (((int)lCoM.size() != m_NumberOfIntervals) ||
       ((int)lZMP.size() != m_NumberOfIntervals))
     return;
@@ -1340,7 +1336,6 @@ int AnalyticalMorisawaCompact::TimeChange(double LocalTime,
                                           unsigned int IndexStep,
                                           unsigned int &IndexStartingInterval,
                                           double &FinalTime, double &NewTj) {
-
   // The Index Step can be equal to m_NumberOfIntervals.
   if ((int)IndexStep < m_NumberOfIntervals)
 
@@ -1375,7 +1370,6 @@ int AnalyticalMorisawaCompact::TimeChange(double LocalTime,
 
 void AnalyticalMorisawaCompact::NewTimeIntervals(
     unsigned int IndexStartingInterval, double NewTime) {
-
   /* Build the new time interval. */
   m_DeltaTj[0] = NewTime;
   m_StepTypes[0] = m_StepTypes[IndexStartingInterval];
@@ -1426,7 +1420,6 @@ void AnalyticalMorisawaCompact::ConstraintsChange(
     for (; (k < m_AbsoluteSupportFootPositions.size()) &&
            (j < m_CTIPX.ZMPProfil.size());
          k++, j += 2) {
-
       aCTIPX.ZMPProfil[j] = m_AbsoluteSupportFootPositions[k].x;
       aCTIPY.ZMPProfil[j] = m_AbsoluteSupportFootPositions[k].y;
 
@@ -1452,7 +1445,6 @@ void AnalyticalMorisawaCompact::ConstraintsChange(
         bool lNewStep = false;
         double NewStepX = 0.0, NewStepY = 0.0, NewStepTheta = 0.0;
         for (int li = 0; li < -r; li++) {
-
           aStepStackHandler->AddStandardOnLineStep(lNewStep, NewStepX, NewStepY,
                                                    NewStepTheta);
         }
@@ -1475,7 +1467,6 @@ void AnalyticalMorisawaCompact::ConstraintsChange(
       /* Add the necessary absolute support foot positions. */
       for (int li = 0; (li < NeededSteps) && (j < m_CTIPX.ZMPProfil.size());
            li++, j += 2) {
-
         aCTIPX.ZMPProfil[j] = lAbsoluteSupportFootPositions[li].x;
         aCTIPY.ZMPProfil[j] = lAbsoluteSupportFootPositions[li].y;
 
@@ -1570,7 +1561,6 @@ void AnalyticalMorisawaCompact::ChangeZMPProfil(
     vector<FootAbsolutePosition> &NewFootAbsPos,
     CompactTrajectoryInstanceParameters &aCTIPX,
     CompactTrajectoryInstanceParameters &aCTIPY) {
-
   /* Change in the constraints, i.e. modify
      aCTIPX and aCTIPY appropriatly . */
   for (unsigned int i = 0; i < IndexStep.size(); i++) {
@@ -1747,7 +1737,6 @@ int AnalyticalMorisawaCompact::ChangeFootLandingPosition(
   /*! Extract the set of absolute coordinates for the foot position,
     and recompute the feet trajectory accordingly. */
   if (m_FeetTrajectoryGenerator != 0) {
-
     m_FeetTrajectoryGenerator->SetDeltaTj(m_DeltaTj);
 
     /* Modify the feet trajectory */
@@ -1916,7 +1905,6 @@ int AnalyticalMorisawaCompact::OnLineFootChanges(
     deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
     deque<FootAbsolutePosition> &RightFootAbsolutePositions,
     StepStackHandler *aStepStackHandler) {
-
   ODEBUG("***** Begin OnLineFootChange *****");
   int IndexInterval = -1;
 
@@ -1943,7 +1931,6 @@ int AnalyticalMorisawaCompact::OnLineFootChanges(
   /* If the interval detected is not a double support interval,
      a shift is done to chose the earliest double support interval. */
   if (m_StepTypes[IndexInterval] != DOUBLE_SUPPORT) {
-
     if (IndexInterval != 0)
       IndexInterval -= 1;
     else
@@ -2096,7 +2083,6 @@ void AnalyticalMorisawaCompact::EndPhaseOfTheWalking(
     deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &FinalCoMPositions,
     deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
     deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions) {
-
   m_OnLineMode = true;
   bool DoNotPrepareLastFoot = false;
   int NbSteps = (int)m_RelativeFootPositions.size();
@@ -2323,7 +2309,6 @@ void AnalyticalMorisawaCompact::FillQueues(
 void AnalyticalMorisawaCompact::ComputeCoMz(COMState &CoM,
                                             FootAbsolutePosition &LeftFoot,
                                             FootAbsolutePosition &) {
-
   CoM.z[0] = ((LeftFoot.z + 0.7) + (LeftFoot.z + 0.85) + (LeftFoot.z + 0.7) +
               (LeftFoot.z + 0.85)) *
              0.25;

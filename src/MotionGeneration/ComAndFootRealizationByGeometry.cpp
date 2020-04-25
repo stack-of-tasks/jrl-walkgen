@@ -40,7 +40,6 @@ using namespace PatternGeneratorJRL;
 ComAndFootRealizationByGeometry::ComAndFootRealizationByGeometry(
     PatternGeneratorInterfacePrivate *aPGI)
     : ComAndFootRealization(aPGI) {
-
   m_WaistPlanner = 0;
   m_UpBody = 0;
   m_ZARM = -1.0;
@@ -173,7 +172,6 @@ void ComAndFootRealizationByGeometry::InitializeMapsForAHand(
 
 void ComAndFootRealizationByGeometry::InitializeMapForChest(
     pinocchio::JointModelVector &ActuatedJoints) {
-
   pinocchio::JointIndex Chest = getPinocchioRobot()->chest();
   if (Chest == 0)
     return;
@@ -187,7 +185,6 @@ void ComAndFootRealizationByGeometry::InitializeMapForChest(
 }
 
 void ComAndFootRealizationByGeometry::Initialization() {
-
   // Planners for stepping over.
   if (m_WaistPlanner == 0)
     m_WaistPlanner = new WaistHeightVariation();
@@ -490,7 +487,6 @@ bool ComAndFootRealizationByGeometry::InitializationCoM(
 bool ComAndFootRealizationByGeometry::InitializationUpperBody(
     deque<ZMPPosition> &inZMPPositions, deque<COMPosition> &inCOMBuffer,
     deque<RelativeFootPosition> lRelativeFootPositions) {
-
   // Check pre-condition.
   if (getPinocchioRobot() == 0) {
     cerr << "ComAndFootRealizationByGeometry::InitializationUpperBody " << endl
@@ -573,7 +569,6 @@ bool ComAndFootRealizationByGeometry::KinematicsForOneLeg(
     Eigen::Vector3d &lDt, Eigen::VectorXd &aCoMPosition,
     Eigen::Vector3d &ToTheHip, int LeftOrRight, Eigen::VectorXd &lq,
     int Stage) {
-
   // Foot Orientation
   Eigen::Matrix3d Foot_R;
   // Foot position
@@ -670,7 +665,6 @@ bool ComAndFootRealizationByGeometry::KinematicsForTheLegs(
     Eigen::VectorXd &aCoMPosition, Eigen::VectorXd &aLeftFoot,
     Eigen::VectorXd &aRightFoot, int Stage, Eigen::VectorXd &ql,
     Eigen::VectorXd &qr, Eigen::Vector3d &AbsoluteWaistPosition) {
-
   // Body attitude
   Eigen::Matrix3d Body_R;
   // Body position
@@ -810,7 +804,6 @@ bool ComAndFootRealizationByGeometry::ComputePostureForGivenCoMAndFeetPosture(
   // For stepping over modify the waist position and
   // according to parameters the arms motion.
   if (GetStepStackHandler()->GetWalkMode() == 2) {
-
     /// this angle is introduced to rotate the upperbody
     ///  when the waist is rotated during stepover
     double qWaistYaw =
@@ -833,7 +826,6 @@ bool ComAndFootRealizationByGeometry::ComputePostureForGivenCoMAndFeetPosture(
     }
 
     if (m_UpperBodyMotion[2] != 0) {
-
       aCoMPosition(4) = m_UpperBodyMotion[2] * fabs(aCoMPosition(5));
     }
   }
@@ -1026,7 +1018,6 @@ int ComAndFootRealizationByGeometry::EvaluateStartingCoM(
     Eigen::VectorXd &BodyAngles, Eigen::Vector3d &aStartingCOMPosition,
     FootAbsolutePosition &InitLeftFootPosition,
     FootAbsolutePosition &InitRightFootPosition) {
-
   EvaluateCOMForStartingPosition(BodyAngles, 0.0, 0.0, m_StartingCOMPosition,
                                  InitLeftFootPosition, InitRightFootPosition);
 
@@ -1073,7 +1064,6 @@ void ComAndFootRealizationByGeometry::GetCurrentPositionofWaistInCOMFrame(
 void ComAndFootRealizationByGeometry::ComputeUpperBodyHeuristicForNormalWalking(
     Eigen::VectorXd &qArmr, Eigen::VectorXd &qArml,
     Eigen::VectorXd &aCOMPosition, Eigen::VectorXd &RFP, Eigen::VectorXd &LFP) {
-
   ODEBUG4("aCOMPosition:" << aCOMPosition << endl
                           << "Right Foot Position:" << RFP << endl
                           << "Left Foot Position:" << LFP << endl,
@@ -1166,7 +1156,6 @@ bool ComAndFootRealizationByGeometry::setPinocchioRobot(
 
 void ComAndFootRealizationByGeometry::CallMethod(string &Method,
                                                  istringstream &istrm) {
-
   if (Method == ":armparameters") {
     istrm >> m_GainFactor;
   } else if (Method == ":UpperBodyMotionParameters") {
@@ -1197,13 +1186,11 @@ ComAndFootRealizationByGeometry::GetCurrentPositionofWaistInCOMFrame() {
 }
 
 Eigen::Vector3d ComAndFootRealizationByGeometry::GetCOGInitialAnkles() {
-
   return m_COGInitialAnkles;
 }
 
 ostream &PatternGeneratorJRL::operator<<(ostream &os,
                                          const ComAndFootRealization &obj) {
-
   SimplePluginManager *SPM = obj.getSimplePluginManager();
   os << "The Simple Plugin Manager is :\n";
   os << SPM << endl;

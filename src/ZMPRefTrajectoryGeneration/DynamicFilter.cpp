@@ -342,7 +342,6 @@ void DynamicFilter::InverseKinematics(
     const FootAbsolutePosition &inputRightFoot, Eigen::VectorXd &configuration,
     Eigen::VectorXd &velocity, Eigen::VectorXd &acceleration,
     double samplingPeriod, int stage, int iteration) {
-
   // lower body !!!!! the angular quantities are set in degree !!!!!!
   aCoMState_(0) = inputCoMState.x[0];
   aCoMSpeed_(0) = inputCoMState.x[1];

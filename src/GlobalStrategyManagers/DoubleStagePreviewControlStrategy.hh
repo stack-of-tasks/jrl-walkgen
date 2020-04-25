@@ -39,7 +39,6 @@ namespace PatternGeneratorJRL {
     algorithm.
 */
 class DoubleStagePreviewControlStrategy : public GlobalStrategyManager {
-
 public:
   /*! Default constructor. */
   DoubleStagePreviewControlStrategy(SimplePluginManager *aSimplePluginManager);

@@ -98,7 +98,6 @@ void OptCholesky::SetiL(double *aiL) {
 }
 
 int OptCholesky::UpdateCholeskyMatrixNormal() {
-
   if ((m_A == 0) | (m_L == 0))
     return -1;
 
@@ -112,7 +111,6 @@ int OptCholesky::UpdateCholeskyMatrixNormal() {
 
   /* Compute Li,j */
   for (int lj = 0; lj < (int)m_SetActiveConstraints.size(); lj++) {
-
     /* A value M(i,j) is computed once,
        directly from the matrix A */
     double *Arow_i = PointerArow_i;
@@ -141,7 +139,6 @@ int OptCholesky::UpdateCholeskyMatrixNormal() {
 }
 
 int OptCholesky::UpdateCholeskyMatrixFortran() {
-
   if ((m_A == 0) | (m_L == 0))
     return -1;
 
@@ -154,7 +151,6 @@ int OptCholesky::UpdateCholeskyMatrixFortran() {
 
   /* Compute Li,j */
   for (int lj = 0; lj < (int)m_SetActiveConstraints.size(); lj++) {
-
     /* A value M(i,j) is computed once,
        directly from the matrix A */
     double *Arow_i = PointerArow_i;
@@ -198,7 +194,6 @@ int OptCholesky::ComputeNormalCholeskyOnANormal() {
   double *pA = m_A;
   for (int li = 0; li < (int)m_NbMaxOfConstraints; li++) {
     for (int lj = 0; lj <= li; lj++) {
-
       /* Compute Li,j */
 
       double r = pA[lj];
@@ -237,7 +232,6 @@ int OptCholesky::ComputeInverseCholeskyNormal(int mode) {
         1 / m_L[lj * m_NbMaxOfConstraints + lj];
 
     for (long int li = lj + 1; li < (long int)LocalSize; li++) {
-
       /* Compute Li,j */
       double r = 0.0;
       double *ptiLik = m_iL + li * m_NbMaxOfConstraints + lj + 1;

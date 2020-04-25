@@ -74,7 +74,6 @@ ComputeConvexHull::~ComputeConvexHull() {}
 
 void ComputeConvexHull::DoComputeConvexHull(vector<CH_Point> aVecOfPoints,
                                             vector<CH_Point> &TheConvexHull) {
-
   if (aVecOfPoints.size() == 0)
     return;
 

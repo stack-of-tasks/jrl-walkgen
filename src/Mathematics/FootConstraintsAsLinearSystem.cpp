@@ -48,7 +48,6 @@ FootConstraintsAsLinearSystem::~FootConstraintsAsLinearSystem() {}
 
 int FootConstraintsAsLinearSystem::FindSimilarConstraints(
     Eigen::MatrixXd &A, vector<int> &SimilarConstraints) {
-
   SimilarConstraints.resize(A.rows());
   SimilarConstraints[0] = 0;
   SimilarConstraints[1] = 0;
@@ -271,7 +270,6 @@ int FootConstraintsAsLinearSystem::BuildLinearConstraintInequalities(
   // Going through the set of generated data for each 5 ms.
   // from this extract a set of linear constraints.
   for (unsigned int i = 0; i < LeftFootAbsolutePositions.size(); i++) {
-
     ComputeCH = 0;
     // First check if we have to compute a convex hull
     if (i == 0) {
@@ -373,7 +371,6 @@ int FootConstraintsAsLinearSystem::BuildLinearConstraintInequalities(
       // In the second case, it is necessary to compute
       // the support foot.
       else {
-
         TheConvexHull.resize(4);
 
         // Who is support foot ?

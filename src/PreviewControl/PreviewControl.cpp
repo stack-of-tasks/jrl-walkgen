@@ -41,7 +41,6 @@ PreviewControl::PreviewControl(SimplePluginManager *lSPM,
                                unsigned int defaultMode,
                                bool lAutoComputeWeights)
     : SimplePlugin(lSPM) {
-
   m_AutoComputeWeights = lAutoComputeWeights;
   m_DefaultWeightComputationMode = defaultMode;
 
@@ -298,7 +297,6 @@ int PreviewControl::OneIterationOfPreview(
     Eigen::MatrixXd &x, Eigen::MatrixXd &y, double &sxzmp, double &syzmp,
     deque<PatternGeneratorJRL::ZMPPosition> &ZMPPositions,
     unsigned long int lindex, double &zmpx2, double &zmpy2, bool Simulation) {
-
   double ux = 0.0, uy = 0.0;
 
   Eigen::Matrix<double, 1, 1> r;
@@ -342,7 +340,6 @@ int PreviewControl::OneIterationOfPreview1D(Eigen::MatrixXd &x, double &sxzmp,
                                             deque<double> &ZMPPositions,
                                             unsigned long int lindex,
                                             double &zmpx2, bool Simulation) {
-
   double ux = 0.0;
 
   Eigen::Matrix<double, 1, 1> r;
@@ -383,7 +380,6 @@ int PreviewControl::OneIterationOfPreview1D(Eigen::MatrixXd &x, double &sxzmp,
                                             vector<double> &ZMPPositions,
                                             unsigned long int lindex,
                                             double &zmpx2, bool Simulation) {
-
   double ux = 0.0;
 
   Eigen::Matrix<double, 1, 1> r;

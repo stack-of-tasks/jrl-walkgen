@@ -49,7 +49,6 @@ namespace PatternGeneratorJRL {
     to generate the output of the pattern generator.
 */
 class GlobalStrategyManager : public SimplePlugin {
-
 public:
   static const int MOTION_FINISHED = -1;
   static const int NEW_STEP_NEEDED = 0;

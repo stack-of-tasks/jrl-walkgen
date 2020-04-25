@@ -57,7 +57,6 @@ void SimplePluginManager::UnregisterPlugin(SimplePlugin *aSimplePlugin) {
 
   it_SP = m_SimplePlugins.begin();
   while (it_SP != m_SimplePlugins.end()) {
-
     if (it_SP->second == aSimplePlugin) {
       it_ToBeRemoved = it_SP;
       it_SP++;
@@ -114,7 +113,7 @@ bool SimplePluginManager::CallMethod(string &MethodName, istringstream &istrm) {
   stringbuf *pbuf;
   pbuf = istrm.rdbuf();
 
-  int size = pbuf->in_avail();
+  auto size = pbuf->in_avail();
   char aBuffer[65636];
   assert(size < 65635);
 

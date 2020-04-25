@@ -37,7 +37,6 @@ using namespace ::PatternGeneratorJRL::TestSuite;
 using namespace std;
 
 class TestInverseKinematics : public TestObject {
-
 private:
   DynamicFilter *dynamicfilter_;
   SimplePluginManager *SPM_;

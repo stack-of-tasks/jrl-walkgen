@@ -115,7 +115,6 @@ ZMPConstrainedQPFastFormulation::ZMPConstrainedQPFastFormulation(
 }
 
 ZMPConstrainedQPFastFormulation::~ZMPConstrainedQPFastFormulation() {
-
   if (m_ZMPD != 0)
     delete m_ZMPD;
 
@@ -177,7 +176,6 @@ int ZMPConstrainedQPFastFormulation::InitializeMatrixPbConstants() {
       m_PPu(i, j) = 0;
 
       if (j <= i) {
-
         m_VPu(i, j) = (2 * (i - j) + 1) * m_QP_T * m_QP_T * 0.5;
         m_VPu(i + m_QP_N, j + m_QP_N) =
             (2 * (i - j) + 1) * m_QP_T * m_QP_T * 0.5;
@@ -193,7 +191,6 @@ int ZMPConstrainedQPFastFormulation::InitializeMatrixPbConstants() {
         m_PPu(i + m_QP_N, j) = 0.0;
 
       } else {
-
         m_VPu(i, j) = 0.0;
         m_VPu(i + m_QP_N, j + m_QP_N) = 0.0;
         m_VPu(i, j + m_QP_N) = 0.0;
@@ -351,7 +348,6 @@ int ZMPConstrainedQPFastFormulation::
 }
 int ZMPConstrainedQPFastFormulation::
     BuildingConstantPartOfTheObjectiveFunctionQLDANDLQ(Eigen::MatrixXd &OptA) {
-
   /*! Build cholesky matrix of the optimum
     We copy only the upper corner of the OptA matrix
     because we know its specific structure.
@@ -460,7 +456,6 @@ int ZMPConstrainedQPFastFormulation::
 
 int ZMPConstrainedQPFastFormulation::
     BuildingConstantPartOfTheObjectiveFunction() {
-
   Eigen::MatrixXd OptA;
   Eigen::MatrixXd tmp;
 
@@ -567,7 +562,6 @@ int ZMPConstrainedQPFastFormulation::
   // Recursive multiplication of the system is applied.
   // we keep the transpose form, i.e. Pu'.
   for (unsigned i = 0; i < m_QP_N; i++) {
-
     for (unsigned k = 0; k <= i; k++) {
       ptPu[k * m_QP_N + i] = ((1 + 3 * (i - k) + 3 * (i - k) * (i - k)) *
                                   m_QP_T * m_QP_T * m_QP_T / 6.0 -
@@ -585,7 +579,6 @@ int ZMPConstrainedQPFastFormulation::
     // So here we compute iLQ*Pu'
     // Be careful with the two stages resolution.
     for (unsigned i = 0; i < m_QP_N; i++) {
-
       for (unsigned j = 0; j < m_QP_N; j++) {
         m_Pu[i * m_QP_N + j] = 0;
         for (unsigned k = 0; k < m_QP_N; k++) {
@@ -723,7 +716,6 @@ int ZMPConstrainedQPFastFormulation::BuildConstraintMatrices(
   // Compute first the number of constraint.
   unsigned int IndexConstraint = 0;
   for (unsigned int i = 0; i < N; i++) {
-
     double ltime = StartingTime + i * T;
     if (ltime > (*LCI_it)->EndingTime)
       LCI_it++;
@@ -750,7 +742,6 @@ int ZMPConstrainedQPFastFormulation::BuildConstraintMatrices(
   ODEBUG("Starting Matrix to build the constraints. ");
   ODEBUG((*LCI_it)->A);
   for (unsigned int i = 0; i < N; i++) {
-
     double ltime = StartingTime + i * T;
     if (ltime > (*LCI_it)->EndingTime) {
       LCI_it++;
@@ -760,7 +751,6 @@ int ZMPConstrainedQPFastFormulation::BuildConstraintMatrices(
 
     // For each constraint.
     for (unsigned j = 0; j < (*LCI_it)->A.rows(); j++) {
-
       // Verification of constraints.
       DPx[IndexConstraint] =
           // X Axis * A
@@ -870,7 +860,6 @@ int ZMPConstrainedQPFastFormulation::BuildConstraintMatrices(
 
   //  if (m_FullDebug>0)
   if (0) {
-
     ofstream aof;
     char Buffer[1024];
     sprintf(Buffer, "PuCst_%f.dat", StartingTime);
@@ -969,7 +958,6 @@ int ZMPConstrainedQPFastFormulation::BuildZMPTrajectoryFromFootTrajectory(
     deque<FootAbsolutePosition> &RightFootAbsolutePositions,
     deque<ZMPPosition> &ZMPRefPositions, deque<COMState> &COMStates,
     double ConstraintOnX, double ConstraintOnY, double T, unsigned int N) {
-
   double *DPx = 0, *DPu = 0;
   unsigned int NbOfConstraints = 8 * N;
   // Nb of constraints to be taken into account
@@ -1237,7 +1225,7 @@ int ZMPConstrainedQPFastFormulation::BuildZMPTrajectoryFromFootTrajectory(
 
     // Compute CPU consumption time.
     gettimeofday(&end, 0);
-    CurrentCPUTime = end.tv_sec - start.tv_sec +
+    CurrentCPUTime = (double)(end.tv_sec - start.tv_sec) +
                      0.000001 * (double)(end.tv_usec - start.tv_usec);
     TotalAmountOfCPUTime += CurrentCPUTime;
     ODEBUG("Current Time : "

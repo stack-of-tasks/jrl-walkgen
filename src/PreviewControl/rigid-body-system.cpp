@@ -42,7 +42,6 @@ RigidBodySystem::~RigidBodySystem() {
 }
 
 void RigidBodySystem::initialize() {
-
   // Create and initialize online interpolation of feet trajectories:
   // ----------------------------------------------------------------
   OFTG_->InitializeInternalDataStructures();
@@ -88,7 +87,6 @@ void RigidBodySystem::initialize() {
 }
 
 int RigidBodySystem::initialize_trajectories() {
-
   // Vertical foot trajectory of a stance phase
   // starting from the beginning of the simple support phase
   // and ending at the end of the double support phase.
@@ -156,7 +154,6 @@ int RigidBodySystem::initialize_trajectories() {
 
 int RigidBodySystem::precompute_trajectories(
     const deque<support_state_t> &SupportStates_deq) {
-
   // Precompute vertical foot trajectories
   // The lowest height is the height of the ankle:
   // ---------------------------------------------
@@ -217,10 +214,8 @@ int RigidBodySystem::update(
     const std::deque<support_state_t> &SupportStates_deq,
     const std::deque<FootAbsolutePosition> &LeftFootTraj_deq,
     const std::deque<FootAbsolutePosition> &RightFootTraj_deq) {
-
   unsigned nbStepsPreviewed = SupportStates_deq.back().StepNumber;
   if (multiBody_) {
-
     compute_foot_pol_dynamics(SupportStates_deq, LeftFoot_.Dynamics(POSITION),
                               RightFoot_.Dynamics(POSITION));
     compute_foot_pol_dynamics(SupportStates_deq,
@@ -278,7 +273,6 @@ invertMatrix (const Eigen::Matrix<T,Dynamic,Dynamic>& input,
 #endif
 
 int RigidBodySystem::compute_dyn_cop(unsigned nbSteps) {
-
   const double GRAVITY = 9.81;
 
   if (multiBody_) {
@@ -378,7 +372,6 @@ int RigidBodySystem::compute_dyn_cop(unsigned nbSteps) {
 }
 
 int RigidBodySystem::compute_dyn_cjerk() {
-
   // Initialize dynamics:
   // --------------------
   compute_dyn_cjerk(CoM_.Dynamics(POSITION));
@@ -474,7 +467,6 @@ int RigidBodySystem::compute_dyn_cjerk(linear_dynamics_t &Dynamics) {
 int RigidBodySystem::compute_foot_zero_dynamics(
     const std::deque<support_state_t> &SupportStates_deq,
     linear_dynamics_t &LeftFootDynamics, linear_dynamics_t &RightFootDynamics) {
-
   // Resize the matrices:
   // --------------------
   unsigned int nbSteps = SupportStates_deq.back().StepNumber;
@@ -574,7 +566,6 @@ int RigidBodySystem::compute_foot_zero_dynamics(
 int RigidBodySystem::compute_foot_pol_dynamics(
     const std::deque<support_state_t> &SupportStates_deq,
     linear_dynamics_t &LeftFootDynamics, linear_dynamics_t &RightFootDynamics) {
-
   // Resize the matrices:
   // --------------------
   unsigned int nbSteps = SupportStates_deq.back().StepNumber;
@@ -599,7 +590,6 @@ int RigidBodySystem::compute_foot_pol_dynamics(
   std::deque<support_state_t>::const_iterator SS_it = SupportStates_deq.begin();
   SS_it++;
   for (unsigned int i = 0; i < N_; i++) {
-
     if (SS_it->Foot == LEFT) {
       SFDynamics = &LeftFootDynamics;
       FFDynamics = &RightFootDynamics;
@@ -635,7 +625,6 @@ int RigidBodySystem::compute_foot_pol_dynamics(
         }
       }
     } else {
-
       compute_sbar(Spbar, Sabar, (SS_it->NbInstants) * T_,
                    FSM_->StepPeriod() - T_);
       compute_ubar(Upbar, Uabar, (SS_it->NbInstants) * T_,
@@ -742,7 +731,6 @@ int RigidBodySystem::generate_trajectories(
     const std::deque<double> &PreviewedSupportAngles_deq,
     std::deque<FootAbsolutePosition> &LeftFootTraj_deq,
     std::deque<FootAbsolutePosition> &RightFootTraj_deq) {
-
   OFTG_->interpolate_feet_positions(Time, PrwSupportStates_deq, Solution,
                                     PreviewedSupportAngles_deq,
                                     LeftFootTraj_deq, RightFootTraj_deq);
@@ -756,7 +744,6 @@ int RigidBodySystem::generate_trajectories(
 
 int RigidBodySystem::compute_sbar(double *Spbar, double *Sabar, double T,
                                   double Td) {
-
   double Td2 = Td * Td;
   double Td3 = Td * Td * Td;
   double Td4 = Td * Td * Td * Td;
@@ -801,7 +788,6 @@ int RigidBodySystem::compute_sbar(double *Spbar, double *Sabar, double T,
 
 int RigidBodySystem::compute_ubar(double *Upbar, double *Uabar, double T,
                                   double Td) {
-
   double Td3 = Td * Td * Td;
   double Td4 = Td * Td * Td * Td;
   double Td5 = Td * Td * Td * Td * Td;

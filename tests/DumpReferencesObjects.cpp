@@ -101,7 +101,6 @@ void DumpReferencesObjects::fillInTestsFormat1(
     Eigen::VectorXd &aCurrentConfiguration)
 
 {
-
   ofstream aof;
   string prefix = aTestName + "CoM";
   std::vector<double> vec_db;
@@ -396,7 +395,7 @@ void DumpReferencesObjects::fillInTestsFormat2(
   prepareFile(aof, prefix, anOneStep);
   Eigen::VectorXd &aTauVec = anOneStep.m_DebugPR->currentTau();
   vec_db.resize(aTauVec.size());
-  if (m_prevTorquesF2.size() != aTauVec.size())
+  if (m_prevTorquesF2.size() != (std::vector<double>::size_type)aTauVec.size())
     m_prevTorquesF2.resize(aTauVec.size());
 
   for (Eigen::VectorXd::Index i = 0; i < aTauVec.size(); i++)

@@ -86,7 +86,6 @@ LeftAndRightFootTrajectoryGenerationMultiple::
 
 LeftAndRightFootTrajectoryGenerationMultiple::
     ~LeftAndRightFootTrajectoryGenerationMultiple() {
-
   if (m_LeftFootTrajectory != 0)
     delete m_LeftFootTrajectory;
 
@@ -114,7 +113,6 @@ void LeftAndRightFootTrajectoryGenerationMultiple::SetAnInterval(
     unsigned int IntervalIndex, FootTrajectoryGenerationMultiple *aFTGM,
     FootAbsolutePosition &FootInitialPosition,
     FootAbsolutePosition &FootFinalPosition, vector<double> MiddlePos) {
-
   ODEBUG("Set interval " << IntervalIndex << "/" << m_DeltaTj.size() << " : "
                          << m_DeltaTj[IntervalIndex] << " X: ("
                          << FootFinalPosition.x << "," << FootInitialPosition.x
@@ -724,7 +722,6 @@ void LeftAndRightFootTrajectoryGenerationMultiple::
   ODEBUG("RelativeFootPositions: " << RelativeFootPositions.size());
 
   for (unsigned int i = 0; i < RelativeFootPositions.size(); i++) {
-
     ODEBUG(i << " : " << RelativeFootPositions[i].sx << " "
              << RelativeFootPositions[i].sy);
 
@@ -885,7 +882,6 @@ void LeftAndRightFootTrajectoryGenerationMultiple::ChangeRelStepsFromAbsSteps(
 bool LeftAndRightFootTrajectoryGenerationMultiple::
     ComputeAnAbsoluteFootPosition(int LeftOrRight, double time,
                                   FootAbsolutePosition &aFAP) {
-
   ODEBUG("Left (1) or right (-1) : " << LeftOrRight);
 
   if (LeftOrRight == 1) {
@@ -917,7 +913,6 @@ bool LeftAndRightFootTrajectoryGenerationMultiple::
     ComputeAnAbsoluteFootPosition(int LeftOrRight, double time,
                                   FootAbsolutePosition &aFAP,
                                   unsigned int IndexInterval) {
-
   ODEBUG(this << " " << m_LeftFootTrajectory << " " << m_RightFootTrajectory);
 
   if (LeftOrRight == 1)

@@ -35,7 +35,6 @@ using namespace ::PatternGeneratorJRL::TestSuite;
 using namespace std;
 
 class ReadDataForNovela : public TestObject {
-
 private:
   string m_FileName;
 

@@ -40,7 +40,6 @@ namespace PatternGeneratorJRL {
 
 /** Class for computing trajectories */
 class Polynome {
-
 public:
   /*! Constructor */
   Polynome(int Degree);

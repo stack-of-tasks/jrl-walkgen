@@ -37,7 +37,6 @@ using namespace ::PatternGeneratorJRL::TestSuite;
 using namespace std;
 
 class TestMulticontactInverseGeometry : public TestObject {
-
 private:
   ComAndFootRealizationByGeometry *CFRG_;
   SimplePluginManager *SPM_;

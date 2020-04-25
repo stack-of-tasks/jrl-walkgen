@@ -36,7 +36,6 @@ MPCTrajectoryGeneration::MPCTrajectoryGeneration(SimplePluginManager *lSPM)
       PreviewControlTime_(0.), N_(0), NbVariables_(0), StepHeight_(0.),
       CurrentTime_(0.), OnLineMode_(false), CoMHeight_(0.), SecurityMargin_(0.),
       ModulationSupportCoefficient_(0.), Omega_(0.) {
-
   std::string aMethodName[6] = {":omega",
                                 ":stepheight",
                                 ":singlesupporttime",

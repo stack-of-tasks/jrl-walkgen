@@ -439,9 +439,7 @@ int FootTrajectoryGenerationStandard::SetParameters(
 int FootTrajectoryGenerationStandard::SetParameters(
     int PolynomeIndex, double TimeInterval, double FinalPosition,
     double InitPosition, double InitSpeed, double InitAcc, double InitJerk) {
-
   switch (PolynomeIndex) {
-
   case X_AXIS:
     m_PolynomeX->SetParameters(TimeInterval, FinalPosition, InitPosition,
                                InitSpeed, InitAcc, InitJerk);
@@ -485,7 +483,6 @@ int FootTrajectoryGenerationStandard::GetParametersWithInitPosInitSpeed(
     double &InitPosition, double &InitSpeed) {
   double MiddlePosition = 0.0; // for polynome4
   switch (PolynomeIndex) {
-
   case X_AXIS:
     ODEBUG2("Initspeed: " << InitSpeed << " ");
     m_PolynomeX->GetParametersWithInitPosInitSpeed(TimeInterval, FinalPosition,
@@ -528,7 +525,6 @@ int FootTrajectoryGenerationStandard::GetParametersWithInitPosInitSpeed(
 // Compute the trajectory from init point to end point using polynom
 double FootTrajectoryGenerationStandard::ComputeAllWithPolynom(
     FootAbsolutePosition &aFootAbsolutePosition, double Time) {
-
   aFootAbsolutePosition.x = m_PolynomeX->Compute(Time);
   aFootAbsolutePosition.dx = m_PolynomeX->ComputeDerivative(Time);
   aFootAbsolutePosition.ddx = m_PolynomeX->ComputeSecDerivative(Time);
@@ -629,7 +625,6 @@ double FootTrajectoryGenerationStandard::Compute(unsigned int PolynomeIndex,
   double r = 0.0;
 
   switch (PolynomeIndex) {
-
   case X_AXIS:
     r = m_PolynomeX->Compute(Time);
     break;
@@ -666,7 +661,6 @@ double FootTrajectoryGenerationStandard::ComputeSecDerivative(
   double r = 0.0;
 
   switch (PolynomeIndex) {
-
   case X_AXIS:
     r = m_PolynomeX->ComputeSecDerivative(Time);
     break;
@@ -1083,7 +1077,6 @@ void FootTrajectoryGenerationStandard::UpdateFootPosition(
 void FootTrajectoryGenerationStandard::ComputingAbsFootPosFromQueueOfRelPos(
     deque<RelativeFootPosition> &RelativeFootPositions,
     deque<FootAbsolutePosition> &AbsoluteFootPositions) {
-
   if (AbsoluteFootPositions.size() == 0)
     AbsoluteFootPositions.resize(RelativeFootPositions.size());
 

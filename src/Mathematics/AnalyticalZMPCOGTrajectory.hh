@@ -40,7 +40,6 @@ namespace PatternGeneratorJRL {
 
 */
 class AnalyticalZMPCOGTrajectory {
-
 public:
   /*! Constructor */
   AnalyticalZMPCOGTrajectory(int lNbOfIntervals = 0);

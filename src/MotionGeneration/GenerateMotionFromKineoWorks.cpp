@@ -204,7 +204,6 @@ void GenerateMotionFromKineoWorks::CreateBufferFirstPreview(
 #endif
 
   for (unsigned int i = 0; i < ZMPRefBuffer.size() - m_NL; i++) {
-
     aFIFOZMPRefPositions.push_back(ZMPRefBuffer[i + m_NL]);
 
     m_PC->OneIterationOfPreview(aPC1x, aPC1y, aSxzmp, aSyzmp,
@@ -236,7 +235,6 @@ void GenerateMotionFromKineoWorks::CreateBufferFirstPreview(
 }
 
 void GenerateMotionFromKineoWorks::SetPreviewControl(PreviewControl *aPC) {
-
   m_PC = aPC;
   m_SamplingPeriod = m_PC->SamplingPeriod();
   m_PreviewControlTime = m_PC->PreviewControlTime();
@@ -278,7 +276,6 @@ void GenerateMotionFromKineoWorks::ComputeUpperBodyPosition(
   for (unsigned int i = 0; i < m_Path[0].Joints.size(); i++) {
     int IdDOF = 0;
     if ((IdDOF = m_IndexFromKWToRobot[i]) != -1) {
-
       UpperBodyPositionsBuffer[count].Joints[k] = m_Path[0].Joints[i];
       ConversionFromLocalToRobotDOFsIndex[k] = IdDOF;
       ConversionFromLocalToKW[k] = i;
@@ -300,11 +297,9 @@ void GenerateMotionFromKineoWorks::ComputeUpperBodyPosition(
     //! Find the closest (X,Y,Z) position in the remaining
     // part of the CoM buffer.
     for (unsigned int i = count; i < m_COMBuffer.size(); i++) {
-      double ldist = (lX - m_COMBuffer[i].x[0]) * (lX - m_COMBuffer[i].x[0])
-          /*+
-            (lY - m_COMBuffer[i].y[0])*(lY-m_COMBuffer[i].y[0]) +
-            (lZ - m_COMBuffer[i].z[0])*(lZ-m_COMBuffer[i].z[0]) */
-          ;
+      double ldist = (lX - m_COMBuffer[i].x[0]) * (lX - m_COMBuffer[i].x[0]) +
+                     (lY - m_COMBuffer[i].y[0]) * (lY - m_COMBuffer[i].y[0]) +
+                     (lZ - m_COMBuffer[i].z[0]) * (lZ - m_COMBuffer[i].z[0]);
 
       if (ldist < dist) {
         dist = ldist;

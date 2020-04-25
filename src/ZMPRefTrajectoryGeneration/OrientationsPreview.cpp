@@ -91,7 +91,6 @@ void OrientationsPreview::preview_orientations(
     const std::deque<FootAbsolutePosition> &LeftFootPositions_deq,
     const std::deque<FootAbsolutePosition> &RightFootPositions_deq,
     solution_t &Solution) {
-
   const deque<support_state_t> &PrwSupportStates_deq =
       Solution.SupportStates_deq;
   std::deque<double> &PreviewedSupportAngles_deq =
@@ -246,7 +245,6 @@ void OrientationsPreview::preview_orientations(
         TrunkVelOK = false;
         break;
       } else {
-
         if (ItBeforeLanding <= ItBeforeLandingThresh && ItBeforeLanding > 0 &&
             Solution.SupportStates_deq.front().Phase == SS &&
             Solution.SupportStates_deq.front().StateChanged != 1 &&
@@ -316,7 +314,6 @@ bool OrientationsPreview::verify_angle_hip_joint(
     const support_state_t &CurrentSupport, double PreviewedTrunkAngleEnd,
     const COMState &TrunkState_, COMState &TrunkStateT_,
     double CurrentSupportFootAngle, unsigned StepNumber) {
-
   // Which limitation is relevant in the current situation?
   double uJointLimit, lJointLimit, JointLimit;
   if (CurrentSupport.Foot == LEFT) {
@@ -403,7 +400,6 @@ void OrientationsPreview::interpolate_trunk_orientation(
     double Time, int CurrentIndex, double NewSamplingPeriod,
     const deque<support_state_t> &PrwSupportStates_deq,
     deque<COMState> &FinalCOMTraj_deq) {
-
   support_state_t CurrentSupport = PrwSupportStates_deq.front();
 
   double initPos = FinalCOMTraj_deq[CurrentIndex - 1].yaw[0];

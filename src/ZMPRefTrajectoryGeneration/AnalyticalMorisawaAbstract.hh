@@ -49,7 +49,6 @@ namespace PatternGeneratorJRL {
 
 */
 class AnalyticalMorisawaAbstract : public ZMPRefTrajectoryGeneration {
-
 public:
   const static unsigned int SINGLE_SUPPORT = 0;
   const static unsigned int DOUBLE_SUPPORT = 1;

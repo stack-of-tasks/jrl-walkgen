@@ -38,7 +38,6 @@ using namespace ::PatternGeneratorJRL;
 
 StepOverPlanner::StepOverPlanner(ObstaclePar &ObstacleParameters,
                                  PinocchioRobot *aPR) {
-
   m_PR = aPR;
   // Get information specific to the humanoid.
   double lWidth;
@@ -179,7 +178,6 @@ StepOverPlanner::StepOverPlanner(ObstaclePar &ObstacleParameters,
 }
 
 StepOverPlanner::~StepOverPlanner() {
-
   if (m_PolynomeStepOverHipRotation != 0)
     delete m_PolynomeStepOverHipRotation;
 
@@ -207,7 +205,6 @@ StepOverPlanner::~StepOverPlanner() {
 
 void StepOverPlanner::CalculateFootHolds(
     deque<RelativeFootPosition> &aFootHolds) {
-
   m_FootHolds.clear();
 
   m_Tsingle = m_ZMPDiscr->GetTSingleSupport();
@@ -362,7 +359,8 @@ void StepOverPlanner::DoubleSupportFeasibility() {
   Eigen::Vector3d ToTheHip;
   Eigen::Matrix<double, 6, 1> LeftLegAngles;
   Eigen::Matrix<double, 6, 1> RightLegAngles;
-
+  LeftLegAngles.Zero();
+  RightLegAngles.Zero();
   Eigen::Vector3d AnkleBeforeObst;
   Eigen::Vector3d AnkleAfterObst;
   Eigen::Vector3d TempCOMState;
@@ -417,7 +415,6 @@ void StepOverPlanner::DoubleSupportFeasibility() {
     to the obstacle */
   for (int i = 0; i < EvaluationNumber + 1; i++) {
     for (int j = 0; j < EvaluationNumber + 1; j++) {
-
       StepOverStepLenght = StepOverStepLenghtMin + i * IncrementStepLenght;
       StepOverCOMHeight =
           StepOverCOMHeightMax - (double(j * IncrementCOMHeight));
@@ -558,7 +555,6 @@ void StepOverPlanner::DoubleSupportFeasibility() {
       // protection against knee overstretch built in
       if (!((LeftLegAngles(3) < m_KneeAngleBound) ||
             (RightLegAngles(3) < m_KneeAngleBound))) {
-
         WaistPos(0) = aCOMState.x[0];
         WaistPos(1) = aCOMState.y[0];
         WaistPos(2) = aCOMState.z[0] + m_DiffBetweenComAndWaist;
@@ -768,7 +764,6 @@ void StepOverPlanner::PolyPlanner(deque<COMState> &aCOMBuffer,
 
 void StepOverPlanner::PolyPlannerFirstStep(
     deque<FootAbsolutePosition> &aStepOverFootBuffer) {
-
   Eigen::Matrix<double, 8, 1> aBoundCondZ;
   Eigen::Matrix<double, 8, 1> aBoundCondY;
   Eigen::Matrix<double, 8, 1> aBoundCondX;
@@ -778,8 +773,8 @@ void StepOverPlanner::PolyPlannerFirstStep(
   double StepLenght;
   double Omega1, Omega2, OmegaImpact;
   double xOffset;
-  double Point1X, Point1Y = 0.0, Point1Z;
-  double Point2X, Point2Y = 0.0, Point2Z;
+  double Point1X, Point1Z;
+  double Point2X, Point2Z;
   double Point3Z;
 
   StepTime = aStepOverFootBuffer[m_StartDoubleSupp].time -
@@ -801,12 +796,10 @@ void StepOverPlanner::PolyPlannerFirstStep(
 
   Point1X = StepLenght - m_heelToAnkle - m_ObstacleParameters.d - xOffset -
             m_tipToAnkle * cos(Omega1 * M_PI / 180.0);
-  Point1Y = 0.00;
   Point1Z = m_ObstacleParameters.h - m_tipToAnkle * sin(Omega1 * M_PI / 180.0);
 
   Point2X = StepLenght - m_heelToAnkle + xOffset +
             m_heelToAnkle * cos(Omega2 * M_PI / 180.0);
-  Point2Y = 0.00;
   Point2Z = m_ObstacleParameters.h - m_tipToAnkle * sin(Omega2 * M_PI / 180.0);
 
   Point3Z = Point1Z + 0.04;
@@ -842,12 +835,10 @@ void StepOverPlanner::PolyPlannerFirstStep(
   ZfootSpeedBound(0) = 0.0;
   ZfootSpeedBound(1) = 0.0;
 
-  int NumberIntermediate = 0, NumberIntermediate2 = 0, Counter = 0,
-      CounterTemp = 0;
+  int NumberIntermediate = 0, Counter = 0, CounterTemp = 0;
   double IntermediateTimeStep;
 
   NumberIntermediate = 10;
-  NumberIntermediate2 = 20;
 
   ZfootPos.resize(2 + 3 * NumberIntermediate);
   TimeIntervalsZ.resize(2 + 3 * NumberIntermediate);
@@ -1091,7 +1082,6 @@ void StepOverPlanner::PolyPlannerFirstStep(
 
 void StepOverPlanner::PolyPlannerSecondStep(
     deque<FootAbsolutePosition> &aStepOverFootBuffer) {
-
   Eigen::Matrix<double, 8, 1> aBoundCondZ;
   Eigen::Matrix<double, 8, 1> aBoundCondY;
   Eigen::Matrix<double, 8, 1> aBoundCondX;
@@ -1101,8 +1091,8 @@ void StepOverPlanner::PolyPlannerSecondStep(
   double StepLenght;
   double Omega1, Omega2, OmegaImpact;
   double xOffset;
-  double Point1X, Point1Y, Point1Z;
-  double Point2X, Point2Y, Point2Z;
+  double Point1X, Point1Z;
+  double Point2X, Point2Z;
   double Point3Z;
 
   StepTime = aStepOverFootBuffer[m_EndStepOver].time -
@@ -1118,12 +1108,10 @@ void StepOverPlanner::PolyPlannerSecondStep(
 
   Point1X = m_StepOverStepLenght - m_heelToAnkle - m_ObstacleParameters.d -
             xOffset - m_tipToAnkle * cos(Omega1 * M_PI / 180.0);
-  Point1Y = 0.0;
   Point1Z = m_ObstacleParameters.h + m_tipToAnkle * sin(Omega1 * M_PI / 180.0);
 
   Point2X = m_StepOverStepLenght - m_heelToAnkle + xOffset +
             m_heelToAnkle * cos(Omega2 * M_PI / 180.0);
-  Point2Y = 0.0;
   Point2Z = Point1Z;
   // m_ObstacleParameters.h+0.04;//-m_tipToAnkle*sin(Omega2*M_PI/180.0);
 
@@ -1522,7 +1510,6 @@ void StepOverPlanner::GetFootBuffers(
 }
 
 void StepOverPlanner::SetObstacleInformation(ObstaclePar ObstacleParameters) {
-
   // add safety boundaries to the obstacle ,
   // the safety bounderies at the moment are chosen
   // but they can vary in the fuuter in function
@@ -1597,7 +1584,6 @@ void StepOverPlanner::SetDynamicMultiBodyModel(PinocchioRobot *aPR) {
 }
 
 void StepOverPlanner::TimeDistributeFactor(vector<double> &TimeDistrFactor) {
-
   for (unsigned int i = 0; i < TimeDistrFactor.size(); i++) {
     m_TimeDistrFactor[i] = TimeDistrFactor[i];
   }
@@ -1651,7 +1637,6 @@ void StepOverPlanner::CreateBufferFirstPreview(
 #endif
 
   for (unsigned int i = 0; i < m_ZMPRefBuffer.size() - m_NL; i++) {
-
     aFIFOZMPRefPositions.push_back(m_ZMPRefBuffer[i + m_NL]);
 
     m_PC->OneIterationOfPreview(aPC1x, aPC1y, aSxzmp, aSyzmp,
@@ -1686,9 +1671,6 @@ void StepOverPlanner::CreateBufferFirstPreview(
 }
 
 void StepOverPlanner::m_SetObstacleParameters(istringstream &strm) {
-
-  bool ReadObstacleParameters = false;
-
   ODEBUG("I am reading the obstacle parameters"
          << " ");
 
@@ -1738,7 +1720,6 @@ void StepOverPlanner::m_SetObstacleParameters(istringstream &strm) {
     if (!strm.eof()) {
       bool lObstacleDetected;
       strm >> lObstacleDetected;
-      ReadObstacleParameters = true;
       break;
     } else {
       cout << "Not enough inputs for completion of "

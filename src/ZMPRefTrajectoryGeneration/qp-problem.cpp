@@ -125,7 +125,6 @@ void QPProblem::resize_all() {
 }
 
 void QPProblem::clear(qp_element_e Type) {
-
   switch (Type) {
   case MATRIX_Q:
     Q_.fill(0.0);
@@ -149,7 +148,6 @@ void QPProblem::clear(qp_element_e Type) {
 }
 
 void QPProblem::reset() {
-
   Q_.fill(0.0);
   Q_dense_.fill(0.0);
   DU_.fill(0.0);
@@ -162,7 +160,6 @@ void QPProblem::reset() {
 }
 
 int QPProblem::reset_variant() {
-
   unsigned firstRow =
       (nbInvariantRows_ < Q_.NbRows_) ? nbInvariantRows_ : Q_.NbRows_;
   unsigned firstCol = 0;
@@ -208,7 +205,6 @@ int QPProblem::reset_variant() {
 
 void QPProblem::solve(solver_e Solver, solution_t &Result,
                       const tests_e &tests) {
-
   m_ = NbConstraints_ + 1;
   me_ = NbEqConstraints_;
   mmax_ = m_ + 1;
@@ -353,7 +349,6 @@ void QPProblem::solve(solver_e Solver, solution_t &Result,
 
 void QPProblem::add_term_to(qp_element_e Type, const Eigen::MatrixXd &Mat,
                             unsigned int row, unsigned int col) {
-
   array_s<double> *Array_p = 0;
 
   switch (Type) {
@@ -422,7 +417,6 @@ void QPProblem::add_term_to(qp_element_e Type, const Eigen::MatrixXd &Mat,
 
 void QPProblem::add_term_to(qp_element_e Type, const Eigen::VectorXd &Vec,
                             unsigned row, unsigned col) {
-
   array_s<double> *Array_p = 0;
 
   switch (Type) {
@@ -495,7 +489,6 @@ void QPProblem::dump_solver_parameters(std::ostream &aos) {
 }
 
 void QPProblem::dump(qp_element_e Type, std::ostream &aos) {
-
   unsigned int NbRows = 0, NbCols = 0;
   double *Array = 0;
   std::string Name;

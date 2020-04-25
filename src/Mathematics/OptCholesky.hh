@@ -45,7 +45,6 @@ namespace PatternGeneratorJRL {
   matrix \$f{\bf A} \f$ of size \f$(m,\|u\|)\f$.
 */
 class OptCholesky {
-
 public:
   /*! \brief Constructor
     @param[in] lNbMaxOfConstraints \f$ m \f$ the number

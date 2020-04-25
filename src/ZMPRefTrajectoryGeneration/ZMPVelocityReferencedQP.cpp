@@ -225,7 +225,6 @@ ZMPVelocityReferencedQP::ZMPVelocityReferencedQP(SimplePluginManager *SPM,
 }
 
 ZMPVelocityReferencedQP::~ZMPVelocityReferencedQP() {
-
   if (VRQPGenerator_ != 0) {
     delete VRQPGenerator_;
     VRQPGenerator_ = 0;
@@ -268,7 +267,6 @@ ZMPVelocityReferencedQP::~ZMPVelocityReferencedQP() {
 }
 
 void ZMPVelocityReferencedQP::setCoMPerturbationForce(istringstream &strm) {
-
   PerturbationAcceleration_.resize(6);
 
   strm >> PerturbationAcceleration_(2);
@@ -279,7 +277,6 @@ void ZMPVelocityReferencedQP::setCoMPerturbationForce(istringstream &strm) {
 }
 
 void ZMPVelocityReferencedQP::setCoMPerturbationForce(double x, double y) {
-
   PerturbationAcceleration_.resize(6);
 
   PerturbationAcceleration_(2) = x / RobotMass_;
@@ -459,7 +456,6 @@ void ZMPVelocityReferencedQP::OnLine(
   // UPDATE WALKING TRAJECTORIES:
   // ----------------------------
   if (time + 0.00001 > UpperTimeLimitToUpdate_) {
-
     // UPDATE INTERNAL DATA:
     // ---------------------
     Problem_.reset_variant();

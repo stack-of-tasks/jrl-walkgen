@@ -39,7 +39,6 @@ namespace PatternGeneratorJRL {
 /// Store and solve a quadratic problem with linear constraints.
 ///
 class QPProblem {
-
   //
   // Public methods
   //
@@ -180,7 +179,6 @@ private:
 
     int stick_together(struct array_s<type> &FinalArray, unsigned int NbRows,
                        unsigned int NbCols) {
-
       try {
         type *NewArray = 0;
         if ((FinalArray.SizeMem_ < NbRows * NbCols) ||
@@ -211,7 +209,6 @@ private:
     /// \param[in] preserve Preserve old values
     /// \return 0
     int resize(unsigned int NbRows, unsigned int NbCols, bool Preserve) {
-
       try {
         bool Reallocate = false;
         type *NewArray = 0;
@@ -245,7 +242,6 @@ private:
 
     array_s() : Array_(0), Id_(0), NbRows_(0), NbCols_(0), SizeMem_(0){};
     ~array_s() {
-
       if (Array_ != 0)
         delete[] Array_;
     };

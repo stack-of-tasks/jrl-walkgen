@@ -38,7 +38,6 @@ namespace PatternGeneratorJRL {
 /// Generate online trajectories for the swinging and the stance foot some
 /// amount in the future.
 class OnLineFootTrajectoryGeneration : public FootTrajectoryGenerationStandard {
-
   //
   // Public methods:
   //

@@ -133,13 +133,11 @@ void ProblemVelRef_s::setDimensions(int NbOfConstraints, int NbOfEqConstraints,
 }
 
 void ProblemVelRef_s::initializeProblem() {
-
   memset(DU, 0,
          (8 * m_QP_N + 1) * 2 * (m_QP_N + m_stepNumber) * sizeof(double));
 }
 
 void ProblemVelRef_s::dumpMatrix(std::ostream &aos, int type) {
-
   int lnbrows = 0, lnbcols = 0;
   double *aMatrix = 0;
   switch (type) {
@@ -165,11 +163,9 @@ void ProblemVelRef_s::dumpMatrix(std::ostream &aos, int type) {
 }
 
 void ProblemVelRef_s::dumpVector(std::ostream &aos, int type) {
-
   int lsize = 0;
   double *aVector = 0;
   switch (type) {
-
   case VECTOR_D:
     lsize = 2 * (m_QP_N + m_stepNumber);
     aVector = D;

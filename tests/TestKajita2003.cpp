@@ -42,7 +42,6 @@ enum Profiles_t {
 };
 
 class TestKajita2003 : public TestObject {
-
 private:
 public:
   TestKajita2003(int argc, char *argv[], string &aString, int TestProfile)
@@ -145,25 +144,6 @@ protected:
       aPGI.ParseCmd(strm2);
     }
 
-    // {
-    //   istringstream strm2(":stepseq 0.0 -0.09 0.0 0.0 \
-    //                  0.15 0.18 0.0 0.0 \
-    //                  0.15 -0.18 0.0 0.0 \
-    //                  0.15 0.18 0.0 0.0 \
-    //                  0.15 -0.18 0.0 0.0 \
-    //                  0.15 0.18 0.0 0.0 \
-    //                  0.15 -0.18 0.0 0.0 \
-    //                  0.15 0.18 0.0 0.0 \
-    //                  0.15 -0.18 0.0 0.0 \
-    //                  0.15 0.18 0.0 0.0 \
-    //                  0.15 -0.18 0.0 0.0 \
-    //                  0.15 0.18 0.0 0.0 \
-    //                  0.15 -0.18 0.0 0.0 \
-    //                  0.15 0.18 0.0 0.0 \
-    //                  0.15 -0.18 0.0 0.0 \
-    //                  0.0 0.18 0.0 0.0");
-    //   aPGI.ParseCmd(strm2);
-    // }
     {
       istringstream strm2(":singlesupporttime 0.9");
       aPGI.ParseCmd(strm2);
@@ -324,9 +304,7 @@ protected:
   }
 
   void chooseTestProfile() {
-
     switch (m_TestProfile) {
-
     case PROFIL_STRAIGHT_WALKING:
       StraightWalking(*m_PGI);
       break;
@@ -352,7 +330,6 @@ protected:
 };
 
 int PerformTests(int argc, char *argv[]) {
-
   std::string CompleteName = string(argv[0]);
   std::size_t found = CompleteName.find_last_of("/\\");
   std::string TestName = CompleteName.substr(found + 1);

@@ -254,7 +254,6 @@ bool PinocchioRobot::testOneModeOfLegsInverseKinematics(
   return lisLegInverseKinematic;
 }
 bool PinocchioRobot::testLegsInverseKinematics() {
-
   std::vector<std::string> leftLegJointName, rightLegJointName;
 
   // Test mode 1.
@@ -298,7 +297,6 @@ bool PinocchioRobot::testLegsInverseKinematics() {
 }
 
 bool PinocchioRobot::testArmsInverseKinematics() {
-
   std::vector<pinocchio::JointIndex> leftArm =
       jointsBetween(m_chest, m_leftWrist);
   std::vector<pinocchio::JointIndex> rightArm =
@@ -715,7 +713,6 @@ double PinocchioRobot::ComputeXmax(double &Z) {
 void PinocchioRobot::getShoulderWristKinematics(
     const Eigen::Matrix4d &jointRootPosition,
     const Eigen::Matrix4d &jointEndPosition, Eigen::VectorXd &q, int side) {
-
   // Initialisation of q
   if (q.size() != 6)
     q.resize(6);

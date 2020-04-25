@@ -210,7 +210,6 @@ void OnLineFootTrajectoryGeneration::interpret_solution(
     double CurrentTime, const solution_t &Solution,
     const support_state_t &CurrentSupport, unsigned int NbSteps, double &X,
     double &Y) {
-
   double Sign;
   if (CurrentSupport.Foot == LEFT)
     Sign = 1.0;

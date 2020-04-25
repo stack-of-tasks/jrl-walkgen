@@ -86,7 +86,6 @@ typedef struct {
   @ingroup analyticalformulation
 */
 class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
-
 public:
   /*! \name Constants to handle errors
     when changing foot steps.

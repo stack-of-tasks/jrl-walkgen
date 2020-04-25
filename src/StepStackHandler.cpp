@@ -156,7 +156,6 @@ void StepStackHandler::ReadStepSequenceAccordingToWalkMode(
   case 0:
 
   case 4: {
-
     ODEBUG("Standard Walk Mode Selected");
     RelativeFootPosition aFootPosition;
 
@@ -201,7 +200,6 @@ void StepStackHandler::ReadStepSequenceAccordingToWalkMode(
   }
   case 3:
   case 1: {
-
     ODEBUG4("Walk Mode with HipHeight Variation Selected", "DebugGMFKW.dat");
     RelativeFootPosition aFootPosition;
 
@@ -252,7 +250,6 @@ void StepStackHandler::ReadStepSequenceAccordingToWalkMode(
   }
     // With a varying double support time and a single support time.
   case 5: {
-
     ODEBUG("Standard Walk Mode Selected");
     RelativeFootPosition aFootPosition;
 
@@ -814,7 +811,6 @@ void StepStackHandler::AddStandardOnLineStep(bool NewStep, double NewStepX,
     aFootPosition.stepType = 0;
 
   } else {
-
     aFootPosition.sx = NewStepX;
     aFootPosition.sy = NewStepY + m_KeepLastCorrectSupportFoot * 0.19;
     aFootPosition.theta = NewTheta;
@@ -930,7 +926,6 @@ void StepStackHandler::CallMethod(std::string &Method,
     double x, y, theta;
 
     while (!strm.eof()) {
-
       if (!strm.eof())
         strm >> x;
       else
@@ -953,7 +948,6 @@ void StepStackHandler::CallMethod(std::string &Method,
     int SupportFoot = -1;
 
     while (!strm.eof()) {
-
       if (!strm.eof())
         strm >> x;
       else
@@ -982,7 +976,6 @@ void StepStackHandler::CallMethod(std::string &Method,
     ODEBUG4("m_CreateArcCenteredInStepStack 1", "DebugData.txt");
 
     while (!strm.eof()) {
-
       if (!strm.eof())
         strm >> R;
       else

@@ -46,7 +46,6 @@ namespace PatternGeneratorJRL {
 /// \brief Generate a stack of inequalities relative to feet centers for
 /// the whole preview window.
 class RelativeFeetInequalities : public SimplePlugin {
-
   //
   // Public types
   //

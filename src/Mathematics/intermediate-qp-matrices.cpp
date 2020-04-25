@@ -32,7 +32,6 @@ using namespace std;
 using namespace PatternGeneratorJRL;
 
 IntermedQPMat::IntermedQPMat() {
-
   InstantVelocity_.type = INSTANT_VELOCITY;
   COPCentering_.type = COP_CENTERING;
   JerkMin_.type = JERK_MIN;
@@ -102,7 +101,6 @@ linear_inequality_t &IntermedQPMat::Inequalities(ineq_e type) {
 }
 
 void IntermedQPMat::dump_objective(objective_e type, std::ostream &aos) {
-
   switch (type) {
   case INSTANT_VELOCITY:
     InstantVelocity_.print(aos);

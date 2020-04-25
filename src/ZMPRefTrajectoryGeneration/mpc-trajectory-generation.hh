@@ -41,7 +41,6 @@ namespace PatternGeneratorJRL {
   low-dimensional walking trajectories (CoM/CdP/Feet).
  */
 class MPCTrajectoryGeneration : public SimplePlugin {
-
   //
   // Protected members
   //

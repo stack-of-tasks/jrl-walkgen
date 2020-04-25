@@ -45,7 +45,6 @@ class SimplePlugin;
 
 */
 class SimplePluginManager {
-
 public:
   struct ltstr {
     bool operator()(const std::string s1, const std::string s2) const {

@@ -43,7 +43,6 @@ using namespace std;
 using namespace PatternGeneratorJRL;
 
 void ZMPVelocityReferencedQP::debugConstructor() {
-
   if (m_FastFormulationMode == QLDANDLQ) {
     RESETDEBUG6("/tmp/dtQLD.dat");
     RESETDEBUG6("/tmp/InfosQLD.dat");

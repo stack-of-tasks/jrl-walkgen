@@ -291,7 +291,6 @@ void AnalyticalZMPCOGTrajectory::SetPolynomialDegrees(
     m_PolynomialDegree = lPolynomialDegree;
 
   for (unsigned int i = 0; i < m_PolynomialDegree.size(); i++) {
-
     ODEBUG("i:" << i << " " << m_PolynomialDegree[i]);
     if (m_ListOfCOGPolynomials[i] != 0)
       delete m_ListOfCOGPolynomials[i];
@@ -352,13 +351,11 @@ bool AnalyticalZMPCOGTrajectory::GetFromListOfZMPPolynomials(
 void AnalyticalZMPCOGTrajectory::
     TransfertOneIntervalCoefficientsFromCOGTrajectoryToZMPOne(
         unsigned int intervalindex, double &lCoMZ, double &lZMPZ) {
-
   vector<double> CoefsFromCOG;
   vector<double> CoefsForZMP;
 
   if ((m_ListOfCOGPolynomials[intervalindex] != 0) &&
       (m_ListOfZMPPolynomials[intervalindex] != 0)) {
-
     m_ListOfCOGPolynomials[intervalindex]->GetCoefficients(CoefsFromCOG);
     //       m_ListOfCOGPolynomials[j]->print();
     CoefsForZMP.resize(CoefsFromCOG.size());
@@ -415,7 +412,6 @@ void AnalyticalZMPCOGTrajectory::Building3rdOrderPolynomial(
 }
 
 double AnalyticalZMPCOGTrajectory::FluctuationMaximal() {
-
   double Tmax;
   vector<double> CoefsForZMP;
   m_ListOfZMPPolynomials[0]->GetCoefficients(CoefsForZMP);
@@ -453,7 +449,6 @@ bool AnalyticalZMPCOGTrajectory::GetIntervalIndexFromTime(
 }
 
 ostream &operator<<(ostream &os, const AnalyticalZMPCOGTrajectory &obj) {
-
   vector<double> lV, lW;
   vector<unsigned int> lPolynomialDegrees;
 

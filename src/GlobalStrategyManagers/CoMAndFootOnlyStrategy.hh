@@ -40,7 +40,6 @@ namespace PatternGeneratorJRL {
     Implementation of the buffers handling without preview control
 */
 class CoMAndFootOnlyStrategy : public GlobalStrategyManager {
-
 public:
   /*! Default constructor. */
   CoMAndFootOnlyStrategy(SimplePluginManager *aSimplePluginManager);

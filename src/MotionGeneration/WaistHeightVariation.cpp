@@ -35,7 +35,6 @@
 using namespace ::PatternGeneratorJRL;
 
 WaistHeightVariation::WaistHeightVariation() {
-
   m_PolynomeHip = new WaistPolynome();
 }
 
@@ -47,7 +46,6 @@ WaistHeightVariation::~WaistHeightVariation() {
 void WaistHeightVariation::PolyPlanner(deque<COMPosition> &aCOMBuffer,
                                        deque<RelativeFootPosition> &aFootHolds,
                                        deque<ZMPPosition> aZMPPosition) {
-
   unsigned int u_start = 0;
   int stepnumber = 0;
   Eigen::Matrix<double, 4, 1> aBoundCond;
@@ -106,7 +104,6 @@ void WaistHeightVariation::PolyPlanner(deque<COMPosition> &aCOMBuffer,
             m_SamplingPeriod;
 
       } else {
-
         double LocalTime;
         LocalTime = (u - u_start) * m_SamplingPeriod;
 

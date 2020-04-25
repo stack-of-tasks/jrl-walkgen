@@ -73,7 +73,6 @@ void FilteringAnalyticalTrajectoryByPreviewControl::SetAnalyticalTrajectory(
 
 void FilteringAnalyticalTrajectoryByPreviewControl::SetPreviewControl(
     PreviewControl *lPreviewControl) {
-
   m_PreviewControl = lPreviewControl;
   m_LocalBufferIndex = 0;
   if (m_PreviewControl != 0) {

@@ -89,7 +89,7 @@ public: // Public methods
 
 private: // Private methods
          // void computeWaist(const FootAbsolutePosition & inputLeftFoot) ;
-  // -------------------------------------------------------------------
+         // -------------------------------------------------------------------
 
 public: // The accessors
   void setRobotUpperPart(const Eigen::VectorXd &configuration,

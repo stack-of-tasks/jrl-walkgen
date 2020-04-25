@@ -162,7 +162,6 @@ bool TestObject::init() {
 }
 
 TestObject::~TestObject() {
-
   if (m_PR != 0)
     delete m_PR;
 
@@ -438,7 +437,6 @@ void TestObject::InitializeRobotWithSRDF(PinocchioRobot &aPR,
 }
 
 void TestObject::prepareDebugFiles() {
-
   if (m_DebugZMP2) {
     ofstream aofzmpmb2;
     string aFileName = m_TestName;
@@ -601,7 +599,6 @@ bool TestObject::compareDebugFiles() {
 }
 
 bool TestObject::doTest(ostream &os) {
-
   // Set time reference.
   m_clock.startingDate();
 
@@ -760,7 +757,6 @@ void TestObject::parseFromURDFtoOpenHRPIndex(Eigen::VectorXd &conf) {
 }
 
 void TestObject::generateOpenHRPTrajectories() {
-
   analyticalInverseKinematics(m_CurrentConfiguration, m_CurrentVelocity,
                               m_CurrentAcceleration);
 

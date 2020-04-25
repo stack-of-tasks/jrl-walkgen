@@ -46,7 +46,6 @@ namespace PatternGeneratorJRL {
 
 /// \brief Generate optimization problem as proposed in Herdt2010IROS
 class GeneratorVelRef : public MPCTrajectoryGeneration {
-
   //
   // Public methods
   //

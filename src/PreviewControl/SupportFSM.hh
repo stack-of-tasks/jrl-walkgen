@@ -33,7 +33,6 @@ namespace PatternGeneratorJRL {
 
 /// \brief Finite state machine to determine the support parameters.
 class SupportFSM {
-
   //
   // Public methods:
   //

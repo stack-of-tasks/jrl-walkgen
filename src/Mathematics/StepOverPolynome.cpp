@@ -457,11 +457,9 @@ double StepOverSpline::GetValueSpline(Eigen::VectorXd TimePoints,
 }
 
 void StepOverSpline::print() {
-
   cout << " Spline Coefficients : " << endl;
 
   for (unsigned int i = 0; i < m_number - 1; i++) {
-
     cout << "             Spline m_number " << i + 1 << ":" << endl
          << "            ";
     for (unsigned int j = 0; j < 4; j++)
@@ -601,11 +599,9 @@ double StepOverClampedCubicSpline::GetValueSpline(Eigen::VectorXd TimePoints,
 }
 
 void StepOverClampedCubicSpline::print() {
-
   cout << "Clamped Cubic Spline m_Coefficients : " << endl;
 
   for (unsigned int i = 0; i < m_number; i++) {
-
     cout << "  Spline m_number " << i + 1 << ":" << endl << "  ";
     for (unsigned int j = 0; j < 4; j++)
       cout << m_Coefficients(j, i) << "  ";

@@ -340,7 +340,6 @@ int FootTrajectoryGenerationMultiple::DisplayIntervals() const {
 
 FootTrajectoryGenerationMultiple &FootTrajectoryGenerationMultiple::
 operator=(const FootTrajectoryGenerationMultiple &aFTGM) {
-
   /* Specify the number of intervals. */
   SetNumberOfIntervals(aFTGM.GetNumberOfIntervals());
 

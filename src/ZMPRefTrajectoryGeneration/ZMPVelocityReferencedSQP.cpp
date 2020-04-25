@@ -174,7 +174,6 @@ void ZMPVelocityReferencedSQP::setCoMPerturbationForce(istringstream &strm) {
 }
 
 void ZMPVelocityReferencedSQP::setCoMPerturbationForce(double x, double y) {
-
   PerturbationAcceleration_.resize(6);
   PerturbationAcceleration_.setZero();
 
@@ -246,7 +245,6 @@ std::size_t ZMPVelocityReferencedSQP::InitOnLine(
     FootAbsolutePosition &InitRightFootAbsolutePosition,
     deque<RelativeFootPosition> &, // RelativeFootPositions,
     COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition) {
-
   // Generator Management
   previewSize_ = 8;
   InterpolationPeriod_ = m_SamplingPeriod * 7;

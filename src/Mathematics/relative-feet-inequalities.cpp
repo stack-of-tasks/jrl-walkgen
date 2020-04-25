@@ -42,7 +42,6 @@ using namespace PatternGeneratorJRL;
 RelativeFeetInequalities::RelativeFeetInequalities(SimplePluginManager *aSPM,
                                                    PinocchioRobot *aPR)
     : SimplePlugin(aSPM) {
-
   DSFeetDistance_ = 0.162;
   SecurityMarginX_ = 0.04;
   SecurityMarginY_ = 0.04;
@@ -76,7 +75,6 @@ RelativeFeetInequalities::RelativeFeetInequalities(SimplePluginManager *aSPM,
 RelativeFeetInequalities::~RelativeFeetInequalities() {}
 
 int RelativeFeetInequalities::init_convex_hulls() {
-
   const unsigned nbVertCoP = 4;
   const unsigned nbVertFeet = 5;
   const unsigned nbIneqCoM = 10;
@@ -148,7 +146,6 @@ int RelativeFeetInequalities::init_convex_hulls() {
 }
 
 int RelativeFeetInequalities::set_feet_dimensions(PinocchioRobot *aPR) {
-
   // Read feet specificities.
   double Height, Width;
   PRFoot *RightFoot = aPR->rightFoot();
@@ -181,7 +178,6 @@ int RelativeFeetInequalities::set_feet_dimensions(PinocchioRobot *aPR) {
 void RelativeFeetInequalities::set_vertices(convex_hull_t &ConvexHull,
                                             const support_state_t &Support,
                                             ineq_e type) {
-
   edges_s *ConvexHull_p = 0;
 
   switch (type) {
@@ -219,7 +215,6 @@ void RelativeFeetInequalities::set_vertices(convex_hull_t &ConvexHull,
 void RelativeFeetInequalities::set_inequalities(convex_hull_t &ConvexHull,
                                                 const support_state_t &,
                                                 ineq_e type) {
-
   convex_hull_t *ConvexHull_p = 0;
 
   switch (type) {
@@ -295,7 +290,6 @@ void RelativeFeetInequalities::compute_linear_system(
 
 void RelativeFeetInequalities::CallMethod(std::string &Method,
                                           std::istringstream &Args) {
-
   if (Method == ":setfeetconstraint") {
     string lCmd;
     Args >> lCmd;

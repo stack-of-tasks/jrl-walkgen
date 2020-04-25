@@ -39,9 +39,7 @@ void UpperBodyMotion::GenerateDataFile(string aFileName, int LenghtDataArray) {
 
   aof.open(aFileName.c_str(), ofstream::out);
   if (aof.is_open()) {
-
     for (int i = 0; i < LenghtDataArray; i++) {
-
 #if 0
           aof         << 0.0*M_PI/180.0 << " "
                       << 0.0*M_PI/180.0 << " " //chest
@@ -90,13 +88,10 @@ void UpperBodyMotion::GenerateDataFile(string aFileName, int LenghtDataArray) {
 
 void UpperBodyMotion::ReadDataFile(string aFileName,
                                    Eigen::MatrixXd &UpperBodyAngles) {
-
   std::ifstream aif;
 
-  unsigned int NumberRows, NumberColumns;
-
-  NumberRows = UpperBodyAngles.rows();
-  NumberColumns = UpperBodyAngles.cols();
+  auto NumberRows = UpperBodyAngles.rows();
+  auto NumberColumns = UpperBodyAngles.cols();
 
   double r;
 
@@ -116,13 +111,11 @@ void UpperBodyMotion::ReadDataFile(string aFileName,
 void UpperBodyMotion::WriteDataFile(string aFileName,
                                     Eigen::MatrixXd &UpperBodyAngles) {
   ofstream aof;
-  unsigned int NumberRows, NumberColumns;
-  NumberRows = UpperBodyAngles.rows();
-  NumberColumns = UpperBodyAngles.cols();
+  auto NumberRows = UpperBodyAngles.rows();
+  auto NumberColumns = UpperBodyAngles.cols();
 
   aof.open(aFileName.c_str(), ofstream::out);
   if (aof.is_open()) {
-
     for (unsigned int i = 0; i < NumberRows; i++) {
       for (unsigned int j = 0; j < NumberColumns; j++) {
         aof << UpperBodyAngles(i, j) << "\t";

@@ -65,7 +65,6 @@ OnLineState &OnLineState::operator=(unsigned int NewState) {
 ZMPDiscretization::ZMPDiscretization(SimplePluginManager *lSPM, string DataFile,
                                      PinocchioRobot *aPR)
     : ZMPRefTrajectoryGeneration(lSPM) {
-
   m_InitializationProfile = PREV_ZMP_INIT_PROFIL;
 
   m_PR = aPR;
@@ -133,7 +132,6 @@ void ZMPDiscretization::GetZMPDiscretization(
     COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
     FootAbsolutePosition &InitLeftFootAbsolutePosition,
     FootAbsolutePosition &InitRightFootAbsolutePosition) {
-
   InitOnLine(FinalZMPPositions, FinalCOMStates, LeftFootAbsolutePositions,
              RightFootAbsolutePositions, InitLeftFootAbsolutePosition,
              InitRightFootAbsolutePosition, RelativeFootPositions,
@@ -167,7 +165,6 @@ void ZMPDiscretization::ResetADataFile(string &DataFile) {
     std::ifstream a_iof;
     a_iof.open(DataFile.c_str(), std::ifstream::in);
     if (a_iof.is_open()) {
-
       a_iof.close();
     }
   }
@@ -253,7 +250,6 @@ void ZMPDiscretization::FilterZMPRef(deque<ZMPPosition> &ZMPPositionsX,
 }
 
 void ZMPDiscretization::SetZMPShift(vector<double> &ZMPShift) {
-
   for (unsigned int i = 0; i < ZMPShift.size(); i++) {
     m_ZMPShift[i] = ZMPShift[i];
   }
@@ -687,7 +683,6 @@ void ZMPDiscretization::OnLineAddFoot(
 
   // First phase of the cycle aka Double support phase.
   for (unsigned int k = 0; k < SizeOf1stPhase; k++) {
-
     ZMPPositions[CurrentZMPindex].px = px0 + k * delta_x;
     ZMPPositions[CurrentZMPindex].py = py0 + k * delta_y;
     ZMPPositions[CurrentZMPindex].pz = 0;
@@ -835,7 +830,6 @@ void ZMPDiscretization::OnLineAddFoot(
 
   ODEBUG("SizeOfSndPhase: " << SizeOfSndPhase);
   for (unsigned int k = 0; k < SizeOfSndPhase; k++) {
-
     Eigen::Matrix<double, 3, 1> ZMPInFootCoordinates;
 
     ZMPInFootCoordinates[0] = m_ZMPNeutralPosition[0];
@@ -858,7 +852,6 @@ void ZMPDiscretization::OnLineAddFoot(
     if (DoIt) {
       if ((m_RelativeFootPositions[1].stepType == 3) ||
           (m_RelativeFootPositions[1].stepType == 4)) {
-
         if (m_RelativeFootPositions[1].stepType == 3) {
           delta_x =
               (m_CurrentSupportFootPosition(0, 2) + m_ZMPShift[1] - px02) /
@@ -946,7 +939,6 @@ void ZMPDiscretization::OnLineAddFoot(
   ODEBUG_CODE(DumpReferences(FinalZMPPositions, ZMPPositions));
 
   if (EndSequence) {
-
     // End Phase of the walking includes the filtering.
     EndPhaseOfTheWalking(FinalZMPPositions, FinalCOMStates,
                          FinalLeftFootAbsolutePositions,
@@ -956,7 +948,6 @@ void ZMPDiscretization::OnLineAddFoot(
 
 void ZMPDiscretization::DumpReferences(deque<ZMPPosition> &FinalZMPPositions,
                                        deque<ZMPPosition> &ZMPPositions) {
-
   ofstream dbg_aof("DebugZMPRefPos.dat", ofstream::app);
   for (unsigned int i = 0; i < ZMPPositions.size(); i++) {
     dbg_aof << ZMPPositions[i].px << " " << ZMPPositions[i].py << endl;
@@ -984,7 +975,6 @@ void ZMPDiscretization::FilterOutValues(deque<ZMPPosition> &ZMPPositions,
       int r;
       r = i - j + lshift;
       if (r < 0) {
-
         if (InitStep) {
           ltmp[0] += m_ZMPFilterWindow[j] * ZMPPositions[lshift].px;
           ltmp[1] += m_ZMPFilterWindow[j] * ZMPPositions[lshift].py;
@@ -1119,7 +1109,6 @@ void ZMPDiscretization::EndPhaseOfTheWalking(
   m_CurrentTime += m_SamplingPeriod;
 
   for (unsigned int k = 1; k < SizeOfEndPhase; k++) {
-
     // Set ZMP positions.
     ZMPPositions[CurrentZMPindex].px =
         ZMPPositions[CurrentZMPindex - 1].px + delta_x;
@@ -1169,7 +1158,6 @@ void ZMPDiscretization::EndPhaseOfTheWalking(
   ODEBUG5(" GetZMPDiscretization: Step 8 ", "DebugData.txt");
 
   for (unsigned int i = 0; i < AddArraySize; i++) {
-
     // Set ZMP Positions
     ZMPPositions[CurrentZMPindex].px = ZMPPositions[CurrentZMPindex - 1].px;
     ZMPPositions[CurrentZMPindex].py = ZMPPositions[CurrentZMPindex - 1].py;

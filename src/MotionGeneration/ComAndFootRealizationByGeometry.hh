@@ -52,7 +52,6 @@ namespace PatternGeneratorJRL {
 
 */
 class ComAndFootRealizationByGeometry : public ComAndFootRealization {
-
 public:
   /*! \name Constructor and destructor */
 

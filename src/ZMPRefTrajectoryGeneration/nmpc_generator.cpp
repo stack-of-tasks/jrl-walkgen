@@ -448,7 +448,6 @@ void NMPCgenerator::updateConstraint() {
   index += nc_rot_;
   for (unsigned obs = 0; obs < obstacles_.size(); ++obs) {
     for (unsigned n = 0; n < nf_; ++n) {
-
       qp_J_obs_i_ = 2 * U_xy_.transpose() * Hobs_[obs][n] + Aobs_[obs][n];
       for (unsigned j = 0; j < N2nf2; ++j)
         qp_J_((obs + 1) * n, j) = qp_J_obs_i_(j);

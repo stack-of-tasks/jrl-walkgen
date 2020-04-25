@@ -166,7 +166,6 @@ inline std::ostream &operator<<(std::ostream &out, const reference_t &Ref) {
 
 /// \brief Convex hull
 struct convex_hull_t {
-
   /// \brief Edges
   std::vector<double> X_vec, Y_vec, Z_vec;
   /// \brief Inequalities A_vec(i)*x+B_vec(i)y+C_vec(i)z+D_vec(i) > 0
@@ -246,7 +245,6 @@ struct linear_inequality_t {
 
 /// \brief Support state of the robot at a certain point in time
 struct support_state_t {
-
   /// \brief Support phase
   PhaseType Phase;
   /// \brief Support foot
@@ -293,7 +291,6 @@ inline std::ostream &operator<<(std::ostream &out, const support_state_t &st) {
 
 /// \brief Solution
 struct solution_t {
-
   /// \brief Size of the solution array
   unsigned int NbVariables;
 

@@ -85,7 +85,6 @@ void LinearizedInvertedPendulum2D::SetRobotControlPeriod(const double &aT) {
   m_SamplingPeriod = aT;
 
   if (m_SamplingPeriod != 0.0) {
-
     double dinterval = m_T / m_SamplingPeriod;
     m_InterpolationInterval = (int)dinterval;
   }

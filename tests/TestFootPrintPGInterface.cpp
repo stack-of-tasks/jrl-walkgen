@@ -619,7 +619,6 @@ void Turn90DegreesWalking(PatternGeneratorInterface &aPGI) {
 }
 
 void TurningOnTheCircleTowardsTheCenter(PatternGeneratorInterface &aPGI) {
-
   CommonInitialization(aPGI);
 
   {
@@ -756,7 +755,6 @@ void StopOnLineWalking(PatternGeneratorInterface &aPGI) {
 }
 
 void KineoWorks(PatternGeneratorInterface &aPGI) {
-
   CommonInitialization(aPGI);
   {
     istringstream strm2(":walkmode 3");
@@ -768,7 +766,6 @@ void KineoWorks(PatternGeneratorInterface &aPGI) {
     aPGI.ParseCmd(strm2);
   }
   {
-
     istringstream strm2(":stepseq 0.0 -0.105 0.0 0.0 0.2 \
                           0.21 0.0 0.0 0.2 -0.21 0.0 0.0 0.2 \
                           0.21 0.0 0.0 0.2 -0.21 0.0 0.0 0.2 \
@@ -1019,7 +1016,6 @@ int main(int argc, char *argv[]) {
     cout << "Iteration nb: " << lNbIt << endl;
     gettimeofday(&begin, 0);
     switch (TestProfil) {
-
     case PROFIL_PB_FLORENT:
       if (lNbIt == 0)
         PbFlorentSeq1(*aPGI);
@@ -1169,7 +1165,6 @@ int main(int argc, char *argv[]) {
         {
           StopOnLineWalking(*aPGI);
         } else {
-
           double triggertime = 9.64 * 200 + deltatime * 200;
           if ((NbOfIt > triggertime) && TestChangeFoot) {
             struct timeval beginmodif, endmodif;

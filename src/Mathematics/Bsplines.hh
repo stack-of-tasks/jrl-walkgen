@@ -19,7 +19,6 @@ namespace PatternGeneratorJRL {
 
 /** Bspline class */
 class Bsplines {
-
 public:
   /*! Constructor */
   Bsplines(long int degree);

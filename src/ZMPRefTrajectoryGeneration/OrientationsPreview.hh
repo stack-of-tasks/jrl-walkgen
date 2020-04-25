@@ -41,7 +41,6 @@
 namespace PatternGeneratorJRL {
 /// \brief The acceleration phase is fixed
 class OrientationsPreview {
-
   //
   // Public methods:
   //

@@ -102,7 +102,6 @@ PLDPSolverHerdt::PLDPSolverHerdt(unsigned int CardU, double *iPu, double *Px,
 }
 
 void PLDPSolverHerdt::AllocateMemoryForSolver(unsigned int NumberSteps) {
-
   PrecomputeiPuPx(NumberSteps);
 
   m_Vk = new double[2 * (m_CardV + NumberSteps)];
@@ -415,7 +414,6 @@ int PLDPSolverHerdt::BackwardSubstitution() {
 
 int PLDPSolverHerdt::ComputeProjectedDescentDirection(
     unsigned int NumberSteps) {
-
   if (m_DebugMode > 1) {
     ofstream aof;
 
@@ -764,7 +762,6 @@ int PLDPSolverHerdt::SolveProblem(
     alpha = ComputeAlpha(NewActivatedConstraints, NumberSteps);
 
     if (m_DebugMode > 1) {
-
       ODEBUG("Alpha:" << alpha);
 
       ofstream aof;

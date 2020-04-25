@@ -42,7 +42,6 @@ class SimplePluginManager;
   parsing from the PGI.
 */
 class SimplePlugin {
-
 private:
   SimplePluginManager *m_SimplePluginManager;
   friend class SimplePluginManager;

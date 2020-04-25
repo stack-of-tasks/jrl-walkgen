@@ -105,7 +105,6 @@ int ZMPQPWithConstraint::ComputeLinearSystem(vector<CH_Point> aVecOfPoints,
   }
 
   for (unsigned int i = 0; i < n - 1; i++) {
-
     ODEBUG("(x[" << i << "],y[" << i << "]): " << aVecOfPoints[i].col << " "
                  << aVecOfPoints[i].row << " " << aVecOfPoints[i + 1].col << " "
                  << aVecOfPoints[i + 1].row);
@@ -345,7 +344,6 @@ int ZMPQPWithConstraint::BuildLinearConstraintInequalities(
       // In the second case, it is necessary to compute
       // the support foot.
       else {
-
         TheConvexHull.resize(4);
 
         // Who is support foot ?
@@ -482,7 +480,6 @@ int ZMPQPWithConstraint::BuildMatricesPxPu(
   // Compute first the number of constraint.
   unsigned int IndexConstraint = 0;
   for (unsigned int i = 0; i < N; i++) {
-
     double ltime = StartingTime + i * T;
     if (ltime > (*LCI_it)->EndingTime)
       LCI_it++;
@@ -499,7 +496,6 @@ int ZMPQPWithConstraint::BuildMatricesPxPu(
   ODEBUG("Starting Matrix to build the constraints. ");
   ODEBUG((*LCI_it)->A);
   for (unsigned int i = 0; i < N; i++) {
-
     double ltime = StartingTime + i * T;
     if (ltime > (*LCI_it)->EndingTime) {
       LCI_it++;
@@ -652,7 +648,6 @@ int ZMPQPWithConstraint::BuildZMPTrajectoryFromFootTrajectory(
       PPu(i, j) = 0;
 
       if (j <= i) {
-
         VPu(i, j) = (2 * (i - j) + 1) * T * T * 0.5;
         VPu(i + N, j + N) = (2 * (i - j) + 1) * T * T * 0.5;
         VPu(i, j + N) = 0.0;
@@ -665,7 +660,6 @@ int ZMPQPWithConstraint::BuildZMPTrajectoryFromFootTrajectory(
         PPu(i + N, j) = 0.0;
 
       } else {
-
         VPu(i, j) = 0.0;
         VPu(i + N, j + N) = 0.0;
         VPu(i, j + N) = 0.0;
@@ -1064,7 +1058,6 @@ int ZMPQPWithConstraint::BuildZMPTrajectoryFromFootTrajectory(
 
     // Fill the queues with the interpolated CoM values.
     for (int lk = 0; lk < interval; lk++) {
-
       COMState &aCOMPos = COMStates[li * interval + lk];
       ;
       double lkSP;

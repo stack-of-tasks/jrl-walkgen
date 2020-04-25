@@ -33,7 +33,6 @@
 
 namespace PatternGeneratorJRL {
 class RigidBodySystem {
-
   //
   // Public methods
   //

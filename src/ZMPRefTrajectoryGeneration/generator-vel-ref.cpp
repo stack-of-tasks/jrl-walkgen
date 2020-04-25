@@ -48,7 +48,6 @@ GeneratorVelRef::~GeneratorVelRef() {}
 //}
 
 void GeneratorVelRef::Ponderation(double weight, objective_e type) {
-
   IntermedQPMat::objective_variant_t &Objective =
       IntermedData_->Objective(type);
   Objective.weight = weight;
@@ -59,7 +58,6 @@ void GeneratorVelRef::preview_support_states(
     const deque<FootAbsolutePosition> &FinalLeftFootTraj_deq,
     const deque<FootAbsolutePosition> &FinalRightFootTraj_deq,
     deque<support_state_t> &SupportStates_deq) {
-
   const FootAbsolutePosition *FAP = NULL;
 
   // DETERMINE CURRENT SUPPORT STATE:
@@ -114,7 +112,6 @@ void GeneratorVelRef::preview_support_states(
 
 void GeneratorVelRef::generate_selection_matrices(
     const std::deque<support_state_t> &SupportStates_deq) {
-
   IntermedQPMat::state_variant_t &State = IntermedData_->State();
   const unsigned &NbPrwSteps = SupportStates_deq.back().StepNumber;
 
@@ -173,7 +170,6 @@ void GeneratorVelRef::generate_selection_matrices(
 }
 
 void GeneratorVelRef::compute_global_reference(const solution_t &Solution) {
-
   reference_t &Ref = IntermedData_->Reference();
 
   Ref.Global.X_vec.resize(N_);
@@ -191,14 +187,12 @@ void GeneratorVelRef::compute_global_reference(const solution_t &Solution) {
 }
 
 void GeneratorVelRef::initialize_matrices() {
-
   linear_inequality_t &IneqCoP = IntermedData_->Inequalities(INEQ_COP);
   initialize_matrices(IneqCoP);
   linear_inequality_t &IneqCoM = IntermedData_->Inequalities(INEQ_COM);
   initialize_matrices(IneqCoM);
 
   IntermedQPMat::state_variant_t &State = IntermedData_->State();
-  bool Preserve = true;
   State.VcshiftX.resize(N_);
   State.VcshiftX.setZero();
   State.VcshiftY.resize(N_);
@@ -210,7 +204,6 @@ void GeneratorVelRef::initialize_matrices() {
 }
 
 void GeneratorVelRef::initialize_matrices(linear_inequality_t &Inequalities) {
-
   switch (Inequalities.type) {
   case INEQ_COP:
     Inequalities.D.X_mat.resize(4 * N_, N_);
@@ -236,7 +229,6 @@ void GeneratorVelRef::initialize_matrices(linear_inequality_t &Inequalities) {
 void GeneratorVelRef::build_inequalities_cop(
     linear_inequality_t &Inequalities,
     const std::deque<support_state_t> &SupportStates_deq) const {
-
   deque<support_state_t>::const_iterator prwSS_it = SupportStates_deq.begin();
 
   const unsigned nbEdges = 4;
@@ -279,7 +271,6 @@ void GeneratorVelRef::build_inequalities_cop(
 void GeneratorVelRef::build_inequalities_feet(
     linear_inequality_t &Inequalities,
     const std::deque<support_state_t> &SupportStates_deq) const {
-
   // Arrays for the generated set of inequalities
   const unsigned nbEdges = 5;
   const unsigned nbIneq = 5;
@@ -332,7 +323,6 @@ void GeneratorVelRef::build_inequalities_feet(
 void GeneratorVelRef::build_inequalities_com(
     linear_inequality_t &Inequalities,
     const std::deque<support_state_t> &SupportStates_deq) const {
-
   deque<support_state_t>::const_iterator prwSS_it = SupportStates_deq.begin();
 
   const unsigned nbEdges = 0;
@@ -364,7 +354,6 @@ void GeneratorVelRef::build_inequalities_com(
 void GeneratorVelRef::build_constraints_cop(const linear_inequality_t &IneqCoP,
                                             unsigned int NbStepsPreviewed,
                                             QPProblem &Pb) {
-
   unsigned int NbConstraints = Pb.NbConstraints();
 
   // -D*U
@@ -456,7 +445,6 @@ void GeneratorVelRef::build_constraints_feet(
 void GeneratorVelRef::build_constraints_com(
     const linear_inequality_t &IneqCoM, const support_state_t &CurrentSupport,
     QPProblem &Pb) {
-
   const linear_dynamics_t &CoMDyn = Robot_->CoM().Dynamics(POSITION);
   const IntermedQPMat::state_variant_t &State = IntermedData_->State();
   const com_t &CoM = IntermedData_->State().CoM;
@@ -499,7 +487,6 @@ void GeneratorVelRef::build_constraints_com(
 void GeneratorVelRef::build_eq_constraints_feet(
     const std::deque<support_state_t> &SupportStates_deq,
     unsigned int NbStepsPreviewed, QPProblem &Pb) {
-
   if (SupportStates_deq.front().StateChanged)
     Robot_->SupportTrajectory().pop_front();
   std::deque<support_state_t>::const_iterator SPTraj_it =
@@ -606,7 +593,6 @@ void GeneratorVelRef::build_constraints(QPProblem &Pb, solution_t &Solution) {
 }
 
 void GeneratorVelRef::build_invariant_part(QPProblem &Pb) {
-
   const RigidBody &CoM = Robot_->CoM();
 
   // Constant terms in the Hessian
@@ -637,7 +623,6 @@ void GeneratorVelRef::build_invariant_part(QPProblem &Pb) {
 
 void GeneratorVelRef::update_problem(
     QPProblem &Pb, const std::deque<support_state_t> &SupportStates_deq) {
-
   Pb.clear(VECTOR_D);
 
   unsigned nbStepsPreviewed = SupportStates_deq.back().StepNumber;
@@ -696,7 +681,6 @@ void GeneratorVelRef::update_problem(
 }
 
 void GeneratorVelRef::compute_warm_start(solution_t &Solution) {
-
   // Initialize:
   // -----------
   unsigned int nbSteps = Solution.SupportStates_deq.back().StepNumber;

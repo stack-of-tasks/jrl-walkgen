@@ -58,7 +58,6 @@ namespace PatternGeneratorJRL {
 
 */
 class LeftAndRightFootTrajectoryGenerationMultiple : public SimplePlugin {
-
 public:
   /*! \brief The constructor initialize the plugin part,
     and the data related to the humanoid. */

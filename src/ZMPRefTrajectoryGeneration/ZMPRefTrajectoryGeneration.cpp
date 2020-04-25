@@ -36,7 +36,6 @@ ZMPRefTrajectoryGeneration::ZMPRefTrajectoryGeneration(
       m_ModulationSupportCoefficient(0.), m_Omega(0.), m_PreviewControlTime(0.),
       m_StepHeight(0.), m_CurrentTime(0.), m_OnLineMode(false),
       m_ComHeight(0.) {
-
   ODEBUG("Identification: " << this);
   std::string aMethodName[6] = {":omega",
                                 ":stepheight",
