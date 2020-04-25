@@ -78,7 +78,7 @@ namespace PatternGeneratorJRL {
 
 */
 class FootTrajectoryGenerationAbstract : public SimplePlugin {
-public:
+ public:
   /*! Constructor: In order to compute some appropriate strategies,
     this class needs to extract specific details from the humanoid model. */
   FootTrajectoryGenerationAbstract(SimplePluginManager *lSPM, PRFoot *inFoot);
@@ -107,17 +107,15 @@ public:
     @param StepType: Type of steps (for book-keeping).
     @param LeftOrRight: Specify if it is left (1) or right (-1).
   */
-  virtual void UpdateFootPosition(
-      std::deque<FootAbsolutePosition> &SupportFootAbsolutePositions,
-      std::deque<FootAbsolutePosition> &NoneSupportFootAbsolutePositions,
-      int CurrentAbsoluteIndex, int IndexInitial,
-      double ModulatedSingleSupportTime, int StepType, int LeftOrRight);
+  virtual void UpdateFootPosition(std::deque<FootAbsolutePosition> &SupportFootAbsolutePositions,
+                                  std::deque<FootAbsolutePosition> &NoneSupportFootAbsolutePositions,
+                                  int CurrentAbsoluteIndex, int IndexInitial, double ModulatedSingleSupportTime,
+                                  int StepType, int LeftOrRight);
 
-  virtual void UpdateFootPosition(
-      std::deque<FootAbsolutePosition> &SupportFootAbsolutePositions,
-      std::deque<FootAbsolutePosition> &NoneSupportFootAbsolutePositions,
-      int StartIndex, int k, double LocalInterpolationStartTime,
-      double ModulatedSingleSupportTime, int StepType, int LeftOrRight);
+  virtual void UpdateFootPosition(std::deque<FootAbsolutePosition> &SupportFootAbsolutePositions,
+                                  std::deque<FootAbsolutePosition> &NoneSupportFootAbsolutePositions, int StartIndex,
+                                  int k, double LocalInterpolationStartTime, double ModulatedSingleSupportTime,
+                                  int StepType, int LeftOrRight);
 
   /*! Initialize internal data structures. */
   virtual void InitializeInternalDataStructures() = 0;
@@ -157,9 +155,7 @@ public:
   */
 
   /*! \brief Set single support time */
-  void SetSamplingPeriod(double aSamplingPeriod) {
-    m_SamplingPeriod = aSamplingPeriod;
-  };
+  void SetSamplingPeriod(double aSamplingPeriod) { m_SamplingPeriod = aSamplingPeriod; };
 
   /*! \brief Get single support time */
   double GetSamplingPeriod() const { return m_SamplingPeriod; };
@@ -202,7 +198,7 @@ public:
   */
   virtual void CallMethod(std::string &Method, std::istringstream &strm);
 
-protected:
+ protected:
   /*! Sampling period of the control. */
   double m_SamplingPeriod;
 
@@ -229,5 +225,5 @@ protected:
   double m_StepCurving;
 };
 
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* _FOOT_TRAJECTORY_GENERATION_ABSTRACT_H_ */

@@ -46,15 +46,14 @@ namespace PatternGeneratorJRL {
 /// \brief Generate a stack of inequalities relative to feet centers for
 /// the whole preview window.
 class RelativeFeetInequalities : public SimplePlugin {
-
   //
   // Public types
   //
-public:
+ public:
   //
   // Public member functions
   //
-public:
+ public:
   /// \name Constructors and destructors.
   /// \{
   RelativeFeetInequalities(SimplePluginManager *aSPM, PinocchioRobot *aPR);
@@ -66,16 +65,14 @@ public:
   /// \param[out] ConvexHull Vertices of the convex hull
   /// \param[in] SupportState Corresponding support state
   /// \param[in] Type CoP/Feet
-  void set_vertices(convex_hull_t &ConvexHull,
-                    const support_state_t &SupportState, ineq_e type);
+  void set_vertices(convex_hull_t &ConvexHull, const support_state_t &SupportState, ineq_e type);
 
   /// \brief Adapt inequalities to the support foot and its orientation
   ///
   /// \param[out] ConvexHull
   /// \param[in] SupportState
   /// \param[in] Type CoP/Feet/CoM
-  void set_inequalities(convex_hull_t &ConvexHull,
-                        const support_state_t &Support, ineq_e type);
+  void set_inequalities(convex_hull_t &ConvexHull, const support_state_t &Support, ineq_e type);
 
   /// \brief Compute the linear inequalities \f${\bf A}{\bf x} \geq
   /// {\bf b}\f$ associated with the
@@ -83,8 +80,7 @@ public:
   ///
   /// \param[out] aVecOfPoints a vector of vertices
   /// \param[in] PrwSupport previewed support state
-  void compute_linear_system(convex_hull_t &ConvexHull,
-                             const support_state_t &PrwSupport) const;
+  void compute_linear_system(convex_hull_t &ConvexHull, const support_state_t &PrwSupport) const;
 
   /// \brief Reimplement the interface of SimplePluginManager
   ///
@@ -103,7 +99,7 @@ public:
   //
   // Private member functions
   //
-private:
+ private:
   /// \brief Initialize the convex hulls for the constraints
   ///
   /// \return 0
@@ -123,7 +119,7 @@ private:
   //
   // Private members
   //
-private:
+ private:
   struct edges_s {
     convex_hull_t LeftSS, RightSS, RightDS, LeftDS;
   };
@@ -145,5 +141,5 @@ private:
   /// \brief Distance between the feet in the double support phase
   double DSFeetDistance_;
 };
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* _RELATIVE_FEET_INEQUALITIES_ */

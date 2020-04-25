@@ -75,10 +75,8 @@ extern void dgetrf_(integer *m,    /* M */
 
 namespace PatternGeneratorJRL {
 
-AnalyticalMorisawaCompact::AnalyticalMorisawaCompact(SimplePluginManager *lSPM,
-                                                     PinocchioRobot *aPR)
+AnalyticalMorisawaCompact::AnalyticalMorisawaCompact(SimplePluginManager *lSPM, PinocchioRobot *aPR)
     : AnalyticalMorisawaAbstract(lSPM) {
-
   RegisterMethods();
   m_OnLineMode = false;
   m_EndPhase = false;
@@ -93,8 +91,7 @@ AnalyticalMorisawaCompact::AnalyticalMorisawaCompact(SimplePluginManager *lSPM,
   m_NeedToReset = true;
   m_AbsoluteTimeReference = 0.0;
 
-  m_PreviewControl = new PreviewControl(
-      lSPM, OptimalControllerSolver::MODE_WITH_INITIALPOS, true);
+  m_PreviewControl = new PreviewControl(lSPM, OptimalControllerSolver::MODE_WITH_INITIALPOS, true);
 
   /*! Dynamic allocation of the analytical trajectories for the ZMP
     and the COG */
@@ -103,11 +100,11 @@ AnalyticalMorisawaCompact::AnalyticalMorisawaCompact(SimplePluginManager *lSPM,
   // m_AnalyticalZMPCoGTrajectoryZ = new AnalyticalZMPCOGTrajectory(7);
 
   /*! Dynamic allocation of the filters. */
-  m_FilterXaxisByPC = new FilteringAnalyticalTrajectoryByPreviewControl(
-      lSPM, m_AnalyticalZMPCoGTrajectoryX, m_PreviewControl);
+  m_FilterXaxisByPC =
+      new FilteringAnalyticalTrajectoryByPreviewControl(lSPM, m_AnalyticalZMPCoGTrajectoryX, m_PreviewControl);
 
-  m_FilterYaxisByPC = new FilteringAnalyticalTrajectoryByPreviewControl(
-      lSPM, m_AnalyticalZMPCoGTrajectoryY, m_PreviewControl);
+  m_FilterYaxisByPC =
+      new FilteringAnalyticalTrajectoryByPreviewControl(lSPM, m_AnalyticalZMPCoGTrajectoryY, m_PreviewControl);
 
   m_kajitaDynamicFilter = new DynamicFilter(lSPM, m_PR);
 
@@ -143,29 +140,23 @@ AnalyticalMorisawaCompact::~AnalyticalMorisawaCompact() {
   Filename = "Clock3.dat";
   m_Clock3.RecordDataBuffer(Filename);
 
-  if (m_AnalyticalZMPCoGTrajectoryX != 0)
-    delete m_AnalyticalZMPCoGTrajectoryX;
+  if (m_AnalyticalZMPCoGTrajectoryX != 0) delete m_AnalyticalZMPCoGTrajectoryX;
   ODEBUG4("Destructor: did AnalyticalZMPCoGTrajectoryX", "DebugPGI.txt");
 
-  if (m_AnalyticalZMPCoGTrajectoryY != 0)
-    delete m_AnalyticalZMPCoGTrajectoryY;
+  if (m_AnalyticalZMPCoGTrajectoryY != 0) delete m_AnalyticalZMPCoGTrajectoryY;
   ODEBUG4("Destructor: did AnalyticalZMPCoGTrajectoryY", "DebugPGI.txt");
 
-  if (m_FilterXaxisByPC != 0)
-    delete m_FilterXaxisByPC;
+  if (m_FilterXaxisByPC != 0) delete m_FilterXaxisByPC;
 
   ODEBUG4("Destructor: did FilterXaxisByPC", "DebugPGI.txt");
 
-  if (m_FilterYaxisByPC != 0)
-    delete m_FilterYaxisByPC;
+  if (m_FilterYaxisByPC != 0) delete m_FilterYaxisByPC;
 
   ODEBUG4("Destructor: did FilterYaxisByPC", "DebugPGI.txt");
 
-  if (m_PreviewControl != 0)
-    delete m_PreviewControl;
+  if (m_PreviewControl != 0) delete m_PreviewControl;
 
-  if (m_BackUpm_FeetTrajectoryGenerator != 0)
-    delete m_BackUpm_FeetTrajectoryGenerator;
+  if (m_BackUpm_FeetTrajectoryGenerator != 0) delete m_BackUpm_FeetTrajectoryGenerator;
   ODEBUG4("Destructor: did PreviewControl", "DebugPGI.txt");
 }
 
@@ -206,8 +197,7 @@ bool AnalyticalMorisawaCompact::InitializeBasicVariables() {
   m_PolynomialDegrees.resize(m_NumberOfIntervals);
   m_PolynomialDegrees[0] = 4;
   m_PolynomialDegrees[m_NumberOfIntervals - 1] = 4;
-  for (int i = 1; i < m_NumberOfIntervals - 1; i++)
-    m_PolynomialDegrees[i] = 3;
+  for (int i = 1; i < m_NumberOfIntervals - 1; i++) m_PolynomialDegrees[i] = 3;
 
   /*! Dynamic allocation for the foot trajectory. */
   if (m_FeetTrajectoryGenerator != 0) {
@@ -300,9 +290,8 @@ void AnalyticalMorisawaCompact::ComputePolynomialWeights2() {
           &NRHS,    /*Nb of columns for X et B */
           &tZ(0),   /* Access to A */
           &LDA,     /* Leading size of A */
-          &m_AF(0), &LDAF, &m_IPIV(0), &EQUED, &lR(0), &lC(0), &m_w(0), &LDB,
-          &m_y(0), &lsizeofx, &lRCOND, &lFERR(0), &lBERR(0), work, iwork,
-          &info);
+          &m_AF(0), &LDAF, &m_IPIV(0), &EQUED, &lR(0), &lC(0), &m_w(0), &LDB, &m_y(0), &lsizeofx, &lRCOND, &lFERR(0),
+          &lBERR(0), work, iwork, &info);
 
   // Compute the weights.
   // m_y=iZ+m_w;
@@ -323,14 +312,12 @@ void AnalyticalMorisawaCompact::ComputePolynomialWeights2() {
   delete[] iwork;
 }
 
-int AnalyticalMorisawaCompact::BuildAndSolveCOMZMPForASetOfSteps(
-    Eigen::Matrix3d &lStartingCOMState,
-    FootAbsolutePosition &LeftFootInitialPosition,
-    FootAbsolutePosition &RightFootInitialPosition,
-    bool IgnoreFirstRelativeFoot, bool DoNotPrepareLastFoot) {
-
-  if (m_RelativeFootPositions.size() == 0)
-    return -2;
+int AnalyticalMorisawaCompact::BuildAndSolveCOMZMPForASetOfSteps(Eigen::Matrix3d &lStartingCOMState,
+                                                                 FootAbsolutePosition &LeftFootInitialPosition,
+                                                                 FootAbsolutePosition &RightFootInitialPosition,
+                                                                 bool IgnoreFirstRelativeFoot,
+                                                                 bool DoNotPrepareLastFoot) {
+  if (m_RelativeFootPositions.size() == 0) return -2;
 
   int NbSteps = (int)m_RelativeFootPositions.size();
   int NbOfIntervals = 2 * NbSteps + 1;
@@ -363,10 +350,8 @@ int AnalyticalMorisawaCompact::BuildAndSolveCOMZMPForASetOfSteps(
   m_AnalyticalZMPCoGTrajectoryX->SetPolynomialDegrees(m_PolynomialDegrees);
   m_AnalyticalZMPCoGTrajectoryY->SetPolynomialDegrees(m_PolynomialDegrees);
 
-  m_AnalyticalZMPCoGTrajectoryX->SetStartingTimeIntervalsAndHeightVariation(
-      m_DeltaTj, m_Omegaj);
-  m_AnalyticalZMPCoGTrajectoryY->SetStartingTimeIntervalsAndHeightVariation(
-      m_DeltaTj, m_Omegaj);
+  m_AnalyticalZMPCoGTrajectoryX->SetStartingTimeIntervalsAndHeightVariation(m_DeltaTj, m_Omegaj);
+  m_AnalyticalZMPCoGTrajectoryY->SetStartingTimeIntervalsAndHeightVariation(m_DeltaTj, m_Omegaj);
 
   /* Build the profil for the X and Y axis. */
   double InitialCoMX = 0.0;
@@ -398,10 +383,9 @@ int AnalyticalMorisawaCompact::BuildAndSolveCOMZMPForASetOfSteps(
   /*! Extract the set of absolute coordinates for the foot position. */
   if (m_FeetTrajectoryGenerator != 0) {
     m_FeetTrajectoryGenerator->SetDeltaTj(m_DeltaTj);
-    m_FeetTrajectoryGenerator->InitializeFromRelativeSteps(
-        m_RelativeFootPositions, LeftFootInitialPosition,
-        RightFootInitialPosition, m_AbsoluteSupportFootPositions,
-        IgnoreFirstRelativeFoot, false);
+    m_FeetTrajectoryGenerator->InitializeFromRelativeSteps(m_RelativeFootPositions, LeftFootInitialPosition,
+                                                           RightFootInitialPosition, m_AbsoluteSupportFootPositions,
+                                                           IgnoreFirstRelativeFoot, false);
     unsigned int i = 0, j = 1;
 
     for (i = 0, j = 1; i < m_AbsoluteSupportFootPositions.size(); i++, j += 2) {
@@ -414,29 +398,24 @@ int AnalyticalMorisawaCompact::BuildAndSolveCOMZMPForASetOfSteps(
 
     // Strategy for the final CoM pos: middle of the segment
     // between the two final steps, in order to be statically stable.
-    unsigned int lindex =
-        (unsigned int)(m_AbsoluteSupportFootPositions.size() - 1);
+    unsigned int lindex = (unsigned int)(m_AbsoluteSupportFootPositions.size() - 1);
 
     if (DoNotPrepareLastFoot)
       FinalCoMPosX = m_AbsoluteSupportFootPositions[lindex].x;
     else
-      FinalCoMPosX = 0.5 * (m_AbsoluteSupportFootPositions[lindex - 1].x +
-                            m_AbsoluteSupportFootPositions[lindex].x);
+      FinalCoMPosX = 0.5 * (m_AbsoluteSupportFootPositions[lindex - 1].x + m_AbsoluteSupportFootPositions[lindex].x);
     if (DoNotPrepareLastFoot)
-      (*lZMPX)[j - 2] = (*lZMPX)[j - 1] =
-          m_AbsoluteSupportFootPositions[lindex].x;
+      (*lZMPX)[j - 2] = (*lZMPX)[j - 1] = m_AbsoluteSupportFootPositions[lindex].x;
     else
       (*lZMPX)[j - 2] = (*lZMPX)[j - 1] = FinalCoMPosX;
 
     if (DoNotPrepareLastFoot)
       FinalCoMPosY = m_AbsoluteSupportFootPositions[lindex].y;
     else
-      FinalCoMPosY = 0.5 * (m_AbsoluteSupportFootPositions[lindex - 1].y +
-                            m_AbsoluteSupportFootPositions[lindex].y);
+      FinalCoMPosY = 0.5 * (m_AbsoluteSupportFootPositions[lindex - 1].y + m_AbsoluteSupportFootPositions[lindex].y);
 
     if (DoNotPrepareLastFoot)
-      (*lZMPY)[j - 2] = (*lZMPY)[j - 1] =
-          m_AbsoluteSupportFootPositions[lindex].y;
+      (*lZMPY)[j - 2] = (*lZMPY)[j - 1] = m_AbsoluteSupportFootPositions[lindex].y;
     else
       (*lZMPY)[j - 2] = (*lZMPY)[j - 1] = FinalCoMPosY;
   } else {
@@ -446,10 +425,8 @@ int AnalyticalMorisawaCompact::BuildAndSolveCOMZMPForASetOfSteps(
 
   /*! Build 3rd order polynomials. */
   for (int i = 1; i < NbOfIntervals - 1; i++) {
-    m_AnalyticalZMPCoGTrajectoryX->Building3rdOrderPolynomial(
-        i, (*lZMPX)[i - 1], (*lZMPX)[i]);
-    m_AnalyticalZMPCoGTrajectoryY->Building3rdOrderPolynomial(
-        i, (*lZMPY)[i - 1], (*lZMPY)[i]);
+    m_AnalyticalZMPCoGTrajectoryX->Building3rdOrderPolynomial(i, (*lZMPX)[i - 1], (*lZMPX)[i]);
+    m_AnalyticalZMPCoGTrajectoryY->Building3rdOrderPolynomial(i, (*lZMPY)[i - 1], (*lZMPY)[i]);
   }
 
   // Block for X trajectory
@@ -473,32 +450,28 @@ int AnalyticalMorisawaCompact::BuildAndSolveCOMZMPForASetOfSteps(
   return 0;
 }
 
-void AnalyticalMorisawaCompact::GetZMPDiscretization(
-    deque<ZMPPosition> &ZMPPositions, deque<COMState> &COMStates,
-    deque<RelativeFootPosition> &RelativeFootPositions,
-    deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-    deque<FootAbsolutePosition> &RightFootAbsolutePositions, double,
-    COMState &lStartingCOMState, Eigen::Vector3d &,
-    FootAbsolutePosition &InitLeftFootAbsolutePosition,
-    FootAbsolutePosition &InitRightFootAbsolutePosition) {
+void AnalyticalMorisawaCompact::GetZMPDiscretization(deque<ZMPPosition> &ZMPPositions, deque<COMState> &COMStates,
+                                                     deque<RelativeFootPosition> &RelativeFootPositions,
+                                                     deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+                                                     deque<FootAbsolutePosition> &RightFootAbsolutePositions, double,
+                                                     COMState &lStartingCOMState, Eigen::Vector3d &,
+                                                     FootAbsolutePosition &InitLeftFootAbsolutePosition,
+                                                     FootAbsolutePosition &InitRightFootAbsolutePosition) {
   // INITIALIZE FEET POSITIONS:
   // --------------------------
   Eigen::Vector3d lAnklePositionRight, lAnklePositionLeft;
   PRFoot *LeftFoot, *RightFoot;
   LeftFoot = m_PR->leftFoot();
-  if (LeftFoot == 0)
-    LTHROW("No left foot");
+  if (LeftFoot == 0) LTHROW("No left foot");
 
   RightFoot = m_PR->rightFoot();
-  if (RightFoot == 0)
-    LTHROW("No right foot");
+  if (RightFoot == 0) LTHROW("No right foot");
 
   lAnklePositionLeft = LeftFoot->anklePosition;
   lAnklePositionRight = RightFoot->anklePosition;
 
   Eigen::Matrix4d CurPosWICF_homogeneous;
-  CurPosWICF_homogeneous = m_kajitaDynamicFilter->getComAndFootRealization()
-                               ->GetCurrentPositionofWaistInCOMFrame();
+  CurPosWICF_homogeneous = m_kajitaDynamicFilter->getComAndFootRealization()->GetCurrentPositionofWaistInCOMFrame();
 
   m_RelativeFootPositions = RelativeFootPositions;
   /* This part computes the CoM and ZMP trajectory giving
@@ -514,21 +487,19 @@ void AnalyticalMorisawaCompact::GetZMPDiscretization(
   m_InitialPoseCoMHeight = lMStartingCOMState(2, 0);
 
   for (unsigned int i = 0; i < 3; i++) {
-    for (unsigned int j = 1; j < 3; j++)
-      lMStartingCOMState(i, j) = 0.0;
+    for (unsigned int j = 1; j < 3; j++) lMStartingCOMState(i, j) = 0.0;
   }
 
   int r = 0;
-  if ((r = BuildAndSolveCOMZMPForASetOfSteps(
-           lMStartingCOMState, InitLeftFootAbsolutePosition,
-           InitRightFootAbsolutePosition, true, false)) < 0) {
+  if ((r = BuildAndSolveCOMZMPForASetOfSteps(lMStartingCOMState, InitLeftFootAbsolutePosition,
+                                             InitRightFootAbsolutePosition, true, false)) < 0) {
     switch (r) {
-    case (-1):
-      LTHROW("Error: Humanoid Specificities not initialized. ");
-      break;
-    case (-2):
-      LTHROW("Error: Relative Foot Size");
-      break;
+      case (-1):
+        LTHROW("Error: Humanoid Specificities not initialized. ");
+        break;
+      case (-2):
+        LTHROW("Error: Relative Foot Size");
+        break;
     }
     return;
   }
@@ -536,26 +507,22 @@ void AnalyticalMorisawaCompact::GetZMPDiscretization(
   /*! Set the current time reference for the analytical trajectory. */
   double TimeShift = m_Tsingle * 2;
   m_AbsoluteTimeReference = m_CurrentTime - TimeShift;
-  m_AnalyticalZMPCoGTrajectoryX->SetAbsoluteTimeReference(
-      m_AbsoluteTimeReference);
-  m_AnalyticalZMPCoGTrajectoryY->SetAbsoluteTimeReference(
-      m_AbsoluteTimeReference);
+  m_AnalyticalZMPCoGTrajectoryX->SetAbsoluteTimeReference(m_AbsoluteTimeReference);
+  m_AnalyticalZMPCoGTrajectoryY->SetAbsoluteTimeReference(m_AbsoluteTimeReference);
   m_FeetTrajectoryGenerator->SetAbsoluteTimeReference(m_AbsoluteTimeReference);
 
   /*! Compute the total size of the array related to the steps. */
-  FillQueues(m_CurrentTime, m_CurrentTime + m_PreviewControlTime - TimeShift,
-             ZMPPositions, COMStates, LeftFootAbsolutePositions,
-             RightFootAbsolutePositions);
+  FillQueues(m_CurrentTime, m_CurrentTime + m_PreviewControlTime - TimeShift, ZMPPositions, COMStates,
+             LeftFootAbsolutePositions, RightFootAbsolutePositions);
 
   bool filterOn_ = true;
   if (filterOn_) {
     /*! initialize the dynamic filter */
     unsigned int n = (unsigned int)COMStates.size();
     double KajitaPCpreviewWindow = 1.6;
-    m_kajitaDynamicFilter->init(
-        m_SamplingPeriod, m_SamplingPeriod, n * m_SamplingPeriod,
-        m_PreviewControlTime - TimeShift + KajitaPCpreviewWindow,
-        KajitaPCpreviewWindow, lStartingCOMState);
+    m_kajitaDynamicFilter->init(m_SamplingPeriod, m_SamplingPeriod, n * m_SamplingPeriod,
+                                m_PreviewControlTime - TimeShift + KajitaPCpreviewWindow, KajitaPCpreviewWindow,
+                                lStartingCOMState);
     /*! Set the upper body trajectory */
     Eigen::VectorXd UpperConfig = m_PR->currentRPYConfiguration();
     Eigen::VectorXd UpperVel = m_PR->currentRPYVelocity();
@@ -613,8 +580,7 @@ void AnalyticalMorisawaCompact::GetZMPDiscretization(
     COMState lastCoM = COMStates.back();
     FootAbsolutePosition lastLF = LeftFootAbsolutePositions.back();
     FootAbsolutePosition lastRF = RightFootAbsolutePositions.back();
-    for (unsigned int i = 0; i < KajitaPCpreviewWindow / m_SamplingPeriod;
-         ++i) {
+    for (unsigned int i = 0; i < KajitaPCpreviewWindow / m_SamplingPeriod; ++i) {
       ZMPPositions.push_back(lastZMP);
       COMStates.push_back(lastCoM);
       LeftFootAbsolutePositions.push_back(lastLF);
@@ -629,17 +595,15 @@ void AnalyticalMorisawaCompact::GetZMPDiscretization(
 
     // Filter the trajectory
     deque<COMState> outputDeltaCOMTraj_deq(n);
-    m_kajitaDynamicFilter->OffLinefilter(
-        COMStates, ZMPPositions, LeftFootAbsolutePositions,
-        RightFootAbsolutePositions, vector<Eigen::VectorXd>(1, UpperConfig),
-        vector<Eigen::VectorXd>(1, UpperVel),
-        vector<Eigen::VectorXd>(1, UpperAcc), outputDeltaCOMTraj_deq);
+    m_kajitaDynamicFilter->OffLinefilter(COMStates, ZMPPositions, LeftFootAbsolutePositions,
+                                         RightFootAbsolutePositions, vector<Eigen::VectorXd>(1, UpperConfig),
+                                         vector<Eigen::VectorXd>(1, UpperVel), vector<Eigen::VectorXd>(1, UpperAcc),
+                                         outputDeltaCOMTraj_deq);
 
 #ifdef DEBUG
-    m_kajitaDynamicFilter->Debug(
-        COMStates, LeftFootAbsolutePositions, RightFootAbsolutePositions,
-        COMStates, ZMPPositions, LeftFootAbsolutePositions,
-        RightFootAbsolutePositions, outputDeltaCOMTraj_deq);
+    m_kajitaDynamicFilter->Debug(COMStates, LeftFootAbsolutePositions, RightFootAbsolutePositions, COMStates,
+                                 ZMPPositions, LeftFootAbsolutePositions, RightFootAbsolutePositions,
+                                 outputDeltaCOMTraj_deq);
 #endif
     vector<vector<double>> filteredZMPMB(n, vector<double>(2, 0.0));
     for (unsigned int i = 0; i < n; ++i) {
@@ -649,8 +613,7 @@ void AnalyticalMorisawaCompact::GetZMPDiscretization(
       }
     }
 
-    for (unsigned int i = 0; i < KajitaPCpreviewWindow / m_SamplingPeriod;
-         ++i) {
+    for (unsigned int i = 0; i < KajitaPCpreviewWindow / m_SamplingPeriod; ++i) {
       ZMPPositions.pop_back();
       COMStates.pop_back();
       LeftFootAbsolutePositions.pop_back();
@@ -665,14 +628,14 @@ void AnalyticalMorisawaCompact::GetZMPDiscretization(
   }
 }
 
-std::size_t AnalyticalMorisawaCompact::InitOnLine(
-    deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &FinalCoMPositions,
-    deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-    deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
-    FootAbsolutePosition &InitLeftFootAbsolutePosition,
-    FootAbsolutePosition &InitRightFootAbsolutePosition,
-    deque<RelativeFootPosition> &RelativeFootPositions,
-    COMState &lStartingCOMState, Eigen::Vector3d &) {
+std::size_t AnalyticalMorisawaCompact::InitOnLine(deque<ZMPPosition> &FinalZMPPositions,
+                                                  deque<COMState> &FinalCoMPositions,
+                                                  deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+                                                  deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
+                                                  FootAbsolutePosition &InitLeftFootAbsolutePosition,
+                                                  FootAbsolutePosition &InitRightFootAbsolutePosition,
+                                                  deque<RelativeFootPosition> &RelativeFootPositions,
+                                                  COMState &lStartingCOMState, Eigen::Vector3d &) {
   m_OnLineMode = true;
   m_RelativeFootPositions.clear();
 
@@ -684,19 +647,16 @@ std::size_t AnalyticalMorisawaCompact::InitOnLine(
   Eigen::Vector3d lAnklePositionRight, lAnklePositionLeft;
   PRFoot *LeftFoot, *RightFoot;
   LeftFoot = m_PR->leftFoot();
-  if (LeftFoot == 0)
-    LTHROW("No left foot");
+  if (LeftFoot == 0) LTHROW("No left foot");
 
   RightFoot = m_PR->rightFoot();
-  if (RightFoot == 0)
-    LTHROW("No right foot");
+  if (RightFoot == 0) LTHROW("No right foot");
 
   lAnklePositionLeft = LeftFoot->anklePosition;
   lAnklePositionRight = RightFoot->anklePosition;
 
   Eigen::Matrix4d CurPosWICF_homogeneous;
-  CurPosWICF_homogeneous = m_kajitaDynamicFilter->getComAndFootRealization()
-                               ->GetCurrentPositionofWaistInCOMFrame();
+  CurPosWICF_homogeneous = m_kajitaDynamicFilter->getComAndFootRealization()->GetCurrentPositionofWaistInCOMFrame();
 
   InitLeftFootAbsolutePosition.x += lAnklePositionLeft(0);
   InitLeftFootAbsolutePosition.y += lAnklePositionLeft(1);
@@ -716,12 +676,10 @@ std::size_t AnalyticalMorisawaCompact::InitOnLine(
   m_InitialPoseCoMHeight = lStartingCOMState.z[0];
 
   for (unsigned int i = 0; i < 3; i++) {
-    for (unsigned int j = 1; j < 3; j++)
-      lMStartingCOMState(i, j) = 0.0;
+    for (unsigned int j = 1; j < 3; j++) lMStartingCOMState(i, j) = 0.0;
   }
 
-  for (unsigned int i = 0; i < maxrelsteps; i++)
-    m_RelativeFootPositions.push_back(RelativeFootPositions[i]);
+  for (unsigned int i = 0; i < maxrelsteps; i++) m_RelativeFootPositions.push_back(RelativeFootPositions[i]);
 
   if (m_RelativeFootPositions[0].sy < 0)
     m_AbsoluteCurrentSupportFootPosition = InitRightFootAbsolutePosition;
@@ -732,24 +690,20 @@ std::size_t AnalyticalMorisawaCompact::InitOnLine(
      giving the foot position information.
      It also creates the analytical feet trajectories.
   */
-  if (BuildAndSolveCOMZMPForASetOfSteps(
-          lMStartingCOMState, InitLeftFootAbsolutePosition,
-          InitRightFootAbsolutePosition, true, true) < 0) {
+  if (BuildAndSolveCOMZMPForASetOfSteps(lMStartingCOMState, InitLeftFootAbsolutePosition,
+                                        InitRightFootAbsolutePosition, true, true) < 0) {
     LTHROW("Error: Humanoid Specificities not initialized. ");
   }
 
   m_AbsoluteTimeReference = m_CurrentTime - m_Tsingle * 2;
-  m_AnalyticalZMPCoGTrajectoryX->SetAbsoluteTimeReference(
-      m_AbsoluteTimeReference);
-  m_AnalyticalZMPCoGTrajectoryY->SetAbsoluteTimeReference(
-      m_AbsoluteTimeReference);
+  m_AnalyticalZMPCoGTrajectoryX->SetAbsoluteTimeReference(m_AbsoluteTimeReference);
+  m_AnalyticalZMPCoGTrajectoryY->SetAbsoluteTimeReference(m_AbsoluteTimeReference);
   m_FeetTrajectoryGenerator->SetAbsoluteTimeReference(m_AbsoluteTimeReference);
 
   /* Current strategy : add 2 values, and update at each iteration the stack.
      When the limit is reached, and the stack exhausted this method is called
      again.  */
-  FillQueues(m_CurrentTime, m_CurrentTime + 2 * m_SamplingPeriod,
-             FinalZMPPositions, FinalCoMPositions,
+  FillQueues(m_CurrentTime, m_CurrentTime + 2 * m_SamplingPeriod, FinalZMPPositions, FinalCoMPositions,
              FinalLeftFootAbsolutePositions, FinalRightFootAbsolutePositions);
 
   for (unsigned i = 0; i < FinalCoMPositions.size(); ++i) {
@@ -759,31 +713,26 @@ std::size_t AnalyticalMorisawaCompact::InitOnLine(
   }
 
   /*! Recompute time when a new step should be added. */
-  m_UpperTimeLimitToUpdateStacks =
-      m_AbsoluteTimeReference + m_DeltaTj[0] + m_Tdble + 0.45 * m_Tsingle;
+  m_UpperTimeLimitToUpdateStacks = m_AbsoluteTimeReference + m_DeltaTj[0] + m_Tdble + 0.45 * m_Tsingle;
 
   double previewWindowSize = 0.8;
   double controlWindowSize = 0.005;
   double interpolationPeriod = 0.05;
-  DFpreviewWindowSize_ = previewWindowSize - interpolationPeriod; // second
+  DFpreviewWindowSize_ = previewWindowSize - interpolationPeriod;  // second
   m_kajitaDynamicFilter->getComAndFootRealization()->ShiftFoot(false);
-  m_kajitaDynamicFilter->init(m_SamplingPeriod, interpolationPeriod,
-                              controlWindowSize, previewWindowSize,
+  m_kajitaDynamicFilter->init(m_SamplingPeriod, interpolationPeriod, controlWindowSize, previewWindowSize,
                               DFpreviewWindowSize_, lStartingCOMState);
 
   return (int)m_RelativeFootPositions.size();
 }
 
-void AnalyticalMorisawaCompact::OnLine(
-    double time, deque<ZMPPosition> &FinalZMPPositions,
-    deque<COMState> &FinalCOMStates,
-    deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-    deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions) {
+void AnalyticalMorisawaCompact::OnLine(double time, deque<ZMPPosition> &FinalZMPPositions,
+                                       deque<COMState> &FinalCOMStates,
+                                       deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+                                       deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions) {
   unsigned int lIndexInterval;
   if (time < m_UpperTimeLimitToUpdateStacks) {
-    if (m_AnalyticalZMPCoGTrajectoryX->GetIntervalIndexFromTime(
-            time, lIndexInterval)) {
-
+    if (m_AnalyticalZMPCoGTrajectoryX->GetIntervalIndexFromTime(time, lIndexInterval)) {
       ZMPPosition aZMPPos;
       memset(&aZMPPos, 0, sizeof(aZMPPos));
       COMState aCOMPos;
@@ -823,11 +772,9 @@ void AnalyticalMorisawaCompact::OnLine(
       double lCOMPosx = 0.0, lCOMPosdx = 0.0;
       double lCOMPosy = 0.0, lCOMPosdy = 0.0;
       m_AnalyticalZMPCoGTrajectoryX->ComputeCOM(time, lCOMPosx, lIndexInterval);
-      m_AnalyticalZMPCoGTrajectoryX->ComputeCOMSpeed(time, lCOMPosdx,
-                                                     lIndexInterval);
+      m_AnalyticalZMPCoGTrajectoryX->ComputeCOMSpeed(time, lCOMPosdx, lIndexInterval);
       m_AnalyticalZMPCoGTrajectoryY->ComputeCOM(time, lCOMPosy, lIndexInterval);
-      m_AnalyticalZMPCoGTrajectoryY->ComputeCOMSpeed(time, lCOMPosdy,
-                                                     lIndexInterval);
+      m_AnalyticalZMPCoGTrajectoryY->ComputeCOMSpeed(time, lCOMPosdy, lIndexInterval);
       aCOMPos.x[0] += lCOMPosx;
       aCOMPos.x[1] += lCOMPosdx;
       aCOMPos.y[0] += lCOMPosy;
@@ -839,15 +786,13 @@ void AnalyticalMorisawaCompact::OnLine(
       /*! Left */
       FootAbsolutePosition LeftFootAbsPos;
       memset(&LeftFootAbsPos, 0, sizeof(LeftFootAbsPos));
-      m_FeetTrajectoryGenerator->ComputeAnAbsoluteFootPosition(
-          1, time, LeftFootAbsPos, lIndexInterval);
+      m_FeetTrajectoryGenerator->ComputeAnAbsoluteFootPosition(1, time, LeftFootAbsPos, lIndexInterval);
       FinalLeftFootAbsolutePositions.push_back(LeftFootAbsPos);
 
       /*! Right */
       FootAbsolutePosition RightFootAbsPos;
       memset(&RightFootAbsPos, 0, sizeof(RightFootAbsPos));
-      m_FeetTrajectoryGenerator->ComputeAnAbsoluteFootPosition(
-          -1, time, RightFootAbsPos, lIndexInterval);
+      m_FeetTrajectoryGenerator->ComputeAnAbsoluteFootPosition(-1, time, RightFootAbsPos, lIndexInterval);
       FinalRightFootAbsolutePositions.push_back(RightFootAbsPos);
     }
   } else {
@@ -857,15 +802,14 @@ void AnalyticalMorisawaCompact::OnLine(
   }
 }
 
-void AnalyticalMorisawaCompact::OnLineAddFoot(
-    RelativeFootPosition &NewRelativeFootPosition,
-    deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &FinalCoMPositions,
-    deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-    deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions, bool) {
+void AnalyticalMorisawaCompact::OnLineAddFoot(RelativeFootPosition &NewRelativeFootPosition,
+                                              deque<ZMPPosition> &FinalZMPPositions,
+                                              deque<COMState> &FinalCoMPositions,
+                                              deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+                                              deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions, bool) {
   ODEBUG("****************** Begin OnLineAddFoot **************************");
   unsigned int StartingIndexInterval;
-  m_AnalyticalZMPCoGTrajectoryX->GetIntervalIndexFromTime(
-      m_CurrentTime, StartingIndexInterval);
+  m_AnalyticalZMPCoGTrajectoryX->GetIntervalIndexFromTime(m_CurrentTime, StartingIndexInterval);
 
   unsigned int IndexInterval = (unsigned int)(m_CTIPX.ZMPProfil.size() - 1);
 
@@ -888,8 +832,7 @@ void AnalyticalMorisawaCompact::OnLineAddFoot(
   deque<FootAbsolutePosition> aQAFP;
 
   m_FeetTrajectoryGenerator->ComputeAbsoluteStepsFromRelativeSteps(
-      m_RelativeFootPositions, FinalLeftFootAbsolutePositions[0],
-      FinalRightFootAbsolutePositions[0], aQAFP);
+      m_RelativeFootPositions, FinalLeftFootAbsolutePositions[0], FinalRightFootAbsolutePositions[0], aQAFP);
 
   vector<FootAbsolutePosition> aNewFootAbsPos;
   aNewFootAbsPos.resize(1);
@@ -916,10 +859,9 @@ void AnalyticalMorisawaCompact::OnLineAddFoot(
   bool lResetFilters = false;
   bool lTemporalShift = false;
   bool lAddingAFootStep = true;
-  ChangeFootLandingPosition(m_CurrentTime, IndexLastZMPProfil, aNewFootAbsPos,
-                            *m_AnalyticalZMPCoGTrajectoryX, m_CTIPX,
-                            *m_AnalyticalZMPCoGTrajectoryY, m_CTIPY,
-                            lTemporalShift, lResetFilters, 0, lAddingAFootStep);
+  ChangeFootLandingPosition(m_CurrentTime, IndexLastZMPProfil, aNewFootAbsPos, *m_AnalyticalZMPCoGTrajectoryX, m_CTIPX,
+                            *m_AnalyticalZMPCoGTrajectoryY, m_CTIPY, lTemporalShift, lResetFilters, 0,
+                            lAddingAFootStep);
 
   /* Indicates that the step has been taken into account appropriatly
      in computing the trajectory. */
@@ -933,10 +875,8 @@ void AnalyticalMorisawaCompact::OnLineAddFoot(
   /* Current strategy : add 2 values, and update at each iteration the stack.
      When the limit is reached, and the stack exhausted this method is called
      again. */
-  FillQueues(m_AbsoluteTimeReference,
-             m_AbsoluteTimeReference + 2 * m_SamplingPeriod, FinalZMPPositions,
-             FinalCoMPositions, FinalLeftFootAbsolutePositions,
-             FinalRightFootAbsolutePositions);
+  FillQueues(m_AbsoluteTimeReference, m_AbsoluteTimeReference + 2 * m_SamplingPeriod, FinalZMPPositions,
+             FinalCoMPositions, FinalLeftFootAbsolutePositions, FinalRightFootAbsolutePositions);
 
   for (unsigned i = 0; i < FinalCoMPositions.size(); ++i) {
     FinalCoMPositions[i].z[0] = m_InitialPoseCoMHeight;
@@ -948,16 +888,12 @@ void AnalyticalMorisawaCompact::OnLineAddFoot(
   m_Clock3.IncIteration();
 
   /* Update the time at which the stack should not be updated anymore */
-  m_UpperTimeLimitToUpdateStacks =
-      m_AbsoluteTimeReference + m_DeltaTj[0] + m_Tdble + 0.45 * m_Tsingle;
+  m_UpperTimeLimitToUpdateStacks = m_AbsoluteTimeReference + m_DeltaTj[0] + m_Tdble + 0.45 * m_Tsingle;
   ODEBUG("****************** End OnLineAddFoot **************************");
 }
 
-void AnalyticalMorisawaCompact::ComputeW(double InitialCoMPos,
-                                         double InitialCoMSpeed,
-                                         vector<double> &ZMPPosSequence,
-                                         double FinalCoMPos,
-                                         AnalyticalZMPCOGTrajectory &aAZCT) {
+void AnalyticalMorisawaCompact::ComputeW(double InitialCoMPos, double InitialCoMSpeed, vector<double> &ZMPPosSequence,
+                                         double FinalCoMPos, AnalyticalZMPCOGTrajectory &aAZCT) {
   unsigned int lindex = 0;
 
   // Again assuming that the number of unknowns
@@ -985,7 +921,7 @@ void AnalyticalMorisawaCompact::ComputeW(double InitialCoMPos,
       lindex++;
       m_w[lindex] = NextCoeffsFromCOG[1];
       lindex++;
-      m_w[lindex] = 0; // ZMPPosSequence[0] - ZMPPosSequence[0];
+      m_w[lindex] = 0;  // ZMPPosSequence[0] - ZMPPosSequence[0];
       lindex++;
       m_w[lindex] = 0;
       lindex++;
@@ -1100,9 +1036,7 @@ void AnalyticalMorisawaCompact::ComputeZ1(unsigned int &rowindex) {
   rowindex++;
 }
 
-void AnalyticalMorisawaCompact::ComputeZj(unsigned int intervalindex,
-                                          unsigned int &colindex,
-                                          unsigned int &rowindex) {
+void AnalyticalMorisawaCompact::ComputeZj(unsigned int intervalindex, unsigned int &colindex, unsigned int &rowindex) {
   // First row : Connection of the position of the CoM
   double Omegaj = m_Omegaj[intervalindex];
   double Omegam = m_Omegaj[m_NumberOfIntervals - 1];
@@ -1131,9 +1065,7 @@ void AnalyticalMorisawaCompact::ComputeZj(unsigned int intervalindex,
   rowindex++;
 }
 
-void AnalyticalMorisawaCompact::ComputeZm(unsigned intervalindex,
-                                          unsigned int &colindex,
-                                          unsigned int &rowindex) {
+void AnalyticalMorisawaCompact::ComputeZm(unsigned intervalindex, unsigned int &colindex, unsigned int &rowindex) {
   double Omegam = m_Omegaj[m_NumberOfIntervals - 1];
   double SquareOmegam = Omegam * Omegam;
 
@@ -1143,8 +1075,7 @@ void AnalyticalMorisawaCompact::ComputeZm(unsigned intervalindex,
   m_Z(rowindex, colindex) = Deltat + 2.0 / SquareOmegam;
 
   Deltat *= m_DeltaTj[intervalindex];
-  m_Z(rowindex, colindex + 1) =
-      Deltat + m_DeltaTj[intervalindex] * 6.0 / SquareOmegam;
+  m_Z(rowindex, colindex + 1) = Deltat + m_DeltaTj[intervalindex] * 6.0 / SquareOmegam;
 
   Deltat *= m_DeltaTj[intervalindex];
   m_Z(rowindex, colindex + 2) = Deltat;
@@ -1176,9 +1107,7 @@ void AnalyticalMorisawaCompact::ComputeZm(unsigned intervalindex,
   m_Z(rowindex, colindex + 1) = Deltat;
 
   Deltat *= m_DeltaTj[intervalindex];
-  m_Z(rowindex, colindex + 2) = Deltat - 12 * m_DeltaTj[intervalindex] *
-                                             m_DeltaTj[intervalindex] /
-                                             SquareOmegam;
+  m_Z(rowindex, colindex + 2) = Deltat - 12 * m_DeltaTj[intervalindex] * m_DeltaTj[intervalindex] / SquareOmegam;
 
   rowindex++;
 
@@ -1190,17 +1119,12 @@ void AnalyticalMorisawaCompact::ComputeZm(unsigned intervalindex,
   m_Z(rowindex, colindex + 1) = 3 * Deltat;
 
   Deltat *= m_DeltaTj[intervalindex];
-  m_Z(rowindex, colindex + 2) =
-      4 * Deltat - 24.0 * m_DeltaTj[intervalindex] / SquareOmegam;
+  m_Z(rowindex, colindex + 2) = 4 * Deltat - 24.0 * m_DeltaTj[intervalindex] / SquareOmegam;
 
   rowindex++;
 }
-void AnalyticalMorisawaCompact::BuildingTheZMatrix(vector<double> &lCoM,
-                                                   vector<double> &lZMP) {
-
-  if (((int)lCoM.size() != m_NumberOfIntervals) ||
-      ((int)lZMP.size() != m_NumberOfIntervals))
-    return;
+void AnalyticalMorisawaCompact::BuildingTheZMatrix(vector<double> &lCoM, vector<double> &lZMP) {
+  if (((int)lCoM.size() != m_NumberOfIntervals) || ((int)lZMP.size() != m_NumberOfIntervals)) return;
 
   for (unsigned int i = 0; i < lCoM.size(); i++) {
     m_Omegaj[i] = sqrt(9.86 / (lCoM[i] - lZMP[i]));
@@ -1222,8 +1146,7 @@ void AnalyticalMorisawaCompact::BuildingTheZMatrix() {
 
   {
     for (unsigned int i = 0; i < m_Z.rows(); i++)
-      for (unsigned int j = 0; j < m_Z.cols(); j++)
-        m_Z(i, j) = 0.0;
+      for (unsigned int j = 0; j < m_Z.cols(); j++) m_Z(i, j) = 0.0;
   };
   m_Z(0, 0) = 2.0 / SquareOmega0;
   m_Z(0, 3) = 1.0;
@@ -1259,9 +1182,9 @@ void AnalyticalMorisawaCompact::BuildingTheZMatrix() {
   }
 }
 
-void AnalyticalMorisawaCompact::TransfertTheCoefficientsToTrajectories(
-    AnalyticalZMPCOGTrajectory &aAZCT, vector<double> &lCoMZ,
-    vector<double> &lZMPZ, double &lZMPInit, double &lZMPEnd, bool) {
+void AnalyticalMorisawaCompact::TransfertTheCoefficientsToTrajectories(AnalyticalZMPCOGTrajectory &aAZCT,
+                                                                       vector<double> &lCoMZ, vector<double> &lZMPZ,
+                                                                       double &lZMPInit, double &lZMPEnd, bool) {
   vector<double> lV;
   vector<double> lW;
 
@@ -1293,16 +1216,11 @@ void AnalyticalMorisawaCompact::TransfertTheCoefficientsToTrajectories(
     lW[i] = m_y[lindex++];
   }
 
-  for (unsigned int k = 2; k <= m_PolynomialDegrees[m_NumberOfIntervals - 1];
-       k++) {
+  for (unsigned int k = 2; k <= m_PolynomialDegrees[m_NumberOfIntervals - 1]; k++) {
     coeff[k] = m_y[lindex++];
   }
-  coeff[1] =
-      coeff[3] * 6.0 /
-      (m_Omegaj[m_NumberOfIntervals - 1] * m_Omegaj[m_NumberOfIntervals - 1]);
-  coeff[0] = lZMPEnd + coeff[2] * 2.0 /
-                           (m_Omegaj[m_NumberOfIntervals - 1] *
-                            m_Omegaj[m_NumberOfIntervals - 1]);
+  coeff[1] = coeff[3] * 6.0 / (m_Omegaj[m_NumberOfIntervals - 1] * m_Omegaj[m_NumberOfIntervals - 1]);
+  coeff[0] = lZMPEnd + coeff[2] * 2.0 / (m_Omegaj[m_NumberOfIntervals - 1] * m_Omegaj[m_NumberOfIntervals - 1]);
 
   aAZCT.GetFromListOfCOGPolynomials(m_NumberOfIntervals - 1, aPolynome);
   aPolynome->SetCoefficients(coeff);
@@ -1316,31 +1234,23 @@ void AnalyticalMorisawaCompact::TransfertTheCoefficientsToTrajectories(
   // Compute the ZMP weights from the CoG's ones:
 
   // for the first interval
-  aAZCT.TransfertOneIntervalCoefficientsFromCOGTrajectoryToZMPOne(0, lCoMZ[0],
-                                                                  lZMPZ[0]);
+  aAZCT.TransfertOneIntervalCoefficientsFromCOGTrajectoryToZMPOne(0, lCoMZ[0], lZMPZ[0]);
 
   // and the last interval
   aAZCT.TransfertOneIntervalCoefficientsFromCOGTrajectoryToZMPOne(
-      m_NumberOfIntervals - 1, lCoMZ[m_NumberOfIntervals - 1],
-      lZMPZ[m_NumberOfIntervals - 1]);
+      m_NumberOfIntervals - 1, lCoMZ[m_NumberOfIntervals - 1], lZMPZ[m_NumberOfIntervals - 1]);
 }
 
-void AnalyticalMorisawaCompact::ComputeTrajectory(
-    CompactTrajectoryInstanceParameters &aCTIP,
-    AnalyticalZMPCOGTrajectory &aAZCT) {
-  ComputeW(aCTIP.InitialCoM, aCTIP.InitialCoMSpeed, aCTIP.ZMPProfil,
-           aCTIP.FinalCoMPos, aAZCT);
+void AnalyticalMorisawaCompact::ComputeTrajectory(CompactTrajectoryInstanceParameters &aCTIP,
+                                                  AnalyticalZMPCOGTrajectory &aAZCT) {
+  ComputeW(aCTIP.InitialCoM, aCTIP.InitialCoMSpeed, aCTIP.ZMPProfil, aCTIP.FinalCoMPos, aAZCT);
   ComputePolynomialWeights2();
-  TransfertTheCoefficientsToTrajectories(
-      aAZCT, aCTIP.CoMZ, aCTIP.ZMPZ, aCTIP.ZMPProfil[0],
-      aCTIP.ZMPProfil[m_NumberOfIntervals - 1], false);
+  TransfertTheCoefficientsToTrajectories(aAZCT, aCTIP.CoMZ, aCTIP.ZMPZ, aCTIP.ZMPProfil[0],
+                                         aCTIP.ZMPProfil[m_NumberOfIntervals - 1], false);
 }
 
-int AnalyticalMorisawaCompact::TimeChange(double LocalTime,
-                                          unsigned int IndexStep,
-                                          unsigned int &IndexStartingInterval,
-                                          double &FinalTime, double &NewTj) {
-
+int AnalyticalMorisawaCompact::TimeChange(double LocalTime, unsigned int IndexStep,
+                                          unsigned int &IndexStartingInterval, double &FinalTime, double &NewTj) {
   // The Index Step can be equal to m_NumberOfIntervals.
   if ((int)IndexStep < m_NumberOfIntervals)
 
@@ -1349,16 +1259,13 @@ int AnalyticalMorisawaCompact::TimeChange(double LocalTime,
     }
 
   FinalTime = 0.0;
-  for (unsigned int j = 0; j < m_DeltaTj.size(); j++)
-    FinalTime += m_DeltaTj[j];
+  for (unsigned int j = 0; j < m_DeltaTj.size(); j++) FinalTime += m_DeltaTj[j];
 
   /* Find from which interval we are starting. */
-  m_AnalyticalZMPCoGTrajectoryX->GetIntervalIndexFromTime(
-      LocalTime + m_AbsoluteTimeReference, IndexStartingInterval);
+  m_AnalyticalZMPCoGTrajectoryX->GetIntervalIndexFromTime(LocalTime + m_AbsoluteTimeReference, IndexStartingInterval);
 
   double reftime = 0.0;
-  for (unsigned int j = 0; j < IndexStartingInterval; j++)
-    reftime += m_DeltaTj[j];
+  for (unsigned int j = 0; j < IndexStartingInterval; j++) reftime += m_DeltaTj[j];
 
   NewTj = m_DeltaTj[IndexStartingInterval] - LocalTime + reftime;
 
@@ -1373,9 +1280,7 @@ int AnalyticalMorisawaCompact::TimeChange(double LocalTime,
   return 0;
 }
 
-void AnalyticalMorisawaCompact::NewTimeIntervals(
-    unsigned int IndexStartingInterval, double NewTime) {
-
+void AnalyticalMorisawaCompact::NewTimeIntervals(unsigned int IndexStartingInterval, double NewTime) {
   /* Build the new time interval. */
   m_DeltaTj[0] = NewTime;
   m_StepTypes[0] = m_StepTypes[IndexStartingInterval];
@@ -1394,11 +1299,11 @@ void AnalyticalMorisawaCompact::NewTimeIntervals(
   ComputePreviewControlTimeWindow();
 }
 
-void AnalyticalMorisawaCompact::ConstraintsChange(
-    double, FluctuationParameters FPX, FluctuationParameters FPY,
-    CompactTrajectoryInstanceParameters &aCTIPX,
-    CompactTrajectoryInstanceParameters &aCTIPY,
-    unsigned int IndexStartingInterval, StepStackHandler *aStepStackHandler) {
+void AnalyticalMorisawaCompact::ConstraintsChange(double, FluctuationParameters FPX, FluctuationParameters FPY,
+                                                  CompactTrajectoryInstanceParameters &aCTIPX,
+                                                  CompactTrajectoryInstanceParameters &aCTIPY,
+                                                  unsigned int IndexStartingInterval,
+                                                  StepStackHandler *aStepStackHandler) {
   if (IndexStartingInterval != 0) {
     /* Shift the current value of the profil. */
     int i;
@@ -1423,10 +1328,7 @@ void AnalyticalMorisawaCompact::ConstraintsChange(
     else
       k = (i - 1) / 2;
 
-    for (; (k < m_AbsoluteSupportFootPositions.size()) &&
-           (j < m_CTIPX.ZMPProfil.size());
-         k++, j += 2) {
-
+    for (; (k < m_AbsoluteSupportFootPositions.size()) && (j < m_CTIPX.ZMPProfil.size()); k++, j += 2) {
       aCTIPX.ZMPProfil[j] = m_AbsoluteSupportFootPositions[k].x;
       aCTIPY.ZMPProfil[j] = m_AbsoluteSupportFootPositions[k].y;
 
@@ -1447,21 +1349,17 @@ void AnalyticalMorisawaCompact::ConstraintsChange(
          We have to remove one, because there is
          still the last foot added.
       */
-      if ((r = (long int)aStepStackHandler->ReturnStackSize() - 1 -
-               (long int)NeededSteps) < 0) {
+      if ((r = (long int)aStepStackHandler->ReturnStackSize() - 1 - (long int)NeededSteps) < 0) {
         bool lNewStep = false;
         double NewStepX = 0.0, NewStepY = 0.0, NewStepTheta = 0.0;
         for (int li = 0; li < -r; li++) {
-
-          aStepStackHandler->AddStandardOnLineStep(lNewStep, NewStepX, NewStepY,
-                                                   NewStepTheta);
+          aStepStackHandler->AddStandardOnLineStep(lNewStep, NewStepX, NewStepY, NewStepTheta);
         }
       }
 
       /* Takes the number of Relative Foot Positions needed. */
       deque<RelativeFootPosition> lRelativeFootPositions;
-      aStepStackHandler->CopyRelativeFootPosition(lRelativeFootPositions,
-                                                  false);
+      aStepStackHandler->CopyRelativeFootPosition(lRelativeFootPositions, false);
 
       /*! Remove the first step still in the stack. */
       lRelativeFootPositions.pop_front();
@@ -1469,13 +1367,10 @@ void AnalyticalMorisawaCompact::ConstraintsChange(
       deque<FootAbsolutePosition> lAbsoluteSupportFootPositions;
       int lLastIndex = (int)(m_AbsoluteSupportFootPositions.size() - 1);
       m_FeetTrajectoryGenerator->ComputeAbsoluteStepsFromRelativeSteps(
-          lRelativeFootPositions, m_AbsoluteSupportFootPositions[lLastIndex],
-          lAbsoluteSupportFootPositions);
+          lRelativeFootPositions, m_AbsoluteSupportFootPositions[lLastIndex], lAbsoluteSupportFootPositions);
 
       /* Add the necessary absolute support foot positions. */
-      for (int li = 0; (li < NeededSteps) && (j < m_CTIPX.ZMPProfil.size());
-           li++, j += 2) {
-
+      for (int li = 0; (li < NeededSteps) && (j < m_CTIPX.ZMPProfil.size()); li++, j += 2) {
         aCTIPX.ZMPProfil[j] = lAbsoluteSupportFootPositions[li].x;
         aCTIPY.ZMPProfil[j] = lAbsoluteSupportFootPositions[li].y;
 
@@ -1491,8 +1386,7 @@ void AnalyticalMorisawaCompact::ConstraintsChange(
          inside the StepStackHandler object taken into account.*/
       for (int li = 0; li < NeededSteps; li++) {
         m_RelativeFootPositions.push_back(lRelativeFootPositions[li]);
-        m_AbsoluteSupportFootPositions.push_back(
-            lAbsoluteSupportFootPositions[li]);
+        m_AbsoluteSupportFootPositions.push_back(lAbsoluteSupportFootPositions[li]);
         aStepStackHandler->RemoveFirstStepInTheStack();
       }
       /*! Remove the corresponding step from the stack of
@@ -1515,34 +1409,22 @@ void AnalyticalMorisawaCompact::ConstraintsChange(
   aCTIPY.FinalCoMPos = aCTIPY.ZMPProfil[m_NumberOfIntervals - 1];
 }
 
-double AnalyticalMorisawaCompact::TimeCompensationForZMPFluctuation(
-    FluctuationParameters &aFP, double DeltaTInit) {
+double AnalyticalMorisawaCompact::TimeCompensationForZMPFluctuation(FluctuationParameters &aFP, double DeltaTInit) {
   double r = 0.0;
   double DeltaTNew = 0.0;
-  if (fabs(aFP.CoMSpeedNew) < 1e-7)
-    aFP.CoMSpeedNew = 0.0;
-  if (fabs(aFP.ZMPSpeedNew) < 1e-7)
-    aFP.ZMPSpeedNew = 0.0;
-  if (fabs(aFP.CoMSpeedInit) < 1e-7)
-    aFP.CoMSpeedInit = 0.0;
-  if (fabs(aFP.ZMPSpeedInit) < 1e-7)
-    aFP.ZMPSpeedInit = 0.0;
-  if (fabs(aFP.CoMInit) < 1e-7)
-    aFP.CoMInit = 0.0;
-  if (fabs(aFP.ZMPInit) < 1e-7)
-    aFP.ZMPInit = 0.0;
-  if (fabs(aFP.CoMNew) < 1e-7)
-    aFP.CoMNew = 0.0;
-  if (fabs(aFP.ZMPNew) < 1e-7)
-    aFP.ZMPNew = 0.0;
+  if (fabs(aFP.CoMSpeedNew) < 1e-7) aFP.CoMSpeedNew = 0.0;
+  if (fabs(aFP.ZMPSpeedNew) < 1e-7) aFP.ZMPSpeedNew = 0.0;
+  if (fabs(aFP.CoMSpeedInit) < 1e-7) aFP.CoMSpeedInit = 0.0;
+  if (fabs(aFP.ZMPSpeedInit) < 1e-7) aFP.ZMPSpeedInit = 0.0;
+  if (fabs(aFP.CoMInit) < 1e-7) aFP.CoMInit = 0.0;
+  if (fabs(aFP.ZMPInit) < 1e-7) aFP.ZMPInit = 0.0;
+  if (fabs(aFP.CoMNew) < 1e-7) aFP.CoMNew = 0.0;
+  if (fabs(aFP.ZMPNew) < 1e-7) aFP.ZMPNew = 0.0;
 
-  double rden = (m_Omegaj[0] * (aFP.CoMInit - aFP.ZMPInit) +
-                 (aFP.CoMSpeedInit - aFP.ZMPSpeedInit));
-  if (fabs(rden) < 1e-5)
-    rden = 0.0;
+  double rden = (m_Omegaj[0] * (aFP.CoMInit - aFP.ZMPInit) + (aFP.CoMSpeedInit - aFP.ZMPSpeedInit));
+  if (fabs(rden) < 1e-5) rden = 0.0;
 
-  double rnum = (m_Omegaj[0] * (aFP.CoMNew - aFP.ZMPNew) +
-                 (aFP.CoMSpeedNew - aFP.ZMPSpeedNew));
+  double rnum = (m_Omegaj[0] * (aFP.CoMNew - aFP.ZMPNew) + (aFP.CoMSpeedNew - aFP.ZMPSpeedNew));
 
   if (rden == 0.0)
     r = 0.0;
@@ -1565,12 +1447,10 @@ double AnalyticalMorisawaCompact::TimeCompensationForZMPFluctuation(
   return DeltaTNew;
 }
 
-void AnalyticalMorisawaCompact::ChangeZMPProfil(
-    vector<unsigned int> &IndexStep,
-    vector<FootAbsolutePosition> &NewFootAbsPos,
-    CompactTrajectoryInstanceParameters &aCTIPX,
-    CompactTrajectoryInstanceParameters &aCTIPY) {
-
+void AnalyticalMorisawaCompact::ChangeZMPProfil(vector<unsigned int> &IndexStep,
+                                                vector<FootAbsolutePosition> &NewFootAbsPos,
+                                                CompactTrajectoryInstanceParameters &aCTIPX,
+                                                CompactTrajectoryInstanceParameters &aCTIPY) {
   /* Change in the constraints, i.e. modify
      aCTIPX and aCTIPY appropriatly . */
   for (unsigned int i = 0; i < IndexStep.size(); i++) {
@@ -1586,16 +1466,12 @@ void AnalyticalMorisawaCompact::ChangeZMPProfil(
     }
 
     if (lIndexStep < aCTIPX.ZMPProfil.size()) {
-      aCTIPX.ZMPProfil[lIndexStep] =
-          NewFootAbsPos[lIndexForFootPrintInterval].x;
-      aCTIPY.ZMPProfil[lIndexStep] =
-          NewFootAbsPos[lIndexForFootPrintInterval].y;
+      aCTIPX.ZMPProfil[lIndexStep] = NewFootAbsPos[lIndexForFootPrintInterval].x;
+      aCTIPY.ZMPProfil[lIndexStep] = NewFootAbsPos[lIndexForFootPrintInterval].y;
     }
     if (lIndexStep < aCTIPX.ZMPProfil.size() - 1) {
-      aCTIPX.ZMPProfil[lIndexStep + 1] =
-          NewFootAbsPos[lIndexForFootPrintInterval].x;
-      aCTIPY.ZMPProfil[lIndexStep + 1] =
-          NewFootAbsPos[lIndexForFootPrintInterval].y;
+      aCTIPX.ZMPProfil[lIndexStep + 1] = NewFootAbsPos[lIndexForFootPrintInterval].x;
+      aCTIPY.ZMPProfil[lIndexStep + 1] = NewFootAbsPos[lIndexForFootPrintInterval].y;
     }
 
     /* If the end condition has been changed... */
@@ -1606,25 +1482,19 @@ void AnalyticalMorisawaCompact::ChangeZMPProfil(
   }
 }
 
-int AnalyticalMorisawaCompact::ChangeFootLandingPosition(
-    double t, vector<unsigned int> &IndexStep,
-    vector<FootAbsolutePosition> &NewFootAbsPos) {
+int AnalyticalMorisawaCompact::ChangeFootLandingPosition(double t, vector<unsigned int> &IndexStep,
+                                                         vector<FootAbsolutePosition> &NewFootAbsPos) {
   int r = 0;
-  r = ChangeFootLandingPosition(
-      t, IndexStep, NewFootAbsPos, *m_AnalyticalZMPCoGTrajectoryX, m_CTIPX,
-      *m_AnalyticalZMPCoGTrajectoryY, m_CTIPY, true, true, 0, false);
+  r = ChangeFootLandingPosition(t, IndexStep, NewFootAbsPos, *m_AnalyticalZMPCoGTrajectoryX, m_CTIPX,
+                                *m_AnalyticalZMPCoGTrajectoryY, m_CTIPY, true, true, 0, false);
   return r;
 }
 
 int AnalyticalMorisawaCompact::ChangeFootLandingPosition(
-    double t, vector<unsigned int> &IndexStep,
-    vector<FootAbsolutePosition> &NewFootAbsPos,
-    AnalyticalZMPCOGTrajectory &aAZCTX,
-    CompactTrajectoryInstanceParameters &aCTIPX,
-    AnalyticalZMPCOGTrajectory &aAZCTY,
-    CompactTrajectoryInstanceParameters &aCTIPY, bool TemporalShift,
-    bool ResetFilters, StepStackHandler *aStepStackHandler,
-    bool AddingAFootStep) {
+    double t, vector<unsigned int> &IndexStep, vector<FootAbsolutePosition> &NewFootAbsPos,
+    AnalyticalZMPCOGTrajectory &aAZCTX, CompactTrajectoryInstanceParameters &aCTIPX,
+    AnalyticalZMPCOGTrajectory &aAZCTY, CompactTrajectoryInstanceParameters &aCTIPY, bool TemporalShift,
+    bool ResetFilters, StepStackHandler *aStepStackHandler, bool AddingAFootStep) {
   double LocalTime = t - m_AbsoluteTimeReference;
   double FinalTime = 0.0;
   unsigned int IndexStartingInterval = 0;
@@ -1635,8 +1505,7 @@ int AnalyticalMorisawaCompact::ChangeFootLandingPosition(
   double TCX = 0.0, TCY = 0.0, TCMax = 0.0;
 
   /* Perform First Time Change i.e. recomputing the proper Tj */
-  if ((RetourTC = TimeChange(LocalTime, IndexStep[0], IndexStartingInterval,
-                             FinalTime, NewTj)) < 0) {
+  if ((RetourTC = TimeChange(LocalTime, IndexStep[0], IndexStartingInterval, FinalTime, NewTj)) < 0) {
     LTHROW("Time Change not possible");
     // return RetourTC;
   }
@@ -1646,10 +1515,8 @@ int AnalyticalMorisawaCompact::ChangeFootLandingPosition(
   /* Store the current position and speed of each foot. */
   FootAbsolutePosition InitAbsLeftFootPos, InitAbsRightFootPos;
 
-  m_FeetTrajectoryGenerator->ComputeAnAbsoluteFootPosition(1, t,
-                                                           InitAbsLeftFootPos);
-  m_FeetTrajectoryGenerator->ComputeAnAbsoluteFootPosition(-1, t,
-                                                           InitAbsRightFootPos);
+  m_FeetTrajectoryGenerator->ComputeAnAbsoluteFootPosition(1, t, InitAbsLeftFootPos);
+  m_FeetTrajectoryGenerator->ComputeAnAbsoluteFootPosition(-1, t, InitAbsRightFootPos);
 
   /* ! This part of the code is not used if we are just trying to add
      a foot step. */
@@ -1679,10 +1546,8 @@ int AnalyticalMorisawaCompact::ChangeFootLandingPosition(
 
     /* Recompute the coefficient of the ZMP/COG trajectories objects. */
     for (int i = 1; i < m_NumberOfIntervals - 1; i++) {
-      aAZCTX.Building3rdOrderPolynomial(i, aCTIPX.ZMPProfil[i - 1],
-                                        aCTIPX.ZMPProfil[i]);
-      aAZCTY.Building3rdOrderPolynomial(i, aCTIPY.ZMPProfil[i - 1],
-                                        aCTIPY.ZMPProfil[i]);
+      aAZCTX.Building3rdOrderPolynomial(i, aCTIPX.ZMPProfil[i - 1], aCTIPX.ZMPProfil[i]);
+      aAZCTY.Building3rdOrderPolynomial(i, aCTIPY.ZMPProfil[i - 1], aCTIPY.ZMPProfil[i]);
     }
 
     /* Compute the trajectories */
@@ -1739,7 +1604,7 @@ int AnalyticalMorisawaCompact::ChangeFootLandingPosition(
   /************ PERFORM THE TIME INTERVAL MODIFICATION ****************/
 
   if (TemporalShift) {
-    NewTimeIntervals(IndexStartingInterval, TCMax); // TCMax
+    NewTimeIntervals(IndexStartingInterval, TCMax);  // TCMax
   } else {
     NewTimeIntervals(IndexStartingInterval, NewTj);
   }
@@ -1747,26 +1612,22 @@ int AnalyticalMorisawaCompact::ChangeFootLandingPosition(
   /*! Extract the set of absolute coordinates for the foot position,
     and recompute the feet trajectory accordingly. */
   if (m_FeetTrajectoryGenerator != 0) {
-
     m_FeetTrajectoryGenerator->SetDeltaTj(m_DeltaTj);
 
     /* Modify the feet trajectory */
     ODEBUG("***** Begin Change Foot Landing Position **************");
     m_FeetTrajectoryGenerator->ComputeAbsoluteStepsFromRelativeSteps(
-        m_RelativeFootPositions, InitAbsLeftFootPos, InitAbsRightFootPos,
-        m_AbsoluteSupportFootPositions);
+        m_RelativeFootPositions, InitAbsLeftFootPos, InitAbsRightFootPos, m_AbsoluteSupportFootPositions);
 
     ODEBUG("***** End of Change Foot Landing Position *************");
   }
 
   /* Shift the ZMP profil, the initial
      and final condition, and update the queue of foot prints. */
-  ConstraintsChange(LocalTime, aFPX, aFPY, aCTIPX, aCTIPY,
-                    IndexStartingInterval, aStepStackHandler);
+  ConstraintsChange(LocalTime, aFPX, aFPY, aCTIPX, aCTIPY, IndexStartingInterval, aStepStackHandler);
 
   m_FeetTrajectoryGenerator->InitializeFromRelativeSteps(
-      m_RelativeFootPositions, InitAbsLeftFootPos, InitAbsRightFootPos,
-      m_AbsoluteSupportFootPositions, false, true);
+      m_RelativeFootPositions, InitAbsLeftFootPos, InitAbsRightFootPos, m_AbsoluteSupportFootPositions, false, true);
 
   // Initialize and modify the aAZCT trajectories' Tj and Omegaj.
   aAZCTX.SetStartingTimeIntervalsAndHeightVariation(m_DeltaTj, m_Omegaj);
@@ -1774,10 +1635,8 @@ int AnalyticalMorisawaCompact::ChangeFootLandingPosition(
 
   /* Recompute the coefficient of the ZMP/COG trajectories objects. */
   for (int i = 1; i < m_NumberOfIntervals - 1; i++) {
-    aAZCTX.Building3rdOrderPolynomial(i, aCTIPX.ZMPProfil[i - 1],
-                                      aCTIPX.ZMPProfil[i]);
-    aAZCTY.Building3rdOrderPolynomial(i, aCTIPY.ZMPProfil[i - 1],
-                                      aCTIPY.ZMPProfil[i]);
+    aAZCTX.Building3rdOrderPolynomial(i, aCTIPX.ZMPProfil[i - 1], aCTIPX.ZMPProfil[i]);
+    aAZCTY.Building3rdOrderPolynomial(i, aCTIPY.ZMPProfil[i - 1], aCTIPY.ZMPProfil[i]);
   }
 
   aAZCTX.SetAbsoluteTimeReference(t);
@@ -1803,26 +1662,24 @@ int AnalyticalMorisawaCompact::ChangeFootLandingPosition(
   return 0;
 }
 
-void AnalyticalMorisawaCompact::StringErrorMessage(int ErrorIndex,
-                                                   string &ErrorMessage) {
+void AnalyticalMorisawaCompact::StringErrorMessage(int ErrorIndex, string &ErrorMessage) {
   switch (ErrorIndex) {
-  case (0):
-    ErrorMessage = "No error";
-    break;
-  case (-1):
-    ErrorMessage = "Wrong foot type";
-    break;
-  case (-2):
-    ErrorMessage = "Modification is asked after the time limit";
-    break;
-  default:
-    ErrorMessage = "Unknown error";
-    break;
+    case (0):
+      ErrorMessage = "No error";
+      break;
+    case (-1):
+      ErrorMessage = "Wrong foot type";
+      break;
+    case (-2):
+      ErrorMessage = "Modification is asked after the time limit";
+      break;
+    default:
+      ErrorMessage = "Unknown error";
+      break;
   }
 }
 
-int AnalyticalMorisawaCompact::SetPreviewControl(
-    PreviewControl *aPreviewControl) {
+int AnalyticalMorisawaCompact::SetPreviewControl(PreviewControl *aPreviewControl) {
   m_PreviewControl = aPreviewControl;
   m_FilterXaxisByPC->SetPreviewControl(aPreviewControl);
   m_FilterYaxisByPC->SetPreviewControl(aPreviewControl);
@@ -1830,22 +1687,20 @@ int AnalyticalMorisawaCompact::SetPreviewControl(
   return 0;
 }
 
-PreviewControl *AnalyticalMorisawaCompact::GetPreviewControl() {
-  return m_PreviewControl;
-}
+PreviewControl *AnalyticalMorisawaCompact::GetPreviewControl() { return m_PreviewControl; }
 
-void AnalyticalMorisawaCompact::FilterOutOrthogonalDirection(
-    AnalyticalZMPCOGTrajectory &aAZCT,
-    CompactTrajectoryInstanceParameters &aCTIP, deque<double> &ZMPTrajectory,
-    deque<double> &CoGTrajectory) {
+void AnalyticalMorisawaCompact::FilterOutOrthogonalDirection(AnalyticalZMPCOGTrajectory &aAZCT,
+                                                             CompactTrajectoryInstanceParameters &aCTIP,
+                                                             deque<double> &ZMPTrajectory,
+                                                             deque<double> &CoGTrajectory) {
   /* Initiliazing the Preview Control according to the trajectory
      to filter. */
   double lAbsoluteTimeReference = aAZCT.GetAbsoluteTimeReference();
   Eigen::MatrixXd x(3, 1);
 
   /*! Initialize the state vector used by the preview controller */
-  x(0, 0) = 0.0; // aAZCT.ComputeCOM(lAbsoluteTimeReference,x(0,0));
-  x(1, 0) = 0.0; // aAZCT.ComputeCOMSpeed(lAbsoluteTimeReference,x(1,0));
+  x(0, 0) = 0.0;  // aAZCT.ComputeCOM(lAbsoluteTimeReference,x(0,0));
+  x(1, 0) = 0.0;  // aAZCT.ComputeCOMSpeed(lAbsoluteTimeReference,x(1,0));
   x(2, 0) = 0.0;
 
   /*! Initializing variables needed to compute the state vector */
@@ -1856,8 +1711,7 @@ void AnalyticalMorisawaCompact::FilterOutOrthogonalDirection(
   double PreviewWindowTime = m_PreviewControl->PreviewControlTime();
   deque<double> FIFOZMPRefPositions;
   RESETDEBUG4("ProfilZMPError.dat");
-  for (double lx = 0; lx < m_DeltaTj[0] + 2 * PreviewWindowTime;
-       lx += m_SamplingPeriod) {
+  for (double lx = 0; lx < m_DeltaTj[0] + 2 * PreviewWindowTime; lx += m_SamplingPeriod) {
     double r = 0.0;
     if (lx < m_DeltaTj[0]) {
       double lZMP;
@@ -1871,10 +1725,8 @@ void AnalyticalMorisawaCompact::FilterOutOrthogonalDirection(
 
   unsigned int lindex = 0;
   lsxzmp = 0.0;
-  for (double lx = 0; lx < m_DeltaTj[0] + PreviewWindowTime;
-       lx += m_SamplingPeriod) {
-    m_PreviewControl->OneIterationOfPreview1D(x, lsxzmp, FIFOZMPRefPositions,
-                                              lindex, lxzmp, false);
+  for (double lx = 0; lx < m_DeltaTj[0] + PreviewWindowTime; lx += m_SamplingPeriod) {
+    m_PreviewControl->OneIterationOfPreview1D(x, lsxzmp, FIFOZMPRefPositions, lindex, lxzmp, false);
     ZMPTrajectory.push_back(lxzmp);
     CoGTrajectory.push_back(x(0, 0));
     lindex++;
@@ -1886,37 +1738,30 @@ void AnalyticalMorisawaCompact::SetFeetTrajectoryGenerator(
     LeftAndRightFootTrajectoryGenerationMultiple *aFeetTrajectoryGenerator) {
   m_FeetTrajectoryGenerator = aFeetTrajectoryGenerator;
   if (m_BackUpm_FeetTrajectoryGenerator == 0)
-    m_BackUpm_FeetTrajectoryGenerator =
-        new LeftAndRightFootTrajectoryGenerationMultiple(
-            m_FeetTrajectoryGenerator->getSimplePluginManager(),
-            m_FeetTrajectoryGenerator->getFoot());
+    m_BackUpm_FeetTrajectoryGenerator = new LeftAndRightFootTrajectoryGenerationMultiple(
+        m_FeetTrajectoryGenerator->getSimplePluginManager(), m_FeetTrajectoryGenerator->getFoot());
 }
 
-LeftAndRightFootTrajectoryGenerationMultiple *
-AnalyticalMorisawaCompact::GetFeetTrajectoryGenerator() {
+LeftAndRightFootTrajectoryGenerationMultiple *AnalyticalMorisawaCompact::GetFeetTrajectoryGenerator() {
   return m_FeetTrajectoryGenerator;
 }
 
-int AnalyticalMorisawaCompact::OnLineFootChange(
-    double time, FootAbsolutePosition &aFootAbsolutePosition,
-    deque<ZMPPosition> &ZMPPositions, deque<COMState> &CoMPositions,
-    deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-    deque<FootAbsolutePosition> &RightFootAbsolutePositions,
-    StepStackHandler *aStepStackHandler) {
+int AnalyticalMorisawaCompact::OnLineFootChange(double time, FootAbsolutePosition &aFootAbsolutePosition,
+                                                deque<ZMPPosition> &ZMPPositions, deque<COMState> &CoMPositions,
+                                                deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+                                                deque<FootAbsolutePosition> &RightFootAbsolutePositions,
+                                                StepStackHandler *aStepStackHandler) {
   deque<FootAbsolutePosition> NewFeetAbsolutePosition;
   NewFeetAbsolutePosition.push_back(aFootAbsolutePosition);
-  return OnLineFootChanges(time, NewFeetAbsolutePosition, ZMPPositions,
-                           CoMPositions, LeftFootAbsolutePositions,
+  return OnLineFootChanges(time, NewFeetAbsolutePosition, ZMPPositions, CoMPositions, LeftFootAbsolutePositions,
                            RightFootAbsolutePositions, aStepStackHandler);
 }
 
-int AnalyticalMorisawaCompact::OnLineFootChanges(
-    double time, deque<FootAbsolutePosition> &aFootAbsolutePosition,
-    deque<ZMPPosition> &ZMPPositions, deque<COMState> &CoMPositions,
-    deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-    deque<FootAbsolutePosition> &RightFootAbsolutePositions,
-    StepStackHandler *aStepStackHandler) {
-
+int AnalyticalMorisawaCompact::OnLineFootChanges(double time, deque<FootAbsolutePosition> &aFootAbsolutePosition,
+                                                 deque<ZMPPosition> &ZMPPositions, deque<COMState> &CoMPositions,
+                                                 deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+                                                 deque<FootAbsolutePosition> &RightFootAbsolutePositions,
+                                                 StepStackHandler *aStepStackHandler) {
   ODEBUG("***** Begin OnLineFootChange *****");
   int IndexInterval = -1;
 
@@ -1943,7 +1788,6 @@ int AnalyticalMorisawaCompact::OnLineFootChanges(
   /* If the interval detected is not a double support interval,
      a shift is done to chose the earliest double support interval. */
   if (m_StepTypes[IndexInterval] != DOUBLE_SUPPORT) {
-
     if (IndexInterval != 0)
       IndexInterval -= 1;
     else
@@ -1958,12 +1802,9 @@ int AnalyticalMorisawaCompact::OnLineFootChanges(
   }
 
   /* Backup data structures */
-  FootAbsolutePosition BackUpm_AbsoluteCurrentSupportFootPosition =
-      m_AbsoluteCurrentSupportFootPosition;
-  deque<FootAbsolutePosition> BackUpm_AbsoluteSupportFootPositions =
-      m_AbsoluteSupportFootPositions;
-  deque<RelativeFootPosition> BackUpm_RelativeFootPositions =
-      m_RelativeFootPositions;
+  FootAbsolutePosition BackUpm_AbsoluteCurrentSupportFootPosition = m_AbsoluteCurrentSupportFootPosition;
+  deque<FootAbsolutePosition> BackUpm_AbsoluteSupportFootPositions = m_AbsoluteSupportFootPositions;
+  deque<RelativeFootPosition> BackUpm_RelativeFootPositions = m_RelativeFootPositions;
   *m_BackUpm_FeetTrajectoryGenerator = *m_FeetTrajectoryGenerator;
 
   /* Find the corresponding interval in the stack of foot steps*/
@@ -1985,14 +1826,13 @@ int AnalyticalMorisawaCompact::OnLineFootChanges(
     IndexIntervals[0] = IndexInterval;
 
     for (unsigned int i = 0; i < aFootAbsolutePosition.size(); i++)
-      m_AbsoluteSupportFootPositions[i + lChangedIntervalFoot] =
-          aFootAbsolutePosition[i];
+      m_AbsoluteSupportFootPositions[i + lChangedIntervalFoot] = aFootAbsolutePosition[i];
 
     /* From the new foot landing position computes the new relative set of
        positions. */
-    m_FeetTrajectoryGenerator->ChangeRelStepsFromAbsSteps(
-        m_RelativeFootPositions, m_AbsoluteCurrentSupportFootPosition,
-        m_AbsoluteSupportFootPositions, lChangedIntervalFoot);
+    m_FeetTrajectoryGenerator->ChangeRelStepsFromAbsSteps(m_RelativeFootPositions,
+                                                          m_AbsoluteCurrentSupportFootPosition,
+                                                          m_AbsoluteSupportFootPositions, lChangedIntervalFoot);
 
     NewRelFootAbsolutePositions.resize(aFootAbsolutePosition.size());
     for (unsigned int i = 0; i < aFootAbsolutePosition.size(); i++)
@@ -2000,37 +1840,29 @@ int AnalyticalMorisawaCompact::OnLineFootChanges(
   } else if (m_OnLineChangeStepMode == RELATIVE_FRAME) {
     IndexIntervals.resize(m_NumberOfIntervals - IndexInterval);
 
-    NewRelFootAbsolutePositions.resize(m_RelativeFootPositions.size() -
-                                       lChangedIntervalFoot);
+    NewRelFootAbsolutePositions.resize(m_RelativeFootPositions.size() - lChangedIntervalFoot);
 
-    for (int j = IndexInterval, k = 0; k < (int)IndexIntervals.size();
-         j++, k++) {
+    for (int j = IndexInterval, k = 0; k < (int)IndexIntervals.size(); j++, k++) {
       IndexIntervals[k] = j;
     }
 
     // In this mode the frame is relative to previous local modification...
     for (unsigned int i = 0; i < aFootAbsolutePosition.size(); i++) {
-      m_RelativeFootPositions[lChangedIntervalFoot + i].sx +=
-          aFootAbsolutePosition[i].x;
-      m_RelativeFootPositions[lChangedIntervalFoot + i].sy +=
-          aFootAbsolutePosition[i].y;
-      m_RelativeFootPositions[lChangedIntervalFoot + i].sz +=
-          aFootAbsolutePosition[i].z;
-      m_RelativeFootPositions[lChangedIntervalFoot + i].theta +=
-          aFootAbsolutePosition[i].theta;
+      m_RelativeFootPositions[lChangedIntervalFoot + i].sx += aFootAbsolutePosition[i].x;
+      m_RelativeFootPositions[lChangedIntervalFoot + i].sy += aFootAbsolutePosition[i].y;
+      m_RelativeFootPositions[lChangedIntervalFoot + i].sz += aFootAbsolutePosition[i].z;
+      m_RelativeFootPositions[lChangedIntervalFoot + i].theta += aFootAbsolutePosition[i].theta;
     }
 
     deque<FootAbsolutePosition> lAbsoluteSupportFootPositions;
     m_FeetTrajectoryGenerator->ComputeAbsoluteStepsFromRelativeSteps(
-        m_RelativeFootPositions, LeftFootAbsolutePositions[0],
-        RightFootAbsolutePositions[0], lAbsoluteSupportFootPositions);
+        m_RelativeFootPositions, LeftFootAbsolutePositions[0], RightFootAbsolutePositions[0],
+        lAbsoluteSupportFootPositions);
 
-    for (unsigned int j = 0, k = lChangedIntervalFoot;
-         j < NewRelFootAbsolutePositions.size(); j++, k++) {
+    for (unsigned int j = 0, k = lChangedIntervalFoot; j < NewRelFootAbsolutePositions.size(); j++, k++) {
       NewRelFootAbsolutePositions[j] = lAbsoluteSupportFootPositions[k];
     }
-    for (unsigned int k = lChangedIntervalFoot;
-         k < m_AbsoluteSupportFootPositions.size(); k++) {
+    for (unsigned int k = lChangedIntervalFoot; k < m_AbsoluteSupportFootPositions.size(); k++) {
       m_AbsoluteSupportFootPositions[k] = lAbsoluteSupportFootPositions[k];
     }
   }
@@ -2038,23 +1870,20 @@ int AnalyticalMorisawaCompact::OnLineFootChanges(
   ODEBUG("*** End Change foot position *** ");
   /* Change the foot landing position. */
   try {
-    ChangeFootLandingPosition(
-        m_CurrentTime, IndexIntervals, NewRelFootAbsolutePositions,
-        *m_AnalyticalZMPCoGTrajectoryX, m_CTIPX, *m_AnalyticalZMPCoGTrajectoryY,
-        m_CTIPY, true, true, aStepStackHandler, false);
+    ChangeFootLandingPosition(m_CurrentTime, IndexIntervals, NewRelFootAbsolutePositions,
+                              *m_AnalyticalZMPCoGTrajectoryX, m_CTIPX, *m_AnalyticalZMPCoGTrajectoryY, m_CTIPY, true,
+                              true, aStepStackHandler, false);
   } catch (exception &e) {
     /*! Put back the foot steps to their original states */
-    m_AbsoluteCurrentSupportFootPosition =
-        BackUpm_AbsoluteCurrentSupportFootPosition;
+    m_AbsoluteCurrentSupportFootPosition = BackUpm_AbsoluteCurrentSupportFootPosition;
     m_AbsoluteSupportFootPositions = BackUpm_AbsoluteSupportFootPositions;
     m_RelativeFootPositions = BackUpm_RelativeFootPositions;
 
     /*! Same for the feet trajectories */
     *m_FeetTrajectoryGenerator = *m_BackUpm_FeetTrajectoryGenerator;
 
-    std::cerr << "Unable to change the step ( " << aFootAbsolutePosition[0].x
-              << " , " << aFootAbsolutePosition[0].y << " , "
-              << aFootAbsolutePosition[0].theta << " ) " << std::endl;
+    std::cerr << "Unable to change the step ( " << aFootAbsolutePosition[0].x << " , " << aFootAbsolutePosition[0].y
+              << " , " << aFootAbsolutePosition[0].theta << " ) " << std::endl;
     throw e;
   }
 
@@ -2069,14 +1898,11 @@ int AnalyticalMorisawaCompact::OnLineFootChanges(
   RightFootAbsolutePositions.clear();
 
   /*! Compute next time where a foot-step should be added. */
-  m_UpperTimeLimitToUpdateStacks =
-      m_AbsoluteTimeReference + m_DeltaTj[0] + m_Tdble + 0.45 * m_Tsingle;
+  m_UpperTimeLimitToUpdateStacks = m_AbsoluteTimeReference + m_DeltaTj[0] + m_Tdble + 0.45 * m_Tsingle;
 
   /*! Put 2 iterations of the new trajectories in the queues */
-  FillQueues(m_AbsoluteTimeReference,
-             m_AbsoluteTimeReference + 2 * m_SamplingPeriod, ZMPPositions,
-             CoMPositions, LeftFootAbsolutePositions,
-             RightFootAbsolutePositions);
+  FillQueues(m_AbsoluteTimeReference, m_AbsoluteTimeReference + 2 * m_SamplingPeriod, ZMPPositions, CoMPositions,
+             LeftFootAbsolutePositions, RightFootAbsolutePositions);
   ODEBUG("***** End OnLineFootChange *****");
   return 0;
 }
@@ -2092,11 +1918,10 @@ int AnalyticalMorisawaCompact::ReturnOptimalTimeToRegenerateAStep() {
   return r;
 }
 
-void AnalyticalMorisawaCompact::EndPhaseOfTheWalking(
-    deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &FinalCoMPositions,
-    deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-    deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions) {
-
+void AnalyticalMorisawaCompact::EndPhaseOfTheWalking(deque<ZMPPosition> &FinalZMPPositions,
+                                                     deque<COMState> &FinalCoMPositions,
+                                                     deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+                                                     deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions) {
   m_OnLineMode = true;
   bool DoNotPrepareLastFoot = false;
   int NbSteps = (int)m_RelativeFootPositions.size();
@@ -2108,8 +1933,7 @@ void AnalyticalMorisawaCompact::EndPhaseOfTheWalking(
   ODEBUG("***** Begin EndPhaseOfTheWalking *****");
   // Strategy for the final CoM pos: middle of the segment
   // between the two final steps, in order to be statically stable.
-  unsigned int lindex =
-      (unsigned int)(m_AbsoluteSupportFootPositions.size() - 1);
+  unsigned int lindex = (unsigned int)(m_AbsoluteSupportFootPositions.size() - 1);
   vector<double> *lZMPX = 0;
   double FinalCoMPosX = 0.6;
 
@@ -2120,23 +1944,20 @@ void AnalyticalMorisawaCompact::EndPhaseOfTheWalking(
   if (DoNotPrepareLastFoot)
     FinalCoMPosX = m_AbsoluteSupportFootPositions[lindex].x;
   else
-    FinalCoMPosX = 0.5 * (m_AbsoluteSupportFootPositions[lindex - 1].x +
-                          m_AbsoluteSupportFootPositions[lindex].x);
+    FinalCoMPosX = 0.5 * (m_AbsoluteSupportFootPositions[lindex - 1].x + m_AbsoluteSupportFootPositions[lindex].x);
   m_CTIPX.FinalCoMPos = FinalCoMPosX;
 
   /*! Prepare end condition for ZMP along X axis */
   lZMPX = &m_CTIPX.ZMPProfil;
   unsigned int j = (unsigned int)lZMPX->size();
   if (DoNotPrepareLastFoot)
-    (*lZMPX)[j - 2] = (*lZMPX)[j - 1] =
-        m_AbsoluteSupportFootPositions[lindex].x;
+    (*lZMPX)[j - 2] = (*lZMPX)[j - 1] = m_AbsoluteSupportFootPositions[lindex].x;
   else
     (*lZMPX)[j - 2] = (*lZMPX)[j - 1] = FinalCoMPosX;
 
   /*! Build 3rd order polynomials. */
   for (int i = 1; i < NbOfIntervals - 1; i++) {
-    m_AnalyticalZMPCoGTrajectoryX->Building3rdOrderPolynomial(
-        i, (*lZMPX)[i - 1], (*lZMPX)[i]);
+    m_AnalyticalZMPCoGTrajectoryX->Building3rdOrderPolynomial(i, (*lZMPX)[i - 1], (*lZMPX)[i]);
   }
 
   /*! Compute trajectory for CoM along X axis. */
@@ -2146,34 +1967,29 @@ void AnalyticalMorisawaCompact::EndPhaseOfTheWalking(
   if (DoNotPrepareLastFoot)
     FinalCoMPosY = m_AbsoluteSupportFootPositions[lindex].y;
   else
-    FinalCoMPosY = 0.5 * (m_AbsoluteSupportFootPositions[lindex - 1].y +
-                          m_AbsoluteSupportFootPositions[lindex].y);
+    FinalCoMPosY = 0.5 * (m_AbsoluteSupportFootPositions[lindex - 1].y + m_AbsoluteSupportFootPositions[lindex].y);
   m_CTIPY.FinalCoMPos = FinalCoMPosY;
 
   /*! Prepare end condition for ZMP along Y axis */
   lZMPY = &m_CTIPY.ZMPProfil;
   if (DoNotPrepareLastFoot)
-    (*lZMPY)[j - 2] = (*lZMPY)[j - 1] =
-        m_AbsoluteSupportFootPositions[lindex].y;
+    (*lZMPY)[j - 2] = (*lZMPY)[j - 1] = m_AbsoluteSupportFootPositions[lindex].y;
   else
     (*lZMPY)[j - 2] = (*lZMPY)[j - 1] = FinalCoMPosY;
 
   /*! Build 3rd order polynomials. */
   for (int i = 1; i < NbOfIntervals - 1; i++) {
-    m_AnalyticalZMPCoGTrajectoryY->Building3rdOrderPolynomial(
-        i, (*lZMPY)[i - 1], (*lZMPY)[i]);
+    m_AnalyticalZMPCoGTrajectoryY->Building3rdOrderPolynomial(i, (*lZMPY)[i - 1], (*lZMPY)[i]);
   }
 
   /*! Compute the analytical trajectory*/
   ComputeTrajectory(m_CTIPY, *m_AnalyticalZMPCoGTrajectoryY);
 
   /* Specify when a new step should be asked for. */
-  m_UpperTimeLimitToUpdateStacks =
-      m_AbsoluteTimeReference + m_PreviewControlTime;
+  m_UpperTimeLimitToUpdateStacks = m_AbsoluteTimeReference + m_PreviewControlTime;
 
   /* Put two positions from the new polynomials in the queues. */
-  FillQueues(m_CurrentTime, m_CurrentTime + 2 * m_SamplingPeriod,
-             FinalZMPPositions, FinalCoMPositions,
+  FillQueues(m_CurrentTime, m_CurrentTime + 2 * m_SamplingPeriod, FinalZMPPositions, FinalCoMPositions,
              FinalLeftFootAbsolutePositions, FinalRightFootAbsolutePositions);
 
   m_EndPhase = true;
@@ -2192,8 +2008,7 @@ void AnalyticalMorisawaCompact::RegisterMethods() {
   }
 }
 
-void AnalyticalMorisawaCompact::CallMethod(std::string &Method,
-                                           std::istringstream &strm) {
+void AnalyticalMorisawaCompact::CallMethod(std::string &Method, std::istringstream &strm) {
   if (Method == ":onlinechangestepframe") {
     std::string aws;
     if (strm.good()) {
@@ -2231,29 +2046,24 @@ void AnalyticalMorisawaCompact::PropagateAbsoluteReferenceTime(double x) {
   m_FeetTrajectoryGenerator->SetAbsoluteTimeReference(x);
 }
 
-void AnalyticalMorisawaCompact::FillQueues(
-    double samplingPeriod, double StartingTime, double EndTime,
-    deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &FinalCoMPositions,
-    deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-    deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions) {
+void AnalyticalMorisawaCompact::FillQueues(double samplingPeriod, double StartingTime, double EndTime,
+                                           deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &FinalCoMPositions,
+                                           deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+                                           deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions) {
   unsigned int lIndexInterval, lPrevIndexInterval;
-  m_AnalyticalZMPCoGTrajectoryX->GetIntervalIndexFromTime(
-      m_AbsoluteTimeReference, lIndexInterval);
+  m_AnalyticalZMPCoGTrajectoryX->GetIntervalIndexFromTime(m_AbsoluteTimeReference, lIndexInterval);
   lPrevIndexInterval = lIndexInterval;
 
   /*! Fill in the stacks: minimal strategy only 1 reference. */
   for (double t = StartingTime; t <= EndTime; t += samplingPeriod) {
-    m_AnalyticalZMPCoGTrajectoryX->GetIntervalIndexFromTime(t, lIndexInterval,
-                                                            lPrevIndexInterval);
+    m_AnalyticalZMPCoGTrajectoryX->GetIntervalIndexFromTime(t, lIndexInterval, lPrevIndexInterval);
 
     /*! Feed the ZMPPositions. */
     ZMPPosition aZMPPos;
-    if (!m_AnalyticalZMPCoGTrajectoryX->ComputeZMP(t, aZMPPos.px,
-                                                   lIndexInterval))
+    if (!m_AnalyticalZMPCoGTrajectoryX->ComputeZMP(t, aZMPPos.px, lIndexInterval))
       LTHROW("Unable to compute ZMP along X-Axis in EndPhaseOfWalking");
 
-    if (!m_AnalyticalZMPCoGTrajectoryY->ComputeZMP(t, aZMPPos.py,
-                                                   lIndexInterval))
+    if (!m_AnalyticalZMPCoGTrajectoryY->ComputeZMP(t, aZMPPos.py, lIndexInterval))
       LTHROW("Unable to compute ZMP along Y-Axis in EndPhaseOfWalking");
 
     ComputeZMPz(t, aZMPPos, lIndexInterval);
@@ -2265,8 +2075,7 @@ void AnalyticalMorisawaCompact::FillQueues(
     /*! Left */
     FootAbsolutePosition LeftFootAbsPos;
     memset(&LeftFootAbsPos, 0, sizeof(LeftFootAbsPos));
-    if (!m_FeetTrajectoryGenerator->ComputeAnAbsoluteFootPosition(
-            1, t, LeftFootAbsPos, lIndexInterval)) {
+    if (!m_FeetTrajectoryGenerator->ComputeAnAbsoluteFootPosition(1, t, LeftFootAbsPos, lIndexInterval)) {
       LTHROW("Unable to compute left foot position in EndPhaseOfWalking");
     }
     FinalLeftFootAbsolutePositions.push_back(LeftFootAbsPos);
@@ -2274,33 +2083,27 @@ void AnalyticalMorisawaCompact::FillQueues(
     /*! Right */
     FootAbsolutePosition RightFootAbsPos;
     memset(&RightFootAbsPos, 0, sizeof(RightFootAbsPos));
-    if (!m_FeetTrajectoryGenerator->ComputeAnAbsoluteFootPosition(
-            -1, t, RightFootAbsPos, lIndexInterval)) {
-      LTHROW("Unable to compute right foot"
-             " position in EndPhaseOfWalking");
+    if (!m_FeetTrajectoryGenerator->ComputeAnAbsoluteFootPosition(-1, t, RightFootAbsPos, lIndexInterval)) {
+      LTHROW(
+          "Unable to compute right foot"
+          " position in EndPhaseOfWalking");
     }
     FinalRightFootAbsolutePositions.push_back(RightFootAbsPos);
 
     /*! Feed the COMStates. */
     COMState aCOMPos;
     memset(&aCOMPos, 0, sizeof(aCOMPos));
-    if (!m_AnalyticalZMPCoGTrajectoryX->ComputeCOM(t, aCOMPos.x[0],
-                                                   lIndexInterval)) {
+    if (!m_AnalyticalZMPCoGTrajectoryX->ComputeCOM(t, aCOMPos.x[0], lIndexInterval)) {
       LTHROW("COM out of bound along X axis.");
     }
-    m_AnalyticalZMPCoGTrajectoryX->ComputeCOMSpeed(t, aCOMPos.x[1],
-                                                   lIndexInterval);
-    m_AnalyticalZMPCoGTrajectoryX->ComputeCOMAcceleration(t, aCOMPos.x[2],
-                                                          lIndexInterval);
+    m_AnalyticalZMPCoGTrajectoryX->ComputeCOMSpeed(t, aCOMPos.x[1], lIndexInterval);
+    m_AnalyticalZMPCoGTrajectoryX->ComputeCOMAcceleration(t, aCOMPos.x[2], lIndexInterval);
 
-    if (!m_AnalyticalZMPCoGTrajectoryY->ComputeCOM(t, aCOMPos.y[0],
-                                                   lIndexInterval)) {
+    if (!m_AnalyticalZMPCoGTrajectoryY->ComputeCOM(t, aCOMPos.y[0], lIndexInterval)) {
       LTHROW("COM out of bound along Y axis.");
     }
-    m_AnalyticalZMPCoGTrajectoryY->ComputeCOMSpeed(t, aCOMPos.y[1],
-                                                   lIndexInterval);
-    m_AnalyticalZMPCoGTrajectoryY->ComputeCOMAcceleration(t, aCOMPos.y[2],
-                                                          lIndexInterval);
+    m_AnalyticalZMPCoGTrajectoryY->ComputeCOMSpeed(t, aCOMPos.y[1], lIndexInterval);
+    m_AnalyticalZMPCoGTrajectoryY->ComputeCOMAcceleration(t, aCOMPos.y[2], lIndexInterval);
 
     ComputeCoMz(t, lIndexInterval, aCOMPos, FinalCoMPositions);
 
@@ -2310,69 +2113,51 @@ void AnalyticalMorisawaCompact::FillQueues(
 
     FinalCoMPositions.push_back(aCOMPos);
 
-    ODEBUG4(aZMPPos.px << " " << aZMPPos.py << " " << aCOMPos.x[0] << " "
-                       << aCOMPos.y[0] << " " << aCOMPos.z[0] << " "
-                       << LeftFootAbsPos.x << " " << LeftFootAbsPos.y << " "
-                       << LeftFootAbsPos.z << " " << RightFootAbsPos.x << " "
-                       << RightFootAbsPos.y << " " << RightFootAbsPos.z << " "
+    ODEBUG4(aZMPPos.px << " " << aZMPPos.py << " " << aCOMPos.x[0] << " " << aCOMPos.y[0] << " " << aCOMPos.z[0] << " "
+                       << LeftFootAbsPos.x << " " << LeftFootAbsPos.y << " " << LeftFootAbsPos.z << " "
+                       << RightFootAbsPos.x << " " << RightFootAbsPos.y << " " << RightFootAbsPos.z << " "
                        << samplingPeriod,
             "Test.dat");
   }
 }
 
-void AnalyticalMorisawaCompact::ComputeCoMz(COMState &CoM,
-                                            FootAbsolutePosition &LeftFoot,
-                                            FootAbsolutePosition &) {
-
-  CoM.z[0] = ((LeftFoot.z + 0.7) + (LeftFoot.z + 0.85) + (LeftFoot.z + 0.7) +
-              (LeftFoot.z + 0.85)) *
-             0.25;
-  CoM.z[0] = ((LeftFoot.dz + 0.7) + (LeftFoot.dz + 0.85) + (LeftFoot.dz + 0.7) +
-              (LeftFoot.dz + 0.85)) *
-             0.25;
-  CoM.z[0] = ((LeftFoot.ddz + 0.7) + (LeftFoot.ddz + 0.85) +
-              (LeftFoot.ddz + 0.7) + (LeftFoot.ddz + 0.85)) *
-             0.25;
+void AnalyticalMorisawaCompact::ComputeCoMz(COMState &CoM, FootAbsolutePosition &LeftFoot, FootAbsolutePosition &) {
+  CoM.z[0] = ((LeftFoot.z + 0.7) + (LeftFoot.z + 0.85) + (LeftFoot.z + 0.7) + (LeftFoot.z + 0.85)) * 0.25;
+  CoM.z[0] = ((LeftFoot.dz + 0.7) + (LeftFoot.dz + 0.85) + (LeftFoot.dz + 0.7) + (LeftFoot.dz + 0.85)) * 0.25;
+  CoM.z[0] = ((LeftFoot.ddz + 0.7) + (LeftFoot.ddz + 0.85) + (LeftFoot.ddz + 0.7) + (LeftFoot.ddz + 0.85)) * 0.25;
 }
 
-void AnalyticalMorisawaCompact::ComputeCoMz(
-    double t, unsigned int lIndexInterval, COMState &CoM,
-    deque<COMState> &FinalCoMPositions) {
+void AnalyticalMorisawaCompact::ComputeCoMz(double t, unsigned int lIndexInterval, COMState &CoM,
+                                            deque<COMState> &FinalCoMPositions) {
   double *CoMz = CoM.z;
-  double moving_time =
-      m_RelativeFootPositions[0].SStime + m_RelativeFootPositions[0].DStime;
+  double moving_time = m_RelativeFootPositions[0].SStime + m_RelativeFootPositions[0].DStime;
   unsigned int Index = lIndexInterval / 2;
 
   // absFootz_0, the z axis is expressed in the waist frame
   // we choose the left one by default, the foot are supposed to be symetrical
   // we use it pass the ankle position to the fot position
   PRFoot *aFoot = m_PR->leftFoot();
-  if (aFoot == 0)
-    LTHROW("No foot");
+  if (aFoot == 0) LTHROW("No foot");
   Eigen::Vector3d corrZ;
   corrZ = aFoot->anklePosition;
-  corrZ(2) = 0; // foot height no more equal to ankle height; TODO :
+  corrZ(2) = 0;  // foot height no more equal to ankle height; TODO :
   // remove corrZ
 
   // after the final step we keep the same position for a while
   if (Index >= m_AbsoluteSupportFootPositions.size()) {
     if (FinalCoMPositions.size() == 0) {
-      CoMz[0] = m_InitialPoseCoMHeight +
-                m_AbsoluteSupportFootPositions[Index].z - corrZ(2);
+      CoMz[0] = m_InitialPoseCoMHeight + m_AbsoluteSupportFootPositions[Index].z - corrZ(2);
       CoMz[1] = 0.0;
       CoMz[2] = 0.0;
       return;
     }
 
     COMState LastCoM = FinalCoMPositions.back();
-    double higherPoseCoMz = m_InitialPoseCoMHeight +
-                            m_AbsoluteSupportFootPositions.back().z - corrZ(2);
-    double ft =
-        m_RelativeFootPositions.back().SStime - (t - Index * moving_time);
+    double higherPoseCoMz = m_InitialPoseCoMHeight + m_AbsoluteSupportFootPositions.back().z - corrZ(2);
+    double ft = m_RelativeFootPositions.back().SStime - (t - Index * moving_time);
 
-    m_CoMbsplinesZ->SetParameters(ft, LastCoM.z[0], higherPoseCoMz,
-                                  vector<double>(), vector<double>(),
-                                  LastCoM.z[1], LastCoM.z[2]);
+    m_CoMbsplinesZ->SetParameters(ft, LastCoM.z[0], higherPoseCoMz, vector<double>(), vector<double>(), LastCoM.z[1],
+                                  LastCoM.z[2]);
     m_CoMbsplinesZ->Compute(m_SamplingPeriod, CoMz[0], CoMz[1], CoMz[2]);
     return;
   }
@@ -2384,12 +2169,9 @@ void AnalyticalMorisawaCompact::ComputeCoMz(
   double sz = m_RelativeFootPositions[Index].sz;
   double SStime = m_RelativeFootPositions[Index].SStime;
   double DStime = m_RelativeFootPositions[Index].DStime;
-  double initCoMheight = m_InitialPoseCoMHeight +
-                         m_AbsoluteSupportFootPositions[Index].z - corrZ(2);
-  double lowerCoMheight = 0.95 * m_InitialPoseCoMHeight +
-                          m_AbsoluteSupportFootPositions[Index].z - corrZ(2);
-  double FinalTime(0.0), InitPos(0.0), InitSpeed(0.0), InitAcc(0.0),
-      FinalPos(0.0), interpolationTime(0.0);
+  double initCoMheight = m_InitialPoseCoMHeight + m_AbsoluteSupportFootPositions[Index].z - corrZ(2);
+  double lowerCoMheight = 0.95 * m_InitialPoseCoMHeight + m_AbsoluteSupportFootPositions[Index].z - corrZ(2);
+  double FinalTime(0.0), InitPos(0.0), InitSpeed(0.0), InitAcc(0.0), FinalPos(0.0), interpolationTime(0.0);
   vector<double> MP;
   MP.clear();
   vector<double> ToMP;
@@ -2413,15 +2195,13 @@ void AnalyticalMorisawaCompact::ComputeCoMz(
     interpolationTime = t - Index * moving_time;
     FinalPos = initCoMheight;
     FinalTime = SStime - interpolationTime;
-    if (sx * sx + sy * sy > 0.22 * 0.22 && sz * sz + sz * sz < 0.00001 &&
-        sx * sx + sx * sx > 0.00001) {
+    if (sx * sx + sy * sy > 0.22 * 0.22 && sz * sz + sz * sz < 0.00001 && sx * sx + sx * sx > 0.00001) {
       FinalPos = lowerCoMheight;
     }
     InitPos = LastCoM.z[0];
     InitSpeed = LastCoM.z[1];
     InitAcc = LastCoM.z[2];
-    m_CoMbsplinesZ->SetParameters(FinalTime, InitPos, FinalPos, ToMP, MP,
-                                  InitSpeed, InitAcc);
+    m_CoMbsplinesZ->SetParameters(FinalTime, InitPos, FinalPos, ToMP, MP, InitSpeed, InitAcc);
     m_CoMbsplinesZ->Compute(m_SamplingPeriod, CoMz[0], CoMz[1], CoMz[2]);
     return;
   }
@@ -2446,13 +2226,12 @@ void AnalyticalMorisawaCompact::ComputeCoMz(
   // interval of SStime.
   // the CoM line will go up between an //upLeft1 to upRight1//
   // interval of SStime while 2nd leg moving up on the stairs.
-  if (absFootz_0 > absFootz_1) // first leg
+  if (absFootz_0 > absFootz_1)  // first leg
   {
     deltaZ = absFootz_0 - absFootz_1;
     if (Index > 1)
-      InitPos =
-          m_InitialPoseCoMHeight + absFootz_2 - up * (absFootz_1 - absFootz_2);
-    else // Special case: starting the motion.
+      InitPos = m_InitialPoseCoMHeight + absFootz_2 - up * (absFootz_1 - absFootz_2);
+    else  // Special case: starting the motion.
       InitPos = m_InitialPoseCoMHeight;
 
     InitSpeed = 0.0;
@@ -2460,8 +2239,7 @@ void AnalyticalMorisawaCompact::ComputeCoMz(
 
     interpolationTime = t - Index * moving_time - upLeft * SStime;
     FinalTime = (upRight - upLeft) * SStime - interpolationTime;
-  } else if (absFootz_0 == absFootz_1 &&
-             m_RelativeFootPositions[Index - 1].sz > 0) // 2nd leg
+  } else if (absFootz_0 == absFootz_1 && m_RelativeFootPositions[Index - 1].sz > 0)  // 2nd leg
   {
     deltaZ = (absFootz_0 - absFootz_2);
     InitPos = m_InitialPoseCoMHeight + absFootz_2 - up * deltaZ;
@@ -2479,9 +2257,8 @@ void AnalyticalMorisawaCompact::ComputeCoMz(
   else if (absFootz_0 < absFootz_1) {
     deltaZ = absFootz_1 - absFootz_0;
     if (Index > 1)
-      InitPos = m_InitialPoseCoMHeight + absFootz_1 -
-                down * (absFootz_2 - absFootz_1);
-    else // Special case: starting the motion.
+      InitPos = m_InitialPoseCoMHeight + absFootz_1 - down * (absFootz_2 - absFootz_1);
+    else  // Special case: starting the motion.
       InitPos = m_InitialPoseCoMHeight;
 
     InitSpeed = 0.0;
@@ -2489,8 +2266,7 @@ void AnalyticalMorisawaCompact::ComputeCoMz(
 
     interpolationTime = t - Index * moving_time - downLeft * SStime;
     FinalTime = (downRight - downLeft) * SStime - interpolationTime;
-  } else if (absFootz_0 == absFootz_1 &&
-             m_RelativeFootPositions[Index - 1].sz < 0) // second leg
+  } else if (absFootz_0 == absFootz_1 && m_RelativeFootPositions[Index - 1].sz < 0)  // second leg
   {
     deltaZ = absFootz_2 - absFootz_0;
     InitPos = m_InitialPoseCoMHeight + absFootz_0 - down * deltaZ;
@@ -2508,18 +2284,15 @@ void AnalyticalMorisawaCompact::ComputeCoMz(
     InitPos = initCoMheight;
     FinalPos = initCoMheight;
 
-    if (sx * sx + sy * sy > 0.22 * 0.22 && sz * sz + sz * sz < 0.00001 &&
-        sx * sx + sx * sx > 0.00001) {
-      if (LastCoM.z[0] >= lowerCoMheight + 0.00001 ||
-          LastCoM.z[0] <= lowerCoMheight - 0.00001) {
+    if (sx * sx + sy * sy > 0.22 * 0.22 && sz * sz + sz * sz < 0.00001 && sx * sx + sx * sx > 0.00001) {
+      if (LastCoM.z[0] >= lowerCoMheight + 0.00001 || LastCoM.z[0] <= lowerCoMheight - 0.00001) {
         FinalTime = DStime - interpolationTime;
         FinalPos = lowerCoMheight;
       } else {
         InitPos = lowerCoMheight;
         FinalPos = lowerCoMheight;
       }
-    } else if (LastCoM.z[0] >= initCoMheight + 0.00001 ||
-               LastCoM.z[0] <= initCoMheight - 0.00001) {
+    } else if (LastCoM.z[0] >= initCoMheight + 0.00001 || LastCoM.z[0] <= initCoMheight - 0.00001) {
       FinalTime = SStime - interpolationTime;
       InitPos = lowerCoMheight;
       FinalPos = initCoMheight;
@@ -2540,25 +2313,21 @@ void AnalyticalMorisawaCompact::ComputeCoMz(
   InitPos = LastCoM.z[0];
   InitSpeed = LastCoM.z[1];
   InitAcc = LastCoM.z[2];
-  m_CoMbsplinesZ->SetParameters(FinalTime, InitPos, FinalPos, ToMP, MP,
-                                InitSpeed, InitAcc);
+  m_CoMbsplinesZ->SetParameters(FinalTime, InitPos, FinalPos, ToMP, MP, InitSpeed, InitAcc);
   m_CoMbsplinesZ->Compute(m_SamplingPeriod, CoMz[0], CoMz[1], CoMz[2]);
 }
 
-void AnalyticalMorisawaCompact::ComputeZMPz(double t, ZMPPosition &ZMPz,
-                                            unsigned int IndexInterval) {
+void AnalyticalMorisawaCompact::ComputeZMPz(double t, ZMPPosition &ZMPz, unsigned int IndexInterval) {
   // absFootz_0, the z axis is expressed in the waist frame
   // we choose the left one by default, the foot are supposed to be symetrical
   // we use it pass the ankle position to the fot position
   PRFoot *aFoot = m_PR->leftFoot();
-  if (aFoot == 0)
-    LTHROW("No foot");
+  if (aFoot == 0) LTHROW("No foot");
   Eigen::Vector3d corrZ;
   corrZ = aFoot->anklePosition;
   corrZ(2) = 0.0;
   bool sinple_support = (IndexInterval % 2) == 0;
-  double moving_time =
-      m_RelativeFootPositions[0].SStime + m_RelativeFootPositions[0].DStime;
+  double moving_time = m_RelativeFootPositions[0].SStime + m_RelativeFootPositions[0].DStime;
   unsigned int stepNumber = int(t / moving_time);
 
   // we start analyze since 2nd step
@@ -2574,23 +2343,18 @@ void AnalyticalMorisawaCompact::ComputeZMPz(double t, ZMPPosition &ZMPz,
     return;
   } else {
     double absFootz_0 = m_AbsoluteSupportFootPositions[stepNumber].z - corrZ(2);
-    double absFootz_1 =
-        m_AbsoluteSupportFootPositions[stepNumber - 1].z - corrZ(2);
-    m_ZMPpolynomeZ->SetParametersWithInitPosInitSpeed(
-        m_RelativeFootPositions[0].DStime, absFootz_0, absFootz_1, 0.0);
-    ZMPz.pz = m_ZMPpolynomeZ->Compute(t - stepNumber * moving_time -
-                                      m_RelativeFootPositions[0].SStime);
+    double absFootz_1 = m_AbsoluteSupportFootPositions[stepNumber - 1].z - corrZ(2);
+    m_ZMPpolynomeZ->SetParametersWithInitPosInitSpeed(m_RelativeFootPositions[0].DStime, absFootz_0, absFootz_1, 0.0);
+    ZMPz.pz = m_ZMPpolynomeZ->Compute(t - stepNumber * moving_time - m_RelativeFootPositions[0].SStime);
   }
   return;
 }
 
-void AnalyticalMorisawaCompact::FillQueues(
-    double StartingTime, double EndTime, deque<ZMPPosition> &FinalZMPPositions,
-    deque<COMState> &FinalCoMPositions,
-    deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-    deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions) {
-  FillQueues(m_SamplingPeriod, StartingTime, EndTime, FinalZMPPositions,
-             FinalCoMPositions, FinalLeftFootAbsolutePositions,
-             FinalRightFootAbsolutePositions);
+void AnalyticalMorisawaCompact::FillQueues(double StartingTime, double EndTime, deque<ZMPPosition> &FinalZMPPositions,
+                                           deque<COMState> &FinalCoMPositions,
+                                           deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+                                           deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions) {
+  FillQueues(m_SamplingPeriod, StartingTime, EndTime, FinalZMPPositions, FinalCoMPositions,
+             FinalLeftFootAbsolutePositions, FinalRightFootAbsolutePositions);
 }
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL

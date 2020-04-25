@@ -57,25 +57,20 @@ void ClockCPUTime::endPlanning() {
   struct timeval end;
 
   gettimeofday(&end, 0);
-  double ltime = (double)(end.tv_sec - m_begin.tv_sec) +
-                 0.000001 * (double)(end.tv_usec - m_begin.tv_usec);
+  double ltime = (double)(end.tv_sec - m_begin.tv_sec) + 0.000001 * (double)(end.tv_usec - m_begin.tv_usec);
   m_totaltimeinplanning += ltime;
 }
 
 void ClockCPUTime::startOneIteration() { gettimeofday(&m_begin, 0); }
 
-double ClockCPUTime::getStartOneIteration() {
-  return (double)(m_begin.tv_sec) + 0.000001 * (double)(m_begin.tv_usec);
-}
+double ClockCPUTime::getStartOneIteration() { return (double)(m_begin.tv_sec) + 0.000001 * (double)(m_begin.tv_usec); }
 
 void ClockCPUTime::stopOneIteration() {
   struct timeval end;
 
   gettimeofday(&end, 0);
-  m_currenttime = (double)(end.tv_sec - m_begin.tv_sec) +
-                  0.000001 * (double)(end.tv_usec - m_begin.tv_usec);
-  if (m_maxtime < m_currenttime)
-    m_maxtime = m_currenttime;
+  m_currenttime = (double)(end.tv_sec - m_begin.tv_sec) + 0.000001 * (double)(end.tv_usec - m_begin.tv_usec);
+  if (m_maxtime < m_currenttime) m_maxtime = m_currenttime;
 
   if (m_currenttime > 0.000300) {
     m_totaltime += m_currenttime;
@@ -89,63 +84,52 @@ void ClockCPUTime::stopModification() {
   struct timeval end;
 
   gettimeofday(&end, 0);
-  m_modificationtime = (double)(end.tv_sec - m_begin.tv_sec) +
-                       0.000001 * (double)(end.tv_usec - m_begin.tv_usec);
+  m_modificationtime = (double)(end.tv_sec - m_begin.tv_sec) + 0.000001 * (double)(end.tv_usec - m_begin.tv_usec);
 
-  if (m_modificationtime > 0.0005)
-    m_nbofmodifs++;
+  if (m_modificationtime > 0.0005) m_nbofmodifs++;
 
   m_totalmodificationtime += m_modificationtime;
 }
 
 void ClockCPUTime::fillInStatistics() {
   m_TimeProfile[m_TimeProfileIndex] = m_currenttime + m_modificationtime;
-  m_TimeProfileTS[m_TimeProfileIndex] =
-      (double)(m_begin.tv_sec) + 0.000001 * (double)m_begin.tv_usec;
+  m_TimeProfileTS[m_TimeProfileIndex] = (double)(m_begin.tv_sec) + 0.000001 * (double)m_begin.tv_usec;
 
   m_TimeProfileIndex++;
-  if (m_TimeProfileIndex > m_TimeProfileUpperLimit)
-    m_TimeProfileIndex = 0;
+  if (m_TimeProfileIndex > m_TimeProfileUpperLimit) m_TimeProfileIndex = 0;
 }
 
 void ClockCPUTime::writeBuffer(string &aFileName) {
   ofstream lProfileOutput(aFileName.c_str(), ofstream::out);
   // Shift all the measurement to the origin.
-  double dST =
-      (double)m_startingtime.tv_sec + 0.000001 * (double)m_startingtime.tv_usec;
+  double dST = (double)m_startingtime.tv_sec + 0.000001 * (double)m_startingtime.tv_usec;
   for (unsigned int i = 0; i < m_TimeProfileIndex; i++)
-    lProfileOutput << " " << m_TimeProfileTS[i] - dST << " " << m_TimeProfile[i]
-                   << std::endl;
+    lProfileOutput << " " << m_TimeProfileTS[i] - dST << " " << m_TimeProfile[i] << std::endl;
 
   lProfileOutput.close();
 }
 
 void ClockCPUTime::displayStatistics(ostream &os, struct OneStep &OneStep) {
-
   os << " === " << endl;
   os << "Number of iterations " << OneStep.m_NbOfIt << endl
      << "Number of iterations above 300 us:" << m_NbOfItToCompute << endl;
   if (m_NbOfItToCompute != 0)
-    os << "Mean time consumption for one iteration above 300 us: "
-       << (double)m_totaltime / (double)m_NbOfItToCompute << " (s) " << endl
-       << "Maximum time consumption for one iteration: " << m_maxtime << " (s) "
-       << endl;
+    os << "Mean time consumption for one iteration above 300 us: " << (double)m_totaltime / (double)m_NbOfItToCompute
+       << " (s) " << endl
+       << "Maximum time consumption for one iteration: " << m_maxtime << " (s) " << endl;
   else
     os << "No iteration above 300 us realized." << endl
        << "The computation were done off-line or there is a problem." << endl;
 
   os << " === " << endl;
   if (m_nbofmodifs != 0)
-    os << "Mean time for modifications: "
-       << (double)m_totalmodificationtime / (double)m_nbofmodifs << " (s) "
-       << endl
+    os << "Mean time for modifications: " << (double)m_totalmodificationtime / (double)m_nbofmodifs << " (s) " << endl
        << "Number of modifications: " << m_nbofmodifs << endl;
   else
     os << "No modifications" << endl;
 
-  os << "Time on ZMP reference planning " << m_totaltimeinplanning << " (s) "
-     << endl;
+  os << "Time on ZMP reference planning " << m_totaltimeinplanning << " (s) " << endl;
 }
 
-} // namespace TestSuite
-} // namespace PatternGeneratorJRL
+}  // namespace TestSuite
+}  // namespace PatternGeneratorJRL

@@ -49,7 +49,7 @@ typedef struct ObstaclePar_t ObstaclePar;
     @brief Object to detect collisions between robot leg and obstacle
 */
 class CollisionDetector {
-public:
+ public:
   /// Constructor
   CollisionDetector();
 
@@ -61,11 +61,8 @@ public:
      (whichLeg positive for left leg and negative for right leg).
      This function might be replaced by functions from DynamicMultibody
   */
-  void CalcCoordShankLowerLegPoint(Eigen::Vector3d RelCoord,
-                                   Eigen::Vector3d &AbsCoord,
-                                   Eigen::VectorXd LegAngles,
-                                   Eigen::Matrix3d WaistRot,
-                                   Eigen::Vector3d WaistPos, int WhichLeg);
+  void CalcCoordShankLowerLegPoint(Eigen::Vector3d RelCoord, Eigen::Vector3d &AbsCoord, Eigen::VectorXd LegAngles,
+                                   Eigen::Matrix3d WaistRot, Eigen::Vector3d WaistPos, int WhichLeg);
 
   /*! Set opstacle position in worldframe and
     the obstacle points in local obstacle frame */
@@ -74,14 +71,13 @@ public:
   /*! This function transforms the coordinates of a point
     expressed in the world frame to the local coordinates
     in the obstacle frame */
-  void WorldFrameToObstacleFrame(Eigen::Vector3d &WorldFrameCoord,
-                                 Eigen::Vector3d &ObstacleFrameCoord);
+  void WorldFrameToObstacleFrame(Eigen::Vector3d &WorldFrameCoord, Eigen::Vector3d &ObstacleFrameCoord);
 
   /*! This function checks for intersection of two line segments
     p1p2 and v1v2. It returns true if a collision occurs, else false
   */
-  bool CollisionTwoLines(std::vector<double> p1, std::vector<double> p2,
-                         std::vector<double> v1, std::vector<double> v2);
+  bool CollisionTwoLines(std::vector<double> p1, std::vector<double> p2, std::vector<double> v1,
+                         std::vector<double> v2);
 
   /*! This function checks for intersection of a linesegment p1p2
     of the robot, expressed in the obstacle frame, with one of the
@@ -89,16 +85,14 @@ public:
     plane 2:rear plane.
     It returns true if a collision occurs, else false.
   */
-  bool CollisionLineObstaclePlane(Eigen::Vector3d &LegPoint1,
-                                  Eigen::Vector3d &LegPoint2, int PlaneNumber);
+  bool CollisionLineObstaclePlane(Eigen::Vector3d &LegPoint1, Eigen::Vector3d &LegPoint2, int PlaneNumber);
 
   /*! This function does the complete check if a linesegment
     intersects with the obstacle or is completely inside the obstacle
   */
-  bool CollisionLineObstacleComplete(Eigen::Vector3d &Point1,
-                                     Eigen::Vector3d &Point2);
+  bool CollisionLineObstacleComplete(Eigen::Vector3d &Point1, Eigen::Vector3d &Point2);
 
-protected:
+ protected:
   /*! x, y, z position of obstacle in worldframe
     (point taken on the front plan of the obstacle
     on the floor and in the middel of the width) */
@@ -118,6 +112,6 @@ protected:
   Eigen::MatrixXd m_ObstaclePoints;
 };
 
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #include <MotionGeneration/StepOverPlanner.hh>
 #endif /* _COLLISION_DETECTOR_H_ */

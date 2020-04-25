@@ -30,11 +30,9 @@
 
 using namespace PatternGeneratorJRL;
 
-FilteringAnalyticalTrajectoryByPreviewControl::
-    FilteringAnalyticalTrajectoryByPreviewControl(
-        SimplePluginManager *lSPM,
-        AnalyticalZMPCOGTrajectory *lAnalyticalZMPCOGTrajectory,
-        PreviewControl *lPreviewControl)
+FilteringAnalyticalTrajectoryByPreviewControl::FilteringAnalyticalTrajectoryByPreviewControl(
+    SimplePluginManager *lSPM, AnalyticalZMPCOGTrajectory *lAnalyticalZMPCOGTrajectory,
+    PreviewControl *lPreviewControl)
     : SimplePlugin(lSPM) {
   m_StartingTime = 0.0;
   m_Duration = 0.0;
@@ -54,8 +52,7 @@ FilteringAnalyticalTrajectoryByPreviewControl::
 
   m_LocalBufferIndex = 0;
 
-  std::string aMethodName[3] = {":samplingperiod", ":previewcontroltime",
-                                ":singlesupporttime"};
+  std::string aMethodName[3] = {":samplingperiod", ":previewcontroltime", ":singlesupporttime"};
 
   for (int i = 0; i < 3; i++) {
     if (!RegisterMethod(aMethodName[i])) {
@@ -66,14 +63,11 @@ FilteringAnalyticalTrajectoryByPreviewControl::
   }
 }
 
-void FilteringAnalyticalTrajectoryByPreviewControl::SetAnalyticalTrajectory(
-    AnalyticalZMPCOGTrajectory *lAZCT) {
+void FilteringAnalyticalTrajectoryByPreviewControl::SetAnalyticalTrajectory(AnalyticalZMPCOGTrajectory *lAZCT) {
   m_AnalyticalZMPCOGTrajectory = lAZCT;
 }
 
-void FilteringAnalyticalTrajectoryByPreviewControl::SetPreviewControl(
-    PreviewControl *lPreviewControl) {
-
+void FilteringAnalyticalTrajectoryByPreviewControl::SetPreviewControl(PreviewControl *lPreviewControl) {
   m_PreviewControl = lPreviewControl;
   m_LocalBufferIndex = 0;
   if (m_PreviewControl != 0) {
@@ -100,21 +94,16 @@ void FilteringAnalyticalTrajectoryByPreviewControl::Resize() {
 #endif
 }
 
-FilteringAnalyticalTrajectoryByPreviewControl::
-    ~FilteringAnalyticalTrajectoryByPreviewControl() {}
+FilteringAnalyticalTrajectoryByPreviewControl::~FilteringAnalyticalTrajectoryByPreviewControl() {}
 
-bool FilteringAnalyticalTrajectoryByPreviewControl::FillInWholeBuffer(
-    double FirstValueofZMPProfil, double DeltaTj0) {
+bool FilteringAnalyticalTrajectoryByPreviewControl::FillInWholeBuffer(double FirstValueofZMPProfil, double DeltaTj0) {
   ODEBUG("m_PreviewControl : " << m_PreviewControl
-                               << " m_AnalyticalZMPCOGTrajectory : "
-                               << m_AnalyticalZMPCOGTrajectory);
+                               << " m_AnalyticalZMPCOGTrajectory : " << m_AnalyticalZMPCOGTrajectory);
 
-  if ((m_PreviewControl == 0) || (m_AnalyticalZMPCOGTrajectory == 0))
-    return false;
+  if ((m_PreviewControl == 0) || (m_AnalyticalZMPCOGTrajectory == 0)) return false;
 
   if (!m_PreviewControl->IsCoherent())
-    m_PreviewControl->ComputeOptimalWeights(
-        OptimalControllerSolver::MODE_WITH_INITIALPOS);
+    m_PreviewControl->ComputeOptimalWeights(OptimalControllerSolver::MODE_WITH_INITIALPOS);
 
   m_Duration = DeltaTj0;
 
@@ -122,11 +111,9 @@ bool FilteringAnalyticalTrajectoryByPreviewControl::FillInWholeBuffer(
   m_StartingTime = m_AnalyticalZMPCOGTrajectory->GetAbsoluteTimeReference();
   double DeltaT = m_PreviewControl->SamplingPeriod();
 
-  unsigned int SizeOfBuffer =
-      (unsigned int)((DeltaTj0 + PreviewWindowTime) / DeltaT);
+  unsigned int SizeOfBuffer = (unsigned int)((DeltaTj0 + PreviewWindowTime) / DeltaT);
   ODEBUG("SizeOfBuffer: " << SizeOfBuffer << " Duration : " << m_Duration);
-  if (m_DataBuffer.size() != SizeOfBuffer)
-    m_DataBuffer.resize(SizeOfBuffer);
+  if (m_DataBuffer.size() != SizeOfBuffer) m_DataBuffer.resize(SizeOfBuffer);
 
   double lZMP;
   double t = 0;
@@ -139,9 +126,7 @@ bool FilteringAnalyticalTrajectoryByPreviewControl::FillInWholeBuffer(
     aof.open(Buffer, ofstream::out);
   }
   // On the interval of the newly changed first foot.
-  for (unsigned int lDataBufferIndex = 0;
-       lDataBufferIndex < m_DataBuffer.size();
-       t += DeltaT, lDataBufferIndex++) {
+  for (unsigned int lDataBufferIndex = 0; lDataBufferIndex < m_DataBuffer.size(); t += DeltaT, lDataBufferIndex++) {
     double r = 0.0;
     if (t < DeltaTj0) {
       m_AnalyticalZMPCOGTrajectory->ComputeZMP(t + m_StartingTime, lZMP);
@@ -166,33 +151,27 @@ bool FilteringAnalyticalTrajectoryByPreviewControl::FillInWholeBuffer(
   return true;
 }
 
-bool FilteringAnalyticalTrajectoryByPreviewControl::UpdateOneStep(
-    double t, double &ZMPValue, double &CoMValue, double &CoMSpeedValue) {
-  ODEBUG("time:" << t << " m_StartingTime: " << m_StartingTime << " "
-                 << m_Duration + m_StartingTime << " ( " << m_Duration << " ) "
+bool FilteringAnalyticalTrajectoryByPreviewControl::UpdateOneStep(double t, double &ZMPValue, double &CoMValue,
+                                                                  double &CoMSpeedValue) {
+  ODEBUG("time:" << t << " m_StartingTime: " << m_StartingTime << " " << m_Duration + m_StartingTime << " ( "
+                 << m_Duration << " ) "
                  << " LBI:" << m_LocalBufferIndex);
-  if ((t < m_StartingTime) || (t > m_Duration + m_StartingTime) ||
-      (m_Duration == 0.0))
-    return false;
+  if ((t < m_StartingTime) || (t > m_Duration + m_StartingTime) || (m_Duration == 0.0)) return false;
 
   double lsxzmp = 0.0;
-  m_PreviewControl->OneIterationOfPreview1D(m_ComState, lsxzmp, m_DataBuffer,
-                                            m_LocalBufferIndex, m_ZMPPCValue,
-                                            false);
+  m_PreviewControl->OneIterationOfPreview1D(m_ComState, lsxzmp, m_DataBuffer, m_LocalBufferIndex, m_ZMPPCValue, false);
 
   ZMPValue = m_ZMPPCValue;
   CoMValue = m_ComState(0, 0);
   CoMSpeedValue = m_ComState(1, 0);
 
   m_LocalBufferIndex++;
-  if (m_LocalBufferIndex >= (int)m_DataBuffer.size())
-    m_LocalBufferIndex = 0;
+  if (m_LocalBufferIndex >= (int)m_DataBuffer.size()) m_LocalBufferIndex = 0;
   return true;
 }
 
 /*! \brief Overloading method of SimplePlugin */
-void FilteringAnalyticalTrajectoryByPreviewControl::CallMethod(
-    std::string &Method, std::istringstream &strm) {
+void FilteringAnalyticalTrajectoryByPreviewControl::CallMethod(std::string &Method, std::istringstream &strm) {
   if (Method == ":samplingperiod") {
     std::string aws;
     if (strm.good()) {

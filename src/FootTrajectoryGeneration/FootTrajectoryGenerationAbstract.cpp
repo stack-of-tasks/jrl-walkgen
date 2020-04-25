@@ -34,8 +34,7 @@
 
 using namespace PatternGeneratorJRL;
 
-FootTrajectoryGenerationAbstract::FootTrajectoryGenerationAbstract(
-    SimplePluginManager *lSPM, PRFoot *aFoot)
+FootTrajectoryGenerationAbstract::FootTrajectoryGenerationAbstract(SimplePluginManager *lSPM, PRFoot *aFoot)
     : SimplePlugin(lSPM), m_Foot(aFoot) {
   m_Omega = 0.0;
   m_SamplingPeriod = 0.005;
@@ -45,8 +44,7 @@ FootTrajectoryGenerationAbstract::FootTrajectoryGenerationAbstract(
   // Define here the curving during the Step (ray defined along Y axis)
   m_StepCurving = 0.2;
 
-  std::string aMethodName[5] = {":omega", ":stepheight", ":singlesupporttime",
-                                ":doublesupporttime",
+  std::string aMethodName[5] = {":omega", ":stepheight", ":singlesupporttime", ":doublesupporttime",
                                 ":samplingperiod"
                                 ":stepstairon"};
 
@@ -57,8 +55,7 @@ FootTrajectoryGenerationAbstract::FootTrajectoryGenerationAbstract(
   }
 }
 
-void FootTrajectoryGenerationAbstract::CallMethod(std::string &Method,
-                                                  std::istringstream &strm) {
+void FootTrajectoryGenerationAbstract::CallMethod(std::string &Method, std::istringstream &strm) {
   if (Method == ":omega") {
     strm >> m_Omega;
   } else if (Method == ":omega2") {
@@ -77,28 +74,30 @@ void FootTrajectoryGenerationAbstract::CallMethod(std::string &Method,
 }
 
 void FootTrajectoryGenerationAbstract::UpdateFootPosition(
-    std::deque<FootAbsolutePosition> &, // SupportFootAbsolutePositions,
-    std::deque<FootAbsolutePosition> &, // NoneSupportFootAbsolutePositions,
-    int,                                // CurrentAbsoluteIndex,
-    int,                                // IndexInitial,
-    double,                             // ModulatedSingleSupportTime,
-    int,                                // StepType,
-    int)                                // LeftOrRight)
+    std::deque<FootAbsolutePosition> &,  // SupportFootAbsolutePositions,
+    std::deque<FootAbsolutePosition> &,  // NoneSupportFootAbsolutePositions,
+    int,                                 // CurrentAbsoluteIndex,
+    int,                                 // IndexInitial,
+    double,                              // ModulatedSingleSupportTime,
+    int,                                 // StepType,
+    int)                                 // LeftOrRight)
 {
-  LTHROW("FootTrajectoryGenerationAbstract::UpdateFootPosition-1: \
+  LTHROW(
+      "FootTrajectoryGenerationAbstract::UpdateFootPosition-1: \
           To be implemented ");
 }
 
 void FootTrajectoryGenerationAbstract::UpdateFootPosition(
-    std::deque<FootAbsolutePosition> &, // SupportFootAbsolutePositions,
-    std::deque<FootAbsolutePosition> &, // NoneSupportFootAbsolutePositions,
-    int,                                // StartIndex,
-    int,                                // k,
-    double,                             // LocalInterpolationStartTime,
-    double,                             // ModulatedSingleSupportTime,
-    int,                                // StepType,
-    int)                                // LeftOrRight)
+    std::deque<FootAbsolutePosition> &,  // SupportFootAbsolutePositions,
+    std::deque<FootAbsolutePosition> &,  // NoneSupportFootAbsolutePositions,
+    int,                                 // StartIndex,
+    int,                                 // k,
+    double,                              // LocalInterpolationStartTime,
+    double,                              // ModulatedSingleSupportTime,
+    int,                                 // StepType,
+    int)                                 // LeftOrRight)
 {
-  LTHROW("FootTrajectoryGenerationAbstract::UpdateFootPosition-2: \
+  LTHROW(
+      "FootTrajectoryGenerationAbstract::UpdateFootPosition-2: \
           To be implemented ");
 }

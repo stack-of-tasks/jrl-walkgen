@@ -35,71 +35,57 @@
 namespace PatternGeneratorJRL {
 
 class DynamicFilter : SimplePlugin {
-public: // Public methods
+ public:  // Public methods
   /// \brief
   DynamicFilter(SimplePluginManager *SPM, PinocchioRobot *aPR);
   ~DynamicFilter();
   /// \brief
-  int OffLinefilter(const deque<COMState> &inputCOMTraj_deq_,
-                    const deque<ZMPPosition> &inputZMPTraj_deq_,
+  int OffLinefilter(const deque<COMState> &inputCOMTraj_deq_, const deque<ZMPPosition> &inputZMPTraj_deq_,
                     const deque<FootAbsolutePosition> &inputLeftFootTraj_deq_,
                     const deque<FootAbsolutePosition> &inputRightFootTraj_deq_,
-                    const vector<Eigen::VectorXd> &UpperPart_q,
-                    const vector<Eigen::VectorXd> &UpperPart_dq,
-                    const vector<Eigen::VectorXd> &UpperPart_ddq,
-                    deque<COMState> &outputDeltaCOMTraj_deq_);
+                    const vector<Eigen::VectorXd> &UpperPart_q, const vector<Eigen::VectorXd> &UpperPart_dq,
+                    const vector<Eigen::VectorXd> &UpperPart_ddq, deque<COMState> &outputDeltaCOMTraj_deq_);
 
-  int OnLinefilter(const deque<COMState> &inputCOMTraj_deq_,
-                   const deque<ZMPPosition> &inputZMPTraj_deq_,
+  int OnLinefilter(const deque<COMState> &inputCOMTraj_deq_, const deque<ZMPPosition> &inputZMPTraj_deq_,
                    const deque<FootAbsolutePosition> &inputLeftFootTraj_deq_,
                    const deque<FootAbsolutePosition> &inputRightFootTraj_deq_,
                    deque<COMState> &outputDeltaCOMTraj_deq_);
 
-  void init(double controlPeriod, double interpolationPeriod,
-            double controlWindowSize, double previewWindowSize,
+  void init(double controlPeriod, double interpolationPeriod, double controlWindowSize, double previewWindowSize,
             double kajitaPCwindowSize, COMState inputCoMState);
 
   /// \brief atomic function
-  void InverseKinematics(const COMState &inputCoMState,
-                         const FootAbsolutePosition &inputLeftFoot,
-                         const FootAbsolutePosition &inputRightFoot,
-                         Eigen::VectorXd &configuration,
-                         Eigen::VectorXd &velocity,
-                         Eigen::VectorXd &acceleration, double samplingPeriod,
-                         int stage, int iteration);
+  void InverseKinematics(const COMState &inputCoMState, const FootAbsolutePosition &inputLeftFoot,
+                         const FootAbsolutePosition &inputRightFoot, Eigen::VectorXd &configuration,
+                         Eigen::VectorXd &velocity, Eigen::VectorXd &acceleration, double samplingPeriod, int stage,
+                         int iteration);
 
   /// \brief atomic function allow to compute
-  void ComputeZMPMB(double samplingPeriod, const COMState &inputCoMState,
-                    const FootAbsolutePosition &inputLeftFoot,
-                    const FootAbsolutePosition &inputRightFoot,
-                    Eigen::Vector3d &ZMPMB, unsigned int stage,
+  void ComputeZMPMB(double samplingPeriod, const COMState &inputCoMState, const FootAbsolutePosition &inputLeftFoot,
+                    const FootAbsolutePosition &inputRightFoot, Eigen::Vector3d &ZMPMB, unsigned int stage,
                     unsigned int iteration);
 
   void stage0INstage1();
 
   /// \brief Preview control on the ZMPMBs computed
-  int OptimalControl(deque<ZMPPosition> &inputdeltaZMP_deq,
-                     deque<COMState> &outputDeltaCOMTraj_deq_);
+  int OptimalControl(deque<ZMPPosition> &inputdeltaZMP_deq, deque<COMState> &outputDeltaCOMTraj_deq_);
 
   /// \brief compute the zmpmb from articulated pos vel and acc
-  int zmpmb(Eigen::VectorXd &configuration, Eigen::VectorXd &velocity,
-            Eigen::VectorXd &acceleration, Eigen::Vector3d &zmpmb);
+  int zmpmb(Eigen::VectorXd &configuration, Eigen::VectorXd &velocity, Eigen::VectorXd &acceleration,
+            Eigen::Vector3d &zmpmb);
 
   void CallMethod(std::string &Method, std::istringstream &strm);
 
-private: // Private methods
-         // void computeWaist(const FootAbsolutePosition & inputLeftFoot) ;
+ private:  // Private methods
+           // void computeWaist(const FootAbsolutePosition & inputLeftFoot) ;
   // -------------------------------------------------------------------
 
-public: // The accessors
-  void setRobotUpperPart(const Eigen::VectorXd &configuration,
-                         const Eigen::VectorXd &velocity,
+ public:  // The accessors
+  void setRobotUpperPart(const Eigen::VectorXd &configuration, const Eigen::VectorXd &velocity,
                          const Eigen::VectorXd &acceleration);
 
   /// \brief getter :
-  inline ComAndFootRealizationByGeometry *getComAndFootRealization() {
-    return comAndFootRealization_;
-  }
+  inline ComAndFootRealizationByGeometry *getComAndFootRealization() { return comAndFootRealization_; }
 
   inline PinocchioRobot *getPinocchioRobot() { return PR_; }
 
@@ -118,7 +104,7 @@ public: // The accessors
 
   inline deque<Eigen::Vector3d> zmpmb() { return ZMPMB_vec_; }
 
-private: // Private members
+ private:  // Private members
   /// \brief Time variables
   /// -----------------------------------
   ///
@@ -222,20 +208,17 @@ private: // Private members
 
   const unsigned int MODE_PC_;
 
-public: // debug functions
+ public:  // debug functions
   // to use the vector of eigen used by metapod
   // EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-  void Debug(const deque<COMState> &ctrlCoMState,
-             const deque<FootAbsolutePosition> &ctrlLeftFoot,
-             const deque<FootAbsolutePosition> &ctrlRightFoot,
-             const deque<COMState> &inputCOMTraj_deq_,
-             const deque<ZMPPosition> inputZMPTraj_deq_,
-             const deque<FootAbsolutePosition> &inputLeftFootTraj_deq_,
+  void Debug(const deque<COMState> &ctrlCoMState, const deque<FootAbsolutePosition> &ctrlLeftFoot,
+             const deque<FootAbsolutePosition> &ctrlRightFoot, const deque<COMState> &inputCOMTraj_deq_,
+             const deque<ZMPPosition> inputZMPTraj_deq_, const deque<FootAbsolutePosition> &inputLeftFootTraj_deq_,
              const deque<FootAbsolutePosition> &inputRightFootTraj_deq_,
              const deque<COMState> &outputDeltaCOMTraj_deq_);
 };
 
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 
-#endif // DYNAMICFILTER_HH
+#endif  // DYNAMICFILTER_HH

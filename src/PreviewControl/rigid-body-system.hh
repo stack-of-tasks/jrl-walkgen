@@ -33,13 +33,11 @@
 
 namespace PatternGeneratorJRL {
 class RigidBodySystem {
-
   //
   // Public methods
   //
-public:
-  RigidBodySystem(SimplePluginManager *SPM, PinocchioRobot *aPR,
-                  SupportFSM *FSM);
+ public:
+  RigidBodySystem(SimplePluginManager *SPM, PinocchioRobot *aPR, SupportFSM *FSM);
 
   ~RigidBodySystem();
 
@@ -55,8 +53,7 @@ public:
   /// \param[in] FinalRightFootTraj_deq
   ///
   /// \return 0
-  int interpolate(solution_t Result, std::deque<ZMPPosition> &FinalZMPTraj_deq,
-                  std::deque<COMState> &FinalCOMTraj_deq,
+  int interpolate(solution_t Result, std::deque<ZMPPosition> &FinalZMPTraj_deq, std::deque<COMState> &FinalCOMTraj_deq,
                   std::deque<FootAbsolutePosition> &FinalLeftFootTraj_deq,
                   std::deque<FootAbsolutePosition> &FinalRightFootTraj_deq);
 
@@ -88,12 +85,11 @@ public:
   /// \param[out] RightFootTraj_deq
   ///
   /// return 0
-  int generate_trajectories(
-      double time, const solution_t &Result,
-      const std::deque<support_state_t> &SupportStates_deq,
-      const std::deque<double> &PreviewedSupportAngles_deq,
-      std::deque<FootAbsolutePosition> &LeftFootTraj_deq,
-      std::deque<FootAbsolutePosition> &RightFootTraj_deq);
+  int generate_trajectories(double time, const solution_t &Result,
+                            const std::deque<support_state_t> &SupportStates_deq,
+                            const std::deque<double> &PreviewedSupportAngles_deq,
+                            std::deque<FootAbsolutePosition> &LeftFootTraj_deq,
+                            std::deque<FootAbsolutePosition> &RightFootTraj_deq);
 
   /// \name Accessors and mutators
   /// \{
@@ -129,15 +125,13 @@ public:
   inline bool multiBody() const { return multiBody_; }
   inline void multiBody(bool multiBody) { multiBody_ = multiBody; }
 
-  std::deque<support_state_t> &SupportTrajectory() {
-    return SupportTrajectory_deq_;
-  }
+  std::deque<support_state_t> &SupportTrajectory() { return SupportTrajectory_deq_; }
   /// \}
 
   //
   // Private methods
   //
-private:
+ private:
   /// \brief Initialize dynamics of the CoP
   ///
   /// \param[out] Dynamics Matrices to be filled
@@ -159,10 +153,8 @@ private:
   /// \param[out] RightFootDynamics
   ///
   /// return 0
-  int compute_foot_zero_dynamics(
-      const std::deque<support_state_t> &SupportStates_deq,
-      linear_dynamics_t &LeftFootDynamics,
-      linear_dynamics_t &RightFootDynamics);
+  int compute_foot_zero_dynamics(const std::deque<support_state_t> &SupportStates_deq,
+                                 linear_dynamics_t &LeftFootDynamics, linear_dynamics_t &RightFootDynamics);
 
   /// \brief Compute foot dynamics based on polynomial interpolation
   ///
@@ -171,10 +163,8 @@ private:
   /// \param[out] RightFootDynamics
   ///
   /// return 0
-  int compute_foot_pol_dynamics(
-      const std::deque<support_state_t> &SupportStates_deq,
-      linear_dynamics_t &LeftFootDynamics,
-      linear_dynamics_t &RightFootDynamics);
+  int compute_foot_pol_dynamics(const std::deque<support_state_t> &SupportStates_deq,
+                                linear_dynamics_t &LeftFootDynamics, linear_dynamics_t &RightFootDynamics);
 
   /// \brief Compute foot dynamics based on "piecewise constant jerk" splines
   ///
@@ -183,18 +173,15 @@ private:
   /// \param[out] RightFootDynamics
   ///
   /// return 0
-  int compute_foot_cjerk_dynamics(
-      const std::deque<support_state_t> &SupportStates_deq,
-      linear_dynamics_t &LeftFootDynamics,
-      linear_dynamics_t &RightFootDynamics);
+  int compute_foot_cjerk_dynamics(const std::deque<support_state_t> &SupportStates_deq,
+                                  linear_dynamics_t &LeftFootDynamics, linear_dynamics_t &RightFootDynamics);
 
   /// \brief Initialize static trajectories
   int initialize_trajectories();
 
   /// \brief Compute predefined trajectories
   /// \param[in] SupportStates_deq Previewed support states
-  int precompute_trajectories(
-      const std::deque<support_state_t> &SupportStates_deq);
+  int precompute_trajectories(const std::deque<support_state_t> &SupportStates_deq);
 
   /// \brief Compute a row of the dynamic matrices Sp and Sa
   /// \param[out] Spbar
@@ -217,7 +204,7 @@ private:
   //
   // Private members
   //
-private:
+ private:
   /// \brief Bodies
   RigidBody CoM_, LeftFoot_, RightFoot_, LeftWrist_, RightWrist_;
 
@@ -268,5 +255,5 @@ private:
 
   PinocchioRobot *PR_;
 };
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* _RIGID_BODY_SYSTEM_ */

@@ -38,18 +38,17 @@ using namespace Eigen;
 using namespace se3;
 
 VectorXd HalfSittingPos(se3::Model model);
-void readData(vector<COMState> &comState_, vector<FootAbsolutePosition> &rf_,
-              vector<FootAbsolutePosition> &lf_,
-              vector<HandAbsolutePosition> &rh_,
-              vector<HandAbsolutePosition> &lh_, vector<ZMPPosition> &zmp_);
+void readData(vector<COMState> &comState_, vector<FootAbsolutePosition> &rf_, vector<FootAbsolutePosition> &lf_,
+              vector<HandAbsolutePosition> &rh_, vector<HandAbsolutePosition> &lh_, vector<ZMPPosition> &zmp_);
 
 int main(int argc, char *argv[]) {
   std::string filename;
   if (argc >= 2) {
     filename = argv[1];
   } else {
-    filename = "/home/mnaveau/devel/ros_unstable/stacks/inverse_kinematics/"
-               "pgmax/hrp2014.urdf";
+    filename =
+        "/home/mnaveau/devel/ros_unstable/stacks/inverse_kinematics/"
+        "pgmax/hrp2014.urdf";
   }
 
   std::cout << "Parse filename \"" << filename << "\"" << std::endl;
@@ -69,8 +68,7 @@ int main(int argc, char *argv[]) {
   MultiContactHirukawa aMCH(&model);
   aMCH.q(q);
 
-  aMCH.oneIteration(comState_deque[0], rf_deque[0], lf_deque[0], rh_deque[0],
-                    lh_deque[0]);
+  aMCH.oneIteration(comState_deque[0], rf_deque[0], lf_deque[0], rh_deque[0], lh_deque[0]);
 
   return 1;
 }
@@ -78,9 +76,10 @@ int main(int argc, char *argv[]) {
 VectorXd HalfSittingPos(se3::Model model) {
   VectorXd halfsitting = VectorXd::Zero(model.nq);
   ifstream aif;
-  aif.open("/home/mnaveau/devel/ros_unstable/install/share/hrp2-14/"
-           "HRP2JRLInitConfigSmall.dat",
-           ifstream::in);
+  aif.open(
+      "/home/mnaveau/devel/ros_unstable/install/share/hrp2-14/"
+      "HRP2JRLInitConfigSmall.dat",
+      ifstream::in);
   if (aif.is_open()) {
     for (int i = 0; i < model.nq; i++) {
       aif >> halfsitting(i);
@@ -93,10 +92,8 @@ VectorXd HalfSittingPos(se3::Model model) {
   return halfsitting;
 }
 
-void readData(vector<COMState> &comPos_, vector<FootAbsolutePosition> &rf_,
-              vector<FootAbsolutePosition> &lf_,
-              vector<HandAbsolutePosition> &rh_,
-              vector<HandAbsolutePosition> &lh_, vector<ZMPPosition> &zmp_) {
+void readData(vector<COMState> &comPos_, vector<FootAbsolutePosition> &rf_, vector<FootAbsolutePosition> &lf_,
+              vector<HandAbsolutePosition> &rh_, vector<HandAbsolutePosition> &lh_, vector<ZMPPosition> &zmp_) {
   vector<vector<double>> data_;
   data_.clear();
   std::string astateFile =
@@ -108,8 +105,7 @@ void readData(vector<COMState> &comPos_, vector<FootAbsolutePosition> &rf_,
   // reading all the data file
   while (dataStream.good()) {
     vector<double> oneLine(74);
-    for (unsigned int i = 0; i < oneLine.size(); ++i)
-      dataStream >> oneLine[i];
+    for (unsigned int i = 0; i < oneLine.size(); ++i) dataStream >> oneLine[i];
     data_.push_back(oneLine);
   }
   dataStream.close();

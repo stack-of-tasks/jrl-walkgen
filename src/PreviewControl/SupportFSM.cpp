@@ -32,11 +32,14 @@ using namespace PatternGeneratorJRL;
 using namespace std;
 
 SupportFSM::SupportFSM()
-    : EPS_(1e-6), InTranslation_(false), InRotation_(false),
-      NbStepsAfterRotation_(0), CurrentSupportFoot_(LEFT),
+    : EPS_(1e-6),
+      InTranslation_(false),
+      InRotation_(false),
+      NbStepsAfterRotation_(0),
+      CurrentSupportFoot_(LEFT),
       PostRotationPhase_(false) {
-  StepPeriod_ = 0.8; // Duration of one step
-  DSPeriod_ = 1e9;   // Duration of the DS phase
+  StepPeriod_ = 0.8;  // Duration of one step
+  DSPeriod_ = 1e9;    // Duration of the DS phase
   DSSSPeriod_ = 0.8;
   // TODO: setNumberOfStepsSSDS
   NbStepsSSDS_ = 200;
@@ -46,8 +49,7 @@ SupportFSM::SupportFSM()
 
 SupportFSM::~SupportFSM() {}
 
-void SupportFSM::update_vel_reference(reference_t &Ref,
-                                      const support_state_t &CurrentSupport) {
+void SupportFSM::update_vel_reference(reference_t &Ref, const support_state_t &CurrentSupport) {
   // Check the reference type of the robot (rotation, translation)
   if (fabs(Ref.Local.X) > 2 * EPS_ || fabs(Ref.Local.Y) > 2 * EPS_) {
     InTranslation_ = true;
@@ -81,21 +83,16 @@ void SupportFSM::update_vel_reference(reference_t &Ref,
   }
 }
 
-void SupportFSM::set_support_state(double time, unsigned int pi,
-                                   support_state_t &Support,
+void SupportFSM::set_support_state(double time, unsigned int pi, support_state_t &Support,
                                    const reference_t &Ref) const {
-
   Support.StateChanged = false;
   Support.NbInstants++;
 
   bool ReferenceGiven = false;
-  if (fabs(Ref.Local.X) > EPS_ || fabs(Ref.Local.Y) > EPS_ ||
-      fabs(Ref.Local.Yaw) > EPS_)
-    ReferenceGiven = true;
+  if (fabs(Ref.Local.X) > EPS_ || fabs(Ref.Local.Y) > EPS_ || fabs(Ref.Local.Yaw) > EPS_) ReferenceGiven = true;
 
   // Update time limit for double support phase
-  if (ReferenceGiven && Support.Phase == DS &&
-      (Support.TimeLimit - time - EPS_) > DSSSPeriod_) {
+  if (ReferenceGiven && Support.Phase == DS && (Support.TimeLimit - time - EPS_) > DSSSPeriod_) {
     Support.TimeLimit = time + DSSSPeriod_;
     Support.NbStepsLeft = NbStepsSSDS_;
   }
@@ -110,8 +107,7 @@ void SupportFSM::set_support_state(double time, unsigned int pi,
       Support.NbInstants = 0;
     }
     // DS->SS
-    else if (((Support.Phase == DS) && ReferenceGiven) ||
-             ((Support.Phase == DS) && (Support.NbStepsLeft > 0))) {
+    else if (((Support.Phase == DS) && ReferenceGiven) || ((Support.Phase == DS) && (Support.NbStepsLeft > 0))) {
       Support.Phase = SS;
       Support.TimeLimit = time + pi * T_ + StepPeriod_;
       Support.NbStepsLeft = NbStepsSSDS_;
@@ -119,8 +115,7 @@ void SupportFSM::set_support_state(double time, unsigned int pi,
       Support.NbInstants = 0;
     }
     // SS->SS
-    else if ((Support.Phase == SS && Support.NbStepsLeft > 0) ||
-             (Support.NbStepsLeft == 0 && ReferenceGiven)) {
+    else if ((Support.Phase == SS && Support.NbStepsLeft > 0) || (Support.NbStepsLeft == 0 && ReferenceGiven)) {
       if (Support.Foot == LEFT)
         Support.Foot = RIGHT;
       else
@@ -128,12 +123,10 @@ void SupportFSM::set_support_state(double time, unsigned int pi,
       Support.StateChanged = true;
       Support.NbInstants = 0;
       Support.TimeLimit = time + pi * T_ + StepPeriod_;
-      if (pi != 1) // Flying foot is not down
+      if (pi != 1)  // Flying foot is not down
         ++Support.StepNumber;
-      if (!ReferenceGiven)
-        Support.NbStepsLeft = Support.NbStepsLeft - 1;
-      if (ReferenceGiven)
-        Support.NbStepsLeft = NbStepsSSDS_;
+      if (!ReferenceGiven) Support.NbStepsLeft = Support.NbStepsLeft - 1;
+      if (ReferenceGiven) Support.NbStepsLeft = NbStepsSSDS_;
     }
   }
 }

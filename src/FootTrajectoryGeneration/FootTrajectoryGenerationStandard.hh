@@ -46,9 +46,8 @@ namespace PatternGeneratorJRL {
     is used. Finally a landing and take off phase using an angular value
     (\f$\omega\f$).
 */
-class FootTrajectoryGenerationStandard
-    : public FootTrajectoryGenerationAbstract {
-public:
+class FootTrajectoryGenerationStandard : public FootTrajectoryGenerationAbstract {
+ public:
   /*!\name  Constants related to the direction for the generation of the
     polynomes.
     @{ */
@@ -100,17 +99,15 @@ public:
     @param StepType: Type of steps (for book-keeping).
     @param LeftOrRight: Specify if it is left (1) or right (-1).
   */
-  virtual void UpdateFootPosition(
-      deque<FootAbsolutePosition> &SupportFootAbsolutePositions,
-      deque<FootAbsolutePosition> &NoneSupportFootAbsolutePositions,
-      int CurrentAbsoluteIndex, int IndexInitial,
-      double ModulatedSingleSupportTime, int StepType, int LeftOrRight);
+  virtual void UpdateFootPosition(deque<FootAbsolutePosition> &SupportFootAbsolutePositions,
+                                  deque<FootAbsolutePosition> &NoneSupportFootAbsolutePositions,
+                                  int CurrentAbsoluteIndex, int IndexInitial, double ModulatedSingleSupportTime,
+                                  int StepType, int LeftOrRight);
 
-  virtual void UpdateFootPosition(
-      deque<FootAbsolutePosition> &SupportFootAbsolutePositions,
-      deque<FootAbsolutePosition> &NoneSupportFootAbsolutePositions,
-      int StartIndex, int k, double LocalInterpolationStartTime,
-      double ModulatedSingleSupportTime, int StepType, int LeftOrRight);
+  virtual void UpdateFootPosition(deque<FootAbsolutePosition> &SupportFootAbsolutePositions,
+                                  deque<FootAbsolutePosition> &NoneSupportFootAbsolutePositions, int StartIndex, int k,
+                                  double LocalInterpolationStartTime, double ModulatedSingleSupportTime, int StepType,
+                                  int LeftOrRight);
 
   /*! Initialize internal data structures.
     In this specific case, it is in charge of
@@ -152,10 +149,9 @@ public:
     t=0.0.
     @param[in] InitSpeed: Initial speed when computing the polynome at t=0.0.
   */
-  int SetParametersWithInitPosInitSpeed(
-      int AxisReference, double TimeInterval, double FinalPosition,
-      double InitPosition, double InitSpeed,
-      vector<double> MiddlePos = vector<double>(3, -1));
+  int SetParametersWithInitPosInitSpeed(int AxisReference, double TimeInterval, double FinalPosition,
+                                        double InitPosition, double InitSpeed,
+                                        vector<double> MiddlePos = vector<double>(3, -1));
 
   /*! Overloading -- BSPlines Init Function
     This method specifies the parameters for each of the Bsplines used by
@@ -169,10 +165,8 @@ public:
     @param MaxPosition: Max value of the function.
   */
 
-  int SetParametersWithInitPosInitSpeed(int AxisReference, double TimeInterval,
-                                        double FinalTime, double FinalPosition,
-                                        double TimeMaxPosition,
-                                        double MaxPosition, double InitSpeed,
+  int SetParametersWithInitPosInitSpeed(int AxisReference, double TimeInterval, double FinalTime, double FinalPosition,
+                                        double TimeMaxPosition, double MaxPosition, double InitSpeed,
                                         double InitPosition);
 
   /*! This method get the parameters for each of the polynome used by this
@@ -188,10 +182,8 @@ public:
     t=0.0.
     @param[in] InitSpeed: Initial speed when computing the polynome at t=0.0.
   */
-  int GetParametersWithInitPosInitSpeed(int AxisReference, double &TimeInterval,
-                                        double &FinalPosition,
-                                        double &InitPosition,
-                                        double &InitSpeed);
+  int GetParametersWithInitPosInitSpeed(int AxisReference, double &TimeInterval, double &FinalPosition,
+                                        double &InitPosition, double &InitSpeed);
 
   /// \brief Set parameters considering initial position, speed, acceleration.
   ///
@@ -201,9 +193,8 @@ public:
   /// \param[in] InitPosition
   /// \param[in] InitSpeed
   /// \param[in] InitAcc
-  int SetParameters(int PolynomeIndex, double TimeInterval,
-                    double FinalPosition, double InitPosition, double InitSpeed,
-                    double InitAcc, double InitJerk);
+  int SetParameters(int PolynomeIndex, double TimeInterval, double FinalPosition, double InitPosition,
+                    double InitSpeed, double InitAcc, double InitJerk);
 
   /// \brief Set parameters considering initial position, speed, acceleration.
   ///
@@ -213,19 +204,15 @@ public:
   /// \param[in] InitPosition
   /// \param[in] InitSpeed
   /// \param[in] InitAcc
-  int SetParameters(int PolynomeIndex, double TimeInterval,
-                    double FinalPosition, double InitPosition, double InitSpeed,
-                    double InitAcc,
-                    std::vector<double> MiddlePos = vector<double>(3, -1));
+  int SetParameters(int PolynomeIndex, double TimeInterval, double FinalPosition, double InitPosition,
+                    double InitSpeed, double InitAcc, std::vector<double> MiddlePos = vector<double>(3, -1));
 
   /*! Fill an absolute foot position structure for a given time. */
   // Using Polynoms
-  double ComputeAllWithPolynom(FootAbsolutePosition &aFootAbsolutePosition,
-                               double Time);
+  double ComputeAllWithPolynom(FootAbsolutePosition &aFootAbsolutePosition, double Time);
 
   // Using BSplines
-  double ComputeAllWithBSplines(FootAbsolutePosition &aFootAbsolutePosition,
-                                double Time);
+  double ComputeAllWithBSplines(FootAbsolutePosition &aFootAbsolutePosition, double Time);
 
   /*! Compute the value for a given polynome. */
   double Compute(unsigned int PolynomeIndex, double Time);
@@ -236,9 +223,8 @@ public:
   /*! Compute the absolute foot position from the queue of relative positions.
     There is not direct dependency with time.
   */
-  void ComputingAbsFootPosFromQueueOfRelPos(
-      deque<RelativeFootPosition> &RelativeFootPositions,
-      deque<FootAbsolutePosition> &AbsoluteFootPositions);
+  void ComputingAbsFootPosFromQueueOfRelPos(deque<RelativeFootPosition> &RelativeFootPositions,
+                                            deque<FootAbsolutePosition> &AbsoluteFootPositions);
 
   /*! Methods to compute a set of positions for the feet according to the
     discrete time given in parameters and the phase of walking.
@@ -251,7 +237,7 @@ public:
 
   void copyPolynomesFromFTGS(FootTrajectoryGenerationStandard *FTGS);
 
-protected:
+ protected:
   /*! \brief Polynomes for X and Y axis positions*/
   Polynome5 *m_PolynomeX, *m_PolynomeY;
 
@@ -281,5 +267,5 @@ protected:
   Eigen::Vector3d m_AnklePositionRight;
 };
 
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* _FOOT_TRAJECTORY_GENERATION_ABSTRACT_H_ */

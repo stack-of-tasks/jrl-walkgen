@@ -37,11 +37,9 @@
 namespace PatternGeneratorJRL {
 class ZMPDiscretization;
 class ZMPConstrainedQPFastFormulation : public ZMPRefTrajectoryGeneration {
-
-public:
+ public:
   /* Default constructor. */
-  ZMPConstrainedQPFastFormulation(SimplePluginManager *lSPM, string DataFile,
-                                  PinocchioRobot *aPR = 0);
+  ZMPConstrainedQPFastFormulation(SimplePluginManager *lSPM, string DataFile, PinocchioRobot *aPR = 0);
 
   /* Default destructor. */
   ~ZMPConstrainedQPFastFormulation();
@@ -90,22 +88,20 @@ public:
 
 
   */
-  void GetZMPDiscretization(
-      deque<ZMPPosition> &ZMPPositions, deque<COMState> &CoMStates,
-      deque<RelativeFootPosition> &RelativeFootPositions,
-      deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-      deque<FootAbsolutePosition> &RightFootAbsolutePositions, double Xmax,
-      COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
-      FootAbsolutePosition &InitLeftFootAbsolutePosition,
-      FootAbsolutePosition &InitRightFootAbsolutePosition);
+  void GetZMPDiscretization(deque<ZMPPosition> &ZMPPositions, deque<COMState> &CoMStates,
+                            deque<RelativeFootPosition> &RelativeFootPositions,
+                            deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+                            deque<FootAbsolutePosition> &RightFootAbsolutePositions, double Xmax,
+                            COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
+                            FootAbsolutePosition &InitLeftFootAbsolutePosition,
+                            FootAbsolutePosition &InitRightFootAbsolutePosition);
 
   /*! This method is a new way of computing the ZMP trajectory from
     foot trajectory. */
-  int BuildZMPTrajectoryFromFootTrajectory(
-      deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-      deque<FootAbsolutePosition> &RightFootAbsolutePositions,
-      deque<ZMPPosition> &ZMPRefPositions, deque<COMState> &COMStates,
-      double ConstraintOnX, double ConstraintOnY, double T, unsigned int N);
+  int BuildZMPTrajectoryFromFootTrajectory(deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+                                           deque<FootAbsolutePosition> &RightFootAbsolutePositions,
+                                           deque<ZMPPosition> &ZMPRefPositions, deque<COMState> &COMStates,
+                                           double ConstraintOnX, double ConstraintOnY, double T, unsigned int N);
 
   /*! \name Methods to build the optimization problem
     @{
@@ -142,18 +138,16 @@ public:
 
   /*! Build the necessary matrices for the QP problem under
     linear inequality constraints. */
-  int BuildConstraintMatrices(
-      double *&Px, double *&DPu, unsigned N, double T, double StartingTime,
-      deque<LinearConstraintInequality_t *> &QueueOfLConstraintInequalities,
-      double Com_Height, unsigned int &NbOfConstraints, Eigen::VectorXd &xk,
-      Eigen::VectorXd &ZMPRef, unsigned int &NextNumberOfRemovedConstraints);
+  int BuildConstraintMatrices(double *&Px, double *&DPu, unsigned N, double T, double StartingTime,
+                              deque<LinearConstraintInequality_t *> &QueueOfLConstraintInequalities, double Com_Height,
+                              unsigned int &NbOfConstraints, Eigen::VectorXd &xk, Eigen::VectorXd &ZMPRef,
+                              unsigned int &NextNumberOfRemovedConstraints);
 
   /*! \brief Build the constant part of the constraint matrices. */
   int BuildingConstantPartOfConstraintMatrices();
 
   /*! This method helps to build a linear system for constraining the ZMP. */
-  int ComputeLinearSystem(vector<CH_Point> aVecOfPoints, Eigen::MatrixXd &A,
-                          Eigen::MatrixXd &B);
+  int ComputeLinearSystem(vector<CH_Point> aVecOfPoints, Eigen::MatrixXd &A, Eigen::MatrixXd &B);
 
   /*! @} */
 
@@ -175,41 +169,32 @@ public:
     Returns the number of steps which has been completely put inside
     the queue of ZMP, and foot positions.
   */
-  std::size_t
-  InitOnLine(deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
-             deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-             deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
-             FootAbsolutePosition &InitLeftFootAbsolutePosition,
-             FootAbsolutePosition &InitRightFootAbsolutePosition,
-             deque<RelativeFootPosition> &RelativeFootPositions,
-             COMState &lStartingCOMState,
-             Eigen::Vector3d &lStartingZMPPosition);
+  std::size_t InitOnLine(deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
+                         deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+                         deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
+                         FootAbsolutePosition &InitLeftFootAbsolutePosition,
+                         FootAbsolutePosition &InitRightFootAbsolutePosition,
+                         deque<RelativeFootPosition> &RelativeFootPositions, COMState &lStartingCOMState,
+                         Eigen::Vector3d &lStartingZMPPosition);
 
   /* ! Methods to update the stack on-line by inserting
      a new foot position. */
-  void
-  OnLineAddFoot(RelativeFootPosition &NewRelativeFootPosition,
-                deque<ZMPPosition> &FinalZMPPositions,
-                deque<COMState> &CoMStates,
-                deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-                deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
-                bool EndSequence);
+  void OnLineAddFoot(RelativeFootPosition &NewRelativeFootPosition, deque<ZMPPosition> &FinalZMPPositions,
+                     deque<COMState> &CoMStates, deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+                     deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions, bool EndSequence);
 
   /* ! \brief Method to update the stacks on-line */
-  void OnLine(double time, deque<ZMPPosition> &FinalZMPPositions,
-              deque<COMState> &CoMStates,
+  void OnLine(double time, deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
               deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
               deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions);
 
   /* ! \brief Method to change on line the landing position of a foot.
      @return If the method failed it returns -1, 0 otherwise.
   */
-  int OnLineFootChange(
-      double time, FootAbsolutePosition &aFootAbsolutePosition,
-      deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
-      deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-      deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
-      StepStackHandler *aStepStackHandler = 0);
+  int OnLineFootChange(double time, FootAbsolutePosition &aFootAbsolutePosition, deque<ZMPPosition> &FinalZMPPositions,
+                       deque<COMState> &CoMStates, deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+                       deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
+                       StepStackHandler *aStepStackHandler = 0);
 
   /*! \brief Method to stop walking.
     @param[out] ZMPPositions: The queue of ZMP reference positions.
@@ -219,16 +204,13 @@ public:
     @param[out] RightFootAbsolutePositions:
     The queue of right foot absolute positions.
   */
-  void
-  EndPhaseOfTheWalking(deque<ZMPPosition> &ZMPPositions,
-                       deque<COMState> &FinalCOMStates,
-                       deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-                       deque<FootAbsolutePosition> &RightFootAbsolutePositions);
+  void EndPhaseOfTheWalking(deque<ZMPPosition> &ZMPPositions, deque<COMState> &FinalCOMStates,
+                            deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+                            deque<FootAbsolutePosition> &RightFootAbsolutePositions);
 
-  int ValidationConstraints(
-      double *&DPx, double *&DPu, int NbOfConstraints,
-      deque<LinearConstraintInequality_t *> &QueueOfLConstraintInequalities,
-      unsigned int li, double *X, double StartingTime);
+  int ValidationConstraints(double *&DPx, double *&DPu, int NbOfConstraints,
+                            deque<LinearConstraintInequality_t *> &QueueOfLConstraintInequalities, unsigned int li,
+                            double *X, double StartingTime);
   /*! \brief Return the time at which it is optimal to
     regenerate a step in online mode.
    */
@@ -260,7 +242,7 @@ public:
   static const unsigned int QLDANDLQ = 1;
   static const unsigned int PLDP = 2;
 
-private:
+ private:
   /*! Uses a ZMPDiscretization scheme to get the usual Kajita heuristic. */
   ZMPDiscretization *m_ZMPD;
 
@@ -344,14 +326,13 @@ private:
 
   /*! @} */
 
-  int DumpProblem(double *Q, double *D, double *Pu,
-                  unsigned int NbOfConstraints, double *Px, double *XL,
-                  double *XU, double Time);
+  int DumpProblem(double *Q, double *D, double *Pu, unsigned int NbOfConstraints, double *Px, double *XL, double *XU,
+                  double Time);
 
   /*! Vector of similar constraints. */
   vector<int> m_SimilarConstraints;
 };
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 
 #include <ZMPRefTrajectoryGeneration/ZMPDiscretization.hh>
 #endif /* _ZMPQP_WITH_CONSTRAINT_H_ */

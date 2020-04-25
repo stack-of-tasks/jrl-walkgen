@@ -53,8 +53,7 @@ double trunc(double x) { return x < 0 ? ceil(x) : 0 < x ? floor(x) : x; }
 namespace PatternGeneratorJRL {
 namespace TestSuite {
 
-TestObject::TestObject(int argc, char *argv[], string &aTestName,
-                       int lPGIInterface) {
+TestObject::TestObject(int argc, char *argv[], string &aTestName, int lPGIInterface) {
   // Generates a signal when a NaN occurs.
   feenableexcept(FE_INVALID | FE_OVERFLOW);
 
@@ -89,32 +88,28 @@ bool TestObject::checkFiles() {
     fileExist = false;
     std::ifstream file(m_URDFPath.c_str());
     fileExist = !file.fail();
-    if (!fileExist)
-      throw std::string("failed to open robot urdf model");
+    if (!fileExist) throw std::string("failed to open robot urdf model");
   }
   // check if SRDF file exist
   {
     fileExist = false;
     std::ifstream file(m_SRDFPath.c_str());
     fileExist = !file.fail();
-    if (!fileExist)
-      throw std::string("failed to open robot srdf model");
+    if (!fileExist) throw std::string("failed to open robot srdf model");
   }
   // check if file has .urdf extension
   {
     correctExtension = false;
     std::size_t found = m_URDFPath.find_last_of('.');
     correctExtension = (m_URDFPath.substr(found) == ".urdf");
-    if (!correctExtension)
-      throw std::string("File is not an urdf, extension has to be .urdf");
+    if (!correctExtension) throw std::string("File is not an urdf, extension has to be .urdf");
   }
   // check if file has .srdf extension
   {
     correctExtension = false;
     std::size_t found = m_SRDFPath.find_last_of('.');
     correctExtension = (m_SRDFPath.substr(found) == ".srdf");
-    if (!correctExtension)
-      throw std::string("File is not an srdf, extension has to be .srdf");
+    if (!correctExtension) throw std::string("File is not an srdf, extension has to be .srdf");
   }
   return correctExtension && fileExist;
 }
@@ -162,24 +157,17 @@ bool TestObject::init() {
 }
 
 TestObject::~TestObject() {
+  if (m_PR != 0) delete m_PR;
 
-  if (m_PR != 0)
-    delete m_PR;
+  if (m_DebugPR != 0) delete m_DebugPR;
 
-  if (m_DebugPR != 0)
-    delete m_DebugPR;
+  if (m_robotData != 0) delete m_robotData;
 
-  if (m_robotData != 0)
-    delete m_robotData;
+  if (m_DebugRobotData != 0) delete m_DebugRobotData;
 
-  if (m_DebugRobotData != 0)
-    delete m_DebugRobotData;
+  if (m_PGI != 0) delete m_PGI;
 
-  if (m_PGI != 0)
-    delete m_PGI;
-
-  if (m_SPM != 0)
-    delete m_SPM;
+  if (m_SPM != 0) delete m_SPM;
 }
 
 void TestObject::InitializeStateVectors() {
@@ -209,8 +197,7 @@ void TestObject::InitializeStateVectors() {
 }
 
 void TestObject::CreateAndInitializeComAndFootRealization() {
-  m_ComAndFootRealization = new ComAndFootRealizationByGeometry(
-      (PatternGeneratorInterfacePrivate *)m_SPM);
+  m_ComAndFootRealization = new ComAndFootRealizationByGeometry((PatternGeneratorInterfacePrivate *)m_SPM);
 
   m_ComAndFootRealization->setPinocchioRobot(m_PR);
   m_ComAndFootRealization->SetStepStackHandler(new StepStackHandler(m_SPM));
@@ -228,19 +215,16 @@ void TestObject::CreateAndInitializeComAndFootRealization() {
   lStartingCOMState(2) = m_OneStep.m_finalCOMPosition.z[0];
   m_ComAndFootRealization->setSamplingPeriod(0.005);
   m_ComAndFootRealization->Initialization();
-  m_ComAndFootRealization->InitializationCoM(
-      m_HalfSitting, lStartingCOMState, waist, m_OneStep.m_LeftFootPosition,
-      m_OneStep.m_RightFootPosition);
+  m_ComAndFootRealization->InitializationCoM(m_HalfSitting, lStartingCOMState, waist, m_OneStep.m_LeftFootPosition,
+                                             m_OneStep.m_RightFootPosition);
   m_CurrentConfiguration(0) = waist(0);
   m_CurrentConfiguration(1) = waist(1);
   m_CurrentConfiguration(2) = waist(2);
 }
 
 void TestObject::InitializeLimbs() {
-  m_leftLeg =
-      m_PR->jointsBetween(m_PR->waist(), m_PR->leftFoot()->associatedAnkle);
-  m_rightLeg =
-      m_PR->jointsBetween(m_PR->waist(), m_PR->rightFoot()->associatedAnkle);
+  m_leftLeg = m_PR->jointsBetween(m_PR->waist(), m_PR->leftFoot()->associatedAnkle);
+  m_rightLeg = m_PR->jointsBetween(m_PR->waist(), m_PR->rightFoot()->associatedAnkle);
   m_leftArm = m_PR->jointsBetween(m_PR->chest(), m_PR->leftWrist());
   m_rightArm = m_PR->jointsBetween(m_PR->chest(), m_PR->rightWrist());
 
@@ -248,14 +232,10 @@ void TestObject::InitializeLimbs() {
   m_rightLeg.erase(m_rightLeg.begin());
 
   pinocchio::JointModelVector &ActuatedJoints = m_PR->getActuatedJoints();
-  for (unsigned i = 0; i < m_leftLeg.size(); ++i)
-    m_leftLeg[i] = pinocchio::idx_q(ActuatedJoints[m_leftLeg[i]]) - 1;
-  for (unsigned i = 0; i < m_rightLeg.size(); ++i)
-    m_rightLeg[i] = pinocchio::idx_q(ActuatedJoints[m_rightLeg[i]]) - 1;
-  for (unsigned i = 0; i < m_leftArm.size(); ++i)
-    m_leftArm[i] = pinocchio::idx_q(ActuatedJoints[m_leftArm[i]]) - 1;
-  for (unsigned i = 0; i < m_rightArm.size(); ++i)
-    m_rightArm[i] = pinocchio::idx_q(ActuatedJoints[m_rightArm[i]]) - 1;
+  for (unsigned i = 0; i < m_leftLeg.size(); ++i) m_leftLeg[i] = pinocchio::idx_q(ActuatedJoints[m_leftLeg[i]]) - 1;
+  for (unsigned i = 0; i < m_rightLeg.size(); ++i) m_rightLeg[i] = pinocchio::idx_q(ActuatedJoints[m_rightLeg[i]]) - 1;
+  for (unsigned i = 0; i < m_leftArm.size(); ++i) m_leftArm[i] = pinocchio::idx_q(ActuatedJoints[m_leftArm[i]]) - 1;
+  for (unsigned i = 0; i < m_rightArm.size(); ++i) m_rightArm[i] = pinocchio::idx_q(ActuatedJoints[m_rightArm[i]]) - 1;
 
   if ((m_robotModel.parents.size() >= m_rightArm.back() + 1) &&
       m_robotModel.parents[m_rightArm.back() + 1] == m_rightArm.back())
@@ -270,22 +250,17 @@ void TestObject::InitializeLimbs() {
     m_leftGripper = 0;
 }
 
-void TestObject::CreateAndInitializeHumanoidRobot(std::string &URDFFile,
-                                                  std::string &SRDFFile,
-                                                  PinocchioRobot *&aPR,
+void TestObject::CreateAndInitializeHumanoidRobot(std::string &URDFFile, std::string &SRDFFile, PinocchioRobot *&aPR,
                                                   PinocchioRobot *&aDebugPR) {
   // Creating the humanoid robot via the URDF.
   //      try{
-  pinocchio::urdf::buildModel(URDFFile, pinocchio::JointModelFreeFlyer(),
-                              m_robotModel);
+  pinocchio::urdf::buildModel(URDFFile, pinocchio::JointModelFreeFlyer(), m_robotModel);
   m_robotData = new pinocchio::Data(m_robotModel);
   m_DebugRobotData = new pinocchio::Data(m_robotModel);
 
   if ((aPR == 0) || (aDebugPR == 0)) {
-    if (aPR != 0)
-      delete aPR;
-    if (aDebugPR != 0)
-      delete aDebugPR;
+    if (aPR != 0) delete aPR;
+    if (aDebugPR != 0) delete aDebugPR;
 
     aPR = new PinocchioRobot();
     aDebugPR = new PinocchioRobot();
@@ -302,14 +277,12 @@ void TestObject::CreateAndInitializeHumanoidRobot(std::string &URDFFile,
   InitializeRobotWithSRDF(*aDebugPR, SRDFFile);
 }
 
-void TestObject::InitializeRobotWithSRDF(PinocchioRobot &aPR,
-                                         const std::string &filename) {
+void TestObject::InitializeRobotWithSRDF(PinocchioRobot &aPR, const std::string &filename) {
   // manage the SRDF file
   //////////////////////////////////
   std::ifstream srdf_stream(filename.c_str());
   if (!srdf_stream.is_open()) {
-    const std::string exception_message(filename +
-                                        " does not seem to be a valid file.");
+    const std::string exception_message(filename + " does not seem to be a valid file.");
     cerr << exception_message << endl;
     throw std::invalid_argument(exception_message);
   }
@@ -330,16 +303,13 @@ void TestObject::InitializeRobotWithSRDF(PinocchioRobot &aPR,
   m_HalfSitting.setZero();
 
   std::vector<bool> setHalfSittingJoint(aPR.numberDof() - m_PinoFreeFlyerSize);
-  for (std::size_t i = 0; i < setHalfSittingJoint.size(); i++)
-    setHalfSittingJoint[i] = false;
+  for (std::size_t i = 0; i < setHalfSittingJoint.size(); i++) setHalfSittingJoint[i] = false;
 
   pinocchio::Model *aModel = aPR.Model();
-  BOOST_FOREACH (const ptree::value_type &v,
-                 pt.get_child("robot.group_state")) {
+  BOOST_FOREACH (const ptree::value_type &v, pt.get_child("robot.group_state")) {
     if (v.first == "<xmlattr>") {
       std::string nameOfGroup = v.second.get<std::string>("name");
-      if (nameOfGroup != "half_sitting")
-        break;
+      if (nameOfGroup != "half_sitting") break;
     }
 
     if (v.first == "joint") {
@@ -355,12 +325,12 @@ void TestObject::InitializeRobotWithSRDF(PinocchioRobot &aPR,
         }
       }
     }
-  } // BOOST_FOREACH
+  }  // BOOST_FOREACH
 
   for (std::size_t i = 0; i < setHalfSittingJoint.size(); i++) {
     if (setHalfSittingJoint[i] == false) {
-      std::cerr << "Joint number " << i << " not initialized on "
-                << setHalfSittingJoint.size() << " nb of joints" << std::endl;
+      std::cerr << "Joint number " << i << " not initialized on " << setHalfSittingJoint.size() << " nb of joints"
+                << std::endl;
       exit(-1);
     }
   }
@@ -424,8 +394,7 @@ void TestObject::InitializeRobotWithSRDF(PinocchioRobot &aPR,
     // mapURDFToOpenHRP.
     if (v.first == "<xmlattr>") {
       std::string nameOfGroup = v.second.get<std::string>("name");
-      if (nameOfGroup != "mapURDFToOpenHRP")
-        break;
+      if (nameOfGroup != "mapURDFToOpenHRP") break;
     }
     if (v.first == "joint") {
       const std::string jointName = v.second.get<std::string>("<xmlattr>.name");
@@ -438,7 +407,6 @@ void TestObject::InitializeRobotWithSRDF(PinocchioRobot &aPR,
 }
 
 void TestObject::prepareDebugFiles() {
-
   if (m_DebugZMP2) {
     ofstream aofzmpmb2;
     string aFileName = m_TestName;
@@ -455,16 +423,13 @@ void TestObject::prepareDebugFiles() {
 }
 
 void TestObject::fillInDebugFiles() {
-  if (m_DebugFGPI)
-    m_OneStep.fillInDebugFile();
+  if (m_DebugFGPI) m_OneStep.fillInDebugFile();
 }
 
 void TestObject::fillInDebugFilesFull() {
   if (m_DebugFGPIFull) {
-    analyticalInverseKinematics(m_CurrentConfiguration, m_CurrentVelocity,
-                                m_CurrentAcceleration);
-    m_DebugPR->computeInverseDynamics(m_CurrentConfiguration, m_CurrentVelocity,
-                                      m_CurrentAcceleration);
+    analyticalInverseKinematics(m_CurrentConfiguration, m_CurrentVelocity, m_CurrentAcceleration);
+    m_DebugPR->computeInverseDynamics(m_CurrentConfiguration, m_CurrentVelocity, m_CurrentAcceleration);
     Eigen::Vector3d zmpmb;
     m_DebugPR->zeroMomentumPoint(zmpmb);
 
@@ -480,19 +445,19 @@ void TestObject::fillInDebugFilesFull() {
     aof.precision(8);
     aof.setf(ios::scientific, ios::floatfield);
     m_OneStep.fillInDebugFileContent(aof);
-    aof << " " << filterprecision(zmpmb(0)) << " "     // 45
-        << filterprecision(zmpmb(1)) << " "            // 46
-        << filterprecision(zmpmb(2)) << " ";           // 47
-    for (unsigned int k = 0; k < m_conf.size(); k++) { // 48-53 -> 54-83
+    aof << " " << filterprecision(zmpmb(0)) << " "      // 45
+        << filterprecision(zmpmb(1)) << " "             // 46
+        << filterprecision(zmpmb(2)) << " ";            // 47
+    for (unsigned int k = 0; k < m_conf.size(); k++) {  // 48-53 -> 54-83
       aof << filterprecision(m_conf(k)) << " ";
     }
-    for (unsigned int k = 0; k < m_vel.size(); k++) { // 84-89 -> 90-118
+    for (unsigned int k = 0; k < m_vel.size(); k++) {  // 84-89 -> 90-118
       aof << filterprecision(m_vel(k)) << " ";
     }
-    for (unsigned int k = 0; k < m_acc.size(); k++) { // 119-125 -> 125-155
+    for (unsigned int k = 0; k < m_acc.size(); k++) {  // 119-125 -> 125-155
       aof << filterprecision(m_acc(k)) << " ";
     }
-    for (unsigned int k = 0; k < tau.size(); k++) { // 119-125 -> 125-155
+    for (unsigned int k = 0; k < tau.size(); k++) {  // 119-125 -> 125-155
       aof << filterprecision(tau(k)) << " ";
     }
     aof << endl;
@@ -557,8 +522,7 @@ bool TestObject::compareDebugFiles() {
           break;
         }
       }
-      if (endofinspection)
-        break;
+      if (endofinspection) break;
 
       for (unsigned int i = 0; i < NB_OF_FIELDS; i++) {
         arif >> ReferenceInput[i];
@@ -567,16 +531,14 @@ bool TestObject::compareDebugFiles() {
           break;
         }
       }
-      if (endofinspection)
-        break;
+      if (endofinspection) break;
 
       for (unsigned int i = 0; i < NB_OF_FIELDS; i++) {
         if (fabs(LocalInput[i] - ReferenceInput[i]) >= 1e-6) {
           finalreport = false;
           ostringstream oss;
-          oss << "l: " << nblines << " col:" << i
-              << " ref: " << ReferenceInput[i] << " now: " << LocalInput[i]
-              << " " << nb_of_pbs << std::endl;
+          oss << "l: " << nblines << " col:" << i << " ref: " << ReferenceInput[i] << " now: " << LocalInput[i] << " "
+              << nb_of_pbs << std::endl;
           areportof << oss.str();
           nb_of_pbs++;
           if (nb_of_pbs > max_nb_of_pbs) {
@@ -601,7 +563,6 @@ bool TestObject::compareDebugFiles() {
 }
 
 bool TestObject::doTest(ostream &os) {
-
   // Set time reference.
   m_clock.startingDate();
 
@@ -632,14 +593,12 @@ bool TestObject::doTest(ostream &os) {
       m_clock.startOneIteration();
 
       if (m_PGIInterface == 0) {
-        ok = m_PGI->RunOneStepOfTheControlLoop(
-            m_CurrentConfiguration, m_CurrentVelocity, m_CurrentAcceleration,
-            m_OneStep.m_ZMPTarget, m_OneStep.m_finalCOMPosition,
-            m_OneStep.m_LeftFootPosition, m_OneStep.m_RightFootPosition);
+        ok = m_PGI->RunOneStepOfTheControlLoop(m_CurrentConfiguration, m_CurrentVelocity, m_CurrentAcceleration,
+                                               m_OneStep.m_ZMPTarget, m_OneStep.m_finalCOMPosition,
+                                               m_OneStep.m_LeftFootPosition, m_OneStep.m_RightFootPosition);
       } else if (m_PGIInterface == 1) {
-        ok = m_PGI->RunOneStepOfTheControlLoop(
-            m_CurrentConfiguration, m_CurrentVelocity, m_CurrentAcceleration,
-            m_OneStep.m_ZMPTarget);
+        ok = m_PGI->RunOneStepOfTheControlLoop(m_CurrentConfiguration, m_CurrentVelocity, m_CurrentAcceleration,
+                                               m_OneStep.m_ZMPTarget);
       }
 
       m_clock.stopOneIteration();
@@ -681,13 +640,9 @@ bool TestObject::doTest(ostream &os) {
   return compareDebugFiles();
 }
 
-void TestObject::setDirectorySeqplay(std::string &aDirectory) {
-  m_DirectoryName = aDirectory;
-}
+void TestObject::setDirectorySeqplay(std::string &aDirectory) { m_DirectoryName = aDirectory; }
 
-void TestObject::analyticalInverseKinematics(Eigen::VectorXd &conf,
-                                             Eigen::VectorXd &vel,
-                                             Eigen::VectorXd &acc) {
+void TestObject::analyticalInverseKinematics(Eigen::VectorXd &conf, Eigen::VectorXd &vel, Eigen::VectorXd &acc) {
   /// \brief calculate, from the CoM of computed by the preview control,
   ///    the corresponding articular position, velocity and acceleration
   /// ------------------------------------------------------------------
@@ -730,9 +685,9 @@ void TestObject::analyticalInverseKinematics(Eigen::VectorXd &conf,
   aRightFootPosition(3) = m_OneStep.m_RightFootPosition.theta;
   aRightFootPosition(4) = m_OneStep.m_RightFootPosition.omega;
   m_ComAndFootRealization->setSamplingPeriod(0.005);
-  m_ComAndFootRealization->ComputePostureForGivenCoMAndFeetPosture(
-      aCOMState, aCOMSpeed, aCOMAcc, aLeftFootPosition, aRightFootPosition,
-      conf, vel, acc, ((int)m_OneStep.m_NbOfIt), 1);
+  m_ComAndFootRealization->ComputePostureForGivenCoMAndFeetPosture(aCOMState, aCOMSpeed, aCOMAcc, aLeftFootPosition,
+                                                                   aRightFootPosition, conf, vel, acc,
+                                                                   ((int)m_OneStep.m_NbOfIt), 1);
 
   if (m_leftGripper != 0 && m_rightGripper != 0) {
     conf(m_leftGripper) = 10.0 * M_PI / 180.0;
@@ -740,8 +695,7 @@ void TestObject::analyticalInverseKinematics(Eigen::VectorXd &conf,
   }
 }
 
-void TestObject::setFromURDFToOpenHRP(
-    std::vector<unsigned int> &vfromURDFToOpenHRP) {
+void TestObject::setFromURDFToOpenHRP(std::vector<unsigned int> &vfromURDFToOpenHRP) {
   m_fromURDFToOpenHRP = vfromURDFToOpenHRP;
 }
 
@@ -752,17 +706,14 @@ void TestObject::parseFromURDFtoOpenHRPIndex(Eigen::VectorXd &conf) {
   }
 
   std::cerr << "conf size():" << conf.size() << std::endl;
-  std::cerr << "Current Configuration: " << m_CurrentConfiguration.size()
-            << std::endl;
+  std::cerr << "Current Configuration: " << m_CurrentConfiguration.size() << std::endl;
   conf.setZero();
   for (unsigned int i = 0; i < m_fromURDFToOpenHRP.size(); i++)
     conf(i) = m_CurrentConfiguration(m_fromURDFToOpenHRP[i]);
 }
 
 void TestObject::generateOpenHRPTrajectories() {
-
-  analyticalInverseKinematics(m_CurrentConfiguration, m_CurrentVelocity,
-                              m_CurrentAcceleration);
+  analyticalInverseKinematics(m_CurrentConfiguration, m_CurrentVelocity, m_CurrentAcceleration);
 
   /// \brief Create file .hip/.waist .pos .zmp
   /// --------------------
@@ -789,9 +740,9 @@ void TestObject::generateOpenHRPTrajectories() {
   aof.open(aFileName.c_str(), ofstream::app);
   aof.precision(8);
   aof.setf(ios::scientific, ios::floatfield);
-  aof << filterprecision(((double)iteration) * 0.005) << " "; // 1
+  aof << filterprecision(((double)iteration) * 0.005) << " ";  // 1
   for (unsigned int i = 6; i < conf.size(); i++) {
-    aof << filterprecision(conf(i)) << " "; // 2
+    aof << filterprecision(conf(i)) << " ";  // 2
   }
   for (unsigned int i = 0; i < 9; i++) {
     aof << 0.0 << " ";
@@ -812,12 +763,10 @@ void TestObject::generateOpenHRPTrajectories() {
   aof.open(aFileName.c_str(), ofstream::app);
   aof.precision(8);
   aof.setf(ios::scientific, ios::floatfield);
-  aof << filterprecision(((double)iteration) * 0.005) << " "; // 1
-  aof << filterprecision(m_OneStep.m_finalCOMPosition.roll[0] * M_PI / 180)
-      << " "; // 2
-  aof << filterprecision(m_OneStep.m_finalCOMPosition.pitch[0] * M_PI / 180)
-      << " ";                                                               // 3
-  aof << filterprecision(m_OneStep.m_finalCOMPosition.yaw[0] * M_PI / 180); // 4
+  aof << filterprecision(((double)iteration) * 0.005) << " ";                         // 1
+  aof << filterprecision(m_OneStep.m_finalCOMPosition.roll[0] * M_PI / 180) << " ";   // 2
+  aof << filterprecision(m_OneStep.m_finalCOMPosition.pitch[0] * M_PI / 180) << " ";  // 3
+  aof << filterprecision(m_OneStep.m_finalCOMPosition.yaw[0] * M_PI / 180);           // 4
   aof << endl;
   aof.close();
 
@@ -841,15 +790,13 @@ void TestObject::generateOpenHRPTrajectories() {
   aof.open(aFileName.c_str(), ofstream::app);
   aof.precision(8);
   aof.setf(ios::scientific, ios::floatfield);
-  aof << filterprecision(((double)iteration) * 0.005) << " "; // 1
-  aof << filterprecision(m_OneStep.m_ZMPTarget(0) - m_CurrentConfiguration(0))
-      << " "; // 2
-  aof << filterprecision(m_OneStep.m_ZMPTarget(1) - m_CurrentConfiguration(1))
-      << " ";                                                          // 3
-  aof << filterprecision(aSupportState.z - m_CurrentConfiguration(2)); // 4
+  aof << filterprecision(((double)iteration) * 0.005) << " ";                           // 1
+  aof << filterprecision(m_OneStep.m_ZMPTarget(0) - m_CurrentConfiguration(0)) << " ";  // 2
+  aof << filterprecision(m_OneStep.m_ZMPTarget(1) - m_CurrentConfiguration(1)) << " ";  // 3
+  aof << filterprecision(aSupportState.z - m_CurrentConfiguration(2));                  // 4
   aof << endl;
   aof.close();
 }
 
-} // namespace TestSuite
-} // namespace PatternGeneratorJRL
+}  // namespace TestSuite
+}  // namespace PatternGeneratorJRL

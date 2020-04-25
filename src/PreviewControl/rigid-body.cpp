@@ -28,7 +28,6 @@ using namespace PatternGeneratorJRL;
 using namespace std;
 
 RigidBody::RigidBody() : T_(0), Tr_(0), Ta_(0), N_(16), Mass_(0) {
-
   PositionDynamics_.Type = POSITION;
   VelocityDynamics_.Type = VELOCITY;
   AccelerationDynamics_.Type = ACCELERATION;
@@ -38,7 +37,6 @@ RigidBody::RigidBody() : T_(0), Tr_(0), Ta_(0), N_(16), Mass_(0) {
 RigidBody::~RigidBody() {}
 
 int RigidBody::initialize() {
-
   PositionDynamics_.S.resize(N_, 3);
   PositionDynamics_.S.setZero();
   VelocityDynamics_.S.resize(N_, 3);
@@ -77,36 +75,34 @@ int RigidBody::initialize() {
 // ACCESSORS:
 // ----------
 linear_dynamics_t const &RigidBody::Dynamics(dynamics_e type) const {
-
   switch (type) {
-  case POSITION:
-    return PositionDynamics_;
-  case VELOCITY:
-    return VelocityDynamics_;
-  case ACCELERATION:
-    return AccelerationDynamics_;
-  case JERK:
-    return JerkDynamics_;
-  case COP_POSITION:
-    return CoPDynamics_;
+    case POSITION:
+      return PositionDynamics_;
+    case VELOCITY:
+      return VelocityDynamics_;
+    case ACCELERATION:
+      return AccelerationDynamics_;
+    case JERK:
+      return JerkDynamics_;
+    case COP_POSITION:
+      return CoPDynamics_;
   }
 
   return VelocityDynamics_;
 }
 
 linear_dynamics_t &RigidBody::Dynamics(dynamics_e type) {
-
   switch (type) {
-  case POSITION:
-    return PositionDynamics_;
-  case VELOCITY:
-    return VelocityDynamics_;
-  case ACCELERATION:
-    return AccelerationDynamics_;
-  case JERK:
-    return JerkDynamics_;
-  case COP_POSITION:
-    return CoPDynamics_;
+    case POSITION:
+      return PositionDynamics_;
+    case VELOCITY:
+      return VelocityDynamics_;
+    case ACCELERATION:
+      return AccelerationDynamics_;
+    case JERK:
+      return JerkDynamics_;
+    case COP_POSITION:
+      return CoPDynamics_;
   }
 
   return VelocityDynamics_;
@@ -121,9 +117,7 @@ linear_dynamics_t &RigidBody::Dynamics(dynamics_e type) {
 //
 rigid_body_state_s::rigid_body_state_s() { reset(); }
 
-struct rigid_body_state_s &rigid_body_state_t::
-operator=(const rigid_body_state_s &RB) {
-
+struct rigid_body_state_s &rigid_body_state_t::operator=(const rigid_body_state_s &RB) {
   for (unsigned int i = 0; i < 3; i++) {
     X[i] = RB.X[i];
     Y[i] = RB.Y[i];
@@ -137,7 +131,6 @@ operator=(const rigid_body_state_s &RB) {
 }
 
 void rigid_body_state_t::reset() {
-
   X.resize(3);
   Y.resize(3);
   Z.resize(3);

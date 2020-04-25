@@ -58,16 +58,13 @@ namespace PatternGeneratorJRL {
 
 */
 class LeftAndRightFootTrajectoryGenerationMultiple : public SimplePlugin {
-
-public:
+ public:
   /*! \brief The constructor initialize the plugin part,
     and the data related to the humanoid. */
-  LeftAndRightFootTrajectoryGenerationMultiple(SimplePluginManager *lSPM,
-                                               PRFoot *inFoot);
+  LeftAndRightFootTrajectoryGenerationMultiple(SimplePluginManager *lSPM, PRFoot *inFoot);
 
   /*! \brief Copy constructor. */
-  LeftAndRightFootTrajectoryGenerationMultiple(
-      const LeftAndRightFootTrajectoryGenerationMultiple &);
+  LeftAndRightFootTrajectoryGenerationMultiple(const LeftAndRightFootTrajectoryGenerationMultiple &);
 
   /*! \brief Memory release. */
   ~LeftAndRightFootTrajectoryGenerationMultiple();
@@ -97,12 +94,11 @@ public:
     @param[in] Continuity: Should be true if more steps should be added,
     false to stop stepping.
   */
-  void InitializeFromRelativeSteps(
-      deque<RelativeFootPosition> &RelativeFootPositions,
-      FootAbsolutePosition &LeftFootInitialPosition,
-      FootAbsolutePosition &RightFootInitialPosition,
-      deque<FootAbsolutePosition> &SupportFootAbsoluteFootPositions,
-      bool IgnoreFirst, bool Continuity);
+  void InitializeFromRelativeSteps(deque<RelativeFootPosition> &RelativeFootPositions,
+                                   FootAbsolutePosition &LeftFootInitialPosition,
+                                   FootAbsolutePosition &RightFootInitialPosition,
+                                   deque<FootAbsolutePosition> &SupportFootAbsoluteFootPositions, bool IgnoreFirst,
+                                   bool Continuity);
 
   /*! \brief Method to compute the absolute position of the foot.
     @param[in] LeftOrRight: -1 indicates the right foot,
@@ -114,9 +110,7 @@ public:
     The data structure to be filled with the information
     \f$ (x,y,z,\omega, \omega_2, \theta) \f$.
   */
-  bool
-  ComputeAnAbsoluteFootPosition(int LeftOrRight, double time,
-                                FootAbsolutePosition &aFootAbsolutePosition);
+  bool ComputeAnAbsoluteFootPosition(int LeftOrRight, double time, FootAbsolutePosition &aFootAbsolutePosition);
 
   /*! \brief Method to compute the absolute position of the foot.
     @param[in] LeftOrRight: -1 indicates the right foot,
@@ -130,10 +124,8 @@ public:
     @param[in] IndexInterval: On which interval to compute the foot position.
 
   */
-  bool
-  ComputeAnAbsoluteFootPosition(int LeftOrRight, double time,
-                                FootAbsolutePosition &aFootAbsolutePosition,
-                                unsigned int IndexInterval);
+  bool ComputeAnAbsoluteFootPosition(int LeftOrRight, double time, FootAbsolutePosition &aFootAbsolutePosition,
+                                     unsigned int IndexInterval);
 
   /*
     bool ComputeAnAbsoluteFootPosition(int LeftOrRight,
@@ -153,11 +145,10 @@ public:
     corresponding to the set of relative foot positions
     (i.e given step by step and not every sampled control time)
   */
-  void ComputeAbsoluteStepsFromRelativeSteps(
-      deque<RelativeFootPosition> &RelativeFootPositions,
-      FootAbsolutePosition &LeftFootInitialPosition,
-      FootAbsolutePosition &RightFootInitialPosition,
-      deque<FootAbsolutePosition> &SupportFootAbsoluteFootPositions);
+  void ComputeAbsoluteStepsFromRelativeSteps(deque<RelativeFootPosition> &RelativeFootPositions,
+                                             FootAbsolutePosition &LeftFootInitialPosition,
+                                             FootAbsolutePosition &RightFootInitialPosition,
+                                             deque<FootAbsolutePosition> &SupportFootAbsoluteFootPositions);
 
   /*! \brief Method to compute absolute feet positions from a set of
     relative one.
@@ -170,10 +161,9 @@ public:
     corresponding to the set of relative foot positions
     (i.e given step by step and not every sampled control time).
   */
-  void ComputeAbsoluteStepsFromRelativeSteps(
-      deque<RelativeFootPosition> &RelativeFootPositions,
-      FootAbsolutePosition &SupportFootInitialPosition,
-      deque<FootAbsolutePosition> &SupportFootAbsoluteFootPositions);
+  void ComputeAbsoluteStepsFromRelativeSteps(deque<RelativeFootPosition> &RelativeFootPositions,
+                                             FootAbsolutePosition &SupportFootInitialPosition,
+                                             deque<FootAbsolutePosition> &SupportFootAbsoluteFootPositions);
 
   /*! \brief Method to compute relative feet positions from a set of absolute
     one where one has changed.
@@ -187,21 +177,18 @@ public:
     positions corresponding to the set of relative foot positions
     (i.e given step by step and not every sampled control time).
   */
-  void ChangeRelStepsFromAbsSteps(
-      deque<RelativeFootPosition> &RelativeFootPositions,
-      FootAbsolutePosition &SupportFootInitialPosition,
-      deque<FootAbsolutePosition> &SupportFootAbsoluteFootPositions,
-      unsigned int ChangedInterval);
+  void ChangeRelStepsFromAbsSteps(deque<RelativeFootPosition> &RelativeFootPositions,
+                                  FootAbsolutePosition &SupportFootInitialPosition,
+                                  deque<FootAbsolutePosition> &SupportFootAbsoluteFootPositions,
+                                  unsigned int ChangedInterval);
 
   /*! Returns foot */
   PRFoot *getFoot() const;
 
-protected:
+ protected:
   /*! Internal method to modify the value of an interval. */
-  void SetAnInterval(unsigned int IntervalIndex,
-                     FootTrajectoryGenerationMultiple *aFTGM,
-                     FootAbsolutePosition &FootInitialPosition,
-                     FootAbsolutePosition &FootFinalPosition,
+  void SetAnInterval(unsigned int IntervalIndex, FootTrajectoryGenerationMultiple *aFTGM,
+                     FootAbsolutePosition &FootInitialPosition, FootAbsolutePosition &FootFinalPosition,
                      vector<double> MiddlePos = vector<double>(3, -1));
 
   /*! Left Foot Trajectory Generation object for several intervals. */
@@ -240,7 +227,7 @@ protected:
   /*! Double support time. */
   double m_DoubleSupportTime;
 
-public:
+ public:
   /*! Set the intervals time */
   void SetDeltaTj(std::vector<double> &aDeltaTj);
 
@@ -280,8 +267,7 @@ public:
   FootTrajectoryGenerationMultiple *getLeftFootTrajectory() const;
   FootTrajectoryGenerationMultiple *getRightFootTrajectory() const;
 
-  LeftAndRightFootTrajectoryGenerationMultiple &
-  operator=(const LeftAndRightFootTrajectoryGenerationMultiple &aLRFTGM);
+  LeftAndRightFootTrajectoryGenerationMultiple &operator=(const LeftAndRightFootTrajectoryGenerationMultiple &aLRFTGM);
 };
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* _LEFT_AND_RIGHT_FOOT_TRAJECTORY_GENERATION_MULTIPLE_H_ */

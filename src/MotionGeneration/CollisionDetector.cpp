@@ -114,13 +114,12 @@ void CollisionDetector::SetObstacleCoordinates(ObstaclePar aObstacleInfo) {
   // << endl;
 }
 
-void CollisionDetector::WorldFrameToObstacleFrame(
-    Eigen::Vector3d &WorldFrameCoord, Eigen::Vector3d &ObstacleFrameCoord) {
+void CollisionDetector::WorldFrameToObstacleFrame(Eigen::Vector3d &WorldFrameCoord,
+                                                  Eigen::Vector3d &ObstacleFrameCoord) {
   // This function transforms the coordinates of a point
   // expressed in the world frame to the local coordinates in the obstacle frame
 
-  ObstacleFrameCoord =
-      m_ObstacleRotInv * (WorldFrameCoord - m_ObstaclePosition);
+  ObstacleFrameCoord = m_ObstacleRotInv * (WorldFrameCoord - m_ObstaclePosition);
   /*
     cout << "X WorldFrameCoord:  " <<  WorldFrameCoord(0,0) << endl;
     cout << "Y WorldFrameCoord:  " <<  WorldFrameCoord(1,0) << endl;
@@ -139,12 +138,9 @@ void CollisionDetector::WorldFrameToObstacleFrame(
   */
 }
 
-void CollisionDetector::CalcCoordShankLowerLegPoint(Eigen::Vector3d RelCoord,
-                                                    Eigen::Vector3d &AbsCoord,
-                                                    Eigen::VectorXd LegAngles,
-                                                    Eigen::Matrix3d WaistRot,
-                                                    Eigen::Vector3d WaistPos,
-                                                    int WhichLeg) {
+void CollisionDetector::CalcCoordShankLowerLegPoint(Eigen::Vector3d RelCoord, Eigen::Vector3d &AbsCoord,
+                                                    Eigen::VectorXd LegAngles, Eigen::Matrix3d WaistRot,
+                                                    Eigen::Vector3d WaistPos, int WhichLeg) {
   Eigen::Matrix3d Rotation;
   Eigen::Vector3d TempCoord;
   Eigen::Vector3d Translation;
@@ -263,9 +259,7 @@ void CollisionDetector::CalcCoordShankLowerLegPoint(Eigen::Vector3d RelCoord,
   */
 }
 
-bool CollisionDetector::CollisionTwoLines(vector<double> p1, vector<double> p2,
-                                          vector<double> v1,
-                                          vector<double> v2) {
+bool CollisionDetector::CollisionTwoLines(vector<double> p1, vector<double> p2, vector<double> v1, vector<double> v2) {
   // this function checks for intersection of two line segments p1p2 and v1v2.
   // since this is a 2D problem the coordinates are the respective
   // planar coordinates
@@ -273,23 +267,18 @@ bool CollisionDetector::CollisionTwoLines(vector<double> p1, vector<double> p2,
 
   double Ap1p2v1, Ap1p2v2, Av1v2p1, Av1v2p2;
 
-  Ap1p2v1 = (p1[0] * (p2[1] - v1[1]) + p2[0] * (v1[1] - p1[1]) +
-             v1[0] * (p1[1] - p2[1]));
-  Ap1p2v2 = (p1[0] * (p2[1] - v2[1]) + p2[0] * (v2[1] - p1[1]) +
-             v2[0] * (p1[1] - p2[1]));
-  Av1v2p1 = (v1[0] * (v2[1] - p1[1]) + v2[0] * (p1[1] - v1[1]) +
-             p1[0] * (v1[1] - v2[1]));
-  Av1v2p2 = (v1[0] * (v2[1] - p2[1]) + v2[0] * (p2[1] - v1[1]) +
-             p2[0] * (v1[1] - v2[1]));
+  Ap1p2v1 = (p1[0] * (p2[1] - v1[1]) + p2[0] * (v1[1] - p1[1]) + v1[0] * (p1[1] - p2[1]));
+  Ap1p2v2 = (p1[0] * (p2[1] - v2[1]) + p2[0] * (v2[1] - p1[1]) + v2[0] * (p1[1] - p2[1]));
+  Av1v2p1 = (v1[0] * (v2[1] - p1[1]) + v2[0] * (p1[1] - v1[1]) + p1[0] * (v1[1] - v2[1]));
+  Av1v2p2 = (v1[0] * (v2[1] - p2[1]) + v2[0] * (p2[1] - v1[1]) + p2[0] * (v1[1] - v2[1]));
 
   if ((Ap1p2v1 * Ap1p2v2) > 0 || (Av1v2p1 * Av1v2p2) > 0)
-    return 0; // collision free
+    return 0;  // collision free
   else
-    return 1; // collision occurs
+    return 1;  // collision occurs
 }
 
-bool CollisionDetector::CollisionLineObstaclePlane(Eigen::Vector3d &LegPoint1,
-                                                   Eigen::Vector3d &LegPoint2,
+bool CollisionDetector::CollisionLineObstaclePlane(Eigen::Vector3d &LegPoint1, Eigen::Vector3d &LegPoint2,
                                                    int PlaneNumber) {
   /*! This function checks for intersection of a linesegment p1p2
     of the robot, expressed in the obstacle frame, with one of
@@ -316,7 +305,6 @@ bool CollisionDetector::CollisionLineObstaclePlane(Eigen::Vector3d &LegPoint1,
   CollisionStatusYZ = 1;
 
   if (PlaneNumber == 3) {
-
     // collisioncheck two lines in the YZplane
     p1[0] = LegPoint1(1);
     p1[1] = LegPoint1(2);
@@ -343,7 +331,6 @@ bool CollisionDetector::CollisionLineObstaclePlane(Eigen::Vector3d &LegPoint1,
 
     CollisionStatusXY = CollisionTwoLines(p1, p2, v1, v2);
   } else if (PlaneNumber == 4) {
-
     // collisioncheck two lines in the YZplane
     p1[0] = LegPoint1(1);
     p1[1] = LegPoint1(2);
@@ -370,7 +357,6 @@ bool CollisionDetector::CollisionLineObstaclePlane(Eigen::Vector3d &LegPoint1,
 
     CollisionStatusXY = CollisionTwoLines(p1, p2, v1, v2);
   } else {
-
     // collisioncheck two lines in the XZplane
     p1[0] = LegPoint1(0);
     p1[1] = LegPoint1(2);
@@ -399,21 +385,17 @@ bool CollisionDetector::CollisionLineObstaclePlane(Eigen::Vector3d &LegPoint1,
   }
 
   if ((CollisionStatusXZ) & (CollisionStatusXY) & (CollisionStatusYZ))
-    return 1; // collision occurs
+    return 1;  // collision occurs
   else
-    return 0; // collision free
+    return 0;  // collision free
 }
 
-bool CollisionDetector::CollisionLineObstacleComplete(Eigen::Vector3d &Point1,
-                                                      Eigen::Vector3d &Point2) {
-
+bool CollisionDetector::CollisionLineObstacleComplete(Eigen::Vector3d &Point1, Eigen::Vector3d &Point2) {
   if ((((Point1(0) > 0.0) & (Point1(0) < m_ObstaclePoints(0, 3))) &
-       ((Point1(1) > -m_ObstaclePoints(1, 3)) &
-        (Point1(1) < m_ObstaclePoints(1, 3))) &
+       ((Point1(1) > -m_ObstaclePoints(1, 3)) & (Point1(1) < m_ObstaclePoints(1, 3))) &
        ((Point1(2) > 0.0) & (Point1(2) < m_ObstaclePoints(2, 2)))) &
       (((Point2(0) > 0.0) & (Point2(0) < m_ObstaclePoints(0, 3))) &
-       ((Point2(1) > -m_ObstaclePoints(1, 3)) &
-        (Point2(1) < m_ObstaclePoints(1, 3))) &
+       ((Point2(1) > -m_ObstaclePoints(1, 3)) & (Point2(1) < m_ObstaclePoints(1, 3))) &
        ((Point2(2) > 0.0) & (Point2(2) < m_ObstaclePoints(2, 2))))) {
     // cout << "line segment completely inside obstacle region" << endl;
     return 1;

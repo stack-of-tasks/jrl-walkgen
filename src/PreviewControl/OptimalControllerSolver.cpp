@@ -44,10 +44,9 @@ extern doublereal dlapy2_(doublereal *, doublereal *);
 extern double dlamch_(char *);
 extern /* Subroutine */
     int
-    dgges_(char *, char *, char *, L_fp, integer *, doublereal *, integer *,
-           doublereal *, integer *, integer *, doublereal *, doublereal *,
-           doublereal *, doublereal *, integer *, doublereal *, integer *,
-           doublereal *, integer *, logical *, integer *);
+    dgges_(char *, char *, char *, L_fp, integer *, doublereal *, integer *, doublereal *, integer *, integer *,
+           doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *,
+           integer *, logical *, integer *);
 }
 
 logical sb02ox(double *_alphar, double *_alphai, double *_beta) {
@@ -84,30 +83,24 @@ logical sb02ow(double *_alphar, double * /* _alphai */, double *_beta) {
   char lp[2] = "p";
   logical r = ((*_alphar < 0.0) && (*_beta > 0.0)) ||
 
-              (((*_alphar > 0.0) && (*_beta < 0.0)) &&
-               ((fabs(*_beta) > fabs(*_alphar) * dlamch_(lp))));
+              (((*_alphar > 0.0) && (*_beta < 0.0)) && ((fabs(*_beta) > fabs(*_alphar) * dlamch_(lp))));
   ;
   return r;
 }
 
-OptimalControllerSolver::OptimalControllerSolver(Eigen::MatrixXd &A,
-                                                 Eigen::MatrixXd &b,
-                                                 Eigen::MatrixXd &c, double Q,
+OptimalControllerSolver::OptimalControllerSolver(Eigen::MatrixXd &A, Eigen::MatrixXd &b, Eigen::MatrixXd &c, double Q,
                                                  double R, unsigned int Nl) {
   m_A.resize(A.rows(), A.cols());
   for (unsigned int i = 0; i < A.rows(); i++)
-    for (unsigned int j = 0; j < A.cols(); j++)
-      m_A(i, j) = A(i, j);
+    for (unsigned int j = 0; j < A.cols(); j++) m_A(i, j) = A(i, j);
 
   m_b.resize(b.rows(), b.cols());
   for (unsigned int i = 0; i < b.rows(); i++)
-    for (unsigned int j = 0; j < b.cols(); j++)
-      m_b(i, j) = b(i, j);
+    for (unsigned int j = 0; j < b.cols(); j++) m_b(i, j) = b(i, j);
 
   m_c.resize(c.rows(), c.cols());
   for (unsigned int i = 0; i < c.rows(); i++)
-    for (unsigned int j = 0; j < c.cols(); j++)
-      m_c(i, j) = c(i, j);
+    for (unsigned int j = 0; j < c.cols(); j++) m_c(i, j) = c(i, j);
 
   m_Q = Q;
   m_R = R;
@@ -116,11 +109,9 @@ OptimalControllerSolver::OptimalControllerSolver(Eigen::MatrixXd &A,
 
 OptimalControllerSolver::~OptimalControllerSolver() {}
 
-bool OptimalControllerSolver::GeneralizedSchur(MatrixRXd &A, MatrixRXd &B,
-                                               Eigen::VectorXd &alphar,
-                                               Eigen::VectorXd &alphai,
-                                               Eigen::VectorXd &beta,
-                                               MatrixRXd &L, MatrixRXd &R) {
+bool OptimalControllerSolver::GeneralizedSchur(MatrixRXd &A, MatrixRXd &B, Eigen::VectorXd &alphar,
+                                               Eigen::VectorXd &alphai, Eigen::VectorXd &beta, MatrixRXd &L,
+                                               MatrixRXd &R) {
   ODEBUG("A:" << A);
   ODEBUG("B:" << A);
   int n = (int)A.rows();
@@ -138,26 +129,22 @@ bool OptimalControllerSolver::GeneralizedSchur(MatrixRXd &A, MatrixRXd &B,
 
   int sdim = 0;
   int lwork = 1000 + (8 * (int)n + 16);
-  double *work = new double[lwork]; // std::vector<double> work(lwork);
-  for (int i = 0; i < lwork; i++)
-    work[i] = 0.0;
+  double *work = new double[lwork];  // std::vector<double> work(lwork);
+  for (int i = 0; i < lwork; i++) work[i] = 0.0;
   int info = 0;
   logical *bwork = new logical[2 * n];
-  for (int i = 0; i < 2 * n; i++)
-    bwork[i] = 0;
+  for (int i = 0; i < 2 * n; i++) bwork[i] = 0;
 
   char lV[2] = "V";
   char lS[2] = "S";
-  for (int i = 0; i < 2 * n; i++)
-    bwork[i] = 0;
+  for (int i = 0; i < 2 * n; i++) bwork[i] = 0;
   A.transposeInPlace();
   B.transposeInPlace();
   ODEBUG("A:" << A);
   ODEBUG("A:" << B);
 
-  dgges_(lV, lV, lS, (logical(*)(...))sb02ox, &n, A.data(), &n, B.data(), &n,
-         &sdim, alphar.data(), alphai.data(), beta.data(), L.data(), &n,
-         R.data(), &n, &work[0], &lwork, bwork, &info);
+  dgges_(lV, lV, lS, (logical(*)(...))sb02ox, &n, A.data(), &n, B.data(), &n, &sdim, alphar.data(), alphai.data(),
+         beta.data(), L.data(), &n, R.data(), &n, &work[0], &lwork, bwork, &info);
 
   A.transposeInPlace();
   B.transposeInPlace();
@@ -198,8 +185,7 @@ void OptimalControllerSolver::ComputeWeights(unsigned int Mode) {
   Eigen::Index n = m_A.rows();
 
   for (int i = 0; i < n; i++)
-    for (int j = 0; j < n; j++)
-      H(i, j) = m_A(i, j);
+    for (int j = 0; j < n; j++) H(i, j) = m_A(i, j);
 
   MatrixRXd H21;
   H21 = m_c.transpose();
@@ -212,8 +198,7 @@ void OptimalControllerSolver::ComputeWeights(unsigned int Mode) {
 
   ODEBUG("H21:" << H21);
   for (int i = 0; i < n; i++)
-    for (int j = 0; j < n; j++)
-      H(i + n, j) = H21(i, j);
+    for (int j = 0; j < n; j++) H(i + n, j) = H21(i, j);
 
   ODEBUG("H:" << endl << H);
   MatrixRXd E(2 * n, 2 * n);
@@ -232,8 +217,8 @@ void OptimalControllerSolver::ComputeWeights(unsigned int Mode) {
 
   ODEBUG("E:" << endl << E);
   // Computes S the Schur form of Laub_Z
-  MatrixRXd ZH(2 * n, 2 * n); // The matrix of schur vectors
-  MatrixRXd ZE(2 * n, 2 * n); // The matrix of Schur vectors.
+  MatrixRXd ZH(2 * n, 2 * n);  // The matrix of schur vectors
+  MatrixRXd ZE(2 * n, 2 * n);  // The matrix of Schur vectors.
   Eigen::VectorXd WR(2 * n);
   Eigen::VectorXd WI(2 * n);
   // The eigenvalues ( a matrix to handle complex eigenvalues).
@@ -272,10 +257,10 @@ void OptimalControllerSolver::ComputeWeights(unsigned int Mode) {
   MatrixRXd r;
 
   double la;
-  r = tm_b;           // b^T
-  r = r * P;          // b^T P
-  r = r * m_b;        // b^T P b
-  la = m_R + r(0, 0); // R + b^T P b
+  r = tm_b;            // b^T
+  r = r * P;           // b^T P
+  r = r * m_b;         // b^T P b
+  la = m_R + r(0, 0);  // R + b^T P b
   la = 1 / la;
 
   // Computes the weights for the accumulated difference
@@ -299,8 +284,7 @@ void OptimalControllerSolver::ComputeWeights(unsigned int Mode) {
 
   PostMatrix = m_c.transpose();
   PostMatrix = PostMatrix * m_Q;
-  if (Mode == MODE_WITHOUT_INITIALPOS)
-    PostMatrix = P * PostMatrix;
+  if (Mode == MODE_WITHOUT_INITIALPOS) PostMatrix = P * PostMatrix;
 
   Recursive = PostMatrix;
 

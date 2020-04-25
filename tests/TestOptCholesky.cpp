@@ -41,8 +41,7 @@ void MatrixMatrixT(double *A, double *AAT, int lNbOfConstraints, int lCardU) {
   for (int i = 0; i < lNbOfConstraints; i++) {
     for (int j = 0; j < lNbOfConstraints; j++) {
       AAT[i * lNbOfConstraints + j] = 0.0;
-      for (int k = 0; k < lCardU; k++)
-        AAT[i * lNbOfConstraints + j] += A[i * lCardU + k] * A[j * lCardU + k];
+      for (int k = 0; k < lCardU; k++) AAT[i * lNbOfConstraints + j] += A[i * lCardU + k] * A[j * lCardU + k];
     }
   }
 }
@@ -58,7 +57,7 @@ void DisplayMatrix(double *A, int rows, int columns, string name, int format) {
       cout << A[i * rows + j] << " ";
     }
     cout << "];";
-    if (format == 0) // Human readable.
+    if (format == 0)  // Human readable.
       cout << endl;
   }
   cout << "]" << endl;
@@ -94,8 +93,8 @@ int main() {
   double *iL = new double[lNbOfConstraints * lNbOfConstraints];
 
   /* Create the object for optimized Cholesky computation */
-  anOptCholesky = new PatternGeneratorJRL::OptCholesky(
-      lNbOfConstraints, lCardU, PatternGeneratorJRL::OptCholesky::MODE_NORMAL);
+  anOptCholesky =
+      new PatternGeneratorJRL::OptCholesky(lNbOfConstraints, lCardU, PatternGeneratorJRL::OptCholesky::MODE_NORMAL);
 
   /* Build the test matrix */
   srand(0);
@@ -104,25 +103,21 @@ int main() {
       A[i * lCardU + j] = (double)rand() / (double)RAND_MAX;
     }
   }
-  if (verbose > 1)
-    DisplayMatrix(A, lNbOfConstraints, lCardU, string("A"), 0);
+  if (verbose > 1) DisplayMatrix(A, lNbOfConstraints, lCardU, string("A"), 0);
 
   anOptCholesky->SetA(A, PatternGeneratorJRL::OptCholesky::MODE_NORMAL);
   anOptCholesky->SetL(L);
   anOptCholesky->SetiL(iL);
 
-  for (unsigned int i = 0; i < lNbOfConstraints; i++)
-    anOptCholesky->AddActiveConstraint(i);
+  for (unsigned int i = 0; i < lNbOfConstraints; i++) anOptCholesky->AddActiveConstraint(i);
 
-  if (verbose > 1)
-    DisplayMatrix(L, lNbOfConstraints, lNbOfConstraints, string("L"), 0);
+  if (verbose > 1) DisplayMatrix(L, lNbOfConstraints, lNbOfConstraints, string("L"), 0);
 
   double *AAT = new double[lNbOfConstraints * lNbOfConstraints];
 
   MatrixMatrixT(A, AAT, lNbOfConstraints, lCardU);
 
-  if (verbose > 1)
-    DisplayMatrix(AAT, lNbOfConstraints, lNbOfConstraints, string("AAT"), 0);
+  if (verbose > 1) DisplayMatrix(AAT, lNbOfConstraints, lNbOfConstraints, string("AAT"), 0);
 
   int return_value = 0;
 
@@ -135,9 +130,8 @@ int main() {
   delete anOptCholesky;
 
   /* Create the object for normal Cholesky computation */
-  anOptCholesky = new PatternGeneratorJRL::OptCholesky(
-      lNbOfConstraints, lNbOfConstraints,
-      PatternGeneratorJRL::OptCholesky::MODE_NORMAL);
+  anOptCholesky = new PatternGeneratorJRL::OptCholesky(lNbOfConstraints, lNbOfConstraints,
+                                                       PatternGeneratorJRL::OptCholesky::MODE_NORMAL);
 
   anOptCholesky->SetA(AAT, PatternGeneratorJRL::OptCholesky::MODE_NORMAL);
   anOptCholesky->SetL(L);
@@ -146,8 +140,7 @@ int main() {
   anOptCholesky->ComputeNormalCholeskyOnANormal();
 
   r = CheckCholeskyDecomposition(AAT, L, lNbOfConstraints);
-  if (verbose > 1)
-    DisplayMatrix(L, lNbOfConstraints, lNbOfConstraints, string("L"), 0);
+  if (verbose > 1) DisplayMatrix(L, lNbOfConstraints, lNbOfConstraints, string("L"), 0);
 
   if (r > 1e-6) {
     cout << "Normal Cholesky decomposition pb:" << r << endl;
@@ -155,8 +148,7 @@ int main() {
   }
 
   anOptCholesky->ComputeInverseCholeskyNormal(1);
-  if (verbose > 1)
-    DisplayMatrix(iL, lNbOfConstraints, lNbOfConstraints, string("iL"), 0);
+  if (verbose > 1) DisplayMatrix(iL, lNbOfConstraints, lNbOfConstraints, string("iL"), 0);
 
   delete anOptCholesky;
   delete[] L;

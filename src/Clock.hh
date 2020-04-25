@@ -48,7 +48,7 @@ namespace PatternGeneratorJRL {
   The precision is expected to be in micro-second but is OS dependent.
 */
 class Clock {
-public:
+ public:
   /*! \brief Default constructor */
   Clock();
 
@@ -88,7 +88,7 @@ public:
   /*! \brief Record buffer of time consumption. */
   void RecordDataBuffer(std::string filename);
 
-private:
+ private:
   /*! Storing begin and end timestamps. */
   struct timeval m_BeginTimeStamp, m_EndTimeStamp;
 
@@ -107,5 +107,5 @@ private:
   /*! Buffer */
   std::vector<double> m_DataBuffer;
 };
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* _HWPG_CLOCK_H_ */

@@ -33,11 +33,10 @@ namespace PatternGeneratorJRL {
 
 /// \brief Finite state machine to determine the support parameters.
 class SupportFSM {
-
   //
   // Public methods:
   //
-public:
+ public:
   /// \brief Constructor
   SupportFSM();
 
@@ -48,8 +47,7 @@ public:
   ///
   /// \param[in] Ref
   /// \param[in] CurrentSupport
-  void update_vel_reference(reference_t &Ref,
-                            const support_state_t &CurrentSupport);
+  void update_vel_reference(reference_t &Ref, const support_state_t &CurrentSupport);
 
   /// \brief Initialize the previewed state
   ///
@@ -58,8 +56,7 @@ public:
   /// inside the preview period
   /// \param[out] Support Support state to be actualized
   /// \param[in] Ref Trajectory reference
-  void set_support_state(double time, unsigned int pi, support_state_t &Support,
-                         const reference_t &Ref) const;
+  void set_support_state(double time, unsigned int pi, support_state_t &Support, const reference_t &Ref) const;
 
   /// \name Accessors
   /// \{
@@ -73,9 +70,7 @@ public:
   inline void DSSSPeriod(const double DSSSPeriod) { DSSSPeriod_ = DSSSPeriod; };
 
   inline unsigned NBStepsSSDS() const { return NbStepsSSDS_; };
-  inline void NbStepsSSDS(const unsigned NbStepsSSDS) {
-    NbStepsSSDS_ = NbStepsSSDS;
-  };
+  inline void NbStepsSSDS(const unsigned NbStepsSSDS) { NbStepsSSDS_ = NbStepsSSDS; };
 
   inline double SamplingPeriod() const { return T_; };
   inline void SamplingPeriod(const double T) { T_ = T; };
@@ -84,7 +79,7 @@ public:
   //
   // Private members:
   //
-private:
+ private:
   /// \brief Number of steps to be done before DS
   unsigned NbStepsSSDS_;
 
@@ -121,6 +116,6 @@ private:
   bool PostRotationPhase_;
   /// \}
 };
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 
 #endif /* _SUPPORT_FSM_ */

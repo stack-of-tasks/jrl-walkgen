@@ -40,7 +40,7 @@ class IntermedQPMat {
   //
   // Public types
   //
-public:
+ public:
   /// \name QP elements that are objective independent
   /// \{
   struct state_variant_s {
@@ -94,7 +94,7 @@ public:
   //
   // Public methods
   //
-public:
+ public:
   /// \name Constructors and destructors.
   /// \{
   IntermedQPMat();
@@ -122,15 +122,9 @@ public:
   inline reference_t &Reference() { return StateMatrices_.Ref; };
   inline void Reference(const reference_t &Ref) { StateMatrices_.Ref = Ref; };
 
-  inline support_state_t const &SupportState() const {
-    return StateMatrices_.SupportState;
-  };
-  inline support_state_t &SupportState() {
-    return StateMatrices_.SupportState;
-  };
-  inline void SupportState(const support_state_t &SupportState) {
-    StateMatrices_.SupportState = SupportState;
-  };
+  inline support_state_t const &SupportState() const { return StateMatrices_.SupportState; };
+  inline support_state_t &SupportState() { return StateMatrices_.SupportState; };
+  inline void SupportState(const support_state_t &SupportState) { StateMatrices_.SupportState = SupportState; };
   /// \}
 
   /// \name Displaying
@@ -145,7 +139,7 @@ public:
   //
   // Private members
   //
-private:
+ private:
   objective_variant_t MeanVelocity_, InstantVelocity_, COPCentering_, JerkMin_;
 
   state_variant_t StateMatrices_;
@@ -153,8 +147,7 @@ private:
   linear_inequality_t IneqCoP_, IneqCoM_, IneqFeet_;
 };
 
-std::ostream &operator<<(std::ostream &o,
-                         const IntermedQPMat::objective_variant_s &r);
-} // namespace PatternGeneratorJRL
+std::ostream &operator<<(std::ostream &o, const IntermedQPMat::objective_variant_s &r);
+}  // namespace PatternGeneratorJRL
 
 #endif /* INTERMEDQPMAT_HH_ */

@@ -46,15 +46,14 @@ namespace PatternGeneratorJRL {
 
 /// \brief Generate optimization problem as proposed in Herdt2010IROS
 class GeneratorVelRef : public MPCTrajectoryGeneration {
-
   //
   // Public methods
   //
-public:
+ public:
   /// \name Constructors and destructors.
   /// \{
-  GeneratorVelRef(SimplePluginManager *lSPM, IntermedQPMat *Data,
-                  RigidBodySystem *Robot, RelativeFeetInequalities *RFC);
+  GeneratorVelRef(SimplePluginManager *lSPM, IntermedQPMat *Data, RigidBodySystem *Robot,
+                  RelativeFeetInequalities *RFC);
   ~GeneratorVelRef();
   /// \}
 
@@ -65,11 +64,10 @@ public:
   /// \param[in] FinalLeftFootTraj_deq
   /// \param[in] FinalRightFootTraj_deq
   /// \param[out] SupportStates_deq
-  void preview_support_states(
-      double Time, const SupportFSM *FSM,
-      const deque<FootAbsolutePosition> &FinalLeftFootTraj_deq,
-      const deque<FootAbsolutePosition> &FinalRightFootTraj_deq,
-      deque<support_state_t> &SupportStates_deq);
+  void preview_support_states(double Time, const SupportFSM *FSM,
+                              const deque<FootAbsolutePosition> &FinalLeftFootTraj_deq,
+                              const deque<FootAbsolutePosition> &FinalRightFootTraj_deq,
+                              deque<support_state_t> &SupportStates_deq);
 
   /// \brief Set the global reference from the local one and the
   /// orientation of the trunk frame
@@ -97,8 +95,7 @@ public:
   ///
   /// \param[in] Pb
   /// \param[in] SupportStates_deq
-  void update_problem(QPProblem &Pb,
-                      const std::deque<support_state_t> &SupportStates_deq);
+  void update_problem(QPProblem &Pb, const std::deque<support_state_t> &SupportStates_deq);
 
   /// \brief Compute the initial solution vector for warm start
   ///
@@ -113,12 +110,8 @@ public:
   /// \param[in] Type Objective type
   void Ponderation(double weight, objective_e type);
 
-  inline void Reference(const reference_t &Ref) {
-    IntermedData_->Reference(Ref);
-  };
-  inline void SupportState(const support_state_t &SupportState) {
-    IntermedData_->SupportState(SupportState);
-  };
+  inline void Reference(const reference_t &Ref) { IntermedData_->Reference(Ref); };
+  inline void SupportState(const support_state_t &SupportState) { IntermedData_->SupportState(SupportState); };
   inline void CoM(const com_t &CoM) { IntermedData_->CoM(CoM); };
   inline void LastFootSol(const solution_t &Solution) {
     if (Solution.Solution_vec.size() > 2 * N_) {
@@ -138,45 +131,40 @@ public:
   ///
   /// \param[out] Inequalities
   /// \param[in] SupportStates_deq
-  void build_inequalities_feet(
-      linear_inequality_t &Inequalities,
-      const std::deque<support_state_t> &SupportStates_deq) const;
+  void build_inequalities_feet(linear_inequality_t &Inequalities,
+                               const std::deque<support_state_t> &SupportStates_deq) const;
 
   //
   // Protected methods
   //
-protected:
+ protected:
   /// \brief Compute the selection matrices
   ///
   /// \param[in] SupportStates_deq
-  void generate_selection_matrices(
-      const std::deque<support_state_t> &SupportStates_deq);
+  void generate_selection_matrices(const std::deque<support_state_t> &SupportStates_deq);
 
   /// \brief Generate a queue of inequalities with respect to the centers of
   /// the feet
   ///
   /// \param[out] Inequalities
   /// \param[in] SupportStates_deq
-  void build_inequalities_cop(
-      linear_inequality_t &Inequalities,
-      const std::deque<support_state_t> &SupportStates_deq) const;
+  void build_inequalities_cop(linear_inequality_t &Inequalities,
+                              const std::deque<support_state_t> &SupportStates_deq) const;
 
   /// \brief Generate a queue of inequality constraints on
   /// the feet positions with respect to previous foot positions
   ///
   /// \param[out] Inequalities In matrix form
   /// \param[in] SupportStates_deq
-  void build_inequalities_com(
-      linear_inequality_t &Inequalities,
-      const std::deque<support_state_t> &SupportStates_deq) const;
+  void build_inequalities_com(linear_inequality_t &Inequalities,
+                              const std::deque<support_state_t> &SupportStates_deq) const;
 
   /// \brief Compute CoP constraints corresponding to the set of inequalities
   ///
   /// \param[in] IneqCop
   /// \param[in] NbStepsPreviewed
   /// \param[out] Pb
-  void build_constraints_cop(const linear_inequality_t &IneqCoP,
-                             unsigned int NbStepsPreviewed, QPProblem &Pb);
+  void build_constraints_cop(const linear_inequality_t &IneqCoP, unsigned int NbStepsPreviewed, QPProblem &Pb);
 
   /// \brief Compute feet constraints corresponding to the set of inequalities
   ///
@@ -184,8 +172,7 @@ protected:
   /// \param[in] State
   /// \param[in] nbStepsPreviewed
   /// \param[out] Pb
-  void build_constraints_feet(const linear_inequality_t &IneqFeet,
-                              const IntermedQPMat::state_variant_t &State,
+  void build_constraints_feet(const linear_inequality_t &IneqFeet, const IntermedQPMat::state_variant_t &State,
                               int nbStepsPreviewed, QPProblem &Pb);
 
   /// \brief Compute com<->feet constraints
@@ -193,26 +180,22 @@ protected:
   /// \param[in] IneqCoM
   /// \param[in] CurrentSupport
   /// \param[out] Pb
-  void build_constraints_com(const linear_inequality_t &IneqCoM,
-                             const support_state_t &CurrentSupport,
-                             QPProblem &Pb);
+  void build_constraints_com(const linear_inequality_t &IneqCoM, const support_state_t &CurrentSupport, QPProblem &Pb);
 
   /// \brief Compute feet equality constraints from a trajectory
   ///
   /// \param[in] SupportStates_deq
   /// \param[in] NbStepsPreviewed
   /// \param[out] Pb
-  void build_eq_constraints_feet(
-      const std::deque<support_state_t> &SupportStates_deq,
-      unsigned int NbStepsPreviewed, QPProblem &Pb);
+  void build_eq_constraints_feet(const std::deque<support_state_t> &SupportStates_deq, unsigned int NbStepsPreviewed,
+                                 QPProblem &Pb);
 
   /// \brief Compute feet equality constraints to restrain the previewed foot
   /// position
   /// some iteration before landing
   /// \param[in] Solution
   /// \param[out] Pb
-  void build_eq_constraints_limitPosFeet(const solution_t &Solution,
-                                         QPProblem &Pb);
+  void build_eq_constraints_limitPosFeet(const solution_t &Solution, QPProblem &Pb);
 
   /// \brief Initialize inequality matrices
   ///
@@ -220,27 +203,23 @@ protected:
   void initialize_matrices(linear_inequality_t &Inequalities);
 
   /// \brief Scaled product\f$ weight*M*M \f$
-  void compute_term(Eigen::MatrixXd &weightMM, double weight,
-                    const Eigen::MatrixXd &M1, const Eigen::MatrixXd &M2);
+  void compute_term(Eigen::MatrixXd &weightMM, double weight, const Eigen::MatrixXd &M1, const Eigen::MatrixXd &M2);
 
   /// \brief Scaled product \f$ weight*M*V \f$
-  void compute_term(Eigen::VectorXd &weightMV, double weight,
-                    const Eigen::MatrixXd &M, const Eigen::VectorXd &V);
+  void compute_term(Eigen::VectorXd &weightMV, double weight, const Eigen::MatrixXd &M, const Eigen::VectorXd &V);
 
   /// \brief Scaled product \f$ weight*M*V*scalar \f$
-  void compute_term(Eigen::VectorXd &weightMV, double weight,
-                    const Eigen::MatrixXd &M, const Eigen::VectorXd &V,
+  void compute_term(Eigen::VectorXd &weightMV, double weight, const Eigen::MatrixXd &M, const Eigen::VectorXd &V,
                     const double scalar);
 
   /// \brief Scaled product \f$ weight*M*M*V \f$
-  void compute_term(Eigen::VectorXd &weightMV, double weight,
-                    const Eigen::MatrixXd &M1, const Eigen::MatrixXd &M2,
+  void compute_term(Eigen::VectorXd &weightMV, double weight, const Eigen::MatrixXd &M1, const Eigen::MatrixXd &M2,
                     const Eigen::VectorXd &V2);
 
   //
   // Protected members
   //
-protected:
+ protected:
   IntermedQPMat *IntermedData_;
   RigidBodySystem *Robot_;
   RelativeFeetInequalities *RFI_;
@@ -249,7 +228,7 @@ protected:
   //
   // Private members
   //
-private:
+ private:
   /// \name Temporary vectors
   /// \{
   Eigen::MatrixXd MM_;
@@ -257,6 +236,6 @@ private:
   Eigen::VectorXd MV2_;
   /// \}
 };
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 
 #endif /* GENERATORVELREF_HH_ */

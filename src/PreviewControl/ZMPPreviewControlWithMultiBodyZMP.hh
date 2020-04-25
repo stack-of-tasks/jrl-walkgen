@@ -67,7 +67,7 @@ namespace PatternGeneratorJRL {
 
 */
 class ZMPPreviewControlWithMultiBodyZMP : public SimplePlugin {
-private:
+ private:
   /*! Vector from the Waist to the left and right hip. */
   //@{
   /*! Static part from the waist to the left hip.. */
@@ -175,7 +175,7 @@ private:
   /*! Set the preview control time and update NL. */
   void SetPreviewControlTime(double lPreviewControlTime);
 
-public:
+ public:
   /*! Constantes to define the strategy with the first and second stage.
     @{
   */
@@ -255,12 +255,9 @@ public:
     @param[out] CurrentAcceleration: The results is a state vector containing
     the acceleration.
   */
-  int OneGlobalStepOfControl(FootAbsolutePosition &LeftFootPosition,
-                             FootAbsolutePosition &RightFootPosition,
-                             ZMPPosition &NewZMPRefPos, COMState &finalCOMState,
-                             Eigen::VectorXd &CurrentConfiguration,
-                             Eigen::VectorXd &CurrentVelocity,
-                             Eigen::VectorXd &CurrentAcceleration);
+  int OneGlobalStepOfControl(FootAbsolutePosition &LeftFootPosition, FootAbsolutePosition &RightFootPosition,
+                             ZMPPosition &NewZMPRefPos, COMState &finalCOMState, Eigen::VectorXd &CurrentConfiguration,
+                             Eigen::VectorXd &CurrentVelocity, Eigen::VectorXd &CurrentAcceleration);
 
   /*! First stage of the control,
     i.e.preview control on the CART model with delayed step parameters,
@@ -275,8 +272,7 @@ public:
 
     @return If an error occurs returns a negative integer, 0 otherwise.
   */
-  int FirstStageOfControl(FootAbsolutePosition &LeftFootPosition,
-                          FootAbsolutePosition &RightFootPosition,
+  int FirstStageOfControl(FootAbsolutePosition &LeftFootPosition, FootAbsolutePosition &RightFootPosition,
                           COMState &afCOMState);
 
   /*! This methods is used only to update the queue of ZMP difference
@@ -318,12 +314,9 @@ public:
     @param[out] InitRightFootPosition: Returns the position of the right foot
     in the waist coordinates frame.
   */
-  int EvaluateStartingState(Eigen::VectorXd &BodyAngles,
-                            Eigen::Vector3d &aStartingCOMState,
-                            Eigen::Vector3d &aStartingZMPPosition,
-                            Eigen::Matrix<double, 6, 1> &aStartingWaistPose,
-                            FootAbsolutePosition &InitLeftFootPosition,
-                            FootAbsolutePosition &InitRightFootPosition);
+  int EvaluateStartingState(Eigen::VectorXd &BodyAngles, Eigen::Vector3d &aStartingCOMState,
+                            Eigen::Vector3d &aStartingZMPPosition, Eigen::Matrix<double, 6, 1> &aStartingWaistPose,
+                            FootAbsolutePosition &InitLeftFootPosition, FootAbsolutePosition &InitRightFootPosition);
 
   /*! Compute the COM of the robot with the Joint values given in BodyAngles,
     velocities set to zero, and returns the values of the COM in
@@ -338,11 +331,8 @@ public:
     @param[out] InitRightFootPosition: Position of the right foot in the
     waist coordinates frame.
   */
-  int EvaluateStartingCoM(Eigen::MatrixXd BodyAngles,
-                          Eigen::Vector3d &aStartingCOMState,
-                          Eigen::VectorXd &aWaistPose,
-                          FootAbsolutePosition &InitLeftFootPosition,
-                          FootAbsolutePosition &InitRightFootPosition);
+  int EvaluateStartingCoM(Eigen::MatrixXd BodyAngles, Eigen::Vector3d &aStartingCOMState, Eigen::VectorXd &aWaistPose,
+                          FootAbsolutePosition &InitLeftFootPosition, FootAbsolutePosition &InitRightFootPosition);
 
   /*! Methods related to the preparation of the ZMP preview control with
     Multibody ZMP compensation.
@@ -362,8 +352,7 @@ public:
     right foot.
   */
   int Setup(deque<ZMPPosition> &ZMPRefPositions, deque<COMState> &COMStates,
-            deque<FootAbsolutePosition> &LeftFootPositions,
-            deque<FootAbsolutePosition> &RightFootPositions);
+            deque<FootAbsolutePosition> &LeftFootPositions, deque<FootAbsolutePosition> &RightFootPositions);
 
   /*! Method to perform the First Phase. It initializes properly
     the internal fields of ZMPPreviewControlWithMultiBodyZMP
@@ -378,10 +367,8 @@ public:
     @param[in] RightFootPositions: idem than the previous one but for the
     right foot.
   */
-  int SetupFirstPhase(deque<ZMPPosition> &ZMPRefPositions,
-                      deque<COMState> &COMStates,
-                      deque<FootAbsolutePosition> &LeftFootPositions,
-                      deque<FootAbsolutePosition> &RightFootPositions);
+  int SetupFirstPhase(deque<ZMPPosition> &ZMPRefPositions, deque<COMState> &COMStates,
+                      deque<FootAbsolutePosition> &LeftFootPositions, deque<FootAbsolutePosition> &RightFootPositions);
 
   /*! Method to call while feeding the 2 preview windows.
     It updates the first values of the Preview control
@@ -407,13 +394,10 @@ public:
     feet position instance.
     @param[in] localindex: Value of the index which goes from 0 to 2 * m_NL.
   */
-  int SetupIterativePhase(deque<ZMPPosition> &ZMPRefPositions,
-                          deque<COMState> &COMStates,
+  int SetupIterativePhase(deque<ZMPPosition> &ZMPRefPositions, deque<COMState> &COMStates,
                           deque<FootAbsolutePosition> &LeftFootPositions,
-                          deque<FootAbsolutePosition> &RightFootPositions,
-                          Eigen::VectorXd &CurrentConfiguration,
-                          Eigen::VectorXd &CurrentVelocity,
-                          Eigen::VectorXd &CurrentAcceleration, int localindex);
+                          deque<FootAbsolutePosition> &RightFootPositions, Eigen::VectorXd &CurrentConfiguration,
+                          Eigen::VectorXd &CurrentVelocity, Eigen::VectorXd &CurrentAcceleration, int localindex);
 
   /*! Create an extra COM buffer with a first preview round to be
     used by the stepover planner.
@@ -424,8 +408,7 @@ public:
     first preview control).
     @param[out] ExtraZMPRefBuffer: Extra FIFO for the ZMP ref positions.
   */
-  void CreateExtraCOMBuffer(deque<COMState> &ExtraCOMBuffer,
-                            deque<ZMPPosition> &ExtraZMPBuffer,
+  void CreateExtraCOMBuffer(deque<COMState> &ExtraCOMBuffer, deque<ZMPPosition> &ExtraZMPBuffer,
                             deque<ZMPPosition> &ExtraZMPRefBuffer);
 
   /*! Evaluate Starting CoM for a given position.
@@ -436,11 +419,9 @@ public:
     @param[out] InitRightFootPosition: Position of the InitRightFootPosition
     in the same reference frame than the waist
   */
-  int EvaluateStartingCoM(Eigen::VectorXd &BodyAnglesInit,
-                          Eigen::Vector3d &aStartingCOMState,
+  int EvaluateStartingCoM(Eigen::VectorXd &BodyAnglesInit, Eigen::Vector3d &aStartingCOMState,
                           Eigen::Matrix<double, 6, 1> &aStartingWaistPosition,
-                          FootAbsolutePosition &InitLeftFootPosition,
-                          FootAbsolutePosition &InitRightFootPosition);
+                          FootAbsolutePosition &InitLeftFootPosition, FootAbsolutePosition &InitRightFootPosition);
 
   /*! This method returns the final COM pose matrix after the second
     stage of control.
@@ -468,9 +449,7 @@ public:
     m_ComAndFootRealization = aCFR;
     return true;
   };
-  inline ComAndFootRealization *getComAndFootRealization() {
-    return m_ComAndFootRealization;
-  };
+  inline ComAndFootRealization *getComAndFootRealization() { return m_ComAndFootRealization; };
 
   /*! Call To CoM And Foot Realization object,
     the last values in the stack for the CoM
@@ -492,11 +471,10 @@ public:
     @param[in] StageOfTheAlgorithm: Indicates if this is the second stage of
     the preview control or the first one.
   */
-  void CallToComAndFootRealization(
-      COMState &acomp, FootAbsolutePosition &aLeftFAP,
-      FootAbsolutePosition &aRightFAP, Eigen::VectorXd &CurrentConfiguration,
-      Eigen::VectorXd &CurrentVelocity, Eigen::VectorXd &CurrentAcceleration,
-      unsigned long int IterationNumber, int StageOfTheAlgorithm);
+  void CallToComAndFootRealization(COMState &acomp, FootAbsolutePosition &aLeftFAP, FootAbsolutePosition &aRightFAP,
+                                   Eigen::VectorXd &CurrentConfiguration, Eigen::VectorXd &CurrentVelocity,
+                                   Eigen::VectorXd &CurrentAcceleration, unsigned long int IterationNumber,
+                                   int StageOfTheAlgorithm);
 
   /*! Set the link to the preview control. */
   void SetPreviewControl(PreviewControl *aPC);
@@ -522,5 +500,5 @@ public:
   /*! \brief Overloading method of SimplePlugin */
   void CallMethod(std::string &Method, std::istringstream &astrm);
 };
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* _ZMPREVIEWCONTROLWITHMULTIBODYZMP_H_ */

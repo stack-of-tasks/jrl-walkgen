@@ -43,7 +43,6 @@ using namespace std;
 using namespace PatternGeneratorJRL;
 
 void ZMPVelocityReferencedQP::debugConstructor() {
-
   if (m_FastFormulationMode == QLDANDLQ) {
     RESETDEBUG6("/tmp/dtQLD.dat");
     RESETDEBUG6("/tmp/InfosQLD.dat");
@@ -66,8 +65,7 @@ void ZMPVelocityReferencedQP::debugConstructor() {
   }
 }
 
-void ZMPVelocityReferencedQP::debugMatrix(const char *filename,
-                                          enum MatrixType type) {
+void ZMPVelocityReferencedQP::debugMatrix(const char *filename, enum MatrixType type) {
   ofstream aof;
   aof.open(filename, ofstream::out);
   debugMatrix(aof, type);
@@ -79,54 +77,53 @@ void ZMPVelocityReferencedQP::debugMatrix(ostream &aos, enum MatrixType type) {
   int lnbcols = 0, lnbrows = 0;
 
   switch (type) {
-  case M_PPU:
-    lnbrows = lnbcols = 2 * m_QP_N;
-    aMalMatrix = &m_PPu;
-    break;
-  case M_PZU:
-    lnbrows = m_QP_N;
-    lnbcols = m_QP_N;
-    aMalMatrix = &m_PZu;
-    break;
-  case M_VPU:
-    lnbrows = lnbcols = 2 * m_QP_N;
-    aMalMatrix = &m_VPu;
-    break;
-  case M_PPX:
-    lnbrows = 2 * m_QP_N;
-    lnbcols = 6;
-    aMalMatrix = &m_PPx;
-    break;
-  case M_PZX:
-    lnbrows = m_QP_N;
-    lnbcols = 3;
-    aMalMatrix = &m_PZx;
-    break;
-  case M_VPX:
-    lnbrows = 2 * m_QP_N;
-    lnbcols = 6;
-    aMalMatrix = &m_VPx;
-    break;
-  case M_U:
-    lnbrows = m_QP_N;
-    lnbcols = m_PrwSupport.StepNumber;
-    aMalMatrix = &m_U;
-    break;
-  case M_LQ:
-    lnbrows = 2 * m_QP_N;
-    lnbcols = 2 * m_QP_N;
-    aMalMatrix = &m_LQ;
-    break;
-  case M_ILQ:
-    lnbrows = 2 * m_QP_N;
-    lnbcols = 2 * m_QP_N;
-    aMalMatrix = &m_iLQ;
-    break;
+    case M_PPU:
+      lnbrows = lnbcols = 2 * m_QP_N;
+      aMalMatrix = &m_PPu;
+      break;
+    case M_PZU:
+      lnbrows = m_QP_N;
+      lnbcols = m_QP_N;
+      aMalMatrix = &m_PZu;
+      break;
+    case M_VPU:
+      lnbrows = lnbcols = 2 * m_QP_N;
+      aMalMatrix = &m_VPu;
+      break;
+    case M_PPX:
+      lnbrows = 2 * m_QP_N;
+      lnbcols = 6;
+      aMalMatrix = &m_PPx;
+      break;
+    case M_PZX:
+      lnbrows = m_QP_N;
+      lnbcols = 3;
+      aMalMatrix = &m_PZx;
+      break;
+    case M_VPX:
+      lnbrows = 2 * m_QP_N;
+      lnbcols = 6;
+      aMalMatrix = &m_VPx;
+      break;
+    case M_U:
+      lnbrows = m_QP_N;
+      lnbcols = m_PrwSupport.StepNumber;
+      aMalMatrix = &m_U;
+      break;
+    case M_LQ:
+      lnbrows = 2 * m_QP_N;
+      lnbcols = 2 * m_QP_N;
+      aMalMatrix = &m_LQ;
+      break;
+    case M_ILQ:
+      lnbrows = 2 * m_QP_N;
+      lnbcols = 2 * m_QP_N;
+      aMalMatrix = &m_iLQ;
+      break;
   }
 
   for (int i = 0; i < lnbrows; i++) {
-    for (int j = 0; j < lnbcols; j++)
-      aos << (*aMalMatrix)(i, j) << " ";
+    for (int j = 0; j < lnbcols; j++) aos << (*aMalMatrix)(i, j) << " ";
     aos << std::endl;
   }
 }

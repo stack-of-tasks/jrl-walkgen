@@ -10,19 +10,38 @@ using namespace Eigen;
 using namespace se3;
 
 MultiContactHirukawa::MultiContactHirukawa(se3::Model *model)
-    : robot_model_(model), q_(model->nq), dq_(model->nv), dqrh_(6), dqlh_(6),
-      dqrf_(6), dqlf_(6), idx_r_wrist_(findIndex(model, "RARM_JOINT5")),
+    : robot_model_(model),
+      q_(model->nq),
+      dq_(model->nv),
+      dqrh_(6),
+      dqlh_(6),
+      dqrf_(6),
+      dqlf_(6),
+      idx_r_wrist_(findIndex(model, "RARM_JOINT5")),
       idx_l_wrist_(findIndex(model, "LARM_JOINT5")),
       idx_r_ankle_(findIndex(model, "RLEG_JOINT5")),
-      idx_l_ankle_(findIndex(model, "LLEG_JOINT5")), idx_r_hip_(30),
-      idx_l_hip_(24), idx_r_shoulder_(17), idx_l_shoulder_(10),
-      tmpJ_(6, model->nv), Jrh_(6, 6), Jlh_(6, 6), Jrf_(6, 6), Jlf_(6, 6),
-      Jrh_1_(6, 6), Jlh_1_(6, 6), Jrf_1_(6, 6), Jlf_1_(6, 6), xirf_(6),
-      xilf_(6), xirh_(6), xilh_(6),
+      idx_l_ankle_(findIndex(model, "LLEG_JOINT5")),
+      idx_r_hip_(30),
+      idx_l_hip_(24),
+      idx_r_shoulder_(17),
+      idx_l_shoulder_(10),
+      tmpJ_(6, model->nv),
+      Jrh_(6, 6),
+      Jlh_(6, 6),
+      Jrf_(6, 6),
+      Jlf_(6, 6),
+      Jrh_1_(6, 6),
+      Jlh_1_(6, 6),
+      Jrf_1_(6, 6),
+      Jlf_1_(6, 6),
+      xirf_(6),
+      xilf_(6),
+      xirh_(6),
+      xilh_(6),
       svd_(JacobiSVD<MatrixXd>(6, 6, ComputeThinU | ComputeThinV)) {
   robot_data_ = new se3::Data(*model);
-  n_it_ = 5;                // number of iteration max to converge
-  sampling_period_ = 0.005; // sampling period in seconds
+  n_it_ = 5;                 // number of iteration max to converge
+  sampling_period_ = 0.005;  // sampling period in seconds
 
   q_.fill(0.0);
   dq_.fill(0.0);
@@ -68,23 +87,19 @@ MultiContactHirukawa::MultiContactHirukawa(se3::Model *model)
   contacts_.resize(4);
   contacts_[RightFoot].p.fill(0.0);
   contacts_[RightFoot].n.fill(0.0);
-  contacts_[RightFoot].lambda =
-      1.0; // arbitrary value, Check the paper to get more intuition about it
+  contacts_[RightFoot].lambda = 1.0;  // arbitrary value, Check the paper to get more intuition about it
 
   contacts_[LeftFoot].p.fill(0.0);
   contacts_[LeftFoot].n.fill(0.0);
-  contacts_[LeftFoot].lambda =
-      1.0; // arbitrary value, Check the paper to get more intuition about it
+  contacts_[LeftFoot].lambda = 1.0;  // arbitrary value, Check the paper to get more intuition about it
 
   contacts_[RightHand].p.fill(0.0);
   contacts_[RightHand].n.fill(0.0);
-  contacts_[RightHand].lambda =
-      0.2; // arbitrary value, Check the paper to get more intuition about it
+  contacts_[RightHand].lambda = 0.2;  // arbitrary value, Check the paper to get more intuition about it
 
   contacts_[LeftHand].p.fill(0.0);
   contacts_[LeftHand].n.fill(0.0);
-  contacts_[LeftHand].lambda =
-      0.2; // arbitrary value, Check the paper to get more intuition about it
+  contacts_[LeftHand].lambda = 0.2;  // arbitrary value, Check the paper to get more intuition about it
 
   epsilons_.resize(4, 0.0);
 
@@ -95,8 +110,7 @@ MultiContactHirukawa::MultiContactHirukawa(se3::Model *model)
   TauX = TauY = 0.0;
 
   robot_mass_ = 0.0;
-  for (unsigned i = 1; i < robot_model_->inertias.size(); ++i)
-    robot_mass_ += robot_model_->inertias[i].mass();
+  for (unsigned i = 1; i < robot_model_->inertias.size(); ++i) robot_mass_ += robot_model_->inertias[i].mass();
 
   A_ = MatrixXd::Zero(6, 6);
   B_ = VectorXd::Zero(6);
@@ -105,10 +119,8 @@ MultiContactHirukawa::MultiContactHirukawa(se3::Model *model)
 
 MultiContactHirukawa::~MultiContactHirukawa() {}
 
-int MultiContactHirukawa::inverseKinematicsOnLimbs(FootAbsolutePosition &rf,
-                                                   FootAbsolutePosition &lf,
-                                                   HandAbsolutePosition &rh,
-                                                   HandAbsolutePosition &lh) {
+int MultiContactHirukawa::inverseKinematicsOnLimbs(FootAbsolutePosition &rf, FootAbsolutePosition &lf,
+                                                   HandAbsolutePosition &rh, HandAbsolutePosition &lh) {
   xirf_ << rh.dx, rh.dy, rh.dz, rh.domega, rh.domega2, rh.dtheta;
   xilf_ << lh.dx, lh.dy, lh.dz, lh.domega, lh.domega2, lh.dtheta;
   xirh_ << rf.dx, rf.dy, rf.dz, rf.domega, rf.domega2, rf.dtheta;
@@ -187,8 +199,7 @@ int MultiContactHirukawa::contactWrench(COMState &com_ref) {
     lamba_nz_sum += contacts_[i].lambda * contacts_[i].n(2);
   }
   for (unsigned i = 0; i < contacts_.size(); ++i)
-    lambda_ratio[i] =
-        contacts_[i].n.squaredNorm() * contacts_[i].lambda / lamba_nz_sum;
+    lambda_ratio[i] = contacts_[i].n.squaredNorm() * contacts_[i].lambda / lamba_nz_sum;
 
   double g = robot_model_->gravity981(2);
   double ddc_z = com_ref.z[2];
@@ -216,22 +227,16 @@ int MultiContactHirukawa::contactWrench(COMState &com_ref) {
   TauX = 0.0;
   TauY = 0.0;
   for (unsigned i = 0; i < contacts_.size(); ++i) {
-    TauX += epsilons_[i] * (com_ref.x[0] * contacts_[i].n(2) -
-                            com_ref.z[0] * contacts_[i].n(1));
-    TauY += -epsilons_[i] * (com_ref.y[0] * contacts_[i].n(2) -
-                             com_ref.z[0] * contacts_[i].n(0));
+    TauX += epsilons_[i] * (com_ref.x[0] * contacts_[i].n(2) - com_ref.z[0] * contacts_[i].n(1));
+    TauY += -epsilons_[i] * (com_ref.y[0] * contacts_[i].n(2) - com_ref.z[0] * contacts_[i].n(0));
   }
 
   double *xG = com_ref.x;
   double *yG = com_ref.y;
   double *zG = com_ref.z;
 
-  P_(0) = prevP_(0) +
-          sampling_period_ / (zG[0] - zC_) *
-              (TauY - dL_(1) + robot_mass_ * (zG[2] + g) * (xG[0] - xC_));
-  P_(1) = prevP_(1) -
-          sampling_period_ / (zG[0] - zC_) *
-              (TauX - dL_(0) - robot_mass_ * (zG[2] + g) * (yG[0] - yC_));
+  P_(0) = prevP_(0) + sampling_period_ / (zG[0] - zC_) * (TauY - dL_(1) + robot_mass_ * (zG[2] + g) * (xG[0] - xC_));
+  P_(1) = prevP_(1) - sampling_period_ / (zG[0] - zC_) * (TauX - dL_(0) - robot_mass_ * (zG[2] + g) * (yG[0] - yC_));
   P_(2) = robot_mass_ * com_ref.z[1];
 
   // cout << "P = \n" << P_ << endl ;
@@ -239,13 +244,11 @@ int MultiContactHirukawa::contactWrench(COMState &com_ref) {
 }
 
 int MultiContactHirukawa::inverseMomentum() {
-  A_ = robot_data_->M.block(0, 0, 6, 6) -
-       robot_data_->M.block(0, idx_r_shoulder_, 6, 6) * Jrh_1_ * bXrh_;
+  A_ = robot_data_->M.block(0, 0, 6, 6) - robot_data_->M.block(0, idx_r_shoulder_, 6, 6) * Jrh_1_ * bXrh_;
   -robot_data_->M.block(0, idx_l_shoulder_, 6, 6) * Jlh_1_ *bXlh_;
   -robot_data_->M.block(0, idx_r_hip_, 6, 6) * Jrf_1_ *bXrf_;
   -robot_data_->M.block(0, idx_l_hip_, 6, 6) * Jlf_1_ *bXlf_;
-  B_ = (VectorXd(6) << P_, L_).finished() -
-       robot_data_->M.block(0, idx_r_shoulder_, 6, 6) * Jrh_1_ * xirf_ -
+  B_ = (VectorXd(6) << P_, L_).finished() - robot_data_->M.block(0, idx_r_shoulder_, 6, 6) * Jrh_1_ * xirf_ -
        robot_data_->M.block(0, idx_l_shoulder_, 6, 6) * Jlh_1_ * xilf_ -
        robot_data_->M.block(0, idx_r_hip_, 6, 6) * Jrf_1_ * xirh_ -
        robot_data_->M.block(0, idx_l_hip_, 6, 6) * Jlf_1_ * xilh_;
@@ -255,11 +258,11 @@ int MultiContactHirukawa::inverseMomentum() {
   return 0;
 }
 
-int MultiContactHirukawa::oneIteration(COMState &comState,       // INPUT/OUTPUT
-                                       FootAbsolutePosition &rf, // INPUT
-                                       FootAbsolutePosition &lf, // INPUT
-                                       HandAbsolutePosition &rh, // INPUT
-                                       HandAbsolutePosition &lh) // INPUT
+int MultiContactHirukawa::oneIteration(COMState &comState,        // INPUT/OUTPUT
+                                       FootAbsolutePosition &rf,  // INPUT
+                                       FootAbsolutePosition &lf,  // INPUT
+                                       HandAbsolutePosition &rh,  // INPUT
+                                       HandAbsolutePosition &lh)  // INPUT
 {
   cout << "dq_.head(6) = " << endl << dq_.head(6) << endl;
   for (unsigned i = 0; i < 500; ++i) {
@@ -286,13 +289,10 @@ int MultiContactHirukawa::oneIteration(COMState &comState,       // INPUT/OUTPUT
 
     VectorXd error = dq_.head(3) - xiB_.head(3);
     dq_.head(3) = xiB_.head(3);
-    cout << "i= " << i << " ; vB = " << xiB_.head(3)(0) << " "
-         << xiB_.head(3)(1) << " " << xiB_.head(3)(2)
-         << " ; error = " << error(0) << " " << error(1) << " " << error(2)
-         << endl;
+    cout << "i= " << i << " ; vB = " << xiB_.head(3)(0) << " " << xiB_.head(3)(1) << " " << xiB_.head(3)(2)
+         << " ; error = " << error(0) << " " << error(1) << " " << error(2) << endl;
     double precision = 1e-5;
-    if (abs(error(0)) < precision && abs(error(1)) < precision &&
-        abs(error(2)) < precision) {
+    if (abs(error(0)) < precision && abs(error(1)) < precision && abs(error(2)) < precision) {
       break;
     }
   }
@@ -307,7 +307,7 @@ int MultiContactHirukawa::oneIteration(COMState &comState,       // INPUT/OUTPUT
 }
 
 int MultiContactHirukawa::invertMatrix(Eigen::MatrixXd &A,
-                                       Eigen::MatrixXd &A_1 // Right Hand Side
+                                       Eigen::MatrixXd &A_1  // Right Hand Side
 ) {
   svd_.compute(A);
   S_ = svd_.singularValues();
@@ -323,11 +323,9 @@ int MultiContactHirukawa::invertMatrix(Eigen::MatrixXd &A,
   }
   VectorXd::Index diagSize((std::min)(A.rows(), A.cols()));
   VectorXd invertedSingVals(diagSize);
-  invertedSingVals.head(nonzeroSingVals) =
-      S_.head(nonzeroSingVals).array().inverse();
+  invertedSingVals.head(nonzeroSingVals) = S_.head(nonzeroSingVals).array().inverse();
   invertedSingVals.tail(diagSize - nonzeroSingVals).setZero();
 
-  A_1 = V_.leftCols(diagSize) * invertedSingVals.asDiagonal() *
-        U_.leftCols(diagSize).adjoint();
+  A_1 = V_.leftCols(diagSize) * invertedSingVals.asDiagonal() * U_.leftCols(diagSize).adjoint();
   return 0;
 }

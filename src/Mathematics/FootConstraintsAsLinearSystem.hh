@@ -49,7 +49,7 @@ namespace PatternGeneratorJRL {
   for QP solving.
 */
 class FootConstraintsAsLinearSystem : public SimplePlugin {
-public:
+ public:
   /*! Constructor */
   FootConstraintsAsLinearSystem(SimplePluginManager *aSPM, PinocchioRobot *aPR);
 
@@ -62,32 +62,26 @@ public:
     supposed to represent
     the convex hull of the robot contact points with the ground.
   */
-  int ComputeLinearSystem(std::vector<CH_Point> aVecOfPoints,
-                          Eigen::MatrixXd &A, Eigen::MatrixXd &B,
+  int ComputeLinearSystem(std::vector<CH_Point> aVecOfPoints, Eigen::MatrixXd &A, Eigen::MatrixXd &B,
                           Eigen::VectorXd &C);
 
   /*!  Build a queue of constraint Inequalities based on a list of
     Foot Absolute Position.
   */
-  int BuildLinearConstraintInequalities(
-      std::deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-      std::deque<FootAbsolutePosition> &RightFootAbsolutePositions,
-      std::deque<LinearConstraintInequality_t *>
-          &QueueOfLConstraintInequalities,
-      double ConstraintOnX, double ConstraintOnY);
+  int BuildLinearConstraintInequalities(std::deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+                                        std::deque<FootAbsolutePosition> &RightFootAbsolutePositions,
+                                        std::deque<LinearConstraintInequality_t *> &QueueOfLConstraintInequalities,
+                                        double ConstraintOnX, double ConstraintOnY);
 
   /*!  Build a queue of constraint Inequalities based on a list
     of Foot Absolute Position.  */
-  int BuildLinearConstraintInequalities2(
-      std::deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-      std::deque<FootAbsolutePosition> &RightFootAbsolutePositions,
-      std::deque<LinearConstraintInequality_t *>
-          &QueueOfLConstraintInequalities,
-      double ConstraintOnX, double ConstraintOnY);
+  int BuildLinearConstraintInequalities2(std::deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+                                         std::deque<FootAbsolutePosition> &RightFootAbsolutePositions,
+                                         std::deque<LinearConstraintInequality_t *> &QueueOfLConstraintInequalities,
+                                         double ConstraintOnX, double ConstraintOnY);
 
   /*! Find Similar Constraints */
-  int FindSimilarConstraints(Eigen::MatrixXd &A,
-                             std::vector<int> &SimilarConstraints);
+  int FindSimilarConstraints(Eigen::MatrixXd &A, std::vector<int> &SimilarConstraints);
 
   /*! Reimplement the interface of SimplePluginManager
     \param[in] Method: The method to be called.
@@ -95,9 +89,9 @@ public:
   */
   virtual void CallMethod(std::string &Method, std::istringstream &Args);
 
-private:
+ private:
   /* ! Reference on the Humanoid Specificities. */
   PinocchioRobot *m_PR;
 };
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* _FOOT_CONSTRAINTS_AS_LINEAR_SYSTEM_H_ */

@@ -35,11 +35,9 @@
 namespace PatternGeneratorJRL {
 class ZMPDiscretization;
 class ZMPQPWithConstraint : public ZMPRefTrajectoryGeneration {
-
-public:
+ public:
   /* Default constructor. */
-  ZMPQPWithConstraint(SimplePluginManager *lSPM, string DataFile,
-                      PinocchioRobot *aPR = 0);
+  ZMPQPWithConstraint(SimplePluginManager *lSPM, string DataFile, PinocchioRobot *aPR = 0);
 
   /* Default destructor. */
   ~ZMPQPWithConstraint();
@@ -47,11 +45,10 @@ public:
   /*! This method builds a set of linear constraint inequalities based
     on the foot trajectories given as an input.
     The result is a set Linear Constraint Inequalities. */
-  int BuildLinearConstraintInequalities(
-      deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-      deque<FootAbsolutePosition> &RightFootAbsolutePositions,
-      deque<LinearConstraintInequality_t *> &QueueOfLConstraintInequalities,
-      double ConstraintOnX, double ConstraintOnY);
+  int BuildLinearConstraintInequalities(deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+                                        deque<FootAbsolutePosition> &RightFootAbsolutePositions,
+                                        deque<LinearConstraintInequality_t *> &QueueOfLConstraintInequalities,
+                                        double ConstraintOnX, double ConstraintOnY);
 
   /** Generate ZMP discreatization from a vector of foot position.
       ASSUME A COMPLETE MOTION FROM END TO START, and GENERATE EVERY VALUE.
@@ -97,33 +94,29 @@ public:
 
 
   */
-  void GetZMPDiscretization(
-      deque<ZMPPosition> &ZMPPositions, deque<COMState> &CoMStates,
-      deque<RelativeFootPosition> &RelativeFootPositions,
-      deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-      deque<FootAbsolutePosition> &RightFootAbsolutePositions, double Xmax,
-      COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
-      FootAbsolutePosition &InitLeftFootAbsolutePosition,
-      FootAbsolutePosition &InitRightFootAbsolutePosition);
+  void GetZMPDiscretization(deque<ZMPPosition> &ZMPPositions, deque<COMState> &CoMStates,
+                            deque<RelativeFootPosition> &RelativeFootPositions,
+                            deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+                            deque<FootAbsolutePosition> &RightFootAbsolutePositions, double Xmax,
+                            COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
+                            FootAbsolutePosition &InitLeftFootAbsolutePosition,
+                            FootAbsolutePosition &InitRightFootAbsolutePosition);
 
   /*! This method is a new way of computing the ZMP trajectory from
     foot trajectory. */
-  int BuildZMPTrajectoryFromFootTrajectory(
-      deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-      deque<FootAbsolutePosition> &RightFootAbsolutePositions,
-      deque<ZMPPosition> &ZMPRefPositions, deque<COMState> &COMStates,
-      double ConstraintOnX, double ConstraintOnY, double T, unsigned int N);
+  int BuildZMPTrajectoryFromFootTrajectory(deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+                                           deque<FootAbsolutePosition> &RightFootAbsolutePositions,
+                                           deque<ZMPPosition> &ZMPRefPositions, deque<COMState> &COMStates,
+                                           double ConstraintOnX, double ConstraintOnY, double T, unsigned int N);
 
   /*! Build the necessary matrices for the QP problem under linear inequality
     constraints. */
-  int BuildMatricesPxPu(
-      double *&Px, double *&Pu, unsigned N, double T, double StartingTime,
-      deque<LinearConstraintInequality_t *> &QueueOfLConstraintInequalities,
-      double Com_Height, unsigned int &NbOfConstraints, Eigen::VectorXd &xk);
+  int BuildMatricesPxPu(double *&Px, double *&Pu, unsigned N, double T, double StartingTime,
+                        deque<LinearConstraintInequality_t *> &QueueOfLConstraintInequalities, double Com_Height,
+                        unsigned int &NbOfConstraints, Eigen::VectorXd &xk);
 
   /*! This method helps to build a linear system for constraining the ZMP. */
-  int ComputeLinearSystem(std::vector<CH_Point> aVecOfPoints,
-                          Eigen::MatrixXd &A, Eigen::MatrixXd &B);
+  int ComputeLinearSystem(std::vector<CH_Point> aVecOfPoints, Eigen::MatrixXd &A, Eigen::MatrixXd &B);
 
   /*! This method get the COM buffer computed by the QP in off-line mode. */
   void GetComBuffer(deque<COMState> &aCOMBuffer);
@@ -145,41 +138,32 @@ public:
     Returns the number of steps which has been completely put inside
     the queue of ZMP, and foot positions.
   */
-  std::size_t
-  InitOnLine(deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
-             deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-             deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
-             FootAbsolutePosition &InitLeftFootAbsolutePosition,
-             FootAbsolutePosition &InitRightFootAbsolutePosition,
-             deque<RelativeFootPosition> &RelativeFootPositions,
-             COMState &lStartingCOMState,
-             Eigen::Vector3d &lStartingZMPPosition);
+  std::size_t InitOnLine(deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
+                         deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+                         deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
+                         FootAbsolutePosition &InitLeftFootAbsolutePosition,
+                         FootAbsolutePosition &InitRightFootAbsolutePosition,
+                         deque<RelativeFootPosition> &RelativeFootPositions, COMState &lStartingCOMState,
+                         Eigen::Vector3d &lStartingZMPPosition);
 
   /* ! Methods to update the stack on-line by inserting
      a new foot position. */
-  void
-  OnLineAddFoot(RelativeFootPosition &NewRelativeFootPosition,
-                deque<ZMPPosition> &FinalZMPPositions,
-                deque<COMState> &CoMStates,
-                deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-                deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
-                bool EndSequence);
+  void OnLineAddFoot(RelativeFootPosition &NewRelativeFootPosition, deque<ZMPPosition> &FinalZMPPositions,
+                     deque<COMState> &CoMStates, deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+                     deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions, bool EndSequence);
 
   /* ! \brief Method to update the stacks on-line */
-  void OnLine(double time, deque<ZMPPosition> &FinalZMPPositions,
-              deque<COMState> &CoMStates,
+  void OnLine(double time, deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
               deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
               deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions);
 
   /* ! \brief Method to change on line the landing position of a foot.
      @return If the method failed it returns -1, 0 otherwise.
   */
-  int OnLineFootChange(
-      double time, FootAbsolutePosition &aFootAbsolutePosition,
-      deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
-      deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-      deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
-      StepStackHandler *aStepStackHandler = 0);
+  int OnLineFootChange(double time, FootAbsolutePosition &aFootAbsolutePosition, deque<ZMPPosition> &FinalZMPPositions,
+                       deque<COMState> &CoMStates, deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+                       deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
+                       StepStackHandler *aStepStackHandler = 0);
 
   /*! \brief Method to stop walking.
     @param[out] ZMPPositions: The queue of ZMP reference positions.
@@ -189,11 +173,9 @@ public:
     @param[out] RightFootAbsolutePositions:
     The queue of right foot absolute positions.
   */
-  void
-  EndPhaseOfTheWalking(deque<ZMPPosition> &ZMPPositions,
-                       deque<COMState> &FinalCOMStates,
-                       deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-                       deque<FootAbsolutePosition> &RightFootAbsolutePositions);
+  void EndPhaseOfTheWalking(deque<ZMPPosition> &ZMPPositions, deque<COMState> &FinalCOMStates,
+                            deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+                            deque<FootAbsolutePosition> &RightFootAbsolutePositions);
 
   /*! \brief Return the time at which it is optimal to regenerate a step in
     online mode.
@@ -202,7 +184,7 @@ public:
 
   /* @} */
 
-protected:
+ protected:
   /* ! Reference on the Humanoid Specificities. */
   PinocchioRobot *m_PR;
 
@@ -229,7 +211,7 @@ protected:
   /*! Preview window */
   unsigned int m_QP_N;
 };
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 
 #include <ZMPRefTrajectoryGeneration/ZMPDiscretization.hh>
 #endif /* _ZMPQP_WITH_CONSTRAINT_H_ */

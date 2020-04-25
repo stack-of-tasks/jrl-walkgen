@@ -34,20 +34,14 @@
 
 using namespace ::PatternGeneratorJRL;
 
-WaistHeightVariation::WaistHeightVariation() {
-
-  m_PolynomeHip = new WaistPolynome();
-}
+WaistHeightVariation::WaistHeightVariation() { m_PolynomeHip = new WaistPolynome(); }
 
 WaistHeightVariation::~WaistHeightVariation() {
-  if (m_PolynomeHip != 0)
-    delete m_PolynomeHip;
+  if (m_PolynomeHip != 0) delete m_PolynomeHip;
 }
 
-void WaistHeightVariation::PolyPlanner(deque<COMPosition> &aCOMBuffer,
-                                       deque<RelativeFootPosition> &aFootHolds,
+void WaistHeightVariation::PolyPlanner(deque<COMPosition> &aCOMBuffer, deque<RelativeFootPosition> &aFootHolds,
                                        deque<ZMPPosition> aZMPPosition) {
-
   unsigned int u_start = 0;
   int stepnumber = 0;
   Eigen::Matrix<double, 4, 1> aBoundCond;
@@ -65,60 +59,46 @@ void WaistHeightVariation::PolyPlanner(deque<COMPosition> &aCOMBuffer,
 
   aBoundCond(0) = aCOMBuffer[0].z[0];
   aBoundCond(1) = 0.0;
-  aBoundCond(2) =
-      aCOMBuffer[0].z[0] + aFootHolds[stepnumber].DeviationHipHeight;
+  aBoundCond(2) = aCOMBuffer[0].z[0] + aFootHolds[stepnumber].DeviationHipHeight;
   aBoundCond(3) = 0.0;
 
   m_PolynomeHip->SetParameters(aBoundCond, aTimeDistr);
   // m_PolynomeHip->print();
-  aCOMBuffer[u_start].z[0] = aCOMBuffer[0].z[0]; //+aCOMBuffer[u_start].z[0];
+  aCOMBuffer[u_start].z[0] = aCOMBuffer[0].z[0];  //+aCOMBuffer[u_start].z[0];
   aCOMBuffer[u_start].z[1] = 0.0;
   aCOMBuffer[u_start].z[2] = 0.0;
 
   for (unsigned int u = 1; u < aCOMBuffer.size(); u++) {
     if ((aFootHolds[stepnumber].sx > 0) | (stepnumber == 0)) {
-      if ((aZMPPosition[u - 1].stepType == 11) &
-          (std::fabs((double)aZMPPosition[u].stepType) == 1)) {
-        ODEBUG("Deviation Hip Height: "
-               << aFootHolds[stepnumber].DeviationHipHeight);
+      if ((aZMPPosition[u - 1].stepType == 11) & (std::fabs((double)aZMPPosition[u].stepType) == 1)) {
+        ODEBUG("Deviation Hip Height: " << aFootHolds[stepnumber].DeviationHipHeight);
         stepnumber++;
 
-        aTimeDistr[0] =
-            aFootHolds[stepnumber].SStime + aFootHolds[stepnumber].DStime;
+        aTimeDistr[0] = aFootHolds[stepnumber].SStime + aFootHolds[stepnumber].DStime;
 
         u_start = u;
 
-        aBoundCond(0) = aCOMBuffer[u_start].z[0] +
-                        aFootHolds[stepnumber - 1].DeviationHipHeight;
+        aBoundCond(0) = aCOMBuffer[u_start].z[0] + aFootHolds[stepnumber - 1].DeviationHipHeight;
         aBoundCond(1) = 0.0;
-        aBoundCond(2) = aCOMBuffer[u_start].z[0] +
-                        aFootHolds[stepnumber].DeviationHipHeight;
+        aBoundCond(2) = aCOMBuffer[u_start].z[0] + aFootHolds[stepnumber].DeviationHipHeight;
         aBoundCond(3) = 0.0;
 
         m_PolynomeHip->SetParameters(aBoundCond, aTimeDistr);
         // m_PolynomeHip->print();
         aCOMBuffer[u_start].z[0] = m_PolynomeHip->Compute(0);
-        aCOMBuffer[u_start].z[1] =
-            (aCOMBuffer[u_start].z[0] - aCOMBuffer[u_start - 1].z[0]) /
-            m_SamplingPeriod;
-        aCOMBuffer[u_start].z[2] =
-            (aCOMBuffer[u_start].z[1] - aCOMBuffer[u_start - 1].z[1]) /
-            m_SamplingPeriod;
+        aCOMBuffer[u_start].z[1] = (aCOMBuffer[u_start].z[0] - aCOMBuffer[u_start - 1].z[0]) / m_SamplingPeriod;
+        aCOMBuffer[u_start].z[2] = (aCOMBuffer[u_start].z[1] - aCOMBuffer[u_start - 1].z[1]) / m_SamplingPeriod;
 
       } else {
-
         double LocalTime;
         LocalTime = (u - u_start) * m_SamplingPeriod;
 
-        aCOMBuffer[u].z[0] =
-            m_PolynomeHip->Compute(LocalTime); //+aCOMBuffer[u_start].z[0];
-        aCOMBuffer[u].z[1] =
-            (aCOMBuffer[u].z[0] - aCOMBuffer[u - 1].z[0]) / m_SamplingPeriod;
-        aCOMBuffer[u].z[2] =
-            (aCOMBuffer[u].z[1] - aCOMBuffer[u - 1].z[1]) / m_SamplingPeriod;
+        aCOMBuffer[u].z[0] = m_PolynomeHip->Compute(LocalTime);  //+aCOMBuffer[u_start].z[0];
+        aCOMBuffer[u].z[1] = (aCOMBuffer[u].z[0] - aCOMBuffer[u - 1].z[0]) / m_SamplingPeriod;
+        aCOMBuffer[u].z[2] = (aCOMBuffer[u].z[1] - aCOMBuffer[u - 1].z[1]) / m_SamplingPeriod;
       }
     } else {
-      aCOMBuffer[u].z[0] = aCOMBuffer[u - 1].z[0]; //+aCOMBuffer[u_start].z[0];
+      aCOMBuffer[u].z[0] = aCOMBuffer[u - 1].z[0];  //+aCOMBuffer[u_start].z[0];
       aCOMBuffer[u].z[1] = 0.0;
       aCOMBuffer[u].z[2] = 0.0;
     }
@@ -135,13 +115,11 @@ void WaistHeightVariation::PolyPlanner(deque<COMPosition> &aCOMBuffer,
     aof_Buffers.open("WaistBuffers_1.txt", ofstream::app);
   }
 
-  if (FirstCall)
-    FirstCall = 0;
+  if (FirstCall) FirstCall = 0;
 
   for (unsigned int i = 0; i < aCOMBuffer.size(); i++) {
     if (aof_Buffers.is_open()) {
-      aof_Buffers << aCOMBuffer[i].x[0] << " " << aCOMBuffer[i].y[0] << " "
-                  << aCOMBuffer[i].z[0] << " " << endl;
+      aof_Buffers << aCOMBuffer[i].x[0] << " " << aCOMBuffer[i].y[0] << " " << aCOMBuffer[i].z[0] << " " << endl;
     }
   }
 
@@ -157,8 +135,7 @@ WaistPolynome::WaistPolynome() : Polynome(4) {
   // SetParameters(boundCond,timeDistr);
 }
 
-void WaistPolynome::SetParameters(Eigen::VectorXd boundCond,
-                                  vector<double> timeDistr) {
+void WaistPolynome::SetParameters(Eigen::VectorXd boundCond, vector<double> timeDistr) {
   Eigen::Matrix<double, 4, 4> Base;
   ;
   Eigen::Matrix<double, 4, 4> Temp;
@@ -200,8 +177,7 @@ void WaistPolynome::SetParameters(Eigen::VectorXd boundCond,
 
   for (unsigned int i = 0; i < boundCond.size(); i++) {
     Temp = Base;
-    for (unsigned int j = 0; j < Temp.rows(); j++)
-      Temp(j, i) = boundCond(j);
+    for (unsigned int j = 0; j < Temp.rows(); j++) Temp(j, i) = boundCond(j);
     m_Coefficients[i] = Temp.determinant() / detBase;
   };
 }

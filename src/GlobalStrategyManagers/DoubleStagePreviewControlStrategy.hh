@@ -39,8 +39,7 @@ namespace PatternGeneratorJRL {
     algorithm.
 */
 class DoubleStagePreviewControlStrategy : public GlobalStrategyManager {
-
-public:
+ public:
   /*! Default constructor. */
   DoubleStagePreviewControlStrategy(SimplePluginManager *aSimplePluginManager);
 
@@ -65,12 +64,9 @@ public:
     @param[out] CurrentAcceleration: The results is a state vector containing
     the acceleration.
   */
-  int OneGlobalStepOfControl(FootAbsolutePosition &LeftFootPosition,
-                             FootAbsolutePosition &RightFootPosition,
-                             Eigen::VectorXd &ZMPRefPos, COMState &COMState,
-                             Eigen::VectorXd &CurrentConfiguration,
-                             Eigen::VectorXd &CurrentVelocity,
-                             Eigen::VectorXd &CurrentAcceleration);
+  int OneGlobalStepOfControl(FootAbsolutePosition &LeftFootPosition, FootAbsolutePosition &RightFootPosition,
+                             Eigen::VectorXd &ZMPRefPos, COMState &COMState, Eigen::VectorXd &CurrentConfiguration,
+                             Eigen::VectorXd &CurrentVelocity, Eigen::VectorXd &CurrentAcceleration);
 
   /*! Computes the COM of the robot with the Joint values given in BodyAngles,
     velocities set to zero, and returns the values of the COM in
@@ -91,21 +87,15 @@ public:
     @param[out] InitRightFootPosition: Returns the position of the right foot
     in the waist coordinates frame.
   */
-  int EvaluateStartingState(Eigen::VectorXd &BodyAngles,
-                            COMState &aStartingCOMState,
-                            Eigen::Vector3d &aStartingZMPPosition,
-                            Eigen::Matrix<double, 6, 1> &aStartingWaistPose,
-                            FootAbsolutePosition &InitLeftFootPosition,
-                            FootAbsolutePosition &InitRightFootPosition);
+  int EvaluateStartingState(Eigen::VectorXd &BodyAngles, COMState &aStartingCOMState,
+                            Eigen::Vector3d &aStartingZMPPosition, Eigen::Matrix<double, 6, 1> &aStartingWaistPose,
+                            FootAbsolutePosition &InitLeftFootPosition, FootAbsolutePosition &InitRightFootPosition);
 
   /*! \brief Setter for the stack handler. */
-  void SetStepStackHandler(StepStackHandler *aSSH) {
-    m_StepStackHandler = aSSH;
-  }
+  void SetStepStackHandler(StepStackHandler *aSSH) { m_StepStackHandler = aSSH; }
 
   /*! \brief Initialization of the inter objects relationship. */
-  int InitInterObjects(PinocchioRobot *aPR, ComAndFootRealization *aCFR,
-                       StepStackHandler *aSSH);
+  int InitInterObjects(PinocchioRobot *aPR, ComAndFootRealization *aCFR, StepStackHandler *aSSH);
 
   /*! This method returns :
     \li -1 if there is no more motion to realize
@@ -147,7 +137,7 @@ public:
   static const unsigned int ZMPFRAME_WAIST = 0;
   static const unsigned int ZMPFRAME_WORLD = 1;
 
-protected:
+ protected:
   /*! Set the sampling period and update NL.*/
   void SetSamplingPeriod(double lSamplingPeriod);
 
@@ -173,5 +163,5 @@ protected:
   /*! ZMP reference frame. */
   unsigned int m_ZMPFrame;
 };
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* _DOUBLE_STAGE_PREVIEW_CONTROL_STRATEGY_H_*/

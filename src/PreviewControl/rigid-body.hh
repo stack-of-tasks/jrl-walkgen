@@ -81,18 +81,16 @@ typedef linear_dynamics_s linear_dynamics_t;
 /// \}
 
 class RigidBody {
-
   //
   // Public methods
   //
-public:
+ public:
   RigidBody();
 
   ~RigidBody();
 
   /// \brief Interpolate
-  int interpolate(std::deque<COMState> &COMStates,
-                  std::deque<ZMPPosition> &ZMPRefPositions, int CurrentPosition,
+  int interpolate(std::deque<COMState> &COMStates, std::deque<ZMPPosition> &ZMPRefPositions, int CurrentPosition,
                   double CX, double CY);
 
   /// \brief Initialize
@@ -139,11 +137,11 @@ public:
   //
   // Private member functions
   //
-private:
+ private:
   //
   // Private members
   //
-private:
+ private:
   /// \brief State
   rigid_body_state_t State_;
 
@@ -152,8 +150,7 @@ private:
 
   /// \name Dynamics
   /// \{
-  linear_dynamics_t PositionDynamics_, VelocityDynamics_, AccelerationDynamics_,
-      JerkDynamics_, CoPDynamics_;
+  linear_dynamics_t PositionDynamics_, VelocityDynamics_, AccelerationDynamics_, JerkDynamics_, CoPDynamics_;
   /// \}
 
   /// \brief Sampling period simulation
@@ -172,5 +169,5 @@ private:
   /// \brief Mass
   double Mass_;
 };
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* _RIGID_BODY_ */

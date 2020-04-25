@@ -23,21 +23,19 @@ struct contact_t {
 typedef contact_t contact;
 
 class MultiContactHirukawa {
-public:
+ public:
   MultiContactHirukawa(se3::Model *model);
 
   ~MultiContactHirukawa();
 
-  int oneIteration(COMState &comState,        // INPUT
-                   FootAbsolutePosition &rf,  // INPUT
-                   FootAbsolutePosition &lf,  // INPUT
-                   HandAbsolutePosition &rh,  // INPUT
-                   HandAbsolutePosition &lh); // INPUT
+  int oneIteration(COMState &comState,         // INPUT
+                   FootAbsolutePosition &rf,   // INPUT
+                   FootAbsolutePosition &lf,   // INPUT
+                   HandAbsolutePosition &rh,   // INPUT
+                   HandAbsolutePosition &lh);  // INPUT
 
-private:
-  int inverseKinematicsOnLimbs(FootAbsolutePosition &rf,
-                               FootAbsolutePosition &lf,
-                               HandAbsolutePosition &rh,
+ private:
+  int inverseKinematicsOnLimbs(FootAbsolutePosition &rf, FootAbsolutePosition &lf, HandAbsolutePosition &rh,
                                HandAbsolutePosition &lh);
   int forwardMomentum();
   int contactWrench(COMState &com_ref);
@@ -45,8 +43,7 @@ private:
   int invertMatrix(Eigen::MatrixXd &A, Eigen::MatrixXd &A_1);
 
   se3::Model::Index findIndex(se3::Model *model, std::string name) {
-    return model->existBodyName(name) ? model->getBodyId(name)
-                                      : (se3::Model::Index)(model->nbody - 1);
+    return model->existBodyName(name) ? model->getBodyId(name) : (se3::Model::Index)(model->nbody - 1);
   }
 
   Eigen::MatrixXd hat(Eigen::VectorXd vec) {
@@ -56,7 +53,7 @@ private:
     return mat;
   }
 
-protected:
+ protected:
   // robot model an configurations
   se3::Model *robot_model_;
   se3::Data *robot_data_;
@@ -64,13 +61,11 @@ protected:
   Eigen::VectorXd q_, dq_;
   Eigen::VectorXd dqrh_, dqlh_, dqrf_, dqlf_;
 
-  const se3::Model::Index idx_r_wrist_, idx_l_wrist_, idx_r_ankle_,
-      idx_l_ankle_;
-  const se3::Model::Index idx_r_hip_, idx_l_hip_, idx_r_shoulder_,
-      idx_l_shoulder_;
+  const se3::Model::Index idx_r_wrist_, idx_l_wrist_, idx_r_ankle_, idx_l_ankle_;
+  const se3::Model::Index idx_r_hip_, idx_l_hip_, idx_r_shoulder_, idx_l_shoulder_;
 
-  unsigned int n_it_;      // number of iteration max to converge
-  double sampling_period_; // sampling period in seconds
+  unsigned int n_it_;       // number of iteration max to converge
+  double sampling_period_;  // sampling period in seconds
 
   // all the Jacobians of the end effectors :
   // right hand, left hand, right foot, left foot
@@ -98,10 +93,10 @@ protected:
   bool isInitialized_;
 
   // contact planned
-  std::vector<contact> contacts_; // 0:rf , 1:lf , 2:rh , 3:lh
+  std::vector<contact> contacts_;  // 0:rf , 1:lf , 2:rh , 3:lh
 
   // forces applied on the contacts
-  std::vector<double> epsilons_; // 0:rf , 1:lf , 2:rh , 3:lh
+  std::vector<double> epsilons_;  // 0:rf , 1:lf , 2:rh , 3:lh
   double epsilon_sum_;
 
   // Virtual contact point :
@@ -124,9 +119,9 @@ protected:
   // right foot, left foot
   Eigen::MatrixXd Mrh_star_, Mlh_star_, Mrf_star_, Mlf_star_;
 
-public:
+ public:
   void q(Eigen::VectorXd &q) { q_ = q; }
 };
 
-} // namespace PatternGeneratorJRL
-#endif // HIRUKAWA2007_HH
+}  // namespace PatternGeneratorJRL
+#endif  // HIRUKAWA2007_HH

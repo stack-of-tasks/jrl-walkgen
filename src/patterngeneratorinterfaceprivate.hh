@@ -75,13 +75,12 @@ namespace PatternGeneratorJRL {
 
 
 */
-class PatternGeneratorInterfacePrivate
-    : public virtual PatternGeneratorInterface,
-      SimplePluginManager,
-      SimplePlugin
+class PatternGeneratorInterfacePrivate : public virtual PatternGeneratorInterface,
+                                         SimplePluginManager,
+                                         SimplePlugin
 
 {
-public:
+ public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   /*! Constructor
     @param strm: Should provide the file to initialize the preview control,
@@ -115,8 +114,7 @@ public:
     @param[in] SupportFoot: Indicates which is the first support foot (1)
     Left or (-1) Right.
   */
-  void CreateArcInStepStack(double x, double y, double R, double arc_deg,
-                            int SupportFoot);
+  void CreateArcInStepStack(double x, double y, double R, double arc_deg, int SupportFoot);
 
   /*! \brief This methods generate a stack of steps which make the robot
     follows an arc.
@@ -161,12 +159,11 @@ public:
     classical C++ style.
     @param[in] ClearStepStackHandler: Clean the stack of steps after copy.
   */
-  void CommonInitializationOfWalking(
-      COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
-      Eigen::VectorXd &BodyAnglesIni, FootAbsolutePosition &InitLeftFootAbsPos,
-      FootAbsolutePosition &InitRightFootAbsPos,
-      deque<RelativeFootPosition> &lRelativeFootPositions,
-      std::vector<double> &lCurrentJointValues, bool ClearStepStackHandler);
+  void CommonInitializationOfWalking(COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
+                                     Eigen::VectorXd &BodyAnglesIni, FootAbsolutePosition &InitLeftFootAbsPos,
+                                     FootAbsolutePosition &InitRightFootAbsPos,
+                                     deque<RelativeFootPosition> &lRelativeFootPositions,
+                                     std::vector<double> &lCurrentJointValues, bool ClearStepStackHandler);
 
   /*! \name Methods for the control part.
     @{
@@ -187,10 +184,8 @@ public:
     @param[out]  ZMPTarget  The target ZMP in the waist reference frame.
     @return True is there is still some data to send, false otherwise.
   */
-  bool RunOneStepOfTheControlLoop(Eigen::VectorXd &CurrentConfiguration,
-                                  Eigen::VectorXd &CurrentVelocity,
-                                  Eigen::VectorXd &CurrentAcceleration,
-                                  Eigen::VectorXd &ZMPTarget);
+  bool RunOneStepOfTheControlLoop(Eigen::VectorXd &CurrentConfiguration, Eigen::VectorXd &CurrentVelocity,
+                                  Eigen::VectorXd &CurrentAcceleration, Eigen::VectorXd &ZMPTarget);
 
   /*! \brief Run One Step of the global control loop aka The Main
     Method To Be Used.
@@ -211,13 +206,9 @@ public:
     @param[out] RightFootPosition: Absolute position of the right foot.
     @return True is there is still some data to send, false otherwise.
   */
-  bool RunOneStepOfTheControlLoop(Eigen::VectorXd &CurrentConfiguration,
-                                  Eigen::VectorXd &CurrentVelocity,
-                                  Eigen::VectorXd &CurrentAcceleration,
-                                  Eigen::VectorXd &ZMPTarget,
-                                  COMState &COMState,
-                                  FootAbsolutePosition &LeftFootPosition,
-                                  FootAbsolutePosition &RightFootPosition);
+  bool RunOneStepOfTheControlLoop(Eigen::VectorXd &CurrentConfiguration, Eigen::VectorXd &CurrentVelocity,
+                                  Eigen::VectorXd &CurrentAcceleration, Eigen::VectorXd &ZMPTarget, COMState &COMState,
+                                  FootAbsolutePosition &LeftFootPosition, FootAbsolutePosition &RightFootPosition);
 
   /*! \brief Run One Step of the global control loop
     aka The Main Method To Be Used.
@@ -238,12 +229,9 @@ public:
     @param[out] RightFootPosition: Absolute position of the right foot.
     @return True is there is still some data to send, false otherwise.
   */
-  bool RunOneStepOfTheControlLoop(Eigen::VectorXd &CurrentConfiguration,
-                                  Eigen::VectorXd &CurrentVelocity,
-                                  Eigen::VectorXd &CurrentAcceleration,
-                                  Eigen::VectorXd &ZMPTarget,
-                                  COMPosition &aCOMPosition,
-                                  FootAbsolutePosition &LeftFootPosition,
+  bool RunOneStepOfTheControlLoop(Eigen::VectorXd &CurrentConfiguration, Eigen::VectorXd &CurrentVelocity,
+                                  Eigen::VectorXd &CurrentAcceleration, Eigen::VectorXd &ZMPTarget,
+                                  COMPosition &aCOMPosition, FootAbsolutePosition &LeftFootPosition,
                                   FootAbsolutePosition &RightFootPosition);
 
   /*! \brief Run One Step of the global control loop aka
@@ -254,10 +242,8 @@ public:
     @param[out] COMRefPos: COM position new reference.
     @return True is there is still some data to send, false otherwise.
   */
-  bool RunOneStepOfTheControlLoop(FootAbsolutePosition &LeftFootPosition,
-                                  FootAbsolutePosition &RightFootPosition,
-                                  ZMPPosition &ZMPRefPos,
-                                  COMPosition &COMRefPos);
+  bool RunOneStepOfTheControlLoop(FootAbsolutePosition &LeftFootPosition, FootAbsolutePosition &RightFootPosition,
+                                  ZMPPosition &ZMPRefPos, COMPosition &COMRefPos);
   /*! @} */
 
   /*! Set the current joint values of the robot.
@@ -319,8 +305,7 @@ public:
     related
     to an error, 0 otherwise.
   */
-  int ChangeOnLineStep(double Time, FootAbsolutePosition &aFootAbsolutePosition,
-                       double &newtime);
+  int ChangeOnLineStep(double Time, FootAbsolutePosition &aFootAbsolutePosition, double &newtime);
 
   /*! \brief Change online step.
     See the above method for the specifications.
@@ -386,10 +371,8 @@ public:
   /*! \brief Returns the ZMP, CoM, left foot absolute position, and
     right foot absolute position
     for the initiale pose.*/
-  void EvaluateStartingState(COMState &lStartingCOMState,
-                             Eigen::Vector3d &lStartingZMPPosition,
-                             Eigen::Matrix<double, 6, 1> &lStartingWaistPose,
-                             FootAbsolutePosition &InitLeftFootAbsPos,
+  void EvaluateStartingState(COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
+                             Eigen::Matrix<double, 6, 1> &lStartingWaistPose, FootAbsolutePosition &InitLeftFootAbsPos,
                              FootAbsolutePosition &InitRightFootAbsPos);
 
   /*! @} */
@@ -411,7 +394,7 @@ public:
   */
   void setCoMPerturbationForce(double x, double y);
 
-protected:
+ protected:
   /*! \name Methods for interpreter.
     @{
   */
@@ -447,7 +430,7 @@ protected:
 
   virtual void m_StepStairSequence(std::istringstream &strm);
 
-private:
+ private:
   /*! Object to handle the stack of relative steps. */
   StepStackHandler *m_StepStackHandler;
 
@@ -735,7 +718,7 @@ private:
   /*! \brief Start FPE trapping. */
   void AllowFPE();
 
-protected:
+ protected:
   /*! \name Internal methods which are not to be exposed.
     They are therefore subject to change.
     @{
@@ -747,29 +730,24 @@ protected:
 
   /*! \brief Compute the COM, left and right foot position for a
     given BodyAngle position */
-  void EvaluateStartingCOM(Eigen::VectorXd &Configuration,
-                           Eigen::Vector3d &lStartingCOMPosition);
+  void EvaluateStartingCOM(Eigen::VectorXd &Configuration, Eigen::Vector3d &lStartingCOMPosition);
 
   /*! \brief Fill the internal buffer with the appropriate information
     depending on the strategy.
     The behavior of this method depends on \a m_AlgorithmforZMPCOM.
   */
-  int CreateZMPReferences(deque<RelativeFootPosition> &lRelativeFootPositions,
-                          COMState &lStartingCOMState,
-                          Eigen::Vector3d &lStartingZMPPosition,
-                          FootAbsolutePosition &InitLeftFootAbsPos,
+  int CreateZMPReferences(deque<RelativeFootPosition> &lRelativeFootPositions, COMState &lStartingCOMState,
+                          Eigen::Vector3d &lStartingZMPPosition, FootAbsolutePosition &InitLeftFootAbsPos,
                           FootAbsolutePosition &InitRightFootAbsPos);
 
   /*! \brief Create automatically a new step for a ZMP based stability
     criteria */
-  void
-  AutomaticallyAddFirstStep(deque<RelativeFootPosition> &lRelativeFootPositions,
-                            FootAbsolutePosition &InitLeftFootAbsPos,
-                            FootAbsolutePosition &InitRightFootAbsPos,
-                            COMState &lStartingCOMState);
+  void AutomaticallyAddFirstStep(deque<RelativeFootPosition> &lRelativeFootPositions,
+                                 FootAbsolutePosition &InitLeftFootAbsPos, FootAbsolutePosition &InitRightFootAbsPos,
+                                 COMState &lStartingCOMState);
   /* @} */
 };
 
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 
 #endif

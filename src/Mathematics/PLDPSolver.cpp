@@ -58,8 +58,7 @@ using namespace PatternGeneratorJRL;
 using namespace Optimization::Solver;
 using namespace std;
 
-PLDPSolver::PLDPSolver(unsigned int CardU, double *iPu, double *Px, double *Pu,
-                       double *iLQ) {
+PLDPSolver::PLDPSolver(unsigned int CardU, double *iPu, double *Px, double *Pu, double *iLQ) {
   m_DebugMode = 0;
   m_HotStart = true;
   m_InternalTime = 0.0;
@@ -88,14 +87,11 @@ PLDPSolver::PLDPSolver(unsigned int CardU, double *iPu, double *Px, double *Pu,
   m_NbMaxOfConstraints = 8 * m_CardV;
   m_NbOfConstraints = 0;
 
-  m_OptCholesky = new PatternGeneratorJRL::OptCholesky(
-      m_NbMaxOfConstraints, 2 * m_CardV, OptCholesky::MODE_FORTRAN);
+  m_OptCholesky = new PatternGeneratorJRL::OptCholesky(m_NbMaxOfConstraints, 2 * m_CardV, OptCholesky::MODE_FORTRAN);
 
   string Buffer("InfosPLDP");
-  if (m_HotStart)
-    Buffer += "HS";
-  if (m_LimitedComputationTime)
-    Buffer += "LT";
+  if (m_HotStart) Buffer += "HS";
+  if (m_LimitedComputationTime) Buffer += "LT";
   Buffer += ".dat";
   RESETDEBUG6((char *)Buffer.c_str());
   RESETDEBUG6("ActivatedConstraints.dat");
@@ -153,47 +149,33 @@ void PLDPSolver::InitializeSolver() {
 }
 
 PLDPSolver::~PLDPSolver() {
-  if (m_iPuPx != 0)
-    delete[] m_iPuPx;
+  if (m_iPuPx != 0) delete[] m_iPuPx;
 
-  if (m_Vk != 0)
-    delete[] m_Vk;
+  if (m_Vk != 0) delete[] m_Vk;
 
-  if (m_PreviousZMPSolution != 0)
-    delete[] m_PreviousZMPSolution;
+  if (m_PreviousZMPSolution != 0) delete[] m_PreviousZMPSolution;
 
-  if (m_UnconstrainedDescentDirection != 0)
-    delete[] m_UnconstrainedDescentDirection;
+  if (m_UnconstrainedDescentDirection != 0) delete[] m_UnconstrainedDescentDirection;
 
-  if (m_OptCholesky != 0)
-    delete m_OptCholesky;
+  if (m_OptCholesky != 0) delete m_OptCholesky;
 
-  if (m_L != 0)
-    delete[] m_L;
+  if (m_L != 0) delete[] m_L;
 
-  if (m_iL != 0)
-    delete[] m_iL;
+  if (m_iL != 0) delete[] m_iL;
 
-  if (m_v1 != 0)
-    delete[] m_v1;
+  if (m_v1 != 0) delete[] m_v1;
 
-  if (m_v2 != 0)
-    delete[] m_v2;
+  if (m_v2 != 0) delete[] m_v2;
 
-  if (m_tmp1 != 0)
-    delete[] m_tmp1;
+  if (m_tmp1 != 0) delete[] m_tmp1;
 
-  if (m_tmp2 != 0)
-    delete[] m_tmp2;
+  if (m_tmp2 != 0) delete[] m_tmp2;
 
-  if (m_d != 0)
-    delete[] m_d;
+  if (m_d != 0) delete[] m_d;
 
-  if (m_y != 0)
-    delete[] m_y;
+  if (m_y != 0) delete[] m_y;
 
-  if (m_ConstraintsValueComputed != 0)
-    delete[] m_ConstraintsValueComputed;
+  if (m_ConstraintsValueComputed != 0) delete[] m_ConstraintsValueComputed;
 }
 
 int PLDPSolver::PrecomputeiPuPx() {
@@ -261,8 +243,7 @@ int PLDPSolver::PrecomputeiPuPx() {
   return 0;
 }
 
-int PLDPSolver::ComputeInitialSolution(double *ZMPRef, double *XkYk,
-                                       bool StartingSequence) {
+int PLDPSolver::ComputeInitialSolution(double *ZMPRef, double *XkYk, bool StartingSequence) {
   /*! The initial solution of the problem is given by
     eq(14) Dimitar ICRA 2008
     U0 = iPu * Px [Xkt Ykt]t + iPu * ZMPRef
@@ -272,38 +253,29 @@ int PLDPSolver::ComputeInitialSolution(double *ZMPRef, double *XkYk,
     for (unsigned int i = 0; i < m_CardV; i++) {
       m_Vk[i] = 0.0;
       m_Vk[i + m_CardV] = 0.0;
-      for (unsigned int j = 0; j < 3; j++)
-        m_Vk[i] -= m_iPuPx[i * 6 + j] * XkYk[j];
+      for (unsigned int j = 0; j < 3; j++) m_Vk[i] -= m_iPuPx[i * 6 + j] * XkYk[j];
 
-      for (unsigned int j = 3; j < 6; j++)
-        m_Vk[i + m_CardV] -= m_iPuPx[(i + m_CardV) * 6 + j] * XkYk[j];
+      for (unsigned int j = 3; j < 6; j++) m_Vk[i + m_CardV] -= m_iPuPx[(i + m_CardV) * 6 + j] * XkYk[j];
 
-      for (unsigned int j = 0; j < m_CardV - 1; j++)
-        m_Vk[i] += m_iPu[j * m_CardV + i] * m_PreviousZMPSolution[j + 1];
+      for (unsigned int j = 0; j < m_CardV - 1; j++) m_Vk[i] += m_iPu[j * m_CardV + i] * m_PreviousZMPSolution[j + 1];
       m_Vk[i] += m_iPu[(m_CardV - 1) * m_CardV + i] * ZMPRef[m_CardV - 1];
 
       for (unsigned int j = 0; j < m_CardV - 1; j++)
-        m_Vk[i + m_CardV] +=
-            m_iPu[j * m_CardV + i] * m_PreviousZMPSolution[j + m_CardV + 1];
-      m_Vk[i + m_CardV] +=
-          m_iPu[(m_CardV - 1) * m_CardV + i] * ZMPRef[m_CardV - 1 + m_CardV];
+        m_Vk[i + m_CardV] += m_iPu[j * m_CardV + i] * m_PreviousZMPSolution[j + m_CardV + 1];
+      m_Vk[i + m_CardV] += m_iPu[(m_CardV - 1) * m_CardV + i] * ZMPRef[m_CardV - 1 + m_CardV];
     }
 
   } else {
     for (unsigned int i = 0; i < m_CardV; i++) {
       m_Vk[i] = 0.0;
       m_Vk[i + m_CardV] = 0.0;
-      for (unsigned int j = 0; j < 3; j++)
-        m_Vk[i] -= m_iPuPx[i * 6 + j] * XkYk[j];
+      for (unsigned int j = 0; j < 3; j++) m_Vk[i] -= m_iPuPx[i * 6 + j] * XkYk[j];
 
-      for (unsigned int j = 3; j < 6; j++)
-        m_Vk[i + m_CardV] -= m_iPuPx[(i + m_CardV) * 6 + j] * XkYk[j];
+      for (unsigned int j = 3; j < 6; j++) m_Vk[i + m_CardV] -= m_iPuPx[(i + m_CardV) * 6 + j] * XkYk[j];
 
-      for (unsigned int j = 0; j < m_CardV; j++)
-        m_Vk[i] += m_iPu[j * m_CardV + i] * ZMPRef[j];
+      for (unsigned int j = 0; j < m_CardV; j++) m_Vk[i] += m_iPu[j * m_CardV + i] * ZMPRef[j];
 
-      for (unsigned int j = 0; j < m_CardV; j++)
-        m_Vk[i + m_CardV] += m_iPu[j * m_CardV + i] * ZMPRef[j + m_CardV];
+      for (unsigned int j = 0; j < m_CardV; j++) m_Vk[i + m_CardV] += m_iPu[j * m_CardV + i] * ZMPRef[j + m_CardV];
     }
   }
   return 0;
@@ -323,11 +295,9 @@ int PLDPSolver::ForwardSubstitution() {
   */
   for (unsigned int i = startIndex; i < m_ActivatedConstraints.size(); i++) {
     m_y[i] = m_v1[i];
-    for (unsigned int k = 0; k < i; k++)
-      m_y[i] += -m_L[i * m_NbMaxOfConstraints + k] * m_y[k];
+    for (unsigned int k = 0; k < i; k++) m_y[i] += -m_L[i * m_NbMaxOfConstraints + k] * m_y[k];
 
-    if (m_L[i * m_NbMaxOfConstraints + i] != 0.0)
-      m_y[i] /= m_L[i * m_NbMaxOfConstraints + i];
+    if (m_L[i * m_NbMaxOfConstraints + i] != 0.0) m_y[i] /= m_L[i * m_NbMaxOfConstraints + i];
   }
   return 0;
 }
@@ -340,41 +310,36 @@ int PLDPSolver::BackwardSubstitution() {
   // y solved with first phase.
   // So now we are looking for v2.
   auto SizeOfL = m_ActivatedConstraints.size();
-  if (SizeOfL == 0)
-    return 0;
+  if (SizeOfL == 0) return 0;
 
   ODEBUG("BackwardSubstitution " << m_ItNb);
-  
-  for(auto i = SizeOfL - 1;; i--) {
+
+  for (auto i = SizeOfL - 1;; i--) {
     double tmp = 0.0;
     m_v2[i] = m_y[i];
     for (auto k = i + 1; k < SizeOfL; k++) {
-      if (k == SizeOfL - 1)
-        tmp = m_v2[i];
+      if (k == SizeOfL - 1) tmp = m_v2[i];
 
       m_v2[i] -= m_L[k * m_NbMaxOfConstraints + i] * m_v2[k];
     }
     m_v2[i] = m_v2[i] / m_L[i * m_NbMaxOfConstraints + i];
 
     tmp = tmp / m_L[i * m_NbMaxOfConstraints + i];
-    ODEBUG("BS: m_L[i*m_NbMaxOfConstraints+i]:"
-           << m_L[i * m_NbMaxOfConstraints + i] << " " << m_y[i]);
+    ODEBUG("BS: m_L[i*m_NbMaxOfConstraints+i]:" << m_L[i * m_NbMaxOfConstraints + i] << " " << m_y[i]);
     ODEBUG("m_v2[" << i << " ] = " << m_v2[i] << " " << tmp);
-    if (i==0) break;
+    if (i == 0) break;
   }
   return 0;
 }
 
 int PLDPSolver::ComputeProjectedDescentDirection() {
-
   if (m_DebugMode > 1) {
     ofstream aof;
 
     char Buffer[1024];
     sprintf(Buffer, "AC_%02d.dat", m_ItNb);
     aof.open(Buffer, ofstream::out);
-    for (unsigned int li = 0; li < m_ActivatedConstraints.size(); li++)
-      aof << m_ActivatedConstraints[li] << " ";
+    for (unsigned int li = 0; li < m_ActivatedConstraints.size(); li++) aof << m_ActivatedConstraints[li] << " ";
     aof << endl;
     aof.close();
 
@@ -410,8 +375,7 @@ int PLDPSolver::ComputeProjectedDescentDirection() {
     unsigned int RowCstMatrix = m_ActivatedConstraints[li];
     ODEBUG("RowCstMatrix:" << RowCstMatrix);
     for (unsigned int lj = 0; lj < 2 * m_CardV; lj++) {
-      m_v1[li] += m_A[RowCstMatrix + lj * (m_NbOfConstraints + 1)] *
-                  m_UnconstrainedDescentDirection[lj];
+      m_v1[li] += m_A[RowCstMatrix + lj * (m_NbOfConstraints + 1)] * m_UnconstrainedDescentDirection[lj];
     }
     ODEBUG_NENDL(m_v1[li] << " ");
   }
@@ -422,8 +386,7 @@ int PLDPSolver::ComputeProjectedDescentDirection() {
     char Buffer[1024];
     sprintf(Buffer, "v1_%02d.dat", m_ItNb);
     aof.open(Buffer, ofstream::out);
-    for (unsigned int lj = 0; lj < m_ActivatedConstraints.size(); lj++)
-      aof << m_v1[lj] << endl;
+    for (unsigned int lj = 0; lj < m_ActivatedConstraints.size(); lj++) aof << m_v1[lj] << endl;
     aof.close();
   }
 
@@ -437,8 +400,7 @@ int PLDPSolver::ComputeProjectedDescentDirection() {
     char Buffer[1024];
     sprintf(Buffer, "y_%02d.dat", m_ItNb);
     aof.open(Buffer, ofstream::out);
-    for (unsigned int lj = 0; lj < m_ActivatedConstraints.size(); lj++)
-      aof << m_y[lj] << endl;
+    for (unsigned int lj = 0; lj < m_ActivatedConstraints.size(); lj++) aof << m_y[lj] << endl;
     aof.close();
   }
 
@@ -450,8 +412,7 @@ int PLDPSolver::ComputeProjectedDescentDirection() {
     char Buffer[1024];
     sprintf(Buffer, "v2_%02d.dat", m_ItNb);
     aof.open(Buffer, ofstream::out);
-    for (unsigned int lj = 0; lj < m_ActivatedConstraints.size(); lj++)
-      aof << m_v2[lj] << endl;
+    for (unsigned int lj = 0; lj < m_ActivatedConstraints.size(); lj++) aof << m_v2[lj] << endl;
     aof.close();
   }
 
@@ -471,23 +432,20 @@ int PLDPSolver::ComputeProjectedDescentDirection() {
     char Buffer[1024];
     sprintf(Buffer, "UDD_%02d.dat", m_ItNb);
     aof.open(Buffer, ofstream::out);
-    for (unsigned int lj = 0; lj < 2 * m_CardV; lj++)
-      aof << m_d[lj] << " ";
+    for (unsigned int lj = 0; lj < 2 * m_CardV; lj++) aof << m_d[lj] << " ";
     aof << endl;
     aof.close();
   }
   return 0;
 }
 
-double PLDPSolver::ComputeAlpha(vector<unsigned int> &NewActivatedConstraints,
-                                vector<int> &SimilarConstraint) {
+double PLDPSolver::ComputeAlpha(vector<unsigned int> &NewActivatedConstraints, vector<int> &SimilarConstraint) {
   double Alpha = 10000000.0;
   double *ptA = 0;
   bool TheConstraintIsToBeAdded = false;
   unsigned int TheConstraintToActivate = 0;
 
   for (unsigned li = 0; li < m_NbOfConstraints; li++) {
-
     bool ConstraintFound = false;
 
     // Register that this constraint has yet been computed.
@@ -495,15 +453,13 @@ double PLDPSolver::ComputeAlpha(vector<unsigned int> &NewActivatedConstraints,
     m_ConstraintsValueComputed[li + m_NbOfConstraints] = false;
 
     // Make sure that this constraint is not already activated.
-    for (unsigned int ConstraintIndex = 0;
-         ConstraintIndex < m_ActivatedConstraints.size(); ConstraintIndex++) {
+    for (unsigned int ConstraintIndex = 0; ConstraintIndex < m_ActivatedConstraints.size(); ConstraintIndex++) {
       if (m_ActivatedConstraints[ConstraintIndex] == li) {
         ConstraintFound = true;
         break;
       }
     }
-    if (ConstraintFound)
-      continue;
+    if (ConstraintFound) continue;
 
     ptA = m_A + li;
 
@@ -553,11 +509,9 @@ double PLDPSolver::ComputeAlpha(vector<unsigned int> &NewActivatedConstraints,
       }
 
       if (m_tmp2[li] > m_tol) {
-        std::cerr << "PB ON constraint " << li << " at time " << m_InternalTime
-                  << endl;
+        std::cerr << "PB ON constraint " << li << " at time " << m_InternalTime << endl;
         std::cerr << " Check current V k=" << m_ItNb << endl;
-        std::cerr << " should be faisable : " << m_tmp2[li] << " " << -m_v2[li]
-                  << endl;
+        std::cerr << " should be faisable : " << m_tmp2[li] << " " << -m_v2[li] << endl;
       } else if (m_tmp2[li] > 0.0)
         m_tmp2[li] = -m_tol;
 
@@ -570,8 +524,7 @@ double PLDPSolver::ComputeAlpha(vector<unsigned int> &NewActivatedConstraints,
                              << lalpha
                              << " "
                                 " Constrainte "
-                             << li << " on " << m_NbOfConstraints
-                             << " constraints.");
+                             << li << " on " << m_NbOfConstraints << " constraints.");
 
         Alpha = lalpha;
         if (Alpha < 1) {
@@ -582,19 +535,16 @@ double PLDPSolver::ComputeAlpha(vector<unsigned int> &NewActivatedConstraints,
     }
   }
 
-  if (TheConstraintIsToBeAdded)
-    NewActivatedConstraints.push_back(TheConstraintToActivate);
+  if (TheConstraintIsToBeAdded) NewActivatedConstraints.push_back(TheConstraintToActivate);
 
   return Alpha;
 }
-int PLDPSolver::SolveProblem(
-    double *CstPartOfTheCostFunction, unsigned int NbOfConstraints,
-    double *LinearPartOfConstraints, double *CstPartOfConstraints,
-    double *ZMPRef, double *XkYk, double *X, vector<int> &SimilarConstraints,
-    unsigned int NumberOfRemovedConstraints, bool StartingSequence) {
+int PLDPSolver::SolveProblem(double *CstPartOfTheCostFunction, unsigned int NbOfConstraints,
+                             double *LinearPartOfConstraints, double *CstPartOfConstraints, double *ZMPRef,
+                             double *XkYk, double *X, vector<int> &SimilarConstraints,
+                             unsigned int NumberOfRemovedConstraints, bool StartingSequence) {
   vector<unsigned int> NewActivatedConstraints;
-  if (StartingSequence)
-    m_InternalTime = 0.0;
+  if (StartingSequence) m_InternalTime = 0.0;
 
   InitializeSolver();
 
@@ -605,8 +555,8 @@ int PLDPSolver::SolveProblem(
   /* Step zero : Algorithm initialization. */
   m_CstPartOfCostFunction = CstPartOfTheCostFunction;
 
-  ODEBUG("State: " << XkYk[0] << " " << XkYk[3] << " " << XkYk[1] << " "
-                   << XkYk[4] << " " << XkYk[2] << " " << XkYk[5] << " ");
+  ODEBUG("State: " << XkYk[0] << " " << XkYk[3] << " " << XkYk[1] << " " << XkYk[4] << " " << XkYk[2] << " " << XkYk[5]
+                   << " ");
 
   ComputeInitialSolution(ZMPRef, XkYk, StartingSequence);
 
@@ -618,15 +568,13 @@ int PLDPSolver::SolveProblem(
 
     ofstream aof;
     aof.open("InitialSolution.dat", ofstream::out);
-    for (unsigned int i = 0; i < 2 * m_CardV; i++)
-      aof << m_Vk[i] << " ";
+    for (unsigned int i = 0; i < 2 * m_CardV; i++) aof << m_Vk[i] << " ";
     aof << endl;
     aof.close();
 
     aof.open("iPuPx.dat", ofstream::out);
     for (unsigned int i = 0; i < 2 * m_CardV; i++) {
-      for (unsigned int j = 0; j < 6; j++)
-        aof << m_iPuPx[i * 6 + j] << " ";
+      for (unsigned int j = 0; j < 6; j++) aof << m_iPuPx[i * 6 + j] << " ";
       aof << endl;
     }
     aof << endl;
@@ -634,8 +582,7 @@ int PLDPSolver::SolveProblem(
 
     aof.open("A.dat", ofstream::out);
     for (unsigned int i = 0; i < m_NbOfConstraints; i++) {
-      for (unsigned int j = 0; j < 2 * m_CardV; j++)
-        aof << m_A[j * (m_NbOfConstraints + 1) + i] << " ";
+      for (unsigned int j = 0; j < 2 * m_CardV; j++) aof << m_A[j * (m_NbOfConstraints + 1) + i] << " ";
       aof << endl;
     }
     aof << endl;
@@ -697,14 +644,12 @@ int PLDPSolver::SolveProblem(
   // Hot Start
   if (m_HotStart) {
     for (unsigned int i = 0; i < m_PreviouslyActivatedConstraints.size(); i++) {
-      int lindex =
-          m_PreviouslyActivatedConstraints[i] - NumberOfRemovedConstraints;
+      int lindex = m_PreviouslyActivatedConstraints[i] - NumberOfRemovedConstraints;
       if (lindex >= 0) {
         m_ActivatedConstraints.push_back(lindex);
       }
     }
-    if (m_ActivatedConstraints.size() > 0)
-      m_OptCholesky->AddActiveConstraints(m_ActivatedConstraints);
+    if (m_ActivatedConstraints.size() > 0) m_OptCholesky->AddActiveConstraints(m_ActivatedConstraints);
   }
 
   m_PreviouslyActivatedConstraints.clear();
@@ -715,8 +660,7 @@ int PLDPSolver::SolveProblem(
     ODEBUG("Iteration Number:" << m_ItNb);
     /* Step one : Compute descent direction. */
     for (unsigned int i = 0; i < 2 * m_CardV; i++)
-      m_UnconstrainedDescentDirection[i] =
-          -m_CstPartOfCostFunction[i] - m_Vk[i];
+      m_UnconstrainedDescentDirection[i] = -m_CstPartOfCostFunction[i] - m_Vk[i];
 
     /*! Step two: Compute the projected descent direction. */
     ComputeProjectedDescentDirection();
@@ -730,8 +674,7 @@ int PLDPSolver::SolveProblem(
     }
     if (alpha < 0.0) {
       std::cerr << "Problem with alpha: should be positive" << std::endl;
-      std::cerr << "The initial solution is incorrect: " << m_ItNb << " "
-                << m_InternalTime << std::endl;
+      std::cerr << "The initial solution is incorrect: " << m_ItNb << " " << m_InternalTime << std::endl;
       exit(0);
     }
 
@@ -741,7 +684,6 @@ int PLDPSolver::SolveProblem(
     }
 
     if (m_DebugMode > 1) {
-
       ODEBUG("Alpha:" << alpha);
 
       ofstream aof;
@@ -790,8 +732,7 @@ int PLDPSolver::SolveProblem(
     if (m_LimitedComputationTime) {
       struct timeval current;
       gettimeofday(&current, 0);
-      double r = (double)(current.tv_sec - begin.tv_sec) +
-                 0.000001 * (double)(current.tv_usec - begin.tv_usec);
+      double r = (double)(current.tv_sec - begin.tv_sec) + 0.000001 * (double)(current.tv_usec - begin.tv_usec);
       if (r > m_AmountOfLimitedComputationTime) {
         ContinueAlgo = false;
       }
@@ -800,8 +741,7 @@ int PLDPSolver::SolveProblem(
     m_ItNb++;
   }
 
-  for (unsigned int i = 0; i < 2 * m_CardV; i++)
-    X[i] = m_Vk[i];
+  for (unsigned int i = 0; i < 2 * m_CardV; i++) X[i] = m_Vk[i];
 
   if (m_HotStart) {
     ODEBUG("AR (" << lTime << ") :");
@@ -812,8 +752,7 @@ int PLDPSolver::SolveProblem(
         ODEBUG3(m_ActivatedConstraints[i] << " ");
       }
     }
-    ODEBUG((int)m_ActivatedConstraints.size() -
-               (int)m_PreviouslyActivatedConstraints.size()
+    ODEBUG((int)m_ActivatedConstraints.size() - (int)m_PreviouslyActivatedConstraints.size()
            << " " << m_PreviouslyActivatedConstraints.size());
     StoreCurrentZMPSolution(XkYk);
   }
@@ -832,17 +771,14 @@ int PLDPSolver::SolveProblem(
             break;
           }
       }
-      if (!FoundConstraint)
-        aof << "0 ";
+      if (!FoundConstraint) aof << "0 ";
     }
     aof << endl;
     aof.close();
   }
 
-  if ((isnan(X[0])) || (isnan(X[m_CardV])) || (isinf(X[0])) ||
-      (isinf(X[m_CardV]))) {
-    std::cerr << "Nan or inf value " << X[0] << " " << X[m_CardV]
-              << " at iteration " << m_ItNb - 1 << endl;
+  if ((isnan(X[0])) || (isnan(X[m_CardV])) || (isinf(X[0])) || (isinf(X[m_CardV]))) {
+    std::cerr << "Nan or inf value " << X[0] << " " << X[m_CardV] << " at iteration " << m_ItNb - 1 << endl;
     return -1;
   }
 
@@ -870,17 +806,13 @@ int PLDPSolver::SolveProblem(
   }
 
   string Buffer("InfosPLDP");
-  if (m_HotStart)
-    Buffer += "HS";
-  if (m_LimitedComputationTime)
-    Buffer += "LT";
+  if (m_HotStart) Buffer += "HS";
+  if (m_LimitedComputationTime) Buffer += "LT";
   Buffer += ".dat";
 
-  ODEBUG6(m_ActivatedConstraints.size()
-              << " " << NbOfConstraints << " "
-              << m_ActivatedConstraints.size() -
-                     m_PreviouslyActivatedConstraints.size()
-              << " " << m_ItNb,
+  ODEBUG6(m_ActivatedConstraints.size() << " " << NbOfConstraints << " "
+                                        << m_ActivatedConstraints.size() - m_PreviouslyActivatedConstraints.size()
+                                        << " " << m_ItNb,
           (char *)Buffer.c_str());
 
   m_InternalTime += 0.02;
@@ -894,12 +826,11 @@ void PLDPSolver::StoreCurrentZMPSolution(double *XkYk) {
   // when transformed in ZMP ref trajectory.
 
   for (unsigned int i = 0; i < m_CardV; i++) {
-    m_PreviousZMPSolution[i] = 0.0;           // X axis
-    m_PreviousZMPSolution[i + m_CardV] = 0.0; // Y axis
+    m_PreviousZMPSolution[i] = 0.0;            // X axis
+    m_PreviousZMPSolution[i + m_CardV] = 0.0;  // Y axis
     for (unsigned int j = 0; j < m_CardV; j++) {
       m_PreviousZMPSolution[i] += m_Pu[j * m_CardV + i] * m_Vk[j];
-      m_PreviousZMPSolution[i + m_CardV] +=
-          m_Pu[j * m_CardV + i] * m_Vk[j + m_CardV];
+      m_PreviousZMPSolution[i + m_CardV] += m_Pu[j * m_CardV + i] * m_Vk[j + m_CardV];
     }
     for (unsigned int j = 0; j < 3; j++) {
       m_PreviousZMPSolution[i] += m_Px[i * 3 + j] * XkYk[j];
@@ -925,8 +856,8 @@ void PLDPSolver::WriteCurrentZMPSolution(string filename, double *XkYk) {
   aof.open(filename.c_str(), ofstream::out);
 
   for (unsigned int i = 0; i < m_CardV; i++) {
-    lZMP[i] = 0.0;           // X axis
-    lZMP[i + m_CardV] = 0.0; // Y axis
+    lZMP[i] = 0.0;            // X axis
+    lZMP[i + m_CardV] = 0.0;  // Y axis
     for (unsigned int j = 0; j < m_CardV; j++) {
       lZMP[i] += m_Pu[j * m_CardV + i] * m_Vk[j];
       lZMP[i + m_CardV] += m_Pu[j * m_CardV + i] * m_Vk[j + m_CardV];

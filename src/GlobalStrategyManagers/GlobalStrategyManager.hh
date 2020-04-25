@@ -49,8 +49,7 @@ namespace PatternGeneratorJRL {
     to generate the output of the pattern generator.
 */
 class GlobalStrategyManager : public SimplePlugin {
-
-public:
+ public:
   static const int MOTION_FINISHED = -1;
   static const int NEW_STEP_NEEDED = 0;
   static const int DATA_PRESENT = 1;
@@ -79,12 +78,9 @@ public:
     @param[out] CurrentAcceleration: The results is a state vector containing
     the acceleration.
   */
-  virtual int OneGlobalStepOfControl(FootAbsolutePosition &LeftFootPosition,
-                                     FootAbsolutePosition &RightFootPosition,
-                                     Eigen::VectorXd &ZMPRefPos,
-                                     COMState &aCOMState,
-                                     Eigen::VectorXd &CurrentConfiguration,
-                                     Eigen::VectorXd &CurrentVelocity,
+  virtual int OneGlobalStepOfControl(FootAbsolutePosition &LeftFootPosition, FootAbsolutePosition &RightFootPosition,
+                                     Eigen::VectorXd &ZMPRefPos, COMState &aCOMState,
+                                     Eigen::VectorXd &CurrentConfiguration, Eigen::VectorXd &CurrentVelocity,
                                      Eigen::VectorXd &CurrentAcceleration) = 0;
 
   /*! Computes the COM of the robot with the Joint values given in BodyAngles,
@@ -106,13 +102,11 @@ public:
     @param[out] InitRightFootPosition: Returns the position of the right foot
     in the waist coordinates frame.
   */
-  virtual int
-  EvaluateStartingState(Eigen::VectorXd &BodyAngles,
-                        COMState &aStartingCOMState,
-                        Eigen::Vector3d &aStartingZMPPosition,
-                        Eigen::Matrix<double, 6, 1> &aStartingWaistPose,
-                        FootAbsolutePosition &InitLeftFootPosition,
-                        FootAbsolutePosition &InitRightFootPosition) = 0;
+  virtual int EvaluateStartingState(Eigen::VectorXd &BodyAngles, COMState &aStartingCOMState,
+                                    Eigen::Vector3d &aStartingZMPPosition,
+                                    Eigen::Matrix<double, 6, 1> &aStartingWaistPose,
+                                    FootAbsolutePosition &InitLeftFootPosition,
+                                    FootAbsolutePosition &InitRightFootPosition) = 0;
 
   /*! \brief Method to detect the status regarding the end of the motion.
     This method returns :
@@ -133,19 +127,16 @@ public:
     \param[in] aRightFootAbsolutePositions: Absolute frame positions
     buffer of the right foot.
   */
-  void
-  SetBufferPositions(deque<ZMPPosition> *aZMPositions,
-                     deque<COMState> *aCOMBuffer,
-                     deque<FootAbsolutePosition> *aLeftFootAbsolutePositions,
-                     deque<FootAbsolutePosition> *aRightFootAbsolutePositions);
+  void SetBufferPositions(deque<ZMPPosition> *aZMPositions, deque<COMState> *aCOMBuffer,
+                          deque<FootAbsolutePosition> *aLeftFootAbsolutePositions,
+                          deque<FootAbsolutePosition> *aRightFootAbsolutePositions);
 
   /*! Prepare the buffers at the beginning of the foot positions. */
-  virtual void
-  Setup(deque<ZMPPosition> &aZMPositions, deque<COMState> &aCOMBuffer,
-        deque<FootAbsolutePosition> &aLeftFootAbsolutePositions,
-        deque<FootAbsolutePosition> &aRightFootAbsolutePositions) = 0;
+  virtual void Setup(deque<ZMPPosition> &aZMPositions, deque<COMState> &aCOMBuffer,
+                     deque<FootAbsolutePosition> &aLeftFootAbsolutePositions,
+                     deque<FootAbsolutePosition> &aRightFootAbsolutePositions) = 0;
 
-protected:
+ protected:
   /*! \name Positions buffers.
     @{
   */
@@ -170,7 +161,7 @@ protected:
   /*! Reference to the humanoid structure. */
   PinocchioRobot *m_PinocchioRobot;
 
-public:
+ public:
   /*! \name Setter and getter for the jrlHumanoidDynamicRobot object. */
   /*! @param[in] aHumanoidDynamicRobot: an object able to compute dynamic
     parameters of the robot. */
@@ -181,11 +172,9 @@ public:
 
   /*! \brief Returns the object able to compute the dynamic parameters
     of the robot. */
-  inline PinocchioRobot *getHumanoidDynamicRobot() const {
-    return m_PinocchioRobot;
-  }
+  inline PinocchioRobot *getHumanoidDynamicRobot() const { return m_PinocchioRobot; }
 
   /** @} */
 };
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* _GLOBAL_STRATEGY_MANAGER_H_ */

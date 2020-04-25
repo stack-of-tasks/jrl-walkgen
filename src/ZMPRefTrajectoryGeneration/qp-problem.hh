@@ -39,11 +39,10 @@ namespace PatternGeneratorJRL {
 /// Store and solve a quadratic problem with linear constraints.
 ///
 class QPProblem {
-
   //
   // Public methods
   //
-public:
+ public:
   QPProblem();
 
   ~QPProblem();
@@ -62,16 +61,14 @@ public:
   /// \param[in] Mat Added matrix
   /// \param[in] Row First row inside the target
   /// \param[in] Col First column inside the target
-  void add_term_to(qp_element_e Type, const Eigen::MatrixXd &Mat,
-                   unsigned int Row, unsigned int Col);
+  void add_term_to(qp_element_e Type, const Eigen::MatrixXd &Mat, unsigned int Row, unsigned int Col);
 
   /// \brief Add a vector to the final optimization problem in array form
   ///
   /// \param[in] Type Target vector type
   /// \param[in] Mat Added vector
   /// \param[in] Row First row inside the target
-  void add_term_to(qp_element_e Type, const Eigen::VectorXd &Vec, unsigned Row,
-                   unsigned Col = 0);
+  void add_term_to(qp_element_e Type, const Eigen::VectorXd &Vec, unsigned Row, unsigned Col = 0);
 
   /// \brief Dump current problem on disk.
   void dump(const char *Filename);
@@ -104,29 +101,19 @@ public:
 
   /// \name Accessors and mutators
   /// \{
-  inline void NbVariables(unsigned int NbVariables) {
-    NbVariables_ = NbVariables;
-  };
+  inline void NbVariables(unsigned int NbVariables) { NbVariables_ = NbVariables; };
   inline unsigned int NbVariables() { return NbVariables_; };
 
-  inline void NbEqConstraints(unsigned int NbEqConstraints) {
-    NbEqConstraints_ = NbEqConstraints;
-  };
+  inline void NbEqConstraints(unsigned int NbEqConstraints) { NbEqConstraints_ = NbEqConstraints; };
   inline unsigned int NbEqConstraints() { return NbEqConstraints_; };
 
-  inline void NbConstraints(unsigned int NbConstraints) {
-    NbConstraints_ = NbConstraints;
-  };
+  inline void NbConstraints(unsigned int NbConstraints) { NbConstraints_ = NbConstraints; };
   inline unsigned int NbConstraints() { return NbConstraints_; };
 
-  inline void nbInvariantRows(unsigned int nbInvariantRows) {
-    nbInvariantRows_ = nbInvariantRows;
-  };
+  inline void nbInvariantRows(unsigned int nbInvariantRows) { nbInvariantRows_ = nbInvariantRows; };
   inline unsigned int nbInvariantRows() { return nbInvariantRows_; };
 
-  inline void nbInvariantCols(unsigned int nbInvariantCols) {
-    nbInvariantCols_ = nbInvariantCols;
-  };
+  inline void nbInvariantCols(unsigned int nbInvariantCols) { nbInvariantCols_ = nbInvariantCols; };
   inline unsigned int nbInvariantCols() { return nbInvariantCols_; };
   /// \}
 
@@ -135,7 +122,7 @@ public:
   //
   // Private methods
   //
-private:
+ private:
   /// \brief Release memory.
   void release_memory();
 
@@ -156,9 +143,10 @@ private:
   //
   // Private types
   //
-private:
+ private:
   /// \brief Handle matrices/vectors in array form
-  template <typename type> struct array_s {
+  template <typename type>
+  struct array_s {
     type *Array_;
 
     int Id_;
@@ -167,9 +155,7 @@ private:
 
     void fill(type Value) { std::fill_n(Array_, NbRows_ * NbCols_, Value); }
 
-    void fill(type *Array, int Size, type Value) {
-      std::fill_n(Array, Size, Value);
-    }
+    void fill(type *Array, int Size, type Value) { std::fill_n(Array, Size, Value); }
 
     /// \brief Make a contiguous array
     ///
@@ -178,13 +164,10 @@ private:
     /// \param[in] NbCols Size of the new array
     /// \return 0
 
-    int stick_together(struct array_s<type> &FinalArray, unsigned int NbRows,
-                       unsigned int NbCols) {
-
+    int stick_together(struct array_s<type> &FinalArray, unsigned int NbRows, unsigned int NbCols) {
       try {
         type *NewArray = 0;
-        if ((FinalArray.SizeMem_ < NbRows * NbCols) ||
-            (FinalArray.Array_ == 0)) {
+        if ((FinalArray.SizeMem_ < NbRows * NbCols) || (FinalArray.Array_ == 0)) {
           FinalArray.Array_ = new type[NbRows * NbCols];
           FinalArray.SizeMem_ = NbRows * NbCols;
         }
@@ -192,8 +175,7 @@ private:
 
         fill(NewArray, NbRows * NbCols, (type)0);
         for (unsigned int j = 0; j < NbCols; j++)
-          for (unsigned int i = 0; i < NbRows; i++)
-            NewArray[i + NbRows * j] = Array_[i + NbRows_ * j];
+          for (unsigned int i = 0; i < NbRows; i++) NewArray[i + NbRows * j] = Array_[i + NbRows_ * j];
 
         FinalArray.NbRows_ = NbRows;
         FinalArray.NbCols_ = NbCols;
@@ -211,7 +193,6 @@ private:
     /// \param[in] preserve Preserve old values
     /// \return 0
     int resize(unsigned int NbRows, unsigned int NbCols, bool Preserve) {
-
       try {
         bool Reallocate = false;
         type *NewArray = 0;
@@ -225,8 +206,7 @@ private:
         fill(NewArray, NbRows * NbCols, (type)0);
         if ((Preserve) && (Array_ != 0)) {
           for (unsigned int j = 0; j < NbCols_; j++)
-            for (unsigned int i = 0; i < NbRows_; i++)
-              NewArray[i + NbRows * j] = Array_[i + NbRows_ * j];
+            for (unsigned int i = 0; i < NbRows_; i++) NewArray[i + NbRows * j] = Array_[i + NbRows_ * j];
         }
 
         if ((Array_ != 0) && Reallocate) {
@@ -245,16 +225,14 @@ private:
 
     array_s() : Array_(0), Id_(0), NbRows_(0), NbCols_(0), SizeMem_(0){};
     ~array_s() {
-
-      if (Array_ != 0)
-        delete[] Array_;
+      if (Array_ != 0) delete[] Array_;
     };
   };
 
   //
   // Private members
   //
-private:
+ private:
   /// \name lssol parameters
   /// \{
   int *istate_;
@@ -294,6 +272,6 @@ private:
   unsigned nbInvariantRows_, nbInvariantCols_;
 };
 
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #include <ZMPRefTrajectoryGeneration/qp-problem.hxx>
 #endif /* _QP_PROBLEM_H_ */

@@ -35,34 +35,24 @@
 
 using namespace PatternGeneratorJRL;
 
-CoMAndFootOnlyStrategy::CoMAndFootOnlyStrategy(
-    SimplePluginManager *aSimplePluginManager)
-    : GlobalStrategyManager(aSimplePluginManager),
-      m_NbOfHitBottom(0),
-      m_BufferSizeLimit(0)
-{
-}
+CoMAndFootOnlyStrategy::CoMAndFootOnlyStrategy(SimplePluginManager *aSimplePluginManager)
+    : GlobalStrategyManager(aSimplePluginManager), m_NbOfHitBottom(0), m_BufferSizeLimit(0) {}
 
 CoMAndFootOnlyStrategy::~CoMAndFootOnlyStrategy() {}
 
-int CoMAndFootOnlyStrategy::InitInterObjects(
-    PinocchioRobot * /* aPR */, std::vector<ComAndFootRealization *> aCFR,
-    StepStackHandler * /* aSSH */) {
+int CoMAndFootOnlyStrategy::InitInterObjects(PinocchioRobot * /* aPR */, std::vector<ComAndFootRealization *> aCFR,
+                                             StepStackHandler * /* aSSH */) {
   m_ComAndFootRealization = aCFR;
   return 0;
 }
 
-int CoMAndFootOnlyStrategy::OneGlobalStepOfControl(
-    FootAbsolutePosition &LeftFootPosition,
-    FootAbsolutePosition &RightFootPosition, Eigen::VectorXd &ZMPRefPos,
-    COMState &finalCOMPosition,
-    Eigen::VectorXd & CurrentConfiguration,
-    Eigen::VectorXd & CurrentVelocity,
-    Eigen::VectorXd & CurrentAcceleration)
-{
-  ODEBUG("Begin OneGlobalStepOfControl "
-         << m_LeftFootPositions->size() << " " << m_RightFootPositions->size()
-         << " " << m_COMBuffer->size() << " " << m_ZMPPositions->size());
+int CoMAndFootOnlyStrategy::OneGlobalStepOfControl(FootAbsolutePosition &LeftFootPosition,
+                                                   FootAbsolutePosition &RightFootPosition, Eigen::VectorXd &ZMPRefPos,
+                                                   COMState &finalCOMPosition, Eigen::VectorXd &CurrentConfiguration,
+                                                   Eigen::VectorXd &CurrentVelocity,
+                                                   Eigen::VectorXd &CurrentAcceleration) {
+  ODEBUG("Begin OneGlobalStepOfControl " << m_LeftFootPositions->size() << " " << m_RightFootPositions->size() << " "
+                                         << m_COMBuffer->size() << " " << m_ZMPPositions->size());
 
   /* The strategy of this class is simply to pull
      off values from the buffers. */
@@ -113,18 +103,16 @@ int CoMAndFootOnlyStrategy::OneGlobalStepOfControl(
     return -5;
   }
 
-  ODEBUG("End of OneGlobalStepOfControl"
-         << m_LeftFootPositions->size() << " " << m_RightFootPositions->size()
-         << " " << m_COMBuffer->size() << " " << m_ZMPPositions->size());
+  ODEBUG("End of OneGlobalStepOfControl" << m_LeftFootPositions->size() << " " << m_RightFootPositions->size() << " "
+                                         << m_COMBuffer->size() << " " << m_ZMPPositions->size());
   return 0;
 }
 
-int CoMAndFootOnlyStrategy::EvaluateStartingState(
-    Eigen::VectorXd &BodyAngles, COMState &aStartingCOMState,
-    Eigen::Vector3d &aStartingZMPPosition,
-    Eigen::Matrix<double, 6, 1> &lStartingWaistPose,
-    FootAbsolutePosition &InitLeftFootPosition,
-    FootAbsolutePosition &InitRightFootPosition) {
+int CoMAndFootOnlyStrategy::EvaluateStartingState(Eigen::VectorXd &BodyAngles, COMState &aStartingCOMState,
+                                                  Eigen::Vector3d &aStartingZMPPosition,
+                                                  Eigen::Matrix<double, 6, 1> &lStartingWaistPose,
+                                                  FootAbsolutePosition &InitLeftFootPosition,
+                                                  FootAbsolutePosition &InitRightFootPosition) {
   Eigen::Vector3d lStartingCOMState;
 
   lStartingCOMState(0) = aStartingCOMState.x[0];
@@ -132,13 +120,11 @@ int CoMAndFootOnlyStrategy::EvaluateStartingState(
   lStartingCOMState(2) = aStartingCOMState.z[0];
 
   std::vector<ComAndFootRealization *>::iterator itCFR;
-  for (itCFR = m_ComAndFootRealization.begin();
-       itCFR != m_ComAndFootRealization.end(); ++itCFR) {
+  for (itCFR = m_ComAndFootRealization.begin(); itCFR != m_ComAndFootRealization.end(); ++itCFR) {
     // here we use the analytical forward kinematics
     // to initialise the position of the CoM of mass according to
     // the articular position of the robot.
-    (*itCFR)->InitializationCoM(BodyAngles, lStartingCOMState,
-                                lStartingWaistPose, InitLeftFootPosition,
+    (*itCFR)->InitializationCoM(BodyAngles, lStartingCOMState, lStartingWaistPose, InitLeftFootPosition,
                                 InitRightFootPosition);
 
     ODEBUG("EvaluateStartingCOM: m_StartingCOMState: " << lStartingCOMState);
@@ -156,8 +142,7 @@ int CoMAndFootOnlyStrategy::EvaluateStartingState(
   aStartingZMPPosition(0) = aStartingCOMState.x[0];
   aStartingZMPPosition(1) = aStartingCOMState.y[0];
   // The  altitude of the zmp depend on the altitude of the support foot.
-  aStartingZMPPosition(2) =
-      0.5 * (InitLeftFootPosition.z + InitRightFootPosition.z);
+  aStartingZMPPosition(2) = 0.5 * (InitLeftFootPosition.z + InitRightFootPosition.z);
 
   ///  cerr << "YOU SHOULD INITIALIZE PROPERLY aStartingZMPosition in
   ///  CoMAndFootOnlyStrategy::EvaluateStartingState" <<endl;
@@ -175,40 +160,33 @@ int CoMAndFootOnlyStrategy::EndOfMotion() {
 
   if (m_LeftFootPositions->size() > m_BufferSizeLimit) {
     if (m_LeftFootPositions->size() == m_BufferSizeLimit + 1) {
-      ODEBUG("LeftFootPositions position ( "
-             << (*m_LeftFootPositions)[0].x << " , "
-             << (*m_LeftFootPositions)[0].y << " ) ");
+      ODEBUG("LeftFootPositions position ( " << (*m_LeftFootPositions)[0].x << " , " << (*m_LeftFootPositions)[0].y
+                                             << " ) ");
     }
 
     m_NbOfHitBottom = 0;
     return 1;
-  } else if ((m_LeftFootPositions->size() == m_BufferSizeLimit) &&
-             (m_NbOfHitBottom == 0)) {
-    ODEBUG("LeftFootPositions size : " << m_LeftFootPositions->size()
-                                       << "Buffer size limit: "
-                                       << m_BufferSizeLimit);
+  } else if ((m_LeftFootPositions->size() == m_BufferSizeLimit) && (m_NbOfHitBottom == 0)) {
+    ODEBUG("LeftFootPositions size : " << m_LeftFootPositions->size() << "Buffer size limit: " << m_BufferSizeLimit);
 
     m_NbOfHitBottom++;
     return 0;
-  } else if ((m_LeftFootPositions->size() == m_BufferSizeLimit) &&
-             (m_NbOfHitBottom > 0)) {
+  } else if ((m_LeftFootPositions->size() == m_BufferSizeLimit) && (m_NbOfHitBottom > 0)) {
     return -1;
   }
   return 0;
 }
 
-void CoMAndFootOnlyStrategy::Setup(
-    deque<ZMPPosition> &,          // aZMPPositions,
-    deque<COMState> &,             // aCOMBuffer,
-    deque<FootAbsolutePosition> &, // aLeftFootAbsolutePositions,
-    deque<FootAbsolutePosition> &) // aRightFootAbsolutePositions)
+void CoMAndFootOnlyStrategy::Setup(deque<ZMPPosition> &,           // aZMPPositions,
+                                   deque<COMState> &,              // aCOMBuffer,
+                                   deque<FootAbsolutePosition> &,  // aLeftFootAbsolutePositions,
+                                   deque<FootAbsolutePosition> &)  // aRightFootAbsolutePositions)
 {}
 
-void CoMAndFootOnlyStrategy::CallMethod(std::string &,        // Method,
-                                        std::istringstream &) // astrm)
+void CoMAndFootOnlyStrategy::CallMethod(std::string &,         // Method,
+                                        std::istringstream &)  // astrm)
 {}
 
-void CoMAndFootOnlyStrategy::SetTheLimitOfTheBuffer(
-    unsigned int lBufferSizeLimit) {
+void CoMAndFootOnlyStrategy::SetTheLimitOfTheBuffer(unsigned int lBufferSizeLimit) {
   m_BufferSizeLimit = lBufferSizeLimit;
 }

@@ -73,16 +73,11 @@ double Polynome::ComputeJerk(double t) {
   return r;
 }
 
-void Polynome::GetCoefficients(vector<double> &lCoefficients) const {
-  lCoefficients = m_Coefficients;
-}
+void Polynome::GetCoefficients(vector<double> &lCoefficients) const { lCoefficients = m_Coefficients; }
 
-void Polynome::SetCoefficients(const vector<double> &lCoefficients) {
-  m_Coefficients = lCoefficients;
-}
+void Polynome::SetCoefficients(const vector<double> &lCoefficients) { m_Coefficients = lCoefficients; }
 
 void Polynome::print() const {
-  for (unsigned int i = 0; i < m_Coefficients.size(); i++)
-    cout << m_Coefficients[i] << " ";
+  for (unsigned int i = 0; i < m_Coefficients.size(); i++) cout << m_Coefficients[i] << " ";
   cout << endl;
 }

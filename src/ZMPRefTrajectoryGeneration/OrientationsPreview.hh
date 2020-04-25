@@ -41,11 +41,10 @@
 namespace PatternGeneratorJRL {
 /// \brief The acceleration phase is fixed
 class OrientationsPreview {
-
   //
   // Public methods:
   //
-public:
+ public:
   /// \name Accessors
   /// \{
   OrientationsPreview(PinocchioRobot *aPR);
@@ -70,11 +69,9 @@ public:
   /// \param[in] LeftFootPositions_deq
   /// \param[in] RightFootPositions_deq
   /// \param[out] Solution Trunk and Foot orientations
-  void preview_orientations(
-      double Time, const reference_t &Ref, double StepDuration,
-      const std::deque<FootAbsolutePosition> &LeftFootPositions_deq,
-      const std::deque<FootAbsolutePosition> &RightFootPositions_deq,
-      solution_t &Solution);
+  void preview_orientations(double Time, const reference_t &Ref, double StepDuration,
+                            const std::deque<FootAbsolutePosition> &LeftFootPositions_deq,
+                            const std::deque<FootAbsolutePosition> &RightFootPositions_deq, solution_t &Solution);
 
   /// \brief Interpolate previewed orientation of the trunk
   ///
@@ -83,10 +80,9 @@ public:
   /// \param[in] NewSamplingPeriod
   /// \param[in] PrwSupportStates_deq
   /// \param[out] FinalCOMTraj_deq
-  void interpolate_trunk_orientation(
-      double Time, int CurrentIndex, double NewSamplingPeriod,
-      const std::deque<support_state_t> &PrwSupportStates_deq,
-      std::deque<COMState> &FinalCOMTraj_deq);
+  void interpolate_trunk_orientation(double Time, int CurrentIndex, double NewSamplingPeriod,
+                                     const std::deque<support_state_t> &PrwSupportStates_deq,
+                                     std::deque<COMState> &FinalCOMTraj_deq);
 
   /// \brief Compute the current state for the preview of the orientation
   ///
@@ -95,33 +91,26 @@ public:
   /// \param[in] NewSamplingPeriod
   /// \param[in] PrwSupportStates_deq
   /// \param[out] FinalCOMTraj_deq
-  void one_iteration(double Time,
-                     const std::deque<support_state_t> &PrwSupportStates_deq);
+  void one_iteration(double Time, const std::deque<support_state_t> &PrwSupportStates_deq);
 
   /// \name Accessors
   /// \{
   inline COMState const &CurrentTrunkState() const { return TrunkState_; };
-  inline void CurrentTrunkState(const COMState &TrunkState) {
-    TrunkState_ = TrunkState;
-  };
+  inline void CurrentTrunkState(const COMState &TrunkState) { TrunkState_ = TrunkState; };
   inline COMState const &PreviewTrunkState() const { return TrunkStateT_; };
-  inline void PreviewTrunkState(const COMState &TrunkState) {
-    TrunkStateT_ = TrunkState;
-  };
+  inline void PreviewTrunkState(const COMState &TrunkState) { TrunkStateT_ = TrunkState; };
   inline double SSLength() const { return SSPeriod_; };
   inline void SSLength(double SSPeriod) { SSPeriod_ = SSPeriod; };
   inline double SamplingPeriod() const { return T_; };
   inline void SamplingPeriod(double SamplingPeriod) { T_ = SamplingPeriod; };
   inline double NbSamplingsPreviewed() const { return N_; };
-  inline void NbSamplingsPreviewed(double SamplingsPreviewed) {
-    N_ = SamplingsPreviewed;
-  };
+  inline void NbSamplingsPreviewed(double SamplingsPreviewed) { N_ = SamplingsPreviewed; };
   /// \}
 
   //
   // Private methods:
   //
-private:
+ private:
   /// \brief Verify and eventually reduce the maximal acceleration of
   /// the hip joint necessary to attain the velocity reference in one
   /// sampling T_.
@@ -132,8 +121,7 @@ private:
   ///
   /// \param[in] Ref
   /// \param[in] CurrentSupport
-  void verify_acceleration_hip_joint(const reference_t &Ref,
-                                     const support_state_t &CurrentSupport);
+  void verify_acceleration_hip_joint(const reference_t &Ref, const support_state_t &CurrentSupport);
 
   /// \brief Verify velocity of hip joint
   /// The velocity is verified only between previewed supports.
@@ -149,11 +137,10 @@ private:
   /// \param[in] CurrentLeftFootAngle
   /// \param[in] CurrentLeftFootVelocity
   /// \param[in] CurrentRightFootVelocity
-  void verify_velocity_hip_joint(
-      double Time, double PreviewedSupportFoot, double PreviewedSupportAngle,
-      unsigned StepNumber, const support_state_t &CurrentSupport,
-      double CurrentRightFootAngle, double CurrentLeftFootAngle,
-      double CurrentLeftFootVelocity, double CurrentRightFootVelocity);
+  void verify_velocity_hip_joint(double Time, double PreviewedSupportFoot, double PreviewedSupportAngle,
+                                 unsigned StepNumber, const support_state_t &CurrentSupport,
+                                 double CurrentRightFootAngle, double CurrentLeftFootAngle,
+                                 double CurrentLeftFootVelocity, double CurrentRightFootVelocity);
 
   /// \brief Verify angle of hip joint
   /// Reduce final velocity of the trunk if necessary
@@ -166,10 +153,8 @@ private:
   /// \param[in] StepNumber
   ///
   /// \return AngleOK
-  bool verify_angle_hip_joint(const support_state_t &CurrentSupport,
-                              double PreviewedTrunkAngleEnd,
-                              const COMState &TrunkState, COMState &TrunkStateT,
-                              double CurrentSupportFootAngle,
+  bool verify_angle_hip_joint(const support_state_t &CurrentSupport, double PreviewedTrunkAngleEnd,
+                              const COMState &TrunkState, COMState &TrunkStateT, double CurrentSupportFootAngle,
                               unsigned StepNumber);
 
   /// \brief Fourth order polynomial trajectory
@@ -189,10 +174,9 @@ private:
   //
   // Private members:
   //
-private:
+ private:
   /// \brief Angular limitations of the hip joints
-  double lLimitLeftHipYaw_, uLimitLeftHipYaw_, lLimitRightHipYaw_,
-      uLimitRightHipYaw_;
+  double lLimitLeftHipYaw_, uLimitLeftHipYaw_, lLimitRightHipYaw_, uLimitRightHipYaw_;
 
   /// \brief Maximal acceleration of a hip joint
   double uaLimitHipYaw_;
@@ -231,5 +215,5 @@ private:
 
   Polynome4 *TrunkStateYaw_;
 };
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* ORIENTATIONSPREVIEW_H_ */

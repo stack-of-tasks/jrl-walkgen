@@ -40,8 +40,7 @@ namespace PatternGeneratorJRL {
     Implementation of the buffers handling without preview control
 */
 class CoMAndFootOnlyStrategy : public GlobalStrategyManager {
-
-public:
+ public:
   /*! Default constructor. */
   CoMAndFootOnlyStrategy(SimplePluginManager *aSimplePluginManager);
 
@@ -70,12 +69,9 @@ public:
     @param[out] CurrentAcceleration: The results is a state vector
     containing the acceleration.
   */
-  int OneGlobalStepOfControl(FootAbsolutePosition &LeftFootPosition,
-                             FootAbsolutePosition &RightFootPosition,
-                             Eigen::VectorXd &ZMPRefPos,
-                             COMState &finalCOMState,
-                             Eigen::VectorXd &CurrentConfiguration,
-                             Eigen::VectorXd &CurrentVelocity,
+  int OneGlobalStepOfControl(FootAbsolutePosition &LeftFootPosition, FootAbsolutePosition &RightFootPosition,
+                             Eigen::VectorXd &ZMPRefPos, COMState &finalCOMState,
+                             Eigen::VectorXd &CurrentConfiguration, Eigen::VectorXd &CurrentVelocity,
                              Eigen::VectorXd &CurrentAcceleration);
 
   /*! Computes the COM of the robot with the Joint values given in BodyAngles,
@@ -96,12 +92,9 @@ public:
     @param[out] InitRightFootPosition: Returns the position of the right foot
     in the waist coordinates frame.
   */
-  int EvaluateStartingState(Eigen::VectorXd &BodyAngles,
-                            COMState &aStartingCOMState,
-                            Eigen::Vector3d &aStartingZMPPosition,
-                            Eigen::Matrix<double, 6, 1> &aStartingWaistPose,
-                            FootAbsolutePosition &InitLeftFootPosition,
-                            FootAbsolutePosition &InitRightFootPosition);
+  int EvaluateStartingState(Eigen::VectorXd &BodyAngles, COMState &aStartingCOMState,
+                            Eigen::Vector3d &aStartingZMPPosition, Eigen::Matrix<double, 6, 1> &aStartingWaistPose,
+                            FootAbsolutePosition &InitLeftFootPosition, FootAbsolutePosition &InitRightFootPosition);
 
   /*! This method returns :
     \li -1 if there is no more motion to realize
@@ -129,11 +122,9 @@ public:
              deque<FootAbsolutePosition> &aRightFootAbsolutePositions);
 
   /*! \brief Initialization of the inter objects relationship. */
-  int InitInterObjects(PinocchioRobot *aPR,
-                       std::vector<ComAndFootRealization *> aCFR,
-                       StepStackHandler *aSSH);
+  int InitInterObjects(PinocchioRobot *aPR, std::vector<ComAndFootRealization *> aCFR, StepStackHandler *aSSH);
 
-protected:
+ protected:
   /*! Count the number of successives hits on the bottom of the buffers. */
   int m_NbOfHitBottom;
 
@@ -144,5 +135,5 @@ protected:
   /*! Set the position of the buffer size limit. */
   unsigned m_BufferSizeLimit;
 };
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* _COM_AND_FOOT_ONLY_STRATEGY_H_ */

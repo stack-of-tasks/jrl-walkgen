@@ -49,7 +49,7 @@ namespace TestSuite {
 
 /*! \brief Clock class for computation timing */
 class ClockCPUTime {
-public:
+ public:
   ClockCPUTime();
   ~ClockCPUTime();
 
@@ -89,7 +89,7 @@ public:
   /*! \brief Reset all counters */
   void Reset();
 
-private:
+ private:
   /*! \brief Date at the measurement started,
     i.e. the global reference */
   struct timeval m_startingtime;
@@ -133,6 +133,6 @@ private:
   /*! \brief Nb of iteration really computed */
   unsigned long int m_NbOfItToCompute;
 };
-} // namespace TestSuite
-} // namespace PatternGeneratorJRL
+}  // namespace TestSuite
+}  // namespace PatternGeneratorJRL
 #endif /* _CLOCK_CPUTIME_PATTERN_GERENATOR_UTESTING_H_ */

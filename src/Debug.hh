@@ -26,50 +26,45 @@
 #include <fstream>
 #include <iostream>
 
-#define LTHROW(x)                                                              \
-  {                                                                            \
-    class Exception : public std::exception {                                  \
-      virtual const char *what() const throw() { return x; }                   \
-    };                                                                         \
-                                                                               \
-    Exception almsg;                                                           \
-    throw almsg;                                                               \
+#define LTHROW(x)                                            \
+  {                                                          \
+    class Exception : public std::exception {                \
+      virtual const char *what() const throw() { return x; } \
+    };                                                       \
+                                                             \
+    Exception almsg;                                         \
+    throw almsg;                                             \
   }
 
 #define ODEBUG2(x)
-#define ODEBUG3(x)                                                             \
-  std::cerr << __FILE__ << ":" << __FUNCTION__ << "(#" << __LINE__             \
-            << "):" << x << std::endl;
-#define RESETDEBUG5(y)                                                         \
-  {                                                                            \
-    std::ofstream DebugFile;                                                   \
-    DebugFile.open(y, ofstream::out);                                          \
-    DebugFile.close();                                                         \
+#define ODEBUG3(x) std::cerr << __FILE__ << ":" << __FUNCTION__ << "(#" << __LINE__ << "):" << x << std::endl;
+#define RESETDEBUG5(y)                \
+  {                                   \
+    std::ofstream DebugFile;          \
+    DebugFile.open(y, ofstream::out); \
+    DebugFile.close();                \
   }
-#define ODEBUG5(x, y)                                                          \
-  {                                                                            \
-    std::ofstream DebugFile;                                                   \
-    DebugFile.open(y, ofstream::app);                                          \
-    DebugFile.precision(8);                                                    \
-    DebugFile.setf(ios::scientific, ios::floatfield);                          \
-    DebugFile << __FILE__ << ":" << __FUNCTION__ << "(#" << __LINE__           \
-              << "):" << x << std::endl;                                       \
-    DebugFile.close();                                                         \
+#define ODEBUG5(x, y)                                                                           \
+  {                                                                                             \
+    std::ofstream DebugFile;                                                                    \
+    DebugFile.open(y, ofstream::app);                                                           \
+    DebugFile.precision(8);                                                                     \
+    DebugFile.setf(ios::scientific, ios::floatfield);                                           \
+    DebugFile << __FILE__ << ":" << __FUNCTION__ << "(#" << __LINE__ << "):" << x << std::endl; \
+    DebugFile.close();                                                                          \
   }
-#define ODEBUG5SIMPLE(x, y)                                                    \
-  {                                                                            \
-    std::ofstream DebugFile;                                                   \
-    DebugFile.open(y, ofstream::app);                                          \
-    DebugFile << x << std::endl;                                               \
-    DebugFile.close();                                                         \
+#define ODEBUG5SIMPLE(x, y)           \
+  {                                   \
+    std::ofstream DebugFile;          \
+    DebugFile.open(y, ofstream::app); \
+    DebugFile << x << std::endl;      \
+    DebugFile.close();                \
   }
 
 #define ODEBUG3_NENDL(x) std::cerr << x
 
 #ifdef _DEBUG_MODE_ON_
-#define ODEBUG(x)                                                              \
-  std::cerr << __FILE__ << ":" << __FUNCTION__ << "(#" << __LINE__             \
-            << "):" << x << std::endl;
+#define ODEBUG(x) std::cerr << __FILE__ << ":" << __FUNCTION__ << "(#" << __LINE__ << "):" << x << std::endl;
 
 #define ODEBUG_NENDL(x) std::cerr << x
 
@@ -81,26 +76,25 @@
 #endif
 
 #ifdef _DEBUG_MODE_ON_
-#define RESETDEBUG4(y)                                                         \
-  {                                                                            \
-    std::ofstream DebugFile;                                                   \
-    DebugFile.open(y, ofstream::out);                                          \
-    DebugFile.close();                                                         \
+#define RESETDEBUG4(y)                \
+  {                                   \
+    std::ofstream DebugFile;          \
+    DebugFile.open(y, ofstream::out); \
+    DebugFile.close();                \
   }
-#define ODEBUG4(x, y)                                                          \
-  {                                                                            \
-    std::ofstream DebugFile;                                                   \
-    DebugFile.open(y, ofstream::app);                                          \
-    DebugFile << __FILE__ << ":" << __FUNCTION__ << "(#" << __LINE__           \
-              << "):" << x << std::endl;                                       \
-    DebugFile.close();                                                         \
+#define ODEBUG4(x, y)                                                                           \
+  {                                                                                             \
+    std::ofstream DebugFile;                                                                    \
+    DebugFile.open(y, ofstream::app);                                                           \
+    DebugFile << __FILE__ << ":" << __FUNCTION__ << "(#" << __LINE__ << "):" << x << std::endl; \
+    DebugFile.close();                                                                          \
   }
-#define ODEBUG4SIMPLE(x, y)                                                    \
-  {                                                                            \
-    std::ofstream DebugFile;                                                   \
-    DebugFile.open(y, ofstream::app);                                          \
-    DebugFile << x << std::endl;                                               \
-    DebugFile.close();                                                         \
+#define ODEBUG4SIMPLE(x, y)           \
+  {                                   \
+    std::ofstream DebugFile;          \
+    DebugFile.open(y, ofstream::app); \
+    DebugFile << x << std::endl;      \
+    DebugFile.close();                \
   }
 
 #define _DEBUG_4_ACTIVATED_ 1

@@ -49,11 +49,11 @@ enum foot_type_e { LEFT, RIGHT };
 
 inline std::ostream &operator<<(std::ostream &out, const foot_type_e &ft) {
   switch (ft) {
-  case LEFT:
-    out << "LEFT";
-    break;
-  default:
-    out << "RIGHT";
+    case LEFT:
+      out << "LEFT";
+      break;
+    default:
+      out << "RIGHT";
   }
   return out;
 }
@@ -62,11 +62,11 @@ enum PhaseType { SS, DS };
 
 inline std::ostream &operator<<(std::ostream &out, const PhaseType &pt) {
   switch (pt) {
-  case SS:
-    out << "SingleSupport";
-    break;
-  default:
-    out << "DoubleSupport";
+    case SS:
+      out << "SingleSupport";
+      break;
+    default:
+      out << "DoubleSupport";
   }
   return out;
 }
@@ -77,14 +77,7 @@ enum objective_e { INSTANT_VELOCITY, COP_CENTERING, JERK_MIN };
 
 enum dynamics_e { POSITION, VELOCITY, ACCELERATION, JERK, COP_POSITION };
 
-enum qp_element_e {
-  MATRIX_Q,
-  MATRIX_DU,
-  VECTOR_D,
-  VECTOR_DS,
-  VECTOR_XL,
-  VECTOR_XU
-};
+enum qp_element_e { MATRIX_Q, MATRIX_DU, VECTOR_D, VECTOR_DS, VECTOR_XL, VECTOR_XU };
 
 enum solver_e { QLD, LSSOL };
 
@@ -157,16 +150,13 @@ struct reference_t {
 };
 
 inline std::ostream &operator<<(std::ostream &out, const reference_t &Ref) {
-  out << "Global: (" << Ref.Global.X << ", " << Ref.Global.Y << ", "
-      << Ref.Global.Yaw << ")" << std::endl;
-  out << "Local: (" << Ref.Local.X << ", " << Ref.Local.Y << ", "
-      << Ref.Local.Yaw << ")";
+  out << "Global: (" << Ref.Global.X << ", " << Ref.Global.Y << ", " << Ref.Global.Yaw << ")" << std::endl;
+  out << "Local: (" << Ref.Local.X << ", " << Ref.Local.Y << ", " << Ref.Local.Yaw << ")";
   return out;
 }
 
 /// \brief Convex hull
 struct convex_hull_t {
-
   /// \brief Edges
   std::vector<double> X_vec, Y_vec, Z_vec;
   /// \brief Inequalities A_vec(i)*x+B_vec(i)y+C_vec(i)z+D_vec(i) > 0
@@ -200,8 +190,7 @@ struct convex_hull_t {
   /// \param[in] B_a
   /// \param[in] C_a
   /// \param[in] D_a
-  void set_inequalities(const double *A_a, const double *B_a, const double *C_a,
-                        const double *D_a);
+  void set_inequalities(const double *A_a, const double *B_a, const double *C_a, const double *D_a);
 
   /// \brief Set all points to zero
   void clear();
@@ -215,7 +204,7 @@ struct convex_hull_t {
   /// \param[in] nbIneq Number inequalities
   convex_hull_t(unsigned nbVert = 0, unsigned nbIneq = 0);
 
-private:
+ private:
   /// \brief Number inequalities
   unsigned nbIneq_;
 
@@ -246,7 +235,6 @@ struct linear_inequality_t {
 
 /// \brief Support state of the robot at a certain point in time
 struct support_state_t {
-
   /// \brief Support phase
   PhaseType Phase;
   /// \brief Support foot
@@ -293,7 +281,6 @@ inline std::ostream &operator<<(std::ostream &out, const support_state_t &st) {
 
 /// \brief Solution
 struct solution_t {
-
   /// \brief Size of the solution array
   unsigned int NbVariables;
 
@@ -358,6 +345,6 @@ struct solution_t {
 
 /// \}
 
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 
 #endif /* _PATTERN_GENERATOR_INTERNAL_PRIVATE_H_ */

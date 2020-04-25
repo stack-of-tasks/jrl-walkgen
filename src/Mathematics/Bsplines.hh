@@ -19,8 +19,7 @@ namespace PatternGeneratorJRL {
 
 /** Bspline class */
 class Bsplines {
-
-public:
+ public:
   /*! Constructor */
   Bsplines(long int degree);
 
@@ -41,8 +40,7 @@ public:
   int ComputeBasisFunctions(double t);
 
   // computes the basis function without the derivatives
-  int ComputeBasisFunctionsRecursively(double t, std::deque<double> &knot,
-                                       unsigned int degree);
+  int ComputeBasisFunctionsRecursively(double t, std::deque<double> &knot, unsigned int degree);
   double Nij_t(int i, int j, double t, std::deque<double> &knot);
 
   /*!Compute Bsplines */
@@ -72,7 +70,7 @@ public:
 
   void PrintDegree() const;
 
-protected:
+ protected:
   long int m_degree;
 
   std::vector<double> m_control_points;
@@ -88,16 +86,15 @@ protected:
 
 /// Bsplines used for Z trajectory of stair steps
 class BSplinesFoot : public Bsplines {
-public:
+ public:
   /** Constructor:
       FT: Final time
       FP: Final position
       ToMP : Time of Max Position
       MP : Max Position */
-  BSplinesFoot(double FT = 1.0, double IP = 0.0, double FP = 0.0,
-               std::vector<double> ToMP = std::vector<double>(),
-               std::vector<double> MP = std::vector<double>(), double IS = 0.0,
-               double IA = 0.0, double FS = 0.0, double FA = 0.0);
+  BSplinesFoot(double FT = 1.0, double IP = 0.0, double FP = 0.0, std::vector<double> ToMP = std::vector<double>(),
+               std::vector<double> MP = std::vector<double>(), double IS = 0.0, double IA = 0.0, double FS = 0.0,
+               double FA = 0.0);
 
   /** Detructor **/
   ~BSplinesFoot();
@@ -110,11 +107,9 @@ public:
     It generates knot vector and control point vector
     according to the input
   */
-  void SetParameters(double FT, double IP, double FP, std::vector<double> ToMP,
-                     std::vector<double> MP, double IS = 0.0, double IA = 0.0,
-                     double FS = 0.0, double FA = 0.0);
-  void SetParametersWithoutMPAndToMP(double FT, double IP, double FP, double IS,
-                                     double IA, double FS, double FA);
+  void SetParameters(double FT, double IP, double FP, std::vector<double> ToMP, std::vector<double> MP,
+                     double IS = 0.0, double IA = 0.0, double FS = 0.0, double FA = 0.0);
+  void SetParametersWithoutMPAndToMP(double FT, double IP, double FP, double IS, double IA, double FS, double FA);
 
   /*!Compute Position at time t */
   int Compute(double t, double &x, double &dx, double &ddx);
@@ -127,8 +122,7 @@ public:
   void ComputeControlPointFrom3DataPoint();
   void ComputeControlPointFrom4DataPoint();
 
-  void GetParameters(double &FT, double &IP, double &FP,
-                     std::vector<double> &ToMP, std::vector<double> &MP);
+  void GetParameters(double &FT, double &IP, double &FP, std::vector<double> &ToMP, std::vector<double> &MP);
 
   std::vector<double> MP() { return m_MP; }
 
@@ -142,22 +136,20 @@ public:
 
   double FP() { return m_FP; }
 
-  void SetParametersWithInitFinalPose(double FT, double IP, double FP,
-                                      std::vector<double> &ToMP,
+  void SetParametersWithInitFinalPose(double FT, double IP, double FP, std::vector<double> &ToMP,
                                       std::vector<double> &MP);
 
-private:
-  double m_FT; // final time
-  double m_IP; // Initial Position
-  double m_IS; // Initial Speed
-  double m_IA; // Initial Acceleration
-  double m_FP; // Final Position
-  double m_FS; // Final Speed
-  double m_FA; // Final Acceleration
-  std::vector<double>
-      m_ToMP; // times to reach the middle (intermediate) positions
-  std::vector<double> m_MP; // middle (intermediate) positions
+ private:
+  double m_FT;                 // final time
+  double m_IP;                 // Initial Position
+  double m_IS;                 // Initial Speed
+  double m_IA;                 // Initial Acceleration
+  double m_FP;                 // Final Position
+  double m_FS;                 // Final Speed
+  double m_FA;                 // Final Acceleration
+  std::vector<double> m_ToMP;  // times to reach the middle (intermediate) positions
+  std::vector<double> m_MP;    // middle (intermediate) positions
 };
 
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* _BSPLINES_H_*/

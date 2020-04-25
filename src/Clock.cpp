@@ -72,9 +72,7 @@ void Clock::StopTiming() {
   m_TotalTime += ltime;
 
   m_DataBuffer[(m_NbOfIterations * 2) % 3000000] =
-                                  (double)m_BeginTimeStamp.tv_sec +
-                                  0.000001 * (double)m_BeginTimeStamp.tv_usec -
-                                  m_StartingTime;
+      (double)m_BeginTimeStamp.tv_sec + 0.000001 * (double)m_BeginTimeStamp.tv_usec - m_StartingTime;
   m_DataBuffer[(m_NbOfIterations * 2 + 1) % 3000000] = ltime;
 }
 
@@ -93,8 +91,7 @@ double Clock::MaxTime() { return m_MaximumTime; }
 double Clock::TotalTime() { return m_TotalTime; }
 
 double Clock::AverageTime() {
-  if (m_NbOfIterations != 0)
-    return m_TotalTime / (double)m_NbOfIterations;
+  if (m_NbOfIterations != 0) return m_TotalTime / (double)m_NbOfIterations;
   return 0.0;
 }
 

@@ -142,13 +142,12 @@ namespace PatternGeneratorJRL {
   Vol AC-24, No.6 December 1979
 */
 class OptimalControllerSolver {
-public:
+ public:
   static const unsigned int MODE_WITHOUT_INITIALPOS = 1;
   static const unsigned int MODE_WITH_INITIALPOS = 0;
 
   /*! A constructor */
-  OptimalControllerSolver(Eigen::MatrixXd &A, Eigen::MatrixXd &b,
-                          Eigen::MatrixXd &c, double Q, double R,
+  OptimalControllerSolver(Eigen::MatrixXd &A, Eigen::MatrixXd &b, Eigen::MatrixXd &c, double Q, double R,
                           unsigned int Nl);
 
   /*! Destructor. */
@@ -169,9 +168,8 @@ public:
   /*! To take matrix K, aka the weight of the other part of the command */
   void GetK(Eigen::MatrixXd &LK);
 
-protected:
-  typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>
-      MatrixRXd;
+ protected:
+  typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> MatrixRXd;
   /*! The matrices needed for the dynamical system such as
     \f{eqnarray*}
 
@@ -198,9 +196,8 @@ protected:
   /*! The size of the window for the preview */
   int m_Nl;
 
-  bool GeneralizedSchur(MatrixRXd &A, MatrixRXd &B, Eigen::VectorXd &alphar,
-                        Eigen::VectorXd &alphai, Eigen::VectorXd &beta,
-                        MatrixRXd &L, MatrixRXd &R);
+  bool GeneralizedSchur(MatrixRXd &A, MatrixRXd &B, Eigen::VectorXd &alphar, Eigen::VectorXd &alphai,
+                        Eigen::VectorXd &beta, MatrixRXd &L, MatrixRXd &R);
 };
 
 /*!
@@ -333,5 +330,5 @@ protected:
   \until MODE_WITH_INITIALPOS
 
 */
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* _OPTIMAL_CONTROLLER_SOLVER_H_ */

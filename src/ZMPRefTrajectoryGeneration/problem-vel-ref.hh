@@ -34,7 +34,7 @@ namespace PatternGeneratorJRL {
 */
 struct ProblemVelRef_s {
   int m, me, mmax, n, nmax, mnn;
-  double *Q, *D, *DU, *DS, *XL, *XU, *X, *NewX, *U, *war; // For COM
+  double *Q, *D, *DU, *DS, *XL, *XU, *X, *NewX, *U, *war;  // For COM
   int *iwar;
   int iout, ifail, iprint, lwar, liwar;
   double Eps;
@@ -50,8 +50,7 @@ struct ProblemVelRef_s {
   /// allocate the memory. It is done only
   /// when the problem gets bigger. When it shrinks
   /// down the memory is kept to avoid overhead.
-  void setDimensions(int NbOfConstraints, int NbOfEqConstraints, int StepNumber,
-                     int QP_N);
+  void setDimensions(int NbOfConstraints, int NbOfEqConstraints, int StepNumber, int QP_N);
 
   /// \brief Dump on disk a problem.
   void dumpProblem(const char *filename);
@@ -75,7 +74,7 @@ struct ProblemVelRef_s {
   const static int VECTOR_XU = 5;
   const static int VECTOR_DS = 6;
 
-protected:
+ protected:
   /// The method doing the real job of releasing the memory.
   void ReleaseMemory();
 
@@ -83,7 +82,7 @@ protected:
   /// Called when setting the dimensions of the problem.
   void AllocateMemory();
 
-private:
+ private:
   /// Previous set of step number considered.
   int m_stepNumber;
 
@@ -91,5 +90,5 @@ private:
   int m_QP_N;
 };
 typedef struct ProblemVelRef_s Problem;
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* _PROBLEM_VEL_REF_H_ */

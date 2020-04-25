@@ -42,10 +42,9 @@ namespace Solver {
   optimal problem:
  */
 class PLDPSolverHerdt {
-public:
+ public:
   /*! \brief Constructor */
-  PLDPSolverHerdt(unsigned int CardU, double *iPu, double *Px, double *Pu,
-                  double *iLQ);
+  PLDPSolverHerdt(unsigned int CardU, double *iPu, double *Px, double *Pu, double *iLQ);
 
   /*! \brief Destructor */
   ~PLDPSolverHerdt();
@@ -53,25 +52,20 @@ public:
   /*! \brief Solve the optimization problem
    */
   int SolveProblem(
-      std::deque<PatternGeneratorJRL::LinearConstraintInequalityFreeFeet_t>
-          &QueueOfLConstraintInequalitiesFreeFeet,
-      std::deque<PatternGeneratorJRL::SupportFeet_t> &QueueOfSupportFeet,
-      double *CstPartOfTheCostFunction, unsigned int NbOfConstraints,
-      double *LinearPartOfConstraints, double *CstPartOfConstraints,
-      double *XkYk, double *X, unsigned int NumberOfRemovedConstraints,
-      unsigned int NbRemovedFootCstr, bool StartingSequence,
+      std::deque<PatternGeneratorJRL::LinearConstraintInequalityFreeFeet_t> &QueueOfLConstraintInequalitiesFreeFeet,
+      std::deque<PatternGeneratorJRL::SupportFeet_t> &QueueOfSupportFeet, double *CstPartOfTheCostFunction,
+      unsigned int NbOfConstraints, double *LinearPartOfConstraints, double *CstPartOfConstraints, double *XkYk,
+      double *X, unsigned int NumberOfRemovedConstraints, unsigned int NbRemovedFootCstr, bool StartingSequence,
       unsigned int NumberSteps, bool CurrentStateChanged, double time);
 
-protected:
+ protected:
   /*! \name Initial solution methods related
     @{
   */
   /*! Compute the initial solution */
   int ComputeInitialSolution(
-      std::deque<PatternGeneratorJRL::LinearConstraintInequalityFreeFeet_t>
-          &QueueOfLConstraintInequalitiesFreeFeet,
-      std::deque<PatternGeneratorJRL::SupportFeet_t> &QueueOfSupportFeet,
-      unsigned int NumberSteps, double *XkYk);
+      std::deque<PatternGeneratorJRL::LinearConstraintInequalityFreeFeet_t> &QueueOfLConstraintInequalitiesFreeFeet,
+      std::deque<PatternGeneratorJRL::SupportFeet_t> &QueueOfSupportFeet, unsigned int NumberSteps, double *XkYk);
 
   /*! Precompite iPuPx */
   int PrecomputeiPuPx(unsigned int NumberSteps);
@@ -110,8 +104,7 @@ protected:
   /*! @} */
 
   /*! Detecting violated constraints */
-  double ComputeAlpha(vector<unsigned int> &NewActivatedConstraints,
-                      unsigned int NumberSteps);
+  double ComputeAlpha(vector<unsigned int> &NewActivatedConstraints, unsigned int NumberSteps);
 
   /*! Store the current ZMP solution for hot start purposes. *\/ */
   /*      void StoreCurrentZMPSolution(double *XkYk); */
@@ -123,7 +116,7 @@ protected:
   /*! \name Methods related to a limited amount of computational time
     @{ */
 
-private:
+ private:
   bool m_NoCholesky;
   /*! \brief Store Pu */
   double *m_Pu;
@@ -232,6 +225,6 @@ private:
 
   /*! @} */
 };
-} // namespace Solver
-} // namespace Optimization
+}  // namespace Solver
+}  // namespace Optimization
 #endif /* _PLDPSOLVER_H_*/

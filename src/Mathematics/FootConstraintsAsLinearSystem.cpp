@@ -37,8 +37,7 @@
 using namespace std;
 using namespace PatternGeneratorJRL;
 
-FootConstraintsAsLinearSystem::FootConstraintsAsLinearSystem(
-    SimplePluginManager *aSPM, PinocchioRobot *aPR)
+FootConstraintsAsLinearSystem::FootConstraintsAsLinearSystem(SimplePluginManager *aSPM, PinocchioRobot *aPR)
     : SimplePlugin(aSPM) {
   m_PR = aPR;
   // RESETDEBUG5("Constraints-FCSALS.dat");
@@ -46,26 +45,19 @@ FootConstraintsAsLinearSystem::FootConstraintsAsLinearSystem(
 
 FootConstraintsAsLinearSystem::~FootConstraintsAsLinearSystem() {}
 
-int FootConstraintsAsLinearSystem::FindSimilarConstraints(
-    Eigen::MatrixXd &A, vector<int> &SimilarConstraints) {
-
+int FootConstraintsAsLinearSystem::FindSimilarConstraints(Eigen::MatrixXd &A, vector<int> &SimilarConstraints) {
   SimilarConstraints.resize(A.rows());
   SimilarConstraints[0] = 0;
   SimilarConstraints[1] = 0;
   if (A.rows() == 4) {
-    if ((A(0, 0) == -A(2, 0)) && (A(0, 1) == -A(2, 1)))
-      SimilarConstraints[2] = -2;
-    if ((A(1, 0) == -A(3, 0)) && (A(1, 1) == -A(3, 1)))
-      SimilarConstraints[3] = -2;
+    if ((A(0, 0) == -A(2, 0)) && (A(0, 1) == -A(2, 1))) SimilarConstraints[2] = -2;
+    if ((A(1, 0) == -A(3, 0)) && (A(1, 1) == -A(3, 1))) SimilarConstraints[3] = -2;
 
   } else if (A.rows() == 6) {
     SimilarConstraints[2] = 0;
-    if ((A(0, 0) == -A(3, 0)) && (A(0, 1) == -A(3, 1)))
-      SimilarConstraints[3] = -3;
-    if ((A(1, 0) == -A(4, 0)) && (A(1, 1) == -A(4, 1)))
-      SimilarConstraints[4] = -3;
-    if ((A(2, 0) == -A(5, 0)) && (A(2, 1) == -A(5, 1)))
-      SimilarConstraints[5] = -3;
+    if ((A(0, 0) == -A(3, 0)) && (A(0, 1) == -A(3, 1))) SimilarConstraints[3] = -3;
+    if ((A(1, 0) == -A(4, 0)) && (A(1, 1) == -A(4, 1))) SimilarConstraints[4] = -3;
+    if ((A(2, 0) == -A(5, 0)) && (A(2, 1) == -A(5, 1))) SimilarConstraints[5] = -3;
   }
 
   if (0)
@@ -79,9 +71,8 @@ int FootConstraintsAsLinearSystem::FindSimilarConstraints(
 // Assuming that the points are going counter-clockwise
 // and that the foot's interior is at the left of the points.
 // The result is : A [ Zx(k), Zy(k)]' + B  >=0
-int FootConstraintsAsLinearSystem::ComputeLinearSystem(
-    vector<CH_Point> aVecOfPoints, Eigen::MatrixXd &A, Eigen::MatrixXd &B,
-    Eigen::VectorXd &C) {
+int FootConstraintsAsLinearSystem::ComputeLinearSystem(vector<CH_Point> aVecOfPoints, Eigen::MatrixXd &A,
+                                                       Eigen::MatrixXd &B, Eigen::VectorXd &C) {
   double a, b, c;
   long unsigned int n = aVecOfPoints.size();
   A.resize(aVecOfPoints.size(), 2);
@@ -94,11 +85,11 @@ int FootConstraintsAsLinearSystem::ComputeLinearSystem(
     ofstream aof;
     aof.open("Constraints-FCSALS.dat", ofstream::app);
     for (unsigned int i = 0; i < n - 1; i++) {
-      aof << aVecOfPoints[i].col << " " << aVecOfPoints[i].row << " "
-          << aVecOfPoints[i + 1].col << " " << aVecOfPoints[i + 1].row << endl;
+      aof << aVecOfPoints[i].col << " " << aVecOfPoints[i].row << " " << aVecOfPoints[i + 1].col << " "
+          << aVecOfPoints[i + 1].row << endl;
     }
-    aof << aVecOfPoints[n - 1].col << " " << aVecOfPoints[n - 1].row << " "
-        << aVecOfPoints[0].col << " " << aVecOfPoints[0].row << endl;
+    aof << aVecOfPoints[n - 1].col << " " << aVecOfPoints[n - 1].row << " " << aVecOfPoints[0].col << " "
+        << aVecOfPoints[0].row << endl;
     aof.close();
   }
 
@@ -107,9 +98,8 @@ int FootConstraintsAsLinearSystem::ComputeLinearSystem(
     C(0) += aVecOfPoints[i].col;
     C(1) += aVecOfPoints[i].row;
 
-    ODEBUG("(x[" << i << "],y[" << i << "]): " << aVecOfPoints[i].col << " "
-                 << aVecOfPoints[i].row << " " << aVecOfPoints[i + 1].col << " "
-                 << aVecOfPoints[i + 1].row);
+    ODEBUG("(x[" << i << "],y[" << i << "]): " << aVecOfPoints[i].col << " " << aVecOfPoints[i].row << " "
+                 << aVecOfPoints[i + 1].col << " " << aVecOfPoints[i + 1].row);
 
     if (fabs(aVecOfPoints[i + 1].col - aVecOfPoints[i].col) > 1e-7) {
       double y1, x1, y2, x2, lmul = -1.0;
@@ -156,9 +146,8 @@ int FootConstraintsAsLinearSystem::ComputeLinearSystem(
   C(0) /= (double)n;
   C(1) /= (double)n;
 
-  ODEBUG("(x[" << n - 1 << "],y[" << n - 1 << "]): " << aVecOfPoints[n - 1].col
-               << " " << aVecOfPoints[n - 1].row << " " << aVecOfPoints[0].col
-               << " " << aVecOfPoints[0].row);
+  ODEBUG("(x[" << n - 1 << "],y[" << n - 1 << "]): " << aVecOfPoints[n - 1].col << " " << aVecOfPoints[n - 1].row
+               << " " << aVecOfPoints[0].col << " " << aVecOfPoints[0].row);
 
   if (fabs(aVecOfPoints[0].col - aVecOfPoints[n - 1].col) > 1e-7) {
     double y1, x1, y2, x2, lmul = -1.0;
@@ -218,15 +207,13 @@ int FootConstraintsAsLinearSystem::ComputeLinearSystem(
 }
 
 int FootConstraintsAsLinearSystem::BuildLinearConstraintInequalities(
-    deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-    deque<FootAbsolutePosition> &RightFootAbsolutePositions,
-    deque<LinearConstraintInequality_t *> &QueueOfLConstraintInequalities,
-    double ConstraintOnX, double ConstraintOnY) {
+    deque<FootAbsolutePosition> &LeftFootAbsolutePositions, deque<FootAbsolutePosition> &RightFootAbsolutePositions,
+    deque<LinearConstraintInequality_t *> &QueueOfLConstraintInequalities, double ConstraintOnX,
+    double ConstraintOnY) {
   // Find the convex hull for each of the position,
   // in order to create the corresponding trajectory.
   ComputeConvexHull aCH;
-  double lLeftFootHalfWidth, lLeftFootHalfHeight, lRightFootHalfWidth,
-      lRightFootHalfHeight;
+  double lLeftFootHalfWidth, lLeftFootHalfHeight, lRightFootHalfWidth, lRightFootHalfHeight;
 
   // Read humanoid specificities.
   PRFoot *lRightFoot = m_PR->rightFoot();
@@ -248,8 +235,7 @@ int FootConstraintsAsLinearSystem::BuildLinearConstraintInequalities(
   lLeftFootHalfWidth -= ConstraintOnX;
   lRightFootHalfWidth -= ConstraintOnX;
 
-  if (LeftFootAbsolutePositions.size() != RightFootAbsolutePositions.size())
-    return -1;
+  if (LeftFootAbsolutePositions.size() != RightFootAbsolutePositions.size()) return -1;
 
   // State for the system 0:start,
   // 1: Right Support Foot,
@@ -271,7 +257,6 @@ int FootConstraintsAsLinearSystem::BuildLinearConstraintInequalities(
   // Going through the set of generated data for each 5 ms.
   // from this extract a set of linear constraints.
   for (unsigned int i = 0; i < LeftFootAbsolutePositions.size(); i++) {
-
     ComputeCH = 0;
     // First check if we have to compute a convex hull
     if (i == 0) {
@@ -280,23 +265,19 @@ int FootConstraintsAsLinearSystem::BuildLinearConstraintInequalities(
     }
     // Double support
     if (LeftFootAbsolutePositions[i].stepType >= 10) {
-      if (State != 3)
-        ComputeCH = 1;
+      if (State != 3) ComputeCH = 1;
       State = 3;
     } else {
       double LiftingThreshold = 0.00001;
       if (LeftFootAbsolutePositions[i].z > LiftingThreshold) {
-        if (State != 2)
-          ComputeCH = 1;
+        if (State != 2) ComputeCH = 1;
         State = 2;
       } else if (RightFootAbsolutePositions[i].z > LiftingThreshold) {
-        if (State != 1)
-          ComputeCH = 1;
+        if (State != 1) ComputeCH = 1;
         State = 1;
       } else if ((RightFootAbsolutePositions[i].z < LiftingThreshold) &&
                  (LeftFootAbsolutePositions[i].z < LiftingThreshold)) {
-        if (State != 3)
-          ComputeCH = 1;
+        if (State != 3) ComputeCH = 1;
         State = 3;
       }
     }
@@ -304,11 +285,9 @@ int FootConstraintsAsLinearSystem::BuildLinearConstraintInequalities(
     if (ComputeCH) {
       double xmin = 1e7, xmax = -1e7, ymin = 1e7, ymax = -1e7;
 
-      ODEBUG("LeftFootAbsolutePositions["
-             << i << " ].theta= " << LeftFootAbsolutePositions[i].theta);
+      ODEBUG("LeftFootAbsolutePositions[" << i << " ].theta= " << LeftFootAbsolutePositions[i].theta);
 
-      ODEBUG("RightFootAbsolutePositions["
-             << i << " ].theta= " << RightFootAbsolutePositions[i].theta);
+      ODEBUG("RightFootAbsolutePositions[" << i << " ].theta= " << RightFootAbsolutePositions[i].theta);
 
       vector<CH_Point> TheConvexHull;
       // Check if we are in a single or double support phase,
@@ -327,10 +306,8 @@ int FootConstraintsAsLinearSystem::BuildLinearConstraintInequalities(
         s_t = sin(LeftFootAbsolutePositions[i].theta * M_PI / 180.0);
         c_t = cos(LeftFootAbsolutePositions[i].theta * M_PI / 180.0);
         for (unsigned j = 0; j < 4; j++) {
-          aVecOfPoints[j].col = lx + (lxcoefs[j] * lLeftFootHalfWidth * c_t -
-                                      lycoefs[j] * lLeftFootHalfHeight * s_t);
-          aVecOfPoints[j].row = ly + (lxcoefs[j] * lLeftFootHalfWidth * s_t +
-                                      lycoefs[j] * lLeftFootHalfHeight * c_t);
+          aVecOfPoints[j].col = lx + (lxcoefs[j] * lLeftFootHalfWidth * c_t - lycoefs[j] * lLeftFootHalfHeight * s_t);
+          aVecOfPoints[j].row = ly + (lxcoefs[j] * lLeftFootHalfWidth * s_t + lycoefs[j] * lLeftFootHalfHeight * c_t);
 
           // Computes the maxima.
           xmin = aVecOfPoints[j].col < xmin ? aVecOfPoints[j].col : xmin;
@@ -338,42 +315,32 @@ int FootConstraintsAsLinearSystem::BuildLinearConstraintInequalities(
           ymin = aVecOfPoints[j].row < ymin ? aVecOfPoints[j].row : ymin;
           ymax = aVecOfPoints[j].row > ymax ? aVecOfPoints[j].row : ymax;
         }
-        ODEBUG("State 3-1 " << xmin << " " << xmax << " " << ymin << " "
-                            << ymax);
+        ODEBUG("State 3-1 " << xmin << " " << xmax << " " << ymin << " " << ymax);
         lx = RightFootAbsolutePositions[i].x;
         ly = RightFootAbsolutePositions[i].y;
 
-        s_t = sin(RightFootAbsolutePositions[i].theta * M_PI / 180.0); //+
-        c_t = cos(RightFootAbsolutePositions[i].theta * M_PI / 180.0); //+
+        s_t = sin(RightFootAbsolutePositions[i].theta * M_PI / 180.0);  //+
+        c_t = cos(RightFootAbsolutePositions[i].theta * M_PI / 180.0);  //+
 
-        ODEBUG("Right Foot: " << lx << " " << ly << " "
-                              << RightFootAbsolutePositions[i].theta);
+        ODEBUG("Right Foot: " << lx << " " << ly << " " << RightFootAbsolutePositions[i].theta);
         for (unsigned j = 0; j < 4; j++) {
           aVecOfPoints[j + 4].col =
-              lx + (lxcoefs[j] * lRightFootHalfWidth * c_t -
-                    lycoefs[j] * lRightFootHalfHeight * s_t);
+              lx + (lxcoefs[j] * lRightFootHalfWidth * c_t - lycoefs[j] * lRightFootHalfHeight * s_t);
           aVecOfPoints[j + 4].row =
-              ly + (lxcoefs[j] * lRightFootHalfWidth * s_t +
-                    lycoefs[j] * lRightFootHalfHeight * c_t);
+              ly + (lxcoefs[j] * lRightFootHalfWidth * s_t + lycoefs[j] * lRightFootHalfHeight * c_t);
           // Computes the maxima.
-          xmin =
-              aVecOfPoints[j + 4].col < xmin ? aVecOfPoints[j + 4].col : xmin;
-          xmax =
-              aVecOfPoints[j + 4].col > xmax ? aVecOfPoints[j + 4].col : xmax;
-          ymin =
-              aVecOfPoints[j + 4].row < ymin ? aVecOfPoints[j + 4].row : ymin;
-          ymax =
-              aVecOfPoints[j + 4].row > ymax ? aVecOfPoints[j + 4].row : ymax;
+          xmin = aVecOfPoints[j + 4].col < xmin ? aVecOfPoints[j + 4].col : xmin;
+          xmax = aVecOfPoints[j + 4].col > xmax ? aVecOfPoints[j + 4].col : xmax;
+          ymin = aVecOfPoints[j + 4].row < ymin ? aVecOfPoints[j + 4].row : ymin;
+          ymax = aVecOfPoints[j + 4].row > ymax ? aVecOfPoints[j + 4].row : ymax;
         }
 
-        ODEBUG("State 3-2" << xmin << " " << xmax << " " << ymin << " "
-                           << ymax);
+        ODEBUG("State 3-2" << xmin << " " << xmax << " " << ymin << " " << ymax);
         aCH.DoComputeConvexHull(aVecOfPoints, TheConvexHull);
       }
       // In the second case, it is necessary to compute
       // the support foot.
       else {
-
         TheConvexHull.resize(4);
 
         // Who is support foot ?
@@ -385,11 +352,9 @@ int FootConstraintsAsLinearSystem::BuildLinearConstraintInequalities(
           c_t = cos(LeftFootAbsolutePositions[i].theta * M_PI / 180.0);
           for (unsigned j = 0; j < 4; j++) {
             TheConvexHull[j].col =
-                lx + (lxcoefs[j] * lLeftFootHalfWidth * c_t -
-                      lycoefs[j] * lLeftFootHalfHeight * s_t);
+                lx + (lxcoefs[j] * lLeftFootHalfWidth * c_t - lycoefs[j] * lLeftFootHalfHeight * s_t);
             TheConvexHull[j].row =
-                ly + (lxcoefs[j] * lLeftFootHalfWidth * s_t +
-                      lycoefs[j] * lLeftFootHalfHeight * c_t);
+                ly + (lxcoefs[j] * lLeftFootHalfWidth * s_t + lycoefs[j] * lLeftFootHalfHeight * c_t);
             // Computes the maxima.
             xmin = TheConvexHull[j].col < xmin ? TheConvexHull[j].col : xmin;
             xmax = TheConvexHull[j].col > xmax ? TheConvexHull[j].col : xmax;
@@ -404,11 +369,9 @@ int FootConstraintsAsLinearSystem::BuildLinearConstraintInequalities(
           c_t = cos(RightFootAbsolutePositions[i].theta * M_PI / 180.0);
           for (unsigned j = 0; j < 4; j++) {
             TheConvexHull[j].col =
-                lx + (lxcoefs[j] * lRightFootHalfWidth * c_t -
-                      lycoefs[j] * lRightFootHalfHeight * s_t);
+                lx + (lxcoefs[j] * lRightFootHalfWidth * c_t - lycoefs[j] * lRightFootHalfHeight * s_t);
             TheConvexHull[j].row =
-                ly + (lxcoefs[j] * lRightFootHalfWidth * s_t +
-                      lycoefs[j] * lRightFootHalfHeight * c_t);
+                ly + (lxcoefs[j] * lRightFootHalfWidth * s_t + lycoefs[j] * lRightFootHalfHeight * c_t);
             // Computes the maxima.
             xmin = TheConvexHull[j].col < xmin ? TheConvexHull[j].col : xmin;
             xmax = TheConvexHull[j].col > xmax ? TheConvexHull[j].col : xmax;
@@ -417,8 +380,7 @@ int FootConstraintsAsLinearSystem::BuildLinearConstraintInequalities(
           }
           ODEBUG("Right support foot");
         }
-        ODEBUG("State !=3 " << xmin << " " << xmax << " " << ymin << " "
-                            << ymax);
+        ODEBUG("State !=3 " << xmin << " " << xmax << " " << ymin << " " << ymax);
       }
 
       // Linear Constraint Inequality
@@ -430,12 +392,10 @@ int FootConstraintsAsLinearSystem::BuildLinearConstraintInequalities(
 
       aLCI->StartingTime = LeftFootAbsolutePositions[i].time;
       if (QueueOfLConstraintInequalities.size() > 0) {
-        QueueOfLConstraintInequalities.back()->EndingTime =
-            LeftFootAbsolutePositions[i].time;
+        QueueOfLConstraintInequalities.back()->EndingTime = LeftFootAbsolutePositions[i].time;
         ODEBUG4(QueueOfLConstraintInequalities.back()->StartingTime
-                    << " " << QueueOfLConstraintInequalities.back()->EndingTime
-                    << " " << prev_xmin << " " << prev_xmax << " " << prev_ymin
-                    << " " << prev_ymax,
+                    << " " << QueueOfLConstraintInequalities.back()->EndingTime << " " << prev_xmin << " " << prev_xmax
+                    << " " << prev_ymin << " " << prev_ymax,
                 "ConstraintMax.dat");
       }
       ODEBUG("Final " << xmin << " " << xmax << " " << ymin << " " << ymax);
@@ -448,26 +408,23 @@ int FootConstraintsAsLinearSystem::BuildLinearConstraintInequalities(
     }
     if (i == LeftFootAbsolutePositions.size() - 1) {
       if (QueueOfLConstraintInequalities.size() > 0) {
-        QueueOfLConstraintInequalities.back()->EndingTime =
-            LeftFootAbsolutePositions[i].time;
+        QueueOfLConstraintInequalities.back()->EndingTime = LeftFootAbsolutePositions[i].time;
         ODEBUG4(QueueOfLConstraintInequalities.back()->StartingTime
-                    << " " << QueueOfLConstraintInequalities.back()->EndingTime
-                    << " " << prev_xmin << " " << prev_xmax << " " << prev_ymin
-                    << " " << prev_ymax,
+                    << " " << QueueOfLConstraintInequalities.back()->EndingTime << " " << prev_xmin << " " << prev_xmax
+                    << " " << prev_ymin << " " << prev_ymax,
                 "ConstraintMax.dat");
       }
     }
   }
 
   ODEBUG("Size of the 5 ms array: " << LeftFootAbsolutePositions.size());
-  ODEBUG("Size of the queue of Linear Constraint Inequalities "
-         << QueueOfLConstraintInequalities.size());
+  ODEBUG("Size of the queue of Linear Constraint Inequalities " << QueueOfLConstraintInequalities.size());
 
   return 0;
 }
 
-void FootConstraintsAsLinearSystem::CallMethod(std::string &,        // Method,
-                                               std::istringstream &) // Args)
+void FootConstraintsAsLinearSystem::CallMethod(std::string &,         // Method,
+                                               std::istringstream &)  // Args)
 {
   // TO BE EXTENDED.
 }

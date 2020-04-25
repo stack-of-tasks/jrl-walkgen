@@ -55,7 +55,7 @@ namespace PatternGeneratorJRL {
 
 */
 class FootTrajectoryGenerationMultiple : public SimplePlugin {
-public:
+ public:
   /*! \name Constants to define the nature of the foot trajectory.
     @{
   */
@@ -131,8 +131,7 @@ public:
     for the computation.
     @param[out] aFootAbsolutePosition: a foot absolute position.
   */
-  bool Compute(double t, FootAbsolutePosition &aFootAbsolutePosition,
-               unsigned int IndexInterval);
+  bool Compute(double t, FootAbsolutePosition &aFootAbsolutePosition, unsigned int IndexInterval);
 
   /*! This method specifies the parameters for each of the polynome
     used by this
@@ -143,8 +142,7 @@ public:
     @param TimeInterval: Set the time base of the polynome.
     @param Position: Set the final position of the polynome at TimeInterval.
   */
-  int SetParameters(unsigned int IntervalIndex, int AxisReference,
-                    double TimeInterval, double FinalPosition);
+  int SetParameters(unsigned int IntervalIndex, int AxisReference, double TimeInterval, double FinalPosition);
 
   /*! This method specifies the parameters for each of the polynome used
     by this object.
@@ -160,10 +158,9 @@ public:
     @param InitSpeed: Initial speed when computing the polynome at
     t=m_AbsoluteTimeReference.
   */
-  int SetParametersWithInitPosInitSpeed(
-      unsigned int PolynomeIndex, int AxisReference, double TimeInterval,
-      double FinalPosition, double InitPosition, double InitSpeed,
-      vector<double> MiddlePos = vector<double>(3, -1));
+  int SetParametersWithInitPosInitSpeed(unsigned int PolynomeIndex, int AxisReference, double TimeInterval,
+                                        double FinalPosition, double InitPosition, double InitSpeed,
+                                        vector<double> MiddlePos = vector<double>(3, -1));
 
   /*! This method specifies the parameters for each of the polynome used by
     this object.
@@ -181,10 +178,9 @@ public:
     @param InitAcc: Initial speed when computing the polynome at
     t=m_AbsoluteTimeReference.
   */
-  int SetParametersWithInitPosInitSpeedInitAcc(
-      unsigned int PolynomeIndex, int AxisReference, double TimeInterval,
-      double FinalPosition, double InitPosition, double InitSpeed,
-      double InitAcc, vector<double> middlePos = vector<double>(3, -1));
+  int SetParametersWithInitPosInitSpeedInitAcc(unsigned int PolynomeIndex, int AxisReference, double TimeInterval,
+                                               double FinalPosition, double InitPosition, double InitSpeed,
+                                               double InitAcc, vector<double> middlePos = vector<double>(3, -1));
 
   /*! This method gets the parameters for each of the polynome used by this
     object. In this case, as it is used for the 3rd order polynome.
@@ -200,11 +196,8 @@ public:
     @param InitSpeed: Initial speed when computing the polynome at
     t=m_AbsoluteTimeReference.
   */
-  int GetParametersWithInitPosInitSpeed(unsigned int PolynomeIndex,
-                                        int AxisReference, double &TimeInterval,
-                                        double &FinalPosition,
-                                        double &InitPosition,
-                                        double &InitSpeed);
+  int GetParametersWithInitPosInitSpeed(unsigned int PolynomeIndex, int AxisReference, double &TimeInterval,
+                                        double &FinalPosition, double &InitPosition, double &InitSpeed);
 
   /*! \name Methods related to the Absolute Time Reference.
     This time specifies the beginning of the trajectory.
@@ -218,14 +211,12 @@ public:
 
   /*! @} */
 
-  FootTrajectoryGenerationMultiple &
-  operator=(const FootTrajectoryGenerationMultiple &aFTGM);
+  FootTrajectoryGenerationMultiple &operator=(const FootTrajectoryGenerationMultiple &aFTGM);
 
-protected:
+ protected:
   /*! \brief Handle a set of object allowing the generation of the foot
     trajectory.*/
-  std::vector<FootTrajectoryGenerationStandard *>
-      m_SetOfFootTrajectoryGenerationObjects;
+  std::vector<FootTrajectoryGenerationStandard *> m_SetOfFootTrajectoryGenerationObjects;
 
   /*! \brief Reference of humanoid specificities. */
   PRFoot *m_Foot;
@@ -245,5 +236,5 @@ protected:
   /*! \brief Sensitivity to numerical unstability when using time. */
   double m_Sensitivity;
 };
-} // namespace PatternGeneratorJRL
+}  // namespace PatternGeneratorJRL
 #endif /* _FOOT_TRAJECTORY_GENERATION_MULTIPLE_H_ */

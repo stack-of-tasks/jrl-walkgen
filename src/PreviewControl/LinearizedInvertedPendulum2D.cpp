@@ -56,20 +56,13 @@ LinearizedInvertedPendulum2D::LinearizedInvertedPendulum2D() {
 
 LinearizedInvertedPendulum2D::~LinearizedInvertedPendulum2D() {}
 
-const double &LinearizedInvertedPendulum2D::GetComHeight() const {
-  return m_ComHeight;
-}
+const double &LinearizedInvertedPendulum2D::GetComHeight() const { return m_ComHeight; }
 
-void LinearizedInvertedPendulum2D::SetComHeight(const double &aComHeight) {
-  m_ComHeight = aComHeight;
-}
+void LinearizedInvertedPendulum2D::SetComHeight(const double &aComHeight) { m_ComHeight = aComHeight; }
 
-const double &LinearizedInvertedPendulum2D::GetSimulationControlPeriod() const {
-  return m_T;
-}
+const double &LinearizedInvertedPendulum2D::GetSimulationControlPeriod() const { return m_T; }
 
-void LinearizedInvertedPendulum2D::SetSimulationControlPeriod(
-    const double &aT) {
+void LinearizedInvertedPendulum2D::SetSimulationControlPeriod(const double &aT) {
   m_T = aT;
   if (m_SamplingPeriod != 0.0) {
     double dinterval = m_T / m_SamplingPeriod;
@@ -77,15 +70,12 @@ void LinearizedInvertedPendulum2D::SetSimulationControlPeriod(
   }
 }
 
-const double &LinearizedInvertedPendulum2D::GetRobotControlPeriod() {
-  return m_SamplingPeriod;
-}
+const double &LinearizedInvertedPendulum2D::GetRobotControlPeriod() { return m_SamplingPeriod; }
 
 void LinearizedInvertedPendulum2D::SetRobotControlPeriod(const double &aT) {
   m_SamplingPeriod = aT;
 
   if (m_SamplingPeriod != 0.0) {
-
     double dinterval = m_T / m_SamplingPeriod;
     m_InterpolationInterval = (int)dinterval;
   }
@@ -131,17 +121,14 @@ COMState LinearizedInvertedPendulum2D::GetState() {
 void LinearizedInvertedPendulum2D::setState(com_t aCoM) { m_CoM = aCoM; }
 
 int LinearizedInvertedPendulum2D::InitializeSystem() {
-  if (m_T == -1.0)
-    return -1;
+  if (m_T == -1.0) return -1;
 
-  if (m_ComHeight == -1.0)
-    return -2;
+  if (m_ComHeight == -1.0) return -2;
 
   for (int i = 0; i < 3; i++) {
     m_B(i, 0) = 0.0;
     m_C(0, i) = 0.0;
-    for (int j = 0; j < 3; j++)
-      m_A(i, j) = 0.0;
+    for (int j = 0; j < 3; j++) m_A(i, j) = 0.0;
   }
 
   m_A(0, 0) = 1.0;
@@ -165,9 +152,8 @@ int LinearizedInvertedPendulum2D::InitializeSystem() {
   return 0;
 }
 
-int LinearizedInvertedPendulum2D::Interpolation(
-    deque<COMState> &COMStates, deque<ZMPPosition> &ZMPRefPositions,
-    int CurrentPosition, double CX, double CY) {
+int LinearizedInvertedPendulum2D::Interpolation(deque<COMState> &COMStates, deque<ZMPPosition> &ZMPRefPositions,
+                                                int CurrentPosition, double CX, double CY) {
   int lCurrentPosition = CurrentPosition;
   // Fill the queues with the interpolated CoM values.
   // TODO: with TestHerdt, it is mandatory to use COMStates.size()-1, or it will
@@ -177,37 +163,36 @@ int LinearizedInvertedPendulum2D::Interpolation(
   // interpolate correctly
   // along the whole preview window will it be still fine with the reste of the
   // PG ?
-  int loopEnd = std::min<int>(m_InterpolationInterval - 1,
-                              ((int)COMStates.size()) - 1 - CurrentPosition);
+  int loopEnd = std::min<int>(m_InterpolationInterval - 1, ((int)COMStates.size()) - 1 - CurrentPosition);
   for (int lk = 0; lk <= loopEnd; lk++, lCurrentPosition++) {
     ODEBUG("lCurrentPosition: " << lCurrentPosition);
     COMState &aCOMPos = COMStates[lCurrentPosition];
     double lkSP;
     lkSP = (lk + 1) * m_SamplingPeriod;
 
-    aCOMPos.x[0] = m_CoM.x[0] +                     // Position
-                   lkSP * m_CoM.x[1] +              // Speed
-                   0.5 * lkSP * lkSP * m_CoM.x[2] + // Acceleration
-                   lkSP * lkSP * lkSP * CX / 6.0;   // Jerk
+    aCOMPos.x[0] = m_CoM.x[0] +                      // Position
+                   lkSP * m_CoM.x[1] +               // Speed
+                   0.5 * lkSP * lkSP * m_CoM.x[2] +  // Acceleration
+                   lkSP * lkSP * lkSP * CX / 6.0;    // Jerk
 
-    aCOMPos.x[1] = m_CoM.x[1] +            // Speed
-                   lkSP * m_CoM.x[2] +     // Acceleration
-                   0.5 * lkSP * lkSP * CX; // Jerk
+    aCOMPos.x[1] = m_CoM.x[1] +             // Speed
+                   lkSP * m_CoM.x[2] +      // Acceleration
+                   0.5 * lkSP * lkSP * CX;  // Jerk
 
-    aCOMPos.x[2] = m_CoM.x[2] + // Acceleration
-                   lkSP * CX;   // Jerk
+    aCOMPos.x[2] = m_CoM.x[2] +  // Acceleration
+                   lkSP * CX;    // Jerk
 
-    aCOMPos.y[0] = m_CoM.y[0] +                     // Position
-                   lkSP * m_CoM.y[1] +              // Speed
-                   0.5 * lkSP * lkSP * m_CoM.y[2] + // Acceleration
-                   lkSP * lkSP * lkSP * CY / 6.0;   // Jerk
+    aCOMPos.y[0] = m_CoM.y[0] +                      // Position
+                   lkSP * m_CoM.y[1] +               // Speed
+                   0.5 * lkSP * lkSP * m_CoM.y[2] +  // Acceleration
+                   lkSP * lkSP * lkSP * CY / 6.0;    // Jerk
 
-    aCOMPos.y[1] = m_CoM.y[1] +            // Speed
-                   lkSP * m_CoM.y[2] +     // Acceleration
-                   0.5 * lkSP * lkSP * CY; // Jerk
+    aCOMPos.y[1] = m_CoM.y[1] +             // Speed
+                   lkSP * m_CoM.y[2] +      // Acceleration
+                   0.5 * lkSP * lkSP * CY;  // Jerk
 
-    aCOMPos.y[2] = m_CoM.y[2] + // Acceleration
-                   lkSP * CY;   // Jerk
+    aCOMPos.y[2] = m_CoM.y[2] +  // Acceleration
+                   lkSP * CY;    // Jerk
 
     aCOMPos.yaw[0] = ZMPRefPositions[lCurrentPosition].theta;
 
@@ -216,20 +201,15 @@ int LinearizedInvertedPendulum2D::Interpolation(
     aCOMPos.z[2] = 0;
     // Compute ZMP position and orientation.
     ZMPPosition &aZMPPos = ZMPRefPositions[lCurrentPosition];
-    aZMPPos.px = m_C(0, 0) * aCOMPos.x[0] + m_C(0, 1) * aCOMPos.x[1] +
-                 m_C(0, 2) * aCOMPos.x[2];
+    aZMPPos.px = m_C(0, 0) * aCOMPos.x[0] + m_C(0, 1) * aCOMPos.x[1] + m_C(0, 2) * aCOMPos.x[2];
 
-    aZMPPos.py = m_C(0, 0) * aCOMPos.y[0] + m_C(0, 1) * aCOMPos.y[1] +
-                 m_C(0, 2) * aCOMPos.y[2];
+    aZMPPos.py = m_C(0, 0) * aCOMPos.y[0] + m_C(0, 1) * aCOMPos.y[1] + m_C(0, 2) * aCOMPos.y[2];
 
     aZMPPos.pz = 0.0;
 
-    ODEBUG4(aCOMPos.x[0] << " " << aCOMPos.x[1] << " " << aCOMPos.x[2] << " "
-                         << aCOMPos.y[0] << " " << aCOMPos.y[1] << " "
-                         << aCOMPos.y[2] << " " << aCOMPos.yaw << " "
-                         << aZMPPos.px << " " << aZMPPos.py << " "
-                         << aZMPPos.theta << " " << CX << " " << CY << " "
-                         << lkSP << " " << m_T,
+    ODEBUG4(aCOMPos.x[0] << " " << aCOMPos.x[1] << " " << aCOMPos.x[2] << " " << aCOMPos.y[0] << " " << aCOMPos.y[1]
+                         << " " << aCOMPos.y[2] << " " << aCOMPos.yaw << " " << aZMPPos.px << " " << aZMPPos.py << " "
+                         << aZMPPos.theta << " " << CX << " " << CY << " " << lkSP << " " << m_T,
             "DebugInterpol.dat");
   }
   return 0;
@@ -254,11 +234,9 @@ com_t LinearizedInvertedPendulum2D::OneIteration(double ux, double uy) {
   m_CoM.y = m_CoM.y + Buy;
 
   // Modif. from Dimitar: Initially a mistake regarding the ordering.
-  ODEBUG4(m_xk[0] << " " << m_xk[1] << " " << m_xk[2] << " " << m_xk[3] << " "
-                  << m_xk[4] << " " << m_xk[5] << " " << m_CoM.x << " "
-                  << m_CoM.y << " " << m_zk[0] << " " << m_zk[1] << " "
-                  << Bux[0] << " " << Bux[1] << " " << Bux[2] << " " << Buy[0]
-                  << " " << Buy[1] << " " << Buy[2] << " " << m_B(0, 0) << " "
+  ODEBUG4(m_xk[0] << " " << m_xk[1] << " " << m_xk[2] << " " << m_xk[3] << " " << m_xk[4] << " " << m_xk[5] << " "
+                  << m_CoM.x << " " << m_CoM.y << " " << m_zk[0] << " " << m_zk[1] << " " << Bux[0] << " " << Bux[1]
+                  << " " << Bux[2] << " " << Buy[0] << " " << Buy[1] << " " << Buy[2] << " " << m_B(0, 0) << " "
                   << m_B(1, 0) << " " << m_B(2, 0) << " ",
           "Debug2DLIPM.dat");
 
