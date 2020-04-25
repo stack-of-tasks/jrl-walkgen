@@ -112,29 +112,30 @@ trunk_t::trunk_t() { reset(); }
 
 void convex_hull_t::rotate(axis_e axis, double angle) {
   switch (axis) {
-    case YAW:
-      double xOld, yOld;
-      for (unsigned int j = 0; j < X_vec.size(); j++) {
-        xOld = X_vec[j];
-        yOld = Y_vec[j];
-        X_vec[j] = (xOld * cos(angle) - yOld * sin(angle));
-        Y_vec[j] = (xOld * sin(angle) + yOld * cos(angle));
-      }
-      break;
-    case PITCH:
-      break;
-    case ROLL:
-      break;
-    case X_AXIS:
-      break;
-    case Y_AXIS:
-      break;
-    case Z_AXIS:
-      break;
+  case YAW:
+    double xOld, yOld;
+    for (unsigned int j = 0; j < X_vec.size(); j++) {
+      xOld = X_vec[j];
+      yOld = Y_vec[j];
+      X_vec[j] = (xOld * cos(angle) - yOld * sin(angle));
+      Y_vec[j] = (xOld * sin(angle) + yOld * cos(angle));
+    }
+    break;
+  case PITCH:
+    break;
+  case ROLL:
+    break;
+  case X_AXIS:
+    break;
+  case Y_AXIS:
+    break;
+  case Z_AXIS:
+    break;
   }
 }
 
-convex_hull_t::convex_hull_t(unsigned nbVert, unsigned nbIneq) : nbIneq_(0), nbVert_(0) {
+convex_hull_t::convex_hull_t(unsigned nbVert, unsigned nbIneq)
+    : nbIneq_(0), nbVert_(0) {
   clear();
   resize(nbVert, nbIneq);
 }
@@ -162,7 +163,8 @@ void convex_hull_t::resize(unsigned nbVert, unsigned nbIneq) {
   nbIneq_ = nbIneq;
 }
 
-void convex_hull_t::set_vertices(const double *X_a, const double *Y_a, const double *Z_a) {
+void convex_hull_t::set_vertices(const double *X_a, const double *Y_a,
+                                 const double *Z_a) {
   for (unsigned i = 0; i < nbVert_; i++) {
     X_vec[i] = X_a[i];
     Y_vec[i] = Y_a[i];
@@ -175,7 +177,8 @@ void convex_hull_t::set_vertices(const double *X_a, const double *Y_a) {
     Y_vec[i] = Y_a[i];
   }
 }
-void convex_hull_t::set_inequalities(const double *A_a, const double *B_a, const double *C_a, const double *D_a) {
+void convex_hull_t::set_inequalities(const double *A_a, const double *B_a,
+                                     const double *C_a, const double *D_a) {
   for (unsigned i = 0; i < nbIneq_; i++) {
     A_vec[i] = A_a[i];
     B_vec[i] = B_a[i];
@@ -186,12 +189,14 @@ void convex_hull_t::set_inequalities(const double *A_a, const double *B_a, const
 
 void convex_hull_t::cout() {
   std::cout << "Vertices: " << nbVert_ << std::endl;
-  for (unsigned i = 0; i < nbVert_; ++i) std::cout << X_vec[i] << " " << Y_vec[i] << std::endl;
+  for (unsigned i = 0; i < nbVert_; ++i)
+    std::cout << X_vec[i] << " " << Y_vec[i] << std::endl;
   std::cout << std::endl;
 
   std::cout << "Inequalities: " << nbIneq_ << std::endl;
   for (unsigned i = 0; i < nbIneq_; ++i)
-    std::cout << A_vec[i] << " " << B_vec[i] << " " << C_vec[i] << " " << D_vec[i] << std::endl;
+    std::cout << A_vec[i] << " " << B_vec[i] << " " << C_vec[i] << " "
+              << D_vec[i] << std::endl;
   std::cout << std::endl;
 }
 
@@ -210,16 +215,9 @@ void linear_inequality_t::resize(int NbRows, int NbCols, bool) {
 }
 
 solution_t::solution_t()
-    : NbVariables(0),
-      NbConstraints(0),
-      Fail(0),
-      Print(0),
-      Solution_vec(0),
-      SupportOrientations_deq(0),
-      SupportStates_deq(0),
-      ConstrLagr_vec(0),
-      LBoundsLagr_vec(0),
-      UBoundsLagr_vec(0) {}
+    : NbVariables(0), NbConstraints(0), Fail(0), Print(0), Solution_vec(0),
+      SupportOrientations_deq(0), SupportStates_deq(0), ConstrLagr_vec(0),
+      LBoundsLagr_vec(0), UBoundsLagr_vec(0) {}
 
 void solution_t::reset() {
   NbVariables = 0;
@@ -236,7 +234,8 @@ void solution_t::reset() {
   UBoundsLagr_vec.resize(0, false);
 }
 
-void solution_t::resize(unsigned int SizeSolution, unsigned int SizeConstraints) {
+void solution_t::resize(unsigned int SizeSolution,
+                        unsigned int SizeConstraints) {
   NbVariables = SizeSolution;
   NbConstraints = SizeConstraints;
 
@@ -263,11 +262,14 @@ void solution_t::print(std::ostream &aos) {
 
 reference_t::reference_t() : Global(), Local() {}
 
-reference_t::reference_t(const reference_t &R) : Global(R.Global), Local(R.Local) {}
+reference_t::reference_t(const reference_t &R)
+    : Global(R.Global), Local(R.Local) {}
 
-reference_t::frame_t::frame_t() : X(0), Y(0), Yaw(0), X_vec(), Y_vec(), Yaw_vec() {}
+reference_t::frame_t::frame_t()
+    : X(0), Y(0), Yaw(0), X_vec(), Y_vec(), Yaw_vec() {}
 
 reference_t::frame_t::frame_t(const frame_t &F)
-    : X(F.X), Y(F.Y), Yaw(F.Yaw), X_vec(F.X_vec), Y_vec(F.Y_vec), Yaw_vec(F.Yaw_vec) {}
+    : X(F.X), Y(F.Y), Yaw(F.Yaw), X_vec(F.X_vec), Y_vec(F.Y_vec),
+      Yaw_vec(F.Yaw_vec) {}
 
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL

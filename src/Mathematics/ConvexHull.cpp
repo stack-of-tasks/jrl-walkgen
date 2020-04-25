@@ -46,7 +46,8 @@ struct ltCH_Point {
   }
 };
 
-void DistanceCHRep(CH_Point &s1, CH_Point &s2, double &distance1, double &distance2) {
+void DistanceCHRep(CH_Point &s1, CH_Point &s2, double &distance1,
+                   double &distance2) {
   double x1, x2, y1, y2;
   x1 = s1.col - HRP2CIO_GlobalP0.col;
   x2 = s2.col - HRP2CIO_GlobalP0.col;
@@ -71,14 +72,17 @@ ComputeConvexHull::ComputeConvexHull() {}
 
 ComputeConvexHull::~ComputeConvexHull() {}
 
-void ComputeConvexHull::DoComputeConvexHull(vector<CH_Point> aVecOfPoints, vector<CH_Point> &TheConvexHull) {
-  if (aVecOfPoints.size() == 0) return;
+void ComputeConvexHull::DoComputeConvexHull(vector<CH_Point> aVecOfPoints,
+                                            vector<CH_Point> &TheConvexHull) {
+  if (aVecOfPoints.size() == 0)
+    return;
 
   CH_Point p0 = aVecOfPoints[0];
 
   // Detects the point with the smallest value for y.
   for (unsigned int i = 0; i < aVecOfPoints.size(); i++)
-    if (aVecOfPoints[i].row < p0.row) p0 = aVecOfPoints[i];
+    if (aVecOfPoints[i].row < p0.row)
+      p0 = aVecOfPoints[i];
 
   HRP2CIO_GlobalP0 = p0;
   // Create the list of pixels sortes according to their
@@ -108,7 +112,8 @@ void ComputeConvexHull::DoComputeConvexHull(vector<CH_Point> aVecOfPoints, vecto
       set<CH_Point, ltCH_Point>::iterator it_ToBeDeleted = it_PtinPolarCoord;
 
       it_PtinPolarCoord++;
-      if (ToBeDeleted) ListOfPointinPolarCoord.erase(it_ToBeDeleted);
+      if (ToBeDeleted)
+        ListOfPointinPolarCoord.erase(it_ToBeDeleted);
     }
 
     if (bInsert) {
@@ -157,11 +162,12 @@ void ComputeConvexHull::DoComputeConvexHull(vector<CH_Point> aVecOfPoints, vecto
         ok = 1;
       }
 
-      if (!ok) TheConvexHull.pop_back();
+      if (!ok)
+        TheConvexHull.pop_back();
     } while (!ok);
 
     TheConvexHull.push_back(*it_LPPC);
     it_LPPC++;
   }
 }
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL

@@ -41,7 +41,7 @@ class OnLineFootTrajectoryGeneration : public FootTrajectoryGenerationStandard {
   //
   // Public methods:
   //
- public:
+public:
   OnLineFootTrajectoryGeneration(SimplePluginManager *lSPM, PRFoot *aFoot);
 
   virtual ~OnLineFootTrajectoryGeneration();
@@ -55,17 +55,20 @@ class OnLineFootTrajectoryGeneration : public FootTrajectoryGenerationStandard {
   /// \param[in] PreviewedSupportAngles_deq
   /// \param[out] FinalLeftFootTraj_deq Left foot trajectory
   /// \param[out] FinalRightFootTraj_deq Right foot trajectory
-  virtual void interpolate_feet_positions(double Time, const deque<support_state_t> &PrwSupportStates_deq,
-                                          const solution_t &Solution, const deque<double> &PreviewedSupportAngles_deq,
-                                          deque<FootAbsolutePosition> &FinalLeftFootTraj_deq,
-                                          deque<FootAbsolutePosition> &FinalRightFootTraj_deq);
+  virtual void interpolate_feet_positions(
+      double Time, const deque<support_state_t> &PrwSupportStates_deq,
+      const solution_t &Solution,
+      const deque<double> &PreviewedSupportAngles_deq,
+      deque<FootAbsolutePosition> &FinalLeftFootTraj_deq,
+      deque<FootAbsolutePosition> &FinalRightFootTraj_deq);
 
-  virtual void interpolate_feet_positions(double Time, unsigned CurrentIndex,
-                                          const PatternGeneratorJRL::support_state_t &CurrentSupport,
-                                          std::vector<double> FootStepX, std::vector<double> FootStepY,
-                                          std::vector<double> FootStepYaw,
-                                          deque<FootAbsolutePosition> &FinalLeftFootTraj_deq,
-                                          deque<FootAbsolutePosition> &FinalRightFootTraj_deq);
+  virtual void interpolate_feet_positions(
+      double Time, unsigned CurrentIndex,
+      const PatternGeneratorJRL::support_state_t &CurrentSupport,
+      std::vector<double> FootStepX, std::vector<double> FootStepY,
+      std::vector<double> FootStepYaw,
+      deque<FootAbsolutePosition> &FinalLeftFootTraj_deq,
+      deque<FootAbsolutePosition> &FinalRightFootTraj_deq);
 
   /// \name Accessors
   /// \{
@@ -74,13 +77,15 @@ class OnLineFootTrajectoryGeneration : public FootTrajectoryGenerationStandard {
   inline unsigned int NbSamplingsPreviewed() const { return QP_N_; };
   inline void NbSamplingsPreviewed(unsigned int QP_N) { QP_N_ = QP_N; };
   inline double FeetDistance() const { return FeetDistanceDS_; };
-  inline void FeetDistance(double FeetDistance) { FeetDistanceDS_ = FeetDistance; };
+  inline void FeetDistance(double FeetDistance) {
+    FeetDistanceDS_ = FeetDistance;
+  };
   /// \}
 
   //
   // Protected methods:
   //
- protected:
+protected:
   /// \brief Check if the solution should be used as is and
   /// propose alternative if not.
   ///
@@ -88,8 +93,10 @@ class OnLineFootTrajectoryGeneration : public FootTrajectoryGenerationStandard {
   /// \param[out] Y Solution
   /// \param[in] CurrentSupport
   /// \param[in] CurrentTime
-  virtual void interpret_solution(double CurrentTime, const solution_t &Solution,
-                                  const support_state_t &CurrentSupport, unsigned int NbSteps, double &X, double &Y);
+  virtual void interpret_solution(double CurrentTime,
+                                  const solution_t &Solution,
+                                  const support_state_t &CurrentSupport,
+                                  unsigned int NbSteps, double &X, double &Y);
 
   /// \brief Compute the position of the swinging and the stance foot.
   /// Use polynomials for the X-axis, Y-axis,
@@ -105,22 +112,24 @@ class OnLineFootTrajectoryGeneration : public FootTrajectoryGenerationStandard {
   /// time where the swinging foot can move horizontally. \param StepType: Type
   /// of steps (for book-keeping). \param LeftOrRight: Specify if it is left (1)
   /// or right (-1).
-  virtual void UpdateFootPosition(deque<FootAbsolutePosition> &SupportFootTraj_deq,
-                                  deque<FootAbsolutePosition> &StanceFootTraj_deq, int StartIndex, int k,
-                                  double LocalInterpolationStartTime, double UnlockedSwingPeriod, int StepType,
-                                  int LeftOrRight);
+  virtual void
+  UpdateFootPosition(deque<FootAbsolutePosition> &SupportFootTraj_deq,
+                     deque<FootAbsolutePosition> &StanceFootTraj_deq,
+                     int StartIndex, int k, double LocalInterpolationStartTime,
+                     double UnlockedSwingPeriod, int StepType, int LeftOrRight);
 
   /// \brief Compute the results of the polynome at time "t".
   /// And fill the current none support foot absolute positions obect.
   ///
   /// \param t : the time
   /// \param curr_NSFAP : absolute position for the swinging
-  virtual void ComputeXYThetaFootPosition(double t, FootAbsolutePosition &curr_NSFAP);
+  virtual void ComputeXYThetaFootPosition(double t,
+                                          FootAbsolutePosition &curr_NSFAP);
 
   //
   // Protected members
   //
- protected:
+protected:
   /// \brief Sampling period of the QP
   double QP_T_;
 
@@ -141,5 +150,5 @@ class OnLineFootTrajectoryGeneration : public FootTrajectoryGenerationStandard {
   double FPx_, FPy_;
 };
 
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 #endif /* _ONLINE_FOOT_TRAJECTORY_GENERATION_H_ */

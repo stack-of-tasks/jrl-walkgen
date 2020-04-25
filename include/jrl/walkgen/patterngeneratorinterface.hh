@@ -53,7 +53,7 @@ namespace PatternGeneratorJRL {
 
 */
 class WALK_GEN_JRL_EXPORT PatternGeneratorInterface {
- public:
+public:
   // overload the new[] eigen operator
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   /*! Constructor
@@ -96,11 +96,12 @@ class WALK_GEN_JRL_EXPORT PatternGeneratorInterface {
     classical C++ style.
     @param[in] ClearStepStackHandler: Clean the stack of steps after copy.
   */
-  virtual void CommonInitializationOfWalking(COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
-                                             Eigen::VectorXd &BodyAnglesIni, FootAbsolutePosition &InitLeftFootAbsPos,
-                                             FootAbsolutePosition &InitRightFootAbsPos,
-                                             std::deque<RelativeFootPosition> &lRelativeFootPositions,
-                                             std::vector<double> &lCurrentJointValues, bool ClearStepStackHandler) = 0;
+  virtual void CommonInitializationOfWalking(
+      COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
+      Eigen::VectorXd &BodyAnglesIni, FootAbsolutePosition &InitLeftFootAbsPos,
+      FootAbsolutePosition &InitRightFootAbsPos,
+      std::deque<RelativeFootPosition> &lRelativeFootPositions,
+      std::vector<double> &lCurrentJointValues, bool ClearStepStackHandler) = 0;
 
   /*! \name Methods for the control part.
     @{
@@ -123,8 +124,10 @@ class WALK_GEN_JRL_EXPORT PatternGeneratorInterface {
     The target ZMP in the waist reference frame.
     @return True is there is still some data to send, false otherwise.
   */
-  virtual bool RunOneStepOfTheControlLoop(Eigen::VectorXd &CurrentConfiguration, Eigen::VectorXd &CurrentVelocity,
-                                          Eigen::VectorXd &CurrentAcceleration, Eigen::VectorXd &ZMPTarget) = 0;
+  virtual bool RunOneStepOfTheControlLoop(Eigen::VectorXd &CurrentConfiguration,
+                                          Eigen::VectorXd &CurrentVelocity,
+                                          Eigen::VectorXd &CurrentAcceleration,
+                                          Eigen::VectorXd &ZMPTarget) = 0;
 
   /*! \brief Run One Step of the global control loop aka
     The Main Method To Be Used.
@@ -145,10 +148,11 @@ class WALK_GEN_JRL_EXPORT PatternGeneratorInterface {
     @param[out] RightFootPosition: Absolute position of the right foot.
     @return True is there is still some data to send, false otherwise.
   */
-  virtual bool RunOneStepOfTheControlLoop(Eigen::VectorXd &CurrentConfiguration, Eigen::VectorXd &CurrentVelocity,
-                                          Eigen::VectorXd &CurrentAcceleration, Eigen::VectorXd &ZMPTarget,
-                                          COMPosition &COMPosition, FootAbsolutePosition &LeftFootPosition,
-                                          FootAbsolutePosition &RightFootPosition) = 0;
+  virtual bool RunOneStepOfTheControlLoop(
+      Eigen::VectorXd &CurrentConfiguration, Eigen::VectorXd &CurrentVelocity,
+      Eigen::VectorXd &CurrentAcceleration, Eigen::VectorXd &ZMPTarget,
+      COMPosition &COMPosition, FootAbsolutePosition &LeftFootPosition,
+      FootAbsolutePosition &RightFootPosition) = 0;
 
   /*! \brief Run One Step of the global control loop aka
     The Main Method To Be Used.
@@ -170,10 +174,11 @@ class WALK_GEN_JRL_EXPORT PatternGeneratorInterface {
     @param[out] RightFootPosition: Absolute position of the right foot.
     @return True is there is still some data to send, false otherwise.
   */
-  virtual bool RunOneStepOfTheControlLoop(Eigen::VectorXd &CurrentConfiguration, Eigen::VectorXd &CurrentVelocity,
-                                          Eigen::VectorXd &CurrentAcceleration, Eigen::VectorXd &ZMPTarget,
-                                          COMState &COMState, FootAbsolutePosition &LeftFootPosition,
-                                          FootAbsolutePosition &RightFootPosition) = 0;
+  virtual bool RunOneStepOfTheControlLoop(
+      Eigen::VectorXd &CurrentConfiguration, Eigen::VectorXd &CurrentVelocity,
+      Eigen::VectorXd &CurrentAcceleration, Eigen::VectorXd &ZMPTarget,
+      COMState &COMState, FootAbsolutePosition &LeftFootPosition,
+      FootAbsolutePosition &RightFootPosition) = 0;
 
   /*! \brief Run One Step of the global control loop aka
     The Main Method To Be Used.
@@ -183,9 +188,11 @@ class WALK_GEN_JRL_EXPORT PatternGeneratorInterface {
     @param[out] COMRefPos: COM position new reference.
     @return True is there is still some data to send, false otherwise.
   */
-  virtual bool RunOneStepOfTheControlLoop(FootAbsolutePosition &LeftFootPosition,
-                                          FootAbsolutePosition &RightFootPosition, ZMPPosition &ZMPRefPos,
-                                          COMPosition &COMRefPos) = 0;
+  virtual bool
+  RunOneStepOfTheControlLoop(FootAbsolutePosition &LeftFootPosition,
+                             FootAbsolutePosition &RightFootPosition,
+                             ZMPPosition &ZMPRefPos,
+                             COMPosition &COMRefPos) = 0;
   /*! @} */
 
   /*! Set the current joint values of the robot.
@@ -199,7 +206,8 @@ class WALK_GEN_JRL_EXPORT PatternGeneratorInterface {
   virtual int GetWalkMode() const = 0;
 
   /*! \brief Get the leg joint velocity */
-  virtual void GetLegJointVelocity(Eigen::VectorXd &dqr, Eigen::VectorXd &dql) const = 0;
+  virtual void GetLegJointVelocity(Eigen::VectorXd &dqr,
+                                   Eigen::VectorXd &dql) const = 0;
 
   /*! \brief Read a sequence of steps. */
   virtual void ReadSequenceOfSteps(std::istringstream &strm) = 0;
@@ -235,7 +243,9 @@ class WALK_GEN_JRL_EXPORT PatternGeneratorInterface {
     related
     to an error, 0 otherwise.
   */
-  virtual int ChangeOnLineStep(double Time, FootAbsolutePosition &aFootAbsolutePosition, double &newtime) = 0;
+  virtual int ChangeOnLineStep(double Time,
+                               FootAbsolutePosition &aFootAbsolutePosition,
+                               double &newtime) = 0;
 
   /*! \brief Change online step.
     See the above method for the specifications.
@@ -253,13 +263,15 @@ class WALK_GEN_JRL_EXPORT PatternGeneratorInterface {
 
   /*! \brief Get the waist position and orientation as a quaternion,
     and the planar X-Y orientation in Orientation. */
-  virtual void getWaistPositionAndOrientation(double TQ[7], double &Orientation) const = 0;
+  virtual void getWaistPositionAndOrientation(double TQ[7],
+                                              double &Orientation) const = 0;
 
   /*! \brief Set Waist position and Orientation  */
   virtual void setWaistPositionAndOrientation(double TQ[7]) = 0;
 
   /*! \brief Get Waist velocity */
-  virtual void getWaistVelocity(double &dx, double &dy, double &omega) const = 0;
+  virtual void getWaistVelocity(double &dx, double &dy,
+                                double &omega) const = 0;
 
   /*! \brief An other method to get the waist position using a matrix. */
   virtual void getWaistPositionMatrix(Eigen::Matrix4d &lWaistAbsPos) const = 0;
@@ -285,10 +297,12 @@ class WALK_GEN_JRL_EXPORT PatternGeneratorInterface {
   /*! \brief Returns the ZMP, CoM, left foot absolute position, and
     right foot absolute position
     for the initiale pose.*/
-  virtual void EvaluateStartingState(COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
-                                     Eigen::Matrix<double, 6, 1> &lStartingWaistPose,
-                                     FootAbsolutePosition &InitLeftFootAbsPos,
-                                     FootAbsolutePosition &InitRightFootAbsPos) = 0;
+  virtual void
+  EvaluateStartingState(COMState &lStartingCOMState,
+                        Eigen::Vector3d &lStartingZMPPosition,
+                        Eigen::Matrix<double, 6, 1> &lStartingWaistPose,
+                        FootAbsolutePosition &InitLeftFootAbsPos,
+                        FootAbsolutePosition &InitRightFootAbsPos) = 0;
 
   /*! @} */
 
@@ -308,7 +322,8 @@ class WALK_GEN_JRL_EXPORT PatternGeneratorInterface {
 };
 
 /*! Factory of Pattern generator interface. */
-WALK_GEN_JRL_EXPORT PatternGeneratorInterface *patternGeneratorInterfaceFactory(PinocchioRobot *);
-}  // namespace PatternGeneratorJRL
+WALK_GEN_JRL_EXPORT PatternGeneratorInterface *
+patternGeneratorInterfaceFactory(PinocchioRobot *);
+} // namespace PatternGeneratorJRL
 
 #endif /* _PATTERN_GENERATOR_INTERFACE_H_ */

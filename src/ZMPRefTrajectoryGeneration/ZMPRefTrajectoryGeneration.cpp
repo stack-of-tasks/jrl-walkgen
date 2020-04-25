@@ -30,21 +30,19 @@
 
 using namespace PatternGeneratorJRL;
 
-ZMPRefTrajectoryGeneration::ZMPRefTrajectoryGeneration(SimplePluginManager *lSPM)
-    : SimplePlugin(lSPM),
-      m_Tsingle(0.),
-      m_Tdble(0.),
-      m_SamplingPeriod(0.),
-      m_ModulationSupportCoefficient(0.),
-      m_Omega(0.),
-      m_PreviewControlTime(0.),
-      m_StepHeight(0.),
-      m_CurrentTime(0.),
-      m_OnLineMode(false),
+ZMPRefTrajectoryGeneration::ZMPRefTrajectoryGeneration(
+    SimplePluginManager *lSPM)
+    : SimplePlugin(lSPM), m_Tsingle(0.), m_Tdble(0.), m_SamplingPeriod(0.),
+      m_ModulationSupportCoefficient(0.), m_Omega(0.), m_PreviewControlTime(0.),
+      m_StepHeight(0.), m_CurrentTime(0.), m_OnLineMode(false),
       m_ComHeight(0.) {
   ODEBUG("Identification: " << this);
-  std::string aMethodName[6] = {":omega",     ":stepheight",    ":singlesupporttime", ":doublesupporttime",
-                                ":comheight", ":samplingperiod"};
+  std::string aMethodName[6] = {":omega",
+                                ":stepheight",
+                                ":singlesupporttime",
+                                ":doublesupporttime",
+                                ":comheight",
+                                ":samplingperiod"};
 
   for (int i = 0; i < 6; i++) {
     if (!RegisterMethod(aMethodName[i])) {
@@ -55,7 +53,8 @@ ZMPRefTrajectoryGeneration::ZMPRefTrajectoryGeneration(SimplePluginManager *lSPM
   }
 }
 
-void ZMPRefTrajectoryGeneration::CallMethod(std::string &Method, std::istringstream &strm) {
+void ZMPRefTrajectoryGeneration::CallMethod(std::string &Method,
+                                            std::istringstream &strm) {
   ODEBUG("Calling me (" << this << ") with Method: " << Method);
   if (Method == ":omega") {
     strm >> m_Omega;

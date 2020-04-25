@@ -353,10 +353,12 @@ t_cmache_ cmache_;
 */
 #ifdef __STDC__
 
-int ql0002_(integer *n, integer *m, integer *meq, integer *mmax, integer *mn, integer *mnn, integer *nmax,
-            logical *lql, doublereal *a, doublereal *b, doublereal *grad, doublereal *g, doublereal *xl,
-            doublereal *xu, doublereal *x, integer *nact, integer *iact, integer *maxit, doublereal *vsmall,
-            integer *info, doublereal *diag, doublereal *w, integer *lw);
+int ql0002_(integer *n, integer *m, integer *meq, integer *mmax, integer *mn,
+            integer *mnn, integer *nmax, logical *lql, doublereal *a,
+            doublereal *b, doublereal *grad, doublereal *g, doublereal *xl,
+            doublereal *xu, doublereal *x, integer *nact, integer *iact,
+            integer *maxit, doublereal *vsmall, integer *info, doublereal *diag,
+            doublereal *w, integer *lw);
 #else
 int ql0002_();
 #endif
@@ -372,13 +374,14 @@ int ql0002_();
   compliance.
 */
 #ifdef __STDC__
-int ql0001_(int *m, int *me, int *mmax, int *n, int *nmax, int *mnn, double *c, double *d, double *a, double *b,
-            double *xl, double *xu, double *x, double *u, int * /* iout*/, int *ifail, int * /* iprint */, double *war,
-            int *lwar, int *iwar, int *liwar, double *eps1)
+int ql0001_(int *m, int *me, int *mmax, int *n, int *nmax, int *mnn, double *c,
+            double *d, double *a, double *b, double *xl, double *xu, double *x,
+            double *u, int * /* iout*/, int *ifail, int * /* iprint */,
+            double *war, int *lwar, int *iwar, int *liwar, double *eps1)
 #else
 /* Subroutine */
-int ql0001_(m, me, mmax, n, nmax, mnn, c, d, a, b, xl, xu, x, u, iout, ifail, iprint, war, lwar, iwar, liwar,
-            eps1) integer *m,
+int ql0001_(m, me, mmax, n, nmax, mnn, c, d, a, b, xl, xu, x, u, iout, ifail,
+            iprint, war, lwar, iwar, liwar, eps1) integer *m,
     *me, *mmax, *n, *nmax, *mnn;
 doublereal *c, *d, *a, *b, *xl, *xu, *x, *u;
 integer *iout, *ifail, *iprint;
@@ -475,8 +478,9 @@ L20:
 
   /*     CALL OF QL0002 */
 
-  ql0002_(n, m, me, mmax, &mn, mnn, nmax, &lql, &a[a_offset], &war[inw1], &d[1], &c[c_offset], &xl[1], &xu[1], &x[1],
-          &nact, &iwar[1], &maxit, &qpeps, &info, &diag, &war[inw2], &lw);
+  ql0002_(n, m, me, mmax, &mn, mnn, nmax, &lql, &a[a_offset], &war[inw1], &d[1],
+          &c[c_offset], &xl[1], &xu[1], &x[1], &nact, &iwar[1], &maxit, &qpeps,
+          &info, &diag, &war[inw2], &lw);
 
   /*     TEST OF MATRIX CORRECTIONS */
 
@@ -591,14 +595,16 @@ L90:
    (Thanks got to Martin Wauchope for providing this correction)
 */
 #ifdef __STDC__
-int ql0002_(integer *n, integer *m, integer *meq, integer *mmax, integer *mn, integer * /* mnn */, integer *nmax,
-            logical *lql, doublereal *a, doublereal *b, doublereal *grad, doublereal *g, doublereal *xl,
-            doublereal *xu, doublereal *x, integer *nact, integer *iact, integer *maxit, doublereal *vsmall,
-            integer *info, doublereal *diag, doublereal *w, integer * /* lw */)
+int ql0002_(integer *n, integer *m, integer *meq, integer *mmax, integer *mn,
+            integer * /* mnn */, integer *nmax, logical *lql, doublereal *a,
+            doublereal *b, doublereal *grad, doublereal *g, doublereal *xl,
+            doublereal *xu, doublereal *x, integer *nact, integer *iact,
+            integer *maxit, doublereal *vsmall, integer *info, doublereal *diag,
+            doublereal *w, integer * /* lw */)
 #else
 /* Subroutine */
-int ql0002_(n, m, meq, mmax, mn, mnn, nmax, lql, a, b, grad, g, xl, xu, x, nact, iact, maxit, vsmall, info, diag, w,
-            lw) integer *n,
+int ql0002_(n, m, meq, mmax, mn, mnn, nmax, lql, a, b, grad, g, xl, xu, x, nact,
+            iact, maxit, vsmall, info, diag, w, lw) integer *n,
     *m, *meq, *mmax, *mn, *mnn, *nmax;
 logical *lql;
 doublereal *a, *b, *grad, *g, *xl, *xu, *x;
@@ -789,7 +795,8 @@ L45:
       /* Computing MIN */
       d__1 = w[id], d__2 = g[j + j * g_dim1];
       ga = -min(d__1, d__2);
-      gb = (d__1 = w[id] - g[j + j * g_dim1], abs(d__1)) + (d__2 = g[i + j * g_dim1], abs(d__2));
+      gb = (d__1 = w[id] - g[j + j * g_dim1], abs(d__1)) +
+           (d__2 = g[i + j * g_dim1], abs(d__2));
       if (gb > zero) {
         /* Computing 2nd power */
         d__1 = g[i + j * g_dim1];
@@ -1830,10 +1837,10 @@ L775:
   }
 L791:
   switch ((int)lflag) {
-    case 1:
-      goto L580;
-    case 2:
-      goto L650;
+  case 1:
+    goto L580;
+  case 2:
+    goto L650;
   }
 
   /* ******************************************************************** */
@@ -1917,10 +1924,10 @@ L810:
 L850:
   --(*nact);
   switch ((int)mflag) {
-    case 1:
-      goto L250;
-    case 2:
-      goto L610;
+  case 1:
+    goto L250;
+  case 2:
+    goto L610;
   }
 
   /* ******************************************************************** */
@@ -1964,10 +1971,10 @@ L880:
   goto L880;
 L900:
   switch ((int)nflag) {
-    case 1:
-      goto L560;
-    case 2:
-      goto L630;
+  case 1:
+    goto L560;
+  case 2:
+    goto L630;
   }
 
   /* ******************************************************************** */
@@ -1979,7 +1986,8 @@ L910:
   i__2 = *n;
   for (i = 1; i <= i__2; ++i) {
     sum += (d__1 = x[i], abs(d__1)) * vfact *
-           ((d__2 = grad[i], abs(d__2)) + (d__3 = g[i + i * g_dim1] * x[i], abs(d__3)));
+           ((d__2 = grad[i], abs(d__2)) +
+            (d__3 = g[i + i * g_dim1] * x[i], abs(d__3)));
     if (*lql) {
       goto L920;
     }
@@ -1994,10 +2002,10 @@ L910:
   /* L925: */
   xmag = max(xmag, sum);
   switch ((int)jflag) {
-    case 1:
-      goto L420;
-    case 2:
-      goto L690;
+  case 1:
+    goto L420;
+  case 2:
+    goto L690;
   }
 
   /* ******************************************************************** */
@@ -2020,10 +2028,10 @@ L930:
     }
   }
   switch ((int)kflag) {
-    case 1:
-      goto L350;
-    case 2:
-      goto L550;
+  case 1:
+    goto L350;
+  case 2:
+    goto L550;
   }
   return 0;
 } /* ql0002_ */

@@ -37,7 +37,7 @@ using namespace ::PatternGeneratorJRL::TestSuite;
 using namespace std;
 
 class TestInverseKinematics : public TestObject {
- private:
+private:
   DynamicFilter *dynamicfilter_;
   SimplePluginManager *SPM_;
   double dInitX, dInitY;
@@ -51,8 +51,9 @@ class TestInverseKinematics : public TestObject {
 
   vector<ZMPPosition> zmp;
 
- public:
-  TestInverseKinematics(int argc, char *argv[], string &aString) : TestObject(argc, argv, aString) {
+public:
+  TestInverseKinematics(int argc, char *argv[], string &aString)
+      : TestObject(argc, argv, aString) {
     SPM_ = NULL;
     dynamicfilter_ = NULL;
     once = true;
@@ -72,7 +73,8 @@ class TestInverseKinematics : public TestObject {
     m_DebugHDR = 0;
   }
 
-  typedef void (TestInverseKinematics::*localeventHandler_t)(PatternGeneratorInterface &);
+  typedef void (TestInverseKinematics::*localeventHandler_t)(
+      PatternGeneratorInterface &);
 
   struct localEvent {
     unsigned time;
@@ -80,25 +82,30 @@ class TestInverseKinematics : public TestObject {
   };
 
   bool doTest(ostream &os) {
-    os << "<===============================================================>" << endl;
+    os << "<===============================================================>"
+       << endl;
     os << "Reading data ..." << endl;
 
     readData();
 
-    os << "<===============================================================>" << endl;
+    os << "<===============================================================>"
+       << endl;
     os << "Initialization ..." << endl;
 
     int stage0 = 0;
     int stage1 = 1;
     double samplingPeriod = 0.005;
-    dynamicfilter_->init(samplingPeriod, samplingPeriod, (double)(comPos.size() - 320) * samplingPeriod, 16, 1.6,
-                         comPos[0]);
+    dynamicfilter_->init(samplingPeriod, samplingPeriod,
+                         (double)(comPos.size() - 320) * samplingPeriod, 16,
+                         1.6, comPos[0]);
 
-    os << "<===============================================================>" << endl;
+    os << "<===============================================================>"
+       << endl;
     os << "Computing the ZMPMB" << endl;
-    vector<vector<double>> zmpmb(comPos.size(), vector<double>(2));
+    vector<vector<double> > zmpmb(comPos.size(), vector<double>(2));
     for (unsigned int i = 0; i < comPos.size(); ++i) {
-      dynamicfilter_->ComputeZMPMB(samplingPeriod, comPos[i], lfFoot[i], rfFoot[i], zmpmb[i], stage0, i);
+      dynamicfilter_->ComputeZMPMB(samplingPeriod, comPos[i], lfFoot[i],
+                                   rfFoot[i], zmpmb[i], stage0, i);
     }
 
     deque<ZMPPosition> inputdeltaZMP_deq(comPos.size());
@@ -121,11 +128,13 @@ class TestInverseKinematics : public TestObject {
       }
     }
 
-    os << "<===============================================================>" << endl;
+    os << "<===============================================================>"
+       << endl;
     os << "Checking the inverse kinematics algorithm" << endl;
     for (unsigned int i = 0; i < comPos.size() - 320; ++i) {
-      dynamicfilter_->InverseKinematics(comPos[i], lfFoot[i], rfFoot[i], m_CurrentConfiguration, m_CurrentVelocity,
-                                        m_CurrentAcceleration, samplingPeriod, stage1, i);
+      dynamicfilter_->InverseKinematics(
+          comPos[i], lfFoot[i], rfFoot[i], m_CurrentConfiguration,
+          m_CurrentVelocity, m_CurrentAcceleration, samplingPeriod, stage1, i);
       m_OneStep.finalCOMPosition = comPos[i];
 
       m_OneStep.ZMPTarget(0) = zmp[i].px;
@@ -148,17 +157,20 @@ class TestInverseKinematics : public TestObject {
       std::ifstream file(RobotFileName.c_str());
       fileExist = !file.fail();
     }
-    if (!fileExist) throw std::string("failed to open robot model");
+    if (!fileExist)
+      throw std::string("failed to open robot model");
 
     // Creating the humanoid robot.
     SpecializedRobotConstructor(m_HDR);
     if (m_HDR == 0) {
-      if (m_HDR != 0) delete m_HDR;
+      if (m_HDR != 0)
+        delete m_HDR;
       dynamicsJRLJapan::ObjectFactory aRobotDynamicsObjectConstructor;
       m_HDR = aRobotDynamicsObjectConstructor.createHumanoidDynamicRobot();
     }
     // Parsing the file.
-    dynamicsJRLJapan::parseOpenHRPVRMLFile(*m_HDR, RobotFileName, m_LinkJointRank, m_SpecificitiesFileName);
+    dynamicsJRLJapan::parseOpenHRPVRMLFile(
+        *m_HDR, RobotFileName, m_LinkJointRank, m_SpecificitiesFileName);
     // Create Pattern Generator Interface
     m_PGI = patternGeneratorInterfaceFactory(m_HDR);
 
@@ -167,7 +179,8 @@ class TestInverseKinematics : public TestObject {
     ifstream aif;
     aif.open(m_InitConfig.c_str(), ifstream::in);
     if (aif.is_open()) {
-      for (unsigned int i = 0; i < lNbActuatedJoints; i++) aif >> dInitPos[i];
+      for (unsigned int i = 0; i < lNbActuatedJoints; i++)
+        aif >> dInitPos[i];
     }
     aif.close();
 
@@ -189,7 +202,8 @@ class TestInverseKinematics : public TestObject {
       for (unsigned int i = 0; i < MAL_VECTOR_SIZE(InitialPosition); i++)
         InitialPosition(i) = dInitPos[i] * M_PI / 180.0;
     else
-      for (unsigned int i = 0; i < MAL_VECTOR_SIZE(InitialPosition); i++) InitialPosition(i) = dInitPos[i];
+      for (unsigned int i = 0; i < MAL_VECTOR_SIZE(InitialPosition); i++)
+        InitialPosition(i) = dInitPos[i];
 
     // This is a vector corresponding to ALL the DOFS of the robot:
     // free flyer + actuated DOFS.
@@ -201,7 +215,8 @@ class TestInverseKinematics : public TestObject {
     MAL_VECTOR_DIM(PreviousVelocity, double, lNbDofs);
     MAL_VECTOR_DIM(PreviousAcceleration, double, lNbDofs);
     for (int i = 0; i < 6; i++) {
-      PreviousConfiguration[i] = PreviousVelocity[i] = PreviousAcceleration[i] = 0.0;
+      PreviousConfiguration[i] = PreviousVelocity[i] = PreviousAcceleration[i] =
+          0.0;
     }
 
     for (unsigned int i = 6; i < lNbDofs; i++) {
@@ -229,20 +244,23 @@ class TestInverseKinematics : public TestObject {
       supportFoot = m_OneStep.RightFootPosition;
     }
     double samplingPeriod = 0.005;
-    dynamicfilter_->init(samplingPeriod, samplingPeriod, 0.1, 16, 1.6, m_OneStep.finalCOMPosition);
+    dynamicfilter_->init(samplingPeriod, samplingPeriod, 0.1, 16, 1.6,
+                         m_OneStep.finalCOMPosition);
     initIK();
     MAL_VECTOR_TYPE(double) UpperConfig = m_HDR->currentConfiguration();
     MAL_VECTOR_TYPE(double) UpperVel = m_HDR->currentVelocity();
     MAL_VECTOR_TYPE(double) UpperAcc = m_HDR->currentAcceleration();
     dynamicfilter_->setRobotUpperPart(UpperConfig, UpperVel, UpperAcc);
-    dynamicfilter_->InverseKinematics(m_OneStep.finalCOMPosition, m_OneStep.LeftFootPosition,
-                                      m_OneStep.RightFootPosition, m_CurrentConfiguration, m_CurrentVelocity,
-                                      m_CurrentAcceleration, 0.005, 1, 0);
+    dynamicfilter_->InverseKinematics(
+        m_OneStep.finalCOMPosition, m_OneStep.LeftFootPosition,
+        m_OneStep.RightFootPosition, m_CurrentConfiguration, m_CurrentVelocity,
+        m_CurrentAcceleration, 0.005, 1, 0);
   }
 
- protected:
+protected:
   int readData() {
-    std::string dataPath = "/home/mnaveau/devel/ros_sot/src/jrl/jrl-walkgen/tests/";
+    std::string dataPath =
+        "/home/mnaveau/devel/ros_sot/src/jrl/jrl-walkgen/tests/";
     std::string dataFile = dataPath + "NMPCpython.csv";
     std::ifstream dataStream;
     dataStream.open(dataFile.c_str(), std::ifstream::in);
@@ -330,7 +348,8 @@ class TestInverseKinematics : public TestObject {
 
 #ifdef WITH_HRP2DYNAMICS
     dynamicsJRLJapan::ObjectFactory aRobotDynamicsObjectConstructor;
-    Chrp2OptHumanoidDynamicRobot *aHRP2HDR = new Chrp2OptHumanoidDynamicRobot(&aRobotDynamicsObjectConstructor);
+    Chrp2OptHumanoidDynamicRobot *aHRP2HDR =
+        new Chrp2OptHumanoidDynamicRobot(&aRobotDynamicsObjectConstructor);
     aHDR = aHRP2HDR;
 #endif
   }
@@ -346,12 +365,14 @@ class TestInverseKinematics : public TestObject {
     }
     MAL_S3_VECTOR(lStartingCOMState, double);
     double samplingPeriod = 0.005;
-    ComAndFootRealizationByGeometry *CaFR = dynamicfilter_->getComAndFootRealization();
+    ComAndFootRealizationByGeometry *CaFR =
+        dynamicfilter_->getComAndFootRealization();
     CaFR->SetHeightOfTheCoM(0.814);
     CaFR->setSamplingPeriod(samplingPeriod);
     CaFR->SetStepStackHandler(new StepStackHandler(SPM_));
     CaFR->Initialization();
-    CaFR->InitializationCoM(BodyAngles, lStartingCOMState, waist, m_OneStep.LeftFootPosition,
+    CaFR->InitializationCoM(BodyAngles, lStartingCOMState, waist,
+                            m_OneStep.LeftFootPosition,
                             m_OneStep.RightFootPosition);
     CaFR->Initialization();
     CaFR->SetPreviousConfigurationStage0(m_HDR->currentConfiguration());
@@ -455,7 +476,8 @@ class TestInverseKinematics : public TestObject {
   //  }
 
   double filterprecision(double adb) {
-    if (fabs(adb) < 1e-7) return 0.0;
+    if (fabs(adb) < 1e-7)
+      return 0.0;
 
     double ladb2 = adb * 1e7;
     double lintadb2 = trunc(ladb2);

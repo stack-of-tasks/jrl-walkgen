@@ -48,7 +48,7 @@ class StepOverPlanner;
   the ZMP reference trajectory generator object.
 */
 class StepStackHandler : public SimplePlugin {
- public:
+public:
   /*! \brief Constructor */
   StepStackHandler(SimplePluginManager *lSPM);
 
@@ -106,7 +106,9 @@ class StepStackHandler : public SimplePlugin {
     \param[in] PerformClean Reset the stack if PerformClean is true,
     otherwise does nothing.
   */
-  void CopyRelativeFootPosition(std::deque<RelativeFootPosition> &lRelativeFootPositions, bool PerformClean);
+  void CopyRelativeFootPosition(
+      std::deque<RelativeFootPosition> &lRelativeFootPositions,
+      bool PerformClean);
 
   /*! \name Method related to online stepping.
     @{
@@ -119,7 +121,8 @@ class StepStackHandler : public SimplePlugin {
   void StopOnLineStep();
 
   /*! \brief Add a standard step on the stack. */
-  void AddStandardOnLineStep(bool NewStep, double NewStepX, double NewStepY, double Theta);
+  void AddStandardOnLineStep(bool NewStep, double NewStepX, double NewStepY,
+                             double Theta);
 
   /*! \brief Returns current state for on line stepping. */
   bool IsOnLineSteppingOn();
@@ -134,9 +137,11 @@ class StepStackHandler : public SimplePlugin {
   bool RemoveFirstStepInTheStack();
 
   /*! \brief Add a step in the stack. */
-  void AddStepInTheStack(double sx, double sy, double theta, double sstime, double dstime);
+  void AddStepInTheStack(double sx, double sy, double theta, double sstime,
+                         double dstime);
 
-  void AddStepStairInTheStack(double sx, double sy, double sz, double theta, double sstime, double dstime);
+  void AddStepStairInTheStack(double sx, double sy, double sz, double theta,
+                              double sstime, double dstime);
 
   /*! \brief Push a step in front of the stack. */
   void PushFrontAStepInTheStack(RelativeFootPosition &aRFP);
@@ -166,7 +171,8 @@ class StepStackHandler : public SimplePlugin {
     by SupportFoot. The direction of the robot is tangent
     to the arc centered in x and y.
   */
-  void CreateArcInStepStack(double x, double y, double R, double arc_deg, int SupportFoot);
+  void CreateArcInStepStack(double x, double y, double R, double arc_deg,
+                            int SupportFoot);
   /*! @} */
 
   /*! \brief Handling methods for the plugin mecanism.
@@ -175,7 +181,7 @@ class StepStackHandler : public SimplePlugin {
   */
   virtual void CallMethod(std::string &Method, std::istringstream &strm);
 
- protected:
+protected:
   /*! Vector of relative foot position. */
   std::deque<RelativeFootPosition> m_RelativeFootPositions;
 
@@ -201,6 +207,6 @@ class StepStackHandler : public SimplePlugin {
   bool m_TransitionFinishOnLine;
 };
 
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 #include <MotionGeneration/StepOverPlanner.hh>
 #endif /* _FOOT_PRINT_H_*/

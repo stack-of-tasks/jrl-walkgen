@@ -40,7 +40,7 @@ namespace PatternGeneratorJRL {
 
 /** Class for computing trajectories */
 class Polynome {
- public:
+public:
   /*! Constructor */
   Polynome(int Degree);
 
@@ -70,12 +70,12 @@ class Polynome {
   /*! Print the coefficient. */
   void print() const;
 
- protected:
+protected:
   /// Degree of the polynome
   int m_Degree;
 
   /// Vector of coefficients.
   std::vector<double> m_Coefficients;
 };
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 #endif /* _POLYNOME_H_*/

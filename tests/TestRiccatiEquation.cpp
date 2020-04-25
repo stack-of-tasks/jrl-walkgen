@@ -84,7 +84,8 @@ bool compareDebugFiles(string fileName) {
         break;
       }
     }
-    if (endofinspection) break;
+    if (endofinspection)
+      break;
 
     for (unsigned int i = 0; i < NB_OF_FIELDS; i++) {
       arif >> ReferenceInput[i];
@@ -93,14 +94,15 @@ bool compareDebugFiles(string fileName) {
         break;
       }
     }
-    if (endofinspection) break;
+    if (endofinspection)
+      break;
 
     for (unsigned int i = 0; i < NB_OF_FIELDS; i++) {
       if (fabs(LocalInput[i] - ReferenceInput[i]) >= 1e-6) {
         finalreport = false;
         ostringstream oss;
-        oss << "l: " << nblines << " col:" << i << " ref: " << ReferenceInput[i] << " now: " << LocalInput[i] << " "
-            << nb_of_pbs << std::endl;
+        oss << "l: " << nblines << " col:" << i << " ref: " << ReferenceInput[i]
+            << " now: " << LocalInput[i] << " " << nb_of_pbs << std::endl;
         areportof << oss.str();
         std::cout << oss.str();
         nb_of_pbs++;
@@ -178,7 +180,8 @@ int main() {
   for (int i = 0; i < 3; i++) {
     Ax(0, i + 1) = tmpA(0, i);
     Ax(i + 1, 0) = 0.;
-    for (int j = 0; j < 3; j++) Ax(i + 1, j + 1) = A(i, j);
+    for (int j = 0; j < 3; j++)
+      Ax(i + 1, j + 1) = A(i, j);
   }
   cout << "Ax: " << endl << Ax << endl;
 
@@ -196,9 +199,11 @@ int main() {
   cx(0, 3) = 0.0;
   cout << "cx: " << endl << cx << endl;
 
-  anOCS = new PatternGeneratorJRL::OptimalControllerSolver(Ax, bx, cx, Q, R, Nl);
+  anOCS =
+      new PatternGeneratorJRL::OptimalControllerSolver(Ax, bx, cx, Q, R, Nl);
 
-  anOCS->ComputeWeights(PatternGeneratorJRL::OptimalControllerSolver::MODE_WITHOUT_INITIALPOS);
+  anOCS->ComputeWeights(
+      PatternGeneratorJRL::OptimalControllerSolver::MODE_WITHOUT_INITIALPOS);
   anOCS->DisplayWeights();
   anOCS->GetF(lF);
   anOCS->GetK(lK);
@@ -211,7 +216,8 @@ int main() {
     aof << lF(li, 0) << endl;
   }
   aof.close();
-  bool sameFile = compareDebugFiles("TestRiccatiEquationWeightsWithoutInitialPose.dat");
+  bool sameFile =
+      compareDebugFiles("TestRiccatiEquationWeightsWithoutInitialPose.dat");
   delete anOCS;
 
   // Build the initial discrete system
@@ -248,7 +254,8 @@ int main() {
   cout << "Nl: " << Nl << endl;
   anOCS = new PatternGeneratorJRL::OptimalControllerSolver(A, b, c, Q, R, Nl);
 
-  anOCS->ComputeWeights(PatternGeneratorJRL::OptimalControllerSolver::MODE_WITH_INITIALPOS);
+  anOCS->ComputeWeights(
+      PatternGeneratorJRL::OptimalControllerSolver::MODE_WITH_INITIALPOS);
 
   anOCS->DisplayWeights();
 
@@ -264,7 +271,8 @@ int main() {
   }
   aof.close();
 
-  bool sameFile2 = compareDebugFiles("TestRiccatiEquationWeightsWithInitialPose.dat");
+  bool sameFile2 =
+      compareDebugFiles("TestRiccatiEquationWeightsWithInitialPose.dat");
   delete anOCS;
 
   if (sameFile && sameFile2) {

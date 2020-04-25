@@ -34,15 +34,15 @@ namespace PatternGeneratorJRL {
 /// \param[in] array
 /// \param[in] old_size
 /// \param[in] new_size
-template <typename type>
-int resize(type *&array, int old_size, int new_size) {
+template <typename type> int resize(type *&array, int old_size, int new_size) {
   try {
     type *NewArray = new type[new_size];
     initialize(NewArray, new_size, (type)0);
     for (int i = 0; i < old_size; i++) {
       NewArray[i] = array[i];
     }
-    if (array != 0) delete[] array;
+    if (array != 0)
+      delete[] array;
     array = NewArray;
   } catch (std::bad_alloc &ba) {
     std::cerr << "bad_alloc caught: " << ba.what() << std::endl;
@@ -50,6 +50,6 @@ int resize(type *&array, int old_size, int new_size) {
   return 0;
 }
 
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 
 #endif /* _QP_PROBLEM_HXX_ */

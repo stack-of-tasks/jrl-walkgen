@@ -52,7 +52,8 @@ SimplePluginManager::~SimplePluginManager() {
 }
 
 void SimplePluginManager::UnregisterPlugin(SimplePlugin *aSimplePlugin) {
-  std::multimap<std::string, SimplePlugin *, ltstr>::iterator it_SP, it_ToBeRemoved;
+  std::multimap<std::string, SimplePlugin *, ltstr>::iterator it_SP,
+      it_ToBeRemoved;
 
   it_SP = m_SimplePlugins.begin();
   while (it_SP != m_SimplePlugins.end()) {
@@ -78,13 +79,15 @@ void SimplePluginManager::Print() {
 
 /*! \name Register the method for which this object can be called
   by a higher parser. */
-bool SimplePluginManager::RegisterMethod(string &MethodName, SimplePlugin *aSP) {
+bool SimplePluginManager::RegisterMethod(string &MethodName,
+                                         SimplePlugin *aSP) {
   /* We have to copy the name, because we don't know
      how is handle the memory towards MethodName.c_str() */
 
   m_SimplePlugins.insert(pair<string, SimplePlugin *>(MethodName, aSP));
 
-  ODEBUG5("Registered method " << MethodName << " for plugin " << aSP << endl, "PgDebug.txt");
+  ODEBUG5("Registered method " << MethodName << " for plugin " << aSP << endl,
+          "PgDebug.txt");
   //  Print();
   return true;
 }
@@ -98,10 +101,12 @@ bool SimplePluginManager::CallMethod(string &MethodName, istringstream &istrm) {
   std::multimap<std::string, SimplePlugin *, ltstr>::iterator CurrentPlugin;
 
   unsigned int NbPlugins = 0;
-  for (CurrentPlugin = RangeOfPlugins.first; CurrentPlugin != RangeOfPlugins.second; ++NbPlugins, ++CurrentPlugin)
+  for (CurrentPlugin = RangeOfPlugins.first;
+       CurrentPlugin != RangeOfPlugins.second; ++NbPlugins, ++CurrentPlugin)
     ;
 
-  ODEBUG5("Size of SimplePlugins: " << m_SimplePlugins.size() << " Found for " << MethodName << " : " << NbPlugins,
+  ODEBUG5("Size of SimplePlugins: " << m_SimplePlugins.size() << " Found for "
+                                    << MethodName << " : " << NbPlugins,
           "PgDebug.txt");
   bool FoundAPlugin = false;
 
@@ -113,12 +118,14 @@ bool SimplePluginManager::CallMethod(string &MethodName, istringstream &istrm) {
   assert(size < 65635);
 
   memset(aBuffer, 0, size + 1);
-  for (int i = 0; i < size; i++) aBuffer[i] = (char)pbuf->sbumpc();
+  for (int i = 0; i < size; i++)
+    aBuffer[i] = (char)pbuf->sbumpc();
   ODEBUG5(aBuffer, "PgDebug.txt");
 
   pbuf->pubsetbuf(aBuffer, size);
 
-  for (CurrentPlugin = RangeOfPlugins.first; CurrentPlugin != RangeOfPlugins.second; ++CurrentPlugin) {
+  for (CurrentPlugin = RangeOfPlugins.first;
+       CurrentPlugin != RangeOfPlugins.second; ++CurrentPlugin) {
     istringstream iss(aBuffer);
     SimplePlugin *aSP = CurrentPlugin->second;
     ODEBUG5("Found the method " << MethodName << " for plugin :" << aSP << endl

@@ -29,5 +29,5 @@
 #define bzero(p, size) (void)memset((p), 0, (size))
 #else
 #include <strings.h>
-#endif  //! WIN32
-#endif  //! JRL_WALKGEN_PORTABILITY_BZERO_HH
+#endif //! WIN32
+#endif //! JRL_WALKGEN_PORTABILITY_BZERO_HH

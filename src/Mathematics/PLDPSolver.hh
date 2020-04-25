@@ -41,26 +41,31 @@ namespace Solver {
   following optimal problem:
  */
 class PLDPSolver {
- public:
+public:
   /*! \brief Constructor */
-  PLDPSolver(unsigned int CardU, double *iPu, double *Px, double *Pu, double *iLQ);
+  PLDPSolver(unsigned int CardU, double *iPu, double *Px, double *Pu,
+             double *iLQ);
 
   /*! \brief Destructor */
   ~PLDPSolver();
 
   /*! \brief Solve the optimization problem
    */
-  int SolveProblem(double *CstPartOfTheCostFunction, unsigned int NbOfConstraints, double *LinearPartOfConstraints,
-                   double *CstPartOfConstraints, double *ZMPRef, double *XkYk, double *X,
-                   std::vector<int> &SimilarConstraint, unsigned int NumberOfRemovedConstraints,
+  int SolveProblem(double *CstPartOfTheCostFunction,
+                   unsigned int NbOfConstraints,
+                   double *LinearPartOfConstraints,
+                   double *CstPartOfConstraints, double *ZMPRef, double *XkYk,
+                   double *X, std::vector<int> &SimilarConstraint,
+                   unsigned int NumberOfRemovedConstraints,
                    bool StartingSequence);
 
- protected:
+protected:
   /*! \name Initial solution methods related
     @{
   */
   /*! Compute the initial solution */
-  int ComputeInitialSolution(double *ZMPRef, double *XkYk, bool StartingSequence);
+  int ComputeInitialSolution(double *ZMPRef, double *XkYk,
+                             bool StartingSequence);
 
   /*! Precompite iPuPx */
   int PrecomputeiPuPx();
@@ -99,7 +104,8 @@ class PLDPSolver {
   /*! @} */
 
   /*! Detecting violated constraints */
-  double ComputeAlpha(vector<unsigned int> &NewActivatedConstraints, vector<int> &SimilarConstraint);
+  double ComputeAlpha(vector<unsigned int> &NewActivatedConstraints,
+                      vector<int> &SimilarConstraint);
 
   /*! Store the current ZMP solution for hot start purposes. */
   void StoreCurrentZMPSolution(double *XkYk);
@@ -111,7 +117,7 @@ class PLDPSolver {
   /*! \name Methods related to a limited amount of computational time
     @{ */
 
- private:
+private:
   /*! \brief Store Pu */
   double *m_Pu;
 
@@ -214,6 +220,6 @@ class PLDPSolver {
 
   /*! @} */
 };
-}  // namespace Solver
-}  // namespace Optimization
+} // namespace Solver
+} // namespace Optimization
 #endif /* _PLDPSOLVER_H_*/

@@ -51,7 +51,7 @@ typedef struct s_KWNode {
   a proper motion for the walking pattern generator.
 */
 class GenerateMotionFromKineoWorks {
- public:
+public:
   /*! Constructor */
   GenerateMotionFromKineoWorks();
 
@@ -94,10 +94,11 @@ class GenerateMotionFromKineoWorks {
     path and the COM buffer. The main strategy is to find points inside
     the COM buffer which are the closest to the KWs' way points.
     The value between two found points are linearly interpolated. */
-  void ComputeUpperBodyPosition(deque<KWNode> &UpperBodyPositionsBuffer,
-                                std::vector<int> &ConversionFromLocalToRobotDOFsIndex);
+  void ComputeUpperBodyPosition(
+      deque<KWNode> &UpperBodyPositionsBuffer,
+      std::vector<int> &ConversionFromLocalToRobotDOFsIndex);
 
- protected:
+protected:
   /*! Number of DOFs inside the path provided by KineoWorks. */
   int m_NbOfDOFsFromKW;
 
@@ -132,5 +133,5 @@ class GenerateMotionFromKineoWorks {
   unsigned int m_NL;
 };
 
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 #endif /* _GENERATE_MOTION_FROM_KINEOWORKS_H_ */

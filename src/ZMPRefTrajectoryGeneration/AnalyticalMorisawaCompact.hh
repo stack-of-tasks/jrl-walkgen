@@ -86,7 +86,7 @@ typedef struct {
   @ingroup analyticalformulation
 */
 class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
- public:
+public:
   /*! \name Constants to handle errors
     when changing foot steps.
     @{ */
@@ -154,13 +154,14 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
     @param[in] InitRightFootAbsolutePosition: The initial position
     of the right foot.
   */
-  void GetZMPDiscretization(deque<ZMPPosition> &ZMPPositions, deque<COMState> &CoMStates,
-                            deque<RelativeFootPosition> &RelativeFootPositions,
-                            deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-                            deque<FootAbsolutePosition> &RightFootAbsolutePositions, double Xmax,
-                            COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
-                            FootAbsolutePosition &InitLeftFootAbsolutePosition,
-                            FootAbsolutePosition &InitRightFootAbsolutePosition);
+  void GetZMPDiscretization(
+      deque<ZMPPosition> &ZMPPositions, deque<COMState> &CoMStates,
+      deque<RelativeFootPosition> &RelativeFootPositions,
+      deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+      deque<FootAbsolutePosition> &RightFootAbsolutePositions, double Xmax,
+      COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
+      FootAbsolutePosition &InitLeftFootAbsolutePosition,
+      FootAbsolutePosition &InitRightFootAbsolutePosition);
 
   /*! \brief Methods for on-line generation.
     The queues will be updated as follows:
@@ -191,13 +192,15 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
     @param[in] lStartingZMPPosition:
     The initial position of the ZMP given as a 3D vector.
   */
-  std::size_t InitOnLine(deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
-                         deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-                         deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
-                         FootAbsolutePosition &InitLeftFootAbsolutePosition,
-                         FootAbsolutePosition &InitRightFootAbsolutePosition,
-                         deque<RelativeFootPosition> &RelativeFootPositions, COMState &lStartingCOMState,
-                         Eigen::Vector3d &lStartingZMPPosition);
+  std::size_t
+  InitOnLine(deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
+             deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+             deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
+             FootAbsolutePosition &InitLeftFootAbsolutePosition,
+             FootAbsolutePosition &InitRightFootAbsolutePosition,
+             deque<RelativeFootPosition> &RelativeFootPositions,
+             COMState &lStartingCOMState,
+             Eigen::Vector3d &lStartingZMPPosition);
 
   /* ! \brief Methods to update the stack on-line by inserting a
      new foot position.
@@ -218,30 +221,39 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
      @param[in] EndSequence: Inherited from abstract interface and unused.
 
   */
-  void OnLineAddFoot(RelativeFootPosition &NewRelativeFootPosition, deque<ZMPPosition> &FinalZMPPositions,
-                     deque<COMState> &CoMStates, deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-                     deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions, bool EndSequence);
+  void
+  OnLineAddFoot(RelativeFootPosition &NewRelativeFootPosition,
+                deque<ZMPPosition> &FinalZMPPositions,
+                deque<COMState> &CoMStates,
+                deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+                deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
+                bool EndSequence);
 
   /* ! \brief Method to update the stacks on-line */
-  void OnLine(double time, deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
+  void OnLine(double time, deque<ZMPPosition> &FinalZMPPositions,
+              deque<COMState> &CoMStates,
               deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
               deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions);
 
   /* ! \brief Method to change on line the landing position of a foot.
      @return If the method failed it returns -1, 0 otherwise.
   */
-  int OnLineFootChange(double time, FootAbsolutePosition &aFootPosition, deque<ZMPPosition> &FinalZMPPositions,
-                       deque<COMState> &CoMStates, deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-                       deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
-                       StepStackHandler *aStepStackHandler = 0);
+  int OnLineFootChange(
+      double time, FootAbsolutePosition &aFootPosition,
+      deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
+      deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+      deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
+      StepStackHandler *aStepStackHandler = 0);
 
   /* ! \brief Method to change on line the landing position of several feet.
      @return If the method failed it returns -1, 0 otherwise.
   */
-  int OnLineFootChanges(double time, deque<FootAbsolutePosition> &FeetPosition, deque<ZMPPosition> &FinalZMPPositions,
-                        deque<COMState> &CoMStates, deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-                        deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
-                        StepStackHandler *aStepStackHandler = 0);
+  int OnLineFootChanges(
+      double time, deque<FootAbsolutePosition> &FeetPosition,
+      deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
+      deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+      deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
+      StepStackHandler *aStepStackHandler = 0);
 
   /*! \brief Method to stop walking.
     @param[out] ZMPPositions: The queue of ZMP reference positions.
@@ -251,9 +263,11 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
     @param[out] RightFootAbsolutePositions: The queue of right foot
     absolute positions.
   */
-  void EndPhaseOfTheWalking(deque<ZMPPosition> &ZMPPositions, deque<COMState> &FinalCOMStates,
-                            deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-                            deque<FootAbsolutePosition> &RightFootAbsolutePositions);
+  void
+  EndPhaseOfTheWalking(deque<ZMPPosition> &ZMPPositions,
+                       deque<COMState> &FinalCOMStates,
+                       deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+                       deque<FootAbsolutePosition> &RightFootAbsolutePositions);
 
   /*! \brief Return the time at which it is optimal to regenerate
     a step in online mode.
@@ -273,7 +287,8 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
     @param[in] lZMPZ: Profile of the ZMP's height trajectory
     for each interval.
   */
-  void BuildingTheZMatrix(std::vector<double> &lCoMZ, std::vector<double> &lZMPZ);
+  void BuildingTheZMatrix(std::vector<double> &lCoMZ,
+                          std::vector<double> &lZMPZ);
 
   /*! \brief Building the Z matrix to be inverted. */
   void BuildingTheZMatrix();
@@ -294,7 +309,8 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
     to compute appropriatly the coefficients of \f[ w \f].
 
   */
-  void ComputeW(double InitialCoMPos, double InitialComSpeed, std::vector<double> &ZMPPosSequence, double FinalCoMPos,
+  void ComputeW(double InitialCoMPos, double InitialComSpeed,
+                std::vector<double> &ZMPPosSequence, double FinalCoMPos,
                 AnalyticalZMPCOGTrajectory &aAZCT);
 
   /*! \brief Transfert the computed weights to an Analytical ZMP COG
@@ -308,8 +324,10 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
     @param InitializeaAZCT: This boolean is ignored as aAZCT should
     be already initialized.
   */
-  void TransfertTheCoefficientsToTrajectories(AnalyticalZMPCOGTrajectory &aAZCT, std::vector<double> &lCoMZ,
-                                              std::vector<double> &lZMPZ, double &lZMPInit, double &lZMPEnd,
+  void TransfertTheCoefficientsToTrajectories(AnalyticalZMPCOGTrajectory &aAZCT,
+                                              std::vector<double> &lCoMZ,
+                                              std::vector<double> &lZMPZ,
+                                              double &lZMPInit, double &lZMPEnd,
                                               bool InitializeaAZCT);
   /*! @} */
 
@@ -327,7 +345,8 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
 
   /*! \brief Compute a trajectory with the given parameters.
     This method assumes that a Z matrix has already been computed. */
-  void ComputeTrajectory(CompactTrajectoryInstanceParameters &aCTIP, AnalyticalZMPCOGTrajectory &aAZCT);
+  void ComputeTrajectory(CompactTrajectoryInstanceParameters &aCTIP,
+                         AnalyticalZMPCOGTrajectory &aAZCT);
 
   /*! \brief Reset internal variables to compute a new
     problem */
@@ -366,10 +385,14 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
     string error message to get the corresponding error message.
 
   */
-  int ChangeFootLandingPosition(double t, vector<unsigned int> &IndexStep, vector<FootAbsolutePosition> &NewFootAbsPos,
-                                AnalyticalZMPCOGTrajectory &aAZCTX, CompactTrajectoryInstanceParameters &aCTIPX,
-                                AnalyticalZMPCOGTrajectory &aAZCTY, CompactTrajectoryInstanceParameters &aCTIPY,
-                                bool TemporalShift, bool ResetFilters, StepStackHandler *aStepStackHandler,
+  int ChangeFootLandingPosition(double t, vector<unsigned int> &IndexStep,
+                                vector<FootAbsolutePosition> &NewFootAbsPos,
+                                AnalyticalZMPCOGTrajectory &aAZCTX,
+                                CompactTrajectoryInstanceParameters &aCTIPX,
+                                AnalyticalZMPCOGTrajectory &aAZCTY,
+                                CompactTrajectoryInstanceParameters &aCTIPY,
+                                bool TemporalShift, bool ResetFilters,
+                                StepStackHandler *aStepStackHandler,
                                 bool AddingAFootStep);
 
   /*! \brief For the current time t, we will change the foot position
@@ -401,13 +424,16 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
     to minimize the
     fluctuation involved by the time shift.
   */
-  void FilterOutOrthogonalDirection(AnalyticalZMPCOGTrajectory &aAZCT, CompactTrajectoryInstanceParameters &aCTIP,
-                                    deque<double> &ZMPTrajectory, deque<double> &CoGTrajectory);
+  void FilterOutOrthogonalDirection(AnalyticalZMPCOGTrajectory &aAZCT,
+                                    CompactTrajectoryInstanceParameters &aCTIP,
+                                    deque<double> &ZMPTrajectory,
+                                    deque<double> &CoGTrajectory);
 
   /*! \name Feet Trajectory Generator methods
     @{ */
   /*! Set the feet trajectory generator */
-  void SetFeetTrajectoryGenerator(LeftAndRightFootTrajectoryGenerationMultiple *aFeetTrajectoryGenerator);
+  void SetFeetTrajectoryGenerator(
+      LeftAndRightFootTrajectoryGenerationMultiple *aFeetTrajectoryGenerator);
 
   /*! Get the feet trajectory generator */
   LeftAndRightFootTrajectoryGenerationMultiple *GetFeetTrajectoryGenerator();
@@ -429,7 +455,7 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
   void CallMethod(std::string &Method, std::istringstream &strm);
 
   /*! @} */
- protected:
+protected:
   /*! \name Internal Methods to compute the full linear
     system.
     @{
@@ -442,10 +468,12 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
     @param intervalindex: Index of the interval,
     @param colindex: Index of the column inside the matrix,
     @param rowindex: Index of the row inside the matrix. */
-  void ComputeZj(unsigned int intervalindex, unsigned int &colindex, unsigned int &rowindex);
+  void ComputeZj(unsigned int intervalindex, unsigned int &colindex,
+                 unsigned int &rowindex);
 
   /*! \brief Building the Zm Matrix */
-  void ComputeZm(unsigned int intervalindex, unsigned int &colindex, unsigned int &rowindex);
+  void ComputeZm(unsigned int intervalindex, unsigned int &colindex,
+                 unsigned int &rowindex);
 
   /*! \brief Considering the current time given by LocalTime,
     it identifies by IndexStartingInterval which interval is concerned
@@ -455,7 +483,8 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
     sum[m_Tj[0..StartingIndexInterval-1]].
     LocalTime should be given in the local reference time.
   */
-  int TimeChange(double LocalTime, unsigned int IndexStep, unsigned int &IndexStartingInterval, double &FinalTime,
+  int TimeChange(double LocalTime, unsigned int IndexStep,
+                 unsigned int &IndexStartingInterval, double &FinalTime,
                  double &NewTj);
 
   /*! \brief Recomputing all the m_DeltaTj according to NewTime,
@@ -466,12 +495,16 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
     the new landing position and the time interval (IndexStep) when the
     modification should take place.
   */
-  void ConstraintsChange(double LocalTime, FluctuationParameters FPX, FluctuationParameters FPY,
-                         CompactTrajectoryInstanceParameters &aCTIPX, CompactTrajectoryInstanceParameters &aCTIPY,
-                         unsigned int IndexStartingInterval, StepStackHandler *aStepStackHandler = 0);
+  void ConstraintsChange(double LocalTime, FluctuationParameters FPX,
+                         FluctuationParameters FPY,
+                         CompactTrajectoryInstanceParameters &aCTIPX,
+                         CompactTrajectoryInstanceParameters &aCTIPY,
+                         unsigned int IndexStartingInterval,
+                         StepStackHandler *aStepStackHandler = 0);
 
   /*! \brief Compute the time to compensate for the ZMP fluctuation. */
-  double TimeCompensationForZMPFluctuation(FluctuationParameters &aFluctuationParameters, double DeltaTInit);
+  double TimeCompensationForZMPFluctuation(
+      FluctuationParameters &aFluctuationParameters, double DeltaTInit);
 
   /*! @} */
 
@@ -515,10 +548,11 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
 
 
   */
-  int BuildAndSolveCOMZMPForASetOfSteps(Eigen::Matrix3d &lStartingCOMState,
-                                        FootAbsolutePosition &LeftFootInitialPosition,
-                                        FootAbsolutePosition &RightFootInitialPosition, bool IgnoreFirstRelativeFoot,
-                                        bool DoNotPrepareLastFoot);
+  int BuildAndSolveCOMZMPForASetOfSteps(
+      Eigen::Matrix3d &lStartingCOMState,
+      FootAbsolutePosition &LeftFootInitialPosition,
+      FootAbsolutePosition &RightFootInitialPosition,
+      bool IgnoreFirstRelativeFoot, bool DoNotPrepareLastFoot);
 
   /*! Change the profil of the ZMP profil according to the index of
     the interval.
@@ -531,8 +565,10 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
     \param aCTIPX : The trajectory parameters along the X axis.
     \param aCTIPY : The trajectory parameters along the Y axis.
   */
-  void ChangeZMPProfil(vector<unsigned int> &IndexStep, vector<FootAbsolutePosition> &aNewFootAbsPos,
-                       CompactTrajectoryInstanceParameters &aCTIPX, CompactTrajectoryInstanceParameters &aCTIPY);
+  void ChangeZMPProfil(vector<unsigned int> &IndexStep,
+                       vector<FootAbsolutePosition> &aNewFootAbsPos,
+                       CompactTrajectoryInstanceParameters &aCTIPX,
+                       CompactTrajectoryInstanceParameters &aCTIPY);
   /*! @} */
 
   /*! \brief Fill the queues of CoM, ZMP and feet trajectories.
@@ -553,23 +589,30 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
     \param FinalRightFootAbsolutePositions:
     The queue of Right Foot Absolute positions.
   */
-  void FillQueues(double StartingTime, double EndTime, deque<ZMPPosition> &FinalZMPPositions,
-                  deque<COMState> &FinalCoMPositions, deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+  void FillQueues(double StartingTime, double EndTime,
+                  deque<ZMPPosition> &FinalZMPPositions,
+                  deque<COMState> &FinalCoMPositions,
+                  deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
                   deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions);
 
   void ComputeZMPz(double t, ZMPPosition &ZMPz, unsigned int IndexInterval);
 
-  void ComputeCoMz(COMState &CoM, FootAbsolutePosition &LeftFoot, FootAbsolutePosition &RightFoot);
-  void ComputeCoMz(double t, unsigned int lIndexInterval, COMState &CoMz, deque<COMState> &FinalCoMPositions);
+  void ComputeCoMz(COMState &CoM, FootAbsolutePosition &LeftFoot,
+                   FootAbsolutePosition &RightFoot);
+  void ComputeCoMz(double t, unsigned int lIndexInterval, COMState &CoMz,
+                   deque<COMState> &FinalCoMPositions);
 
-  void FillQueues(double samplingPeriod, double StartingTime, double EndTime, deque<ZMPPosition> &FinalZMPPositions,
-                  deque<COMState> &FinalCoMPositions, deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+  void FillQueues(double samplingPeriod, double StartingTime, double EndTime,
+                  deque<ZMPPosition> &FinalZMPPositions,
+                  deque<COMState> &FinalCoMPositions,
+                  deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
                   deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions);
 
-  void ComputeOneElementOfTheQueue(unsigned int &lIndexInterval, unsigned int &lPrevIndexInterval, double t,
-                                   ZMPPosition &FinalZMPPosition, COMState &FinalCoMPosition,
-                                   FootAbsolutePosition &FinalLeftFootAbsolutePosition,
-                                   FootAbsolutePosition &FinalRightFootAbsolutePosition);
+  void ComputeOneElementOfTheQueue(
+      unsigned int &lIndexInterval, unsigned int &lPrevIndexInterval, double t,
+      ZMPPosition &FinalZMPPosition, COMState &FinalCoMPosition,
+      FootAbsolutePosition &FinalLeftFootAbsolutePosition,
+      FootAbsolutePosition &FinalRightFootAbsolutePosition);
 
   /*! \brief LU decomposition of the Z matrix. */
   Eigen::MatrixXd m_AF;
@@ -599,7 +642,8 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
 
   /*! \brief Foot Trajectory Generator */
   LeftAndRightFootTrajectoryGenerationMultiple *m_FeetTrajectoryGenerator;
-  LeftAndRightFootTrajectoryGenerationMultiple *m_BackUpm_FeetTrajectoryGenerator;
+  LeftAndRightFootTrajectoryGenerationMultiple
+      *m_BackUpm_FeetTrajectoryGenerator;
   /*! @} */
 
   /*! @} */
@@ -645,7 +689,8 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
   unsigned int m_OnLineChangeStepMode;
 
   /*! \brief Filtering the axis through a preview control. */
-  FilteringAnalyticalTrajectoryByPreviewControl *m_FilterXaxisByPC, *m_FilterYaxisByPC;
+  FilteringAnalyticalTrajectoryByPreviewControl *m_FilterXaxisByPC,
+      *m_FilterYaxisByPC;
   DynamicFilter *m_kajitaDynamicFilter;
   // deque sampled at m_SamplingPeriod
   deque<FootAbsolutePosition> ctrlLF_;
@@ -670,7 +715,7 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
   PatternGeneratorJRL::BSplinesFoot *m_CoMbsplinesZ;
   PatternGeneratorJRL::Polynome3 *m_ZMPpolynomeZ;
 
- public:
+public:
   /*! \name Methods related to the Preview Control object used
     by this class. @{ */
   /*! Allows to set the preview control object. */
@@ -683,5 +728,5 @@ class AnalyticalMorisawaCompact : public AnalyticalMorisawaAbstract {
   /*! \brief Propagate Absolute Reference Time */
   void PropagateAbsoluteReferenceTime(double x);
 };
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 #endif

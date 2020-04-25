@@ -55,81 +55,91 @@ double InitialPoses[7][40] = {
 
     // 1- With previous half-sitting value
     {
-        0.0,   0.0,  -20.0, 40.0,  -20.0, 0.0,   0.0,  0.0, -20.0, 40.0, -20.0, 0.0,  // legs
+        0.0,   0.0,   -20.0, 40.0,  -20.0, 0.0,   0.0,
+        0.0,   -20.0, 40.0,  -20.0, 0.0, // legs
 
-        0.0,   0.0,  -23.7, 6.6,  // chest and head
+        0.0,   0.0,   -23.7, 6.6, // chest and head
 
-        27.0,  -5.0, -4.0,  -87.0, -4.0,  -16.0, 20.0,  // right arm
-        15.0,  10.0, 0.0,   -20.0, 0.0,   0.0,   10.0,  // left arm
+        27.0,  -5.0,  -4.0,  -87.0, -4.0,  -16.0, 20.0, // right arm
+        15.0,  10.0,  0.0,   -20.0, 0.0,   0.0,   10.0, // left arm
 
-        -20.0, 20.0, -20.0, 20.0,  -20.0,  // right hand
-        -10.0, 10.0, -10.0, 10.0,  -10.0   // left hand
+        -20.0, 20.0,  -20.0, 20.0,  -20.0, // right hand
+        -10.0, 10.0,  -10.0, 10.0,  -10.0  // left hand
     },
     // 2- Nicolas position + New half sitting for the legs
     {
-        0.0,   0.0,  -26.0, 50.0,  -24.0, 0.0,   0.0,  0.0, -26.0, 50.0, -24.0, 0.0,  // legs
+        0.0,   0.0,   -26.0, 50.0,  -24.0, 0.0,   0.0,
+        0.0,   -26.0, 50.0,  -24.0, 0.0, // legs
 
-        0.0,   0.0,  -23.7, 6.6,  // chest and head
+        0.0,   0.0,   -23.7, 6.6, // chest and head
 
-        27.0,  -5.0, -4.0,  -87.0, -4.0,  -16.0, 20.0,  // right arm
-        15.0,  10.0, 0.0,   -20.0, 0.0,   0.0,   10.0,  // left arm
+        27.0,  -5.0,  -4.0,  -87.0, -4.0,  -16.0, 20.0, // right arm
+        15.0,  10.0,  0.0,   -20.0, 0.0,   0.0,   10.0, // left arm
 
-        -20.0, 20.0, -20.0, 20.0,  -20.0,  // right hand
-        -10.0, 10.0, -10.0, 10.0,  -10.0   // left hand
+        -20.0, 20.0,  -20.0, 20.0,  -20.0, // right hand
+        -10.0, 10.0,  -10.0, 10.0,  -10.0  // left hand
     },
     // 3- Test for comparison with PG v1.x
     {
-        0.0, 0.0, -26.0, 50.0, -24.0, 0.0, 0.0, 0.0, -26.0, 50.0, -24.0, 0.0,  // legs
+        0.0, 0.0,   -26.0, 50.0,  -24.0, 0.0, 0.0,
+        0.0, -26.0, 50.0,  -24.0, 0.0, // legs
 
-        0.0, 0.0, 0.0,   0.0,  // chest and head
+        0.0, 0.0,   0.0,   0.0, // chest and head
 
-        0.0, 0.0, 0.0,   0.0,  0.0,   0.0, 0.0,  // right arm
-        0.0, 0.0, 0.0,   0.0,  0.0,   0.0, 0.0,  // left arm
+        0.0, 0.0,   0.0,   0.0,   0.0,   0.0, 0.0, // right arm
+        0.0, 0.0,   0.0,   0.0,   0.0,   0.0, 0.0, // left arm
 
-        0.0, 0.0, 0.0,   0.0,  0.0,  // right hand
-        0.0, 0.0, 0.0,   0.0,  0.0   // left hand
+        0.0, 0.0,   0.0,   0.0,   0.0, // right hand
+        0.0, 0.0,   0.0,   0.0,   0.0  // left hand
     },
     // 4- New Half sitting
     {
-        0.0,   0.0,   -26.0, 50.0,  -24.0, 0.0, 0.0,  0.0, -26.0, 50.0, -24.0, 0.0,  // legs
+        0.0,   0.0,   -26.0, 50.0,  -24.0, 0.0, 0.0,
+        0.0,   -26.0, 50.0,  -24.0, 0.0, // legs
 
-        0.0,   0.0,   0.0,   0.0,  // chest and head
+        0.0,   0.0,   0.0,   0.0, // chest and head
 
-        15.0,  -10.0, 0.0,   -30.0, 0.0,   0.0, 10.0,  // right arm
-        15.0,  10.0,  0.0,   -30.0, 0.0,   0.0, 10.0,  // left arm
+        15.0,  -10.0, 0.0,   -30.0, 0.0,   0.0, 10.0, // right arm
+        15.0,  10.0,  0.0,   -30.0, 0.0,   0.0, 10.0, // left arm
 
-        -10.0, 10.0,  -10.0, 10.0,  -10.0,  // right hand
-        -10.0, 10.0,  -10.0, 10.0,  -10.0   // left hand
+        -10.0, 10.0,  -10.0, 10.0,  -10.0, // right hand
+        -10.0, 10.0,  -10.0, 10.0,  -10.0  // left hand
     },
     // 5- Position for interaction
     {
-        0.0,        0.0,       -26.0,      50.0,      -24,        0.0, 0.0,
-        0.0,        -26.0,     50.0,       -24,       0.0,  // legs
-        0.0,        0.0,                                    // chest
-        0.0,        0.0,                                    // head
+        0.0,        0.0,        -26.0,      50.0,      -24,
+        0.0,        0.0,        0.0,        -26.0,     50.0,
+        -24,        0.0, // legs
+        0.0,        0.0, // chest
+        0.0,        0.0, // head
 
-        10.0,       -18.0,     0.0,        -100.0,    -18.0,      0.0, 10.0,  // right arm
-        10.0,       18.0,      0.0,        -100.0,    18.0,       0.0, 10.0,
-        -10.000004, 10.000004, -10.000004, 10.000004, -10.000004,  // right hand
-        -10.000004, 10.000004, -10.000004, 10.000004, -10.000004   // left hand
+        10.0,       -18.0,      0.0,        -100.0,    -18.0,
+        0.0,        10.0, // right arm
+        10.0,       18.0,       0.0,        -100.0,    18.0,
+        0.0,        10.0,       -10.000004, 10.000004, -10.000004,
+        10.000004,  -10.000004,                                   // right hand
+        -10.000004, 10.000004,  -10.000004, 10.000004, -10.000004 // left hand
     },
     // 6- Initial position for model building 1,
-    {14.323945,  -6.0363396, -13.459409, 44.02602,   -30.566611, 6.0363396, 0.0000001, 7.4859801,
-     -27.663319, 44.65489,   -16.991579, -7.4859801, 0.,         0.,        0.,        0.,
-     12.397718,  -10.000004, 0.,         -29.618538, 0.,         0.,        10.0,      16.536364,
-     10.000004,  0.,         -29.828011, 0.,         0.,         10.0,
+    {14.323945, -6.0363396, -13.459409, 44.02602, -30.566611, 6.0363396,
+     0.0000001, 7.4859801,  -27.663319, 44.65489, -16.991579, -7.4859801,
+     0.,        0.,         0.,         0.,       12.397718,  -10.000004,
+     0.,        -29.618538, 0.,         0.,       10.0,       16.536364,
+     10.000004, 0.,         -29.828011, 0.,       0.,         10.0,
 
-     -10.0,      10.0,       -10.0,      10,         -10.0,      -10.0,     10.0,      -10.0,
-     10.0,       -10.0},
+     -10.0,     10.0,       -10.0,      10,       -10.0,      -10.0,
+     10.0,      -10.0,      10.0,       -10.0},
     // 7- Initial position for model buiding 2
-    {-7.16197, -7.69299, -16.1787, 44.5201, -28.3415, 7.69299, 7.16197, 5.74946, -31.3668, 44.1057, -12.7389, -5.74946,
+    {-7.16197, -7.69299, -16.1787, 44.5201,  -28.3415, 7.69299, 7.16197,
+     5.74946,  -31.3668, 44.1057,  -12.7389, -5.74946,
 
      0.,       0.,       0.,       0.,
 
-     12.622,   -10,      0,        -29.678, 0,        0,       10,      16.7091, 10,       0,       -29.7841, 0,
-     0,        10,
+     12.622,   -10,      0,        -29.678,  0,        0,       10,
+     16.7091,  10,       0,        -29.7841, 0,        0,       10,
 
-     -10.0,    10.0,     -10.0,    10,      -10.0,    -10.0,   10.0,    -10.0,   10.0,     -10.0}
+     -10.0,    10.0,     -10.0,    10,       -10.0,    -10.0,   10.0,
+     -10.0,    10.0,     -10.0}
 
 };
 
@@ -159,7 +169,8 @@ void CommonInitialization(PatternGeneratorInterface &aPGI) {
   FootAbsolutePosition InitLeftFootAbsPos;
   FootAbsolutePosition InitRightFootAbsPos;
 
-  aPGI.EvaluateStartingState(lStartingCOMPosition, lStartingZMPPosition, lStartingWaistPose, InitLeftFootAbsPos,
+  aPGI.EvaluateStartingState(lStartingCOMPosition, lStartingZMPPosition,
+                             lStartingWaistPose, InitLeftFootAbsPos,
                              InitRightFootAbsPos);
 }
 
@@ -171,8 +182,7 @@ void StraightWalking(PatternGeneratorInterface &aPGI) {
   }
 
   {
-    istringstream strm2(
-        ":stepseq 0.0 -0.105 0.0 \
+    istringstream strm2(":stepseq 0.0 -0.105 0.0 \
                      0.2 0.21 0.0  \
                      0.2 -0.21 0.0 \
                      0.2 0.21 0.0  \
@@ -227,8 +237,7 @@ void PbFlorentSeq1(PatternGeneratorInterface &aPGI) {
 0.0136717 0.2 -0.00157708 \
 0 -0.2 0");
     */
-    istringstream strm2(
-        ":stepseq 0 0.1 0 \
+    istringstream strm2(":stepseq 0 0.1 0 \
 	-0.0398822	-0.232351	4.6646 \
 	-0.0261703	0.199677	4.6646 \
 	-0.0471999	-0.256672	4.6646 \
@@ -257,8 +266,7 @@ void PbFlorentSeq2(PatternGeneratorInterface &aPGI) {
   }
 
   {
-    istringstream strm2(
-        ":stepseq \
+    istringstream strm2(":stepseq \
                                  0 -0.1 0 \
 				-0.0512076 0.207328 -1.15414 \
 				-0.0473172 -0.218623 -1.15414 \
@@ -326,8 +334,7 @@ void PbFlorentSeq3(PatternGeneratorInterface &aPGI) {
   }
 
   {
-    istringstream strm2(
-        ":stepseq \
+    istringstream strm2(":stepseq \
 				0 -0.1 0 \
 				0.206454 0.189754 3.86836 \
 				0.174414 -0.222668 13.578 \
@@ -381,8 +388,7 @@ void StraightWalkingPBW(PatternGeneratorInterface &aPGI) {
   }
 
   {
-    istringstream strm2(
-        ":stepseq 0.0 -0.105 0.0 \
+    istringstream strm2(":stepseq 0.0 -0.105 0.0 \
                      0.2 0.21 0.0  \
                      0.2 -0.21 0.0 \
                      0.2 0.21 0.0  \
@@ -415,8 +421,7 @@ void Herdt(PatternGeneratorInterface &aPGI) {
   }
 
   {
-    istringstream strm2(
-        ":stepseq 0.0 -0.105 0.0 \
+    istringstream strm2(":stepseq 0.0 -0.105 0.0 \
                      0.2 0.21 0.0  \
                      0.2 -0.21 0.0 \
                      0.2 0.21 0.0  \
@@ -447,8 +452,7 @@ void StraightWalkingDimitrov(PatternGeneratorInterface &aPGI) {
   }
 
   {
-    istringstream strm2(
-        ":stepseq 0.0 -0.105 0.0 \
+    istringstream strm2(":stepseq 0.0 -0.105 0.0 \
                      0.2 0.21 0.0  \
                      0.2 -0.21 0.0 \
                      0.2 0.21 0.0  \
@@ -472,8 +476,7 @@ void CurvedWalkingDimitrov(PatternGeneratorInterface &aPGI) {
   }
 
   {
-    istringstream strm2(
-        ":stepseq 0.0 -0.105 0.0 \
+    istringstream strm2(":stepseq 0.0 -0.105 0.0 \
                      0.2 0.21 10.0  \
                      0.2 -0.21 10.0 \
                      0.2 0.21 10.0  \
@@ -502,8 +505,7 @@ void CurvedWalkingPBW(PatternGeneratorInterface &aPGI) {
   }
 
   {
-    istringstream strm2(
-        ":stepseq 0.0 -0.105 0.0 \
+    istringstream strm2(":stepseq 0.0 -0.105 0.0 \
                      0.2 0.21 10.0  \
                      0.2 -0.21 10.0 \
                      0.2 0.21 10.0  \
@@ -527,8 +529,7 @@ void CurvedWalkingPBW2(PatternGeneratorInterface &aPGI) {
   }
 
   {
-    istringstream strm2(
-        ":stepseq 0.0 -0.105 0.0 \
+    istringstream strm2(":stepseq 0.0 -0.105 0.0 \
                      0.2 0.21 10.0  \
                      0.2 -0.21 10.0 \
                      0.2 0.21 10.0  \
@@ -547,8 +548,7 @@ void CurvedWalkingPBW2(PatternGeneratorInterface &aPGI) {
 void ShortStraightWalking(PatternGeneratorInterface &aPGI) {
   CommonInitialization(aPGI);
   {
-    istringstream strm2(
-        ":stepseq 0.0 -0.105 0.0 \
+    istringstream strm2(":stepseq 0.0 -0.105 0.0 \
                      0.2  0.21 0.0 \
                      0.2 -0.21 0.0 \
                      0.2  0.21 0.0 \
@@ -568,8 +568,7 @@ void ShortStraightWalkingOneStage(PatternGeneratorInterface &aPGI) {
   }
 
   {
-    istringstream strm2(
-        ":stepseq 0.0 -0.105 0.0 \
+    istringstream strm2(":stepseq 0.0 -0.105 0.0 \
                      0.2  0.21 0.0 \
                      0.2 -0.21 0.0 \
                      0.2  0.21 0.0 \
@@ -589,8 +588,7 @@ void AnalyticalShortStraightWalking(PatternGeneratorInterface &aPGI) {
   }
 
   {
-    istringstream strm2(
-        ":stepseq 0.0 -0.105 0.0 \
+    istringstream strm2(":stepseq 0.0 -0.105 0.0 \
                      0.2  0.21 0.0 \
                      0.2 -0.21 0.0 \
                      0.2  0.21 0.0 \
@@ -604,8 +602,7 @@ void AnalyticalShortStraightWalking(PatternGeneratorInterface &aPGI) {
 void Turn90DegreesWalking(PatternGeneratorInterface &aPGI) {
   CommonInitialization(aPGI);
   {
-    istringstream strm2(
-        ":stepseq 0.0 -0.105 0.0 \
+    istringstream strm2(":stepseq 0.0 -0.105 0.0 \
                      0.2 0.21 0.0  \
                      0.2 -0.21 10.0 \
                      0.2 0.21 10.0  \
@@ -665,8 +662,7 @@ void StartOnLineWalking(PatternGeneratorInterface &aPGI) {
     /*    istringstream strm2(":StartOnLineStepSequencing 0.0 -0.105 0.0 \
                      0.2 0.21 0.0 \				   \
                      0.2 -0.21 0.0");*/
-    istringstream strm2(
-        ":StartOnLineStepSequencing 0.0 0.105 0.0 \
+    istringstream strm2(":StartOnLineStepSequencing 0.0 0.105 0.0 \
                      0.2 -0.21 0.0 \
                      0.2 0.21 0.0 \
                      0.2 -0.21 0.0 ");
@@ -681,8 +677,7 @@ void StartSimuOnLineWalking(PatternGeneratorInterface &aPGI) {
     /*    istringstream strm2(":StartOnLineStepSequencing 0.0 -0.105 0.0 \
                      0.2 0.21 0.0 \				   \
                      0.2 -0.21 0.0");*/
-    istringstream strm2(
-        ":stepseq 0.0 0.105 0.0 \
+    istringstream strm2(":stepseq 0.0 0.105 0.0 \
                      0.2 -0.21 0.0 \
                      0.2 0.21 0.0 \
                      0.2 -0.21 0.0 \
@@ -732,8 +727,7 @@ void StartAnalyticalOnLineWalking(PatternGeneratorInterface &aPGI) {
   }
 
   {
-    istringstream strm2(
-        ":StartOnLineStepSequencing 0.0 -0.095 0.0 \
+    istringstream strm2(":StartOnLineStepSequencing 0.0 -0.095 0.0 \
                      0.0 0.19 0.0 \
                      0.0 -0.19 0.0 \
                      0.0 0.19 0.0");
@@ -772,8 +766,7 @@ void KineoWorks(PatternGeneratorInterface &aPGI) {
     aPGI.ParseCmd(strm2);
   }
   {
-    istringstream strm2(
-        ":stepseq 0.0 -0.105 0.0 0.0 0.2 \
+    istringstream strm2(":stepseq 0.0 -0.105 0.0 0.0 0.2 \
                           0.21 0.0 0.0 0.2 -0.21 0.0 0.0 0.2 \
                           0.21 0.0 0.0 0.2 -0.21 0.0 0.0 0.2 \
                           0.21 0.0 -0.05 0.2 -0.21 0.0 -0.10 0.2 \
@@ -787,8 +780,9 @@ void KineoWorks(PatternGeneratorInterface &aPGI) {
 }
 
 void SteppingOver(PatternGeneratorInterface &aPGI) {
-  const char lBuffer[3][256] = {":walkmode 2", ":UpperBodyMotionParameters -0.1 -1.0 0.0",
-                                ":stepseq 0.0 -0.105 0.0 0.2 0.21 0.0 0.2 -0.21 0.0 0.2 \
+  const char lBuffer[3][256] = {
+      ":walkmode 2", ":UpperBodyMotionParameters -0.1 -1.0 0.0",
+      ":stepseq 0.0 -0.105 0.0 0.2 0.21 0.0 0.2 -0.21 0.0 0.2 \
                 0.21 0.0 0.2 -0.21 0.0 0.2 0.21 0.0 0.2 \
                -0.21 0.0  0.2 0.21 0.0 0.2 -0.21 0.0 0.2 \
                 0.21 0.0 0.2 -0.21 0.0 0.0 0.21 0.0"};
@@ -860,9 +854,11 @@ int main(int argc, char *argv[]) {
 #else
 #warning "Compiled with HRP2DYNAMICS !"
 #endif
-  Chrp2OptHumanoidDynamicRobot *aHRP2HDR = new Chrp2OptHumanoidDynamicRobot(&aRobotDynamicsObjectConstructor);
+  Chrp2OptHumanoidDynamicRobot *aHRP2HDR =
+      new Chrp2OptHumanoidDynamicRobot(&aRobotDynamicsObjectConstructor);
   aHDR = aHRP2HDR;
-  aDebugHDR = new Chrp2OptHumanoidDynamicRobot(&aRobotDynamicsObjectConstructor);
+  aDebugHDR =
+      new Chrp2OptHumanoidDynamicRobot(&aRobotDynamicsObjectConstructor);
 #endif
 
   // Parsing the file.
@@ -891,7 +887,8 @@ int main(int argc, char *argv[]) {
     for (unsigned int i = 0; i < MAL_VECTOR_SIZE(InitialPosition); i++)
       InitialPosition(i) = dInitPos[i] * M_PI / 180.0;
   else
-    for (unsigned int i = 0; i < MAL_VECTOR_SIZE(InitialPosition); i++) InitialPosition(i) = dInitPos[i];
+    for (unsigned int i = 0; i < MAL_VECTOR_SIZE(InitialPosition); i++)
+      InitialPosition(i) = dInitPos[i];
   aPGI->SetCurrentJointValues(InitialPosition);
 
   // Specify the walking mode: here the default one.
@@ -907,7 +904,8 @@ int main(int argc, char *argv[]) {
   MAL_VECTOR_DIM(PreviousVelocity, double, 46);
   MAL_VECTOR_DIM(PreviousAcceleration, double, 46);
   for (int i = 0; i < 6; i++) {
-    PreviousConfiguration[i] = PreviousVelocity[i] = PreviousAcceleration[i] = 0.0;
+    PreviousConfiguration[i] = PreviousVelocity[i] = PreviousAcceleration[i] =
+        0.0;
   }
 
   for (int i = 6; i < 46; i++) {
@@ -917,11 +915,13 @@ int main(int argc, char *argv[]) {
 
   MAL_VECTOR_DIM(ZMPTarget, double, 3);
 
-  string inProperty[5] = {"TimeStep", "ComputeAcceleration", "ComputeBackwardDynamics", "ComputeZMP",
+  string inProperty[5] = {"TimeStep", "ComputeAcceleration",
+                          "ComputeBackwardDynamics", "ComputeZMP",
                           "ResetIteration"};
   string inValue[5] = {"0.005", "false", "false", "true", "true"};
 
-  for (unsigned int i = 0; i < 5; i++) aDebugHDR->setProperty(inProperty[i], inValue[i]);
+  for (unsigned int i = 0; i < 5; i++)
+    aDebugHDR->setProperty(inProperty[i], inValue[i]);
 
   // COMPosition CurrentWaistPosition;
   struct timeval begin, end, startingtime;
@@ -947,7 +947,8 @@ int main(int argc, char *argv[]) {
   unsigned int TimeProfileUpperLimit = 200 * 620;
 
   ofstream aofzmpmb2;
-  if (DebugZMP2) aofzmpmb2.open("ZMPMBSTAGE2.dat", ofstream::out);
+  if (DebugZMP2)
+    aofzmpmb2.open("ZMPMBSTAGE2.dat", ofstream::out);
 
   ofstream aofq;
   if (DebugConfiguration) {
@@ -988,7 +989,8 @@ int main(int argc, char *argv[]) {
                          "ZMP Y (world ref.)",
                          "Waist X (world ref.)",
                          "Waist Y (world ref.)"};
-    for (unsigned int i = 0; i < 25; i++) aof << i + 1 << ". " << Titles[i] << std::endl;
+    for (unsigned int i = 0; i < 25; i++)
+      aof << i + 1 << ". " << Titles[i] << std::endl;
 
     aof.close();
     aof.open("TestFGPI.dat", ofstream::out);
@@ -1004,102 +1006,105 @@ int main(int argc, char *argv[]) {
   // Number of sequences added.
   unsigned int lNbItMax = 1;
 
-  if (TestProfil == PROFIL_PB_FLORENT) lNbItMax = 3;
+  if (TestProfil == PROFIL_PB_FLORENT)
+    lNbItMax = 3;
 
   for (unsigned int lNbIt = 0; lNbIt < lNbItMax; lNbIt++) {
     // StrangeStartingPosition(*aPGI);
-    cout << "<===============================================================>" << endl;
+    cout << "<===============================================================>"
+         << endl;
     cout << "Iteration nb: " << lNbIt << endl;
     gettimeofday(&begin, 0);
     switch (TestProfil) {
-      case PROFIL_PB_FLORENT:
-        if (lNbIt == 0)
-          PbFlorentSeq1(*aPGI);
-        else if (lNbIt == 1)
-          PbFlorentSeq2(*aPGI);
-        else if (lNbIt == 2)
-          PbFlorentSeq3(*aPGI);
-        break;
+    case PROFIL_PB_FLORENT:
+      if (lNbIt == 0)
+        PbFlorentSeq1(*aPGI);
+      else if (lNbIt == 1)
+        PbFlorentSeq2(*aPGI);
+      else if (lNbIt == 2)
+        PbFlorentSeq3(*aPGI);
+      break;
 
-      case PROFIL_STEPPING_OVER:
-        SteppingOver(*aPGI);
-        break;
+    case PROFIL_STEPPING_OVER:
+      SteppingOver(*aPGI);
+      break;
 
-      case PROFIL_SHORT_STRAIGHT_WALKING:
-        ShortStraightWalking(*aPGI);
-        break;
+    case PROFIL_SHORT_STRAIGHT_WALKING:
+      ShortStraightWalking(*aPGI);
+      break;
 
-      case PROFIL_SHORT_STRAIGHT_WALKING_ONE_STAGE:
-        ShortStraightWalking(*aPGI);
-        break;
+    case PROFIL_SHORT_STRAIGHT_WALKING_ONE_STAGE:
+      ShortStraightWalking(*aPGI);
+      break;
 
-      case PROFIL_CURVED_WALKING_PBW2:
-        CurvedWalkingPBW2(*aPGI);
-        break;
+    case PROFIL_CURVED_WALKING_PBW2:
+      CurvedWalkingPBW2(*aPGI);
+      break;
 
-      case PROFIL_KINEOWORKS:
-        KineoWorks(*aPGI);
-        break;
+    case PROFIL_KINEOWORKS:
+      KineoWorks(*aPGI);
+      break;
 
-      case PROFIL_STRAIGHT_WALKING:
-        StraightWalking(*aPGI);
-        break;
+    case PROFIL_STRAIGHT_WALKING:
+      StraightWalking(*aPGI);
+      break;
 
-      case PROFIL_ANALYTICAL_SHORT_STRAIGHT_WALKING:
-        AnalyticalShortStraightWalking(*aPGI);
-        break;
+    case PROFIL_ANALYTICAL_SHORT_STRAIGHT_WALKING:
+      AnalyticalShortStraightWalking(*aPGI);
+      break;
 
-      case PROFIL_CURVED_WALKING_PBW:
-        CurvedWalkingPBW(*aPGI);
-        break;
+    case PROFIL_CURVED_WALKING_PBW:
+      CurvedWalkingPBW(*aPGI);
+      break;
 
-      case PROFIL_STRAIGHT_WALKING_DIMITROV:
-        StraightWalkingDimitrov(*aPGI);
-        break;
+    case PROFIL_STRAIGHT_WALKING_DIMITROV:
+      StraightWalkingDimitrov(*aPGI);
+      break;
 
-      case PROFIL_HERDT:
-        Herdt(*aPGI);
-        break;
+    case PROFIL_HERDT:
+      Herdt(*aPGI);
+      break;
 
-      case PROFIL_HERDT_ONLINE:
-        HerdtOnline(*aPGI);
-        break;
+    case PROFIL_HERDT_ONLINE:
+      HerdtOnline(*aPGI);
+      break;
 
-      case PROFIL_CURVED_WALKING_DIMITROV:
-        CurvedWalkingDimitrov(*aPGI);
-        break;
+    case PROFIL_CURVED_WALKING_DIMITROV:
+      CurvedWalkingDimitrov(*aPGI);
+      break;
 
-      case PROFIL_TURN_90D:
-        Turn90DegreesWalking(*aPGI);
-        break;
+    case PROFIL_TURN_90D:
+      Turn90DegreesWalking(*aPGI);
+      break;
 
-      case PROFIL_TURNING_ON_THE_CIRCLE:
-        TurningOnTheCircle(*aPGI);
-        break;
+    case PROFIL_TURNING_ON_THE_CIRCLE:
+      TurningOnTheCircle(*aPGI);
+      break;
 
-      case PROFIL_TURNING_ON_THE_CIRCLE_TOWARDS_THE_CENTER:
-        TurningOnTheCircleTowardsTheCenter(*aPGI);
-        break;
+    case PROFIL_TURNING_ON_THE_CIRCLE_TOWARDS_THE_CENTER:
+      TurningOnTheCircleTowardsTheCenter(*aPGI);
+      break;
 
-      case PROFIL_ANALYTICAL_ONLINE_WALKING:
-        StartAnalyticalOnLineWalking(*aPGI);
-        break;
+    case PROFIL_ANALYTICAL_ONLINE_WALKING:
+      StartAnalyticalOnLineWalking(*aPGI);
+      break;
 
-      case PROFIL_ONLINE_WALKING:
-        StartOnLineWalking(*aPGI);
-        break;
+    case PROFIL_ONLINE_WALKING:
+      StartOnLineWalking(*aPGI);
+      break;
 
-      case PROFIL_SIMU_ONLINE_WALKING:
-        StartSimuOnLineWalking(*aPGI);
+    case PROFIL_SIMU_ONLINE_WALKING:
+      StartSimuOnLineWalking(*aPGI);
 
-      default:
-        break;
+    default:
+      break;
     };
 
     // Should generate the same than the one previous (but shorter to specify).
 
     gettimeofday(&end, 0);
-    double ltime = end.tv_sec - begin.tv_sec + 0.000001 * (end.tv_usec - begin.tv_usec);
+    double ltime =
+        end.tv_sec - begin.tv_sec + 0.000001 * (end.tv_usec - begin.tv_usec);
     totaltimeinplanning += ltime;
 
     aDebugHDR->currentConfiguration(PreviousConfiguration);
@@ -1112,15 +1117,20 @@ int main(int argc, char *argv[]) {
       gettimeofday(&begin, 0);
 
       if (PGIInterface == 0) {
-        ok = aPGI->RunOneStepOfTheControlLoop(CurrentConfiguration, CurrentVelocity, CurrentAcceleration, ZMPTarget,
-                                              finalCOMPosition, LeftFootPosition, RightFootPosition);
+        ok = aPGI->RunOneStepOfTheControlLoop(
+            CurrentConfiguration, CurrentVelocity, CurrentAcceleration,
+            ZMPTarget, finalCOMPosition, LeftFootPosition, RightFootPosition);
       } else if (PGIInterface == 1) {
-        ok = aPGI->RunOneStepOfTheControlLoop(CurrentConfiguration, CurrentVelocity, CurrentAcceleration, ZMPTarget);
+        ok = aPGI->RunOneStepOfTheControlLoop(CurrentConfiguration,
+                                              CurrentVelocity,
+                                              CurrentAcceleration, ZMPTarget);
       }
 
       gettimeofday(&end, 0);
-      double ltime = end.tv_sec - begin.tv_sec + 0.000001 * (end.tv_usec - begin.tv_usec);
-      if (maxtime < ltime) maxtime = ltime;
+      double ltime =
+          end.tv_sec - begin.tv_sec + 0.000001 * (end.tv_usec - begin.tv_usec);
+      if (maxtime < ltime)
+        maxtime = ltime;
       NbOfIt++;
 
       if (ltime > 0.000300) {
@@ -1174,12 +1184,14 @@ int main(int argc, char *argv[]) {
             aPGI->ChangeOnLineStep(0.805, aFAP, newtime);
             deltatime += newtime + 0.025;
             gettimeofday(&endmodif, 0);
-            timemodif = endmodif.tv_sec - beginmodif.tv_sec + 0.000001 * (endmodif.tv_usec - beginmodif.tv_usec);
+            timemodif = endmodif.tv_sec - beginmodif.tv_sec +
+                        0.000001 * (endmodif.tv_usec - beginmodif.tv_usec);
             totaltimemodif += timemodif;
             nbofmodifs++;
             TestChangeFoot = true;
             NbStepsModified++;
-            if (NbStepsModified == 360) TestChangeFoot = false;
+            if (NbStepsModified == 360)
+              TestChangeFoot = false;
           }
         }
       }
@@ -1188,30 +1200,38 @@ int main(int argc, char *argv[]) {
         if (NbOfIt > 3 * 200) /* Stop after 3 seconds the on-line stepping */
         {
           Herdt_Stop(*aPGI);
-          if (NbOfIt > 5 * 200) ok = false;
+          if (NbOfIt > 5 * 200)
+            ok = false;
         }
       }
 
       TimeProfile[TimeProfileIndex] = ltime + timemodif;
       TimeProfileTS[TimeProfileIndex] = begin.tv_sec + 0.000001 * begin.tv_usec;
       TimeProfileIndex++;
-      if (TimeProfileIndex > TimeProfileUpperLimit) TimeProfileIndex = 0;
+      if (TimeProfileIndex > TimeProfileUpperLimit)
+        TimeProfileIndex = 0;
 
       if (DebugFGPI) {
-        aof << NbOfIt * 0.005 << " " << finalCOMPosition.x[0] << " " << finalCOMPosition.y[0] << " "
-            << finalCOMPosition.z[0] << " " << finalCOMPosition.x[1] << " " << finalCOMPosition.y[1] << " "
-            << finalCOMPosition.z[1] << " " << ZMPTarget(0) << " " << ZMPTarget(1) << " " << LeftFootPosition.x << " "
-            << LeftFootPosition.y << " " << LeftFootPosition.z << " " << LeftFootPosition.theta << " "
-            << LeftFootPosition.omega << " " << LeftFootPosition.omega2 << " " << RightFootPosition.x << " "
-            << RightFootPosition.y << " " << RightFootPosition.z << " " << RightFootPosition.theta << " "
-            << RightFootPosition.omega << " " << RightFootPosition.omega2 << " "
-            << ZMPTarget(0) * cos(CurrentConfiguration(5)) - ZMPTarget(1) * sin(CurrentConfiguration(5)) +
+        aof << NbOfIt * 0.005 << " " << finalCOMPosition.x[0] << " "
+            << finalCOMPosition.y[0] << " " << finalCOMPosition.z[0] << " "
+            << finalCOMPosition.x[1] << " " << finalCOMPosition.y[1] << " "
+            << finalCOMPosition.z[1] << " " << ZMPTarget(0) << " "
+            << ZMPTarget(1) << " " << LeftFootPosition.x << " "
+            << LeftFootPosition.y << " " << LeftFootPosition.z << " "
+            << LeftFootPosition.theta << " " << LeftFootPosition.omega << " "
+            << LeftFootPosition.omega2 << " " << RightFootPosition.x << " "
+            << RightFootPosition.y << " " << RightFootPosition.z << " "
+            << RightFootPosition.theta << " " << RightFootPosition.omega << " "
+            << RightFootPosition.omega2 << " "
+            << ZMPTarget(0) * cos(CurrentConfiguration(5)) -
+                   ZMPTarget(1) * sin(CurrentConfiguration(5)) +
                    CurrentConfiguration(0)
             << " "
-            << ZMPTarget(0) * sin(CurrentConfiguration(5)) + ZMPTarget(1) * cos(CurrentConfiguration(5)) +
+            << ZMPTarget(0) * sin(CurrentConfiguration(5)) +
+                   ZMPTarget(1) * cos(CurrentConfiguration(5)) +
                    CurrentConfiguration(1)
-            << " " << CurrentConfiguration(0) << " " << CurrentConfiguration(1) << " "
-            << begin.tv_sec + 0.000001 * begin.tv_usec << endl;
+            << " " << CurrentConfiguration(0) << " " << CurrentConfiguration(1)
+            << " " << begin.tv_sec + 0.000001 * begin.tv_usec << endl;
       }
 
       if (DebugConfiguration) {
@@ -1223,7 +1243,8 @@ int main(int argc, char *argv[]) {
     }
 
     cout << "End of iteration " << lNbIt << endl;
-    cout << "<===============================================================>" << endl;
+    cout << "<===============================================================>"
+         << endl;
   }
 
   aofzmpmb2.close();
@@ -1232,20 +1253,25 @@ int main(int argc, char *argv[]) {
     ofstream lProfileOutput("TimeProfile.dat", ofstream::out);
     double dST = startingtime.tv_sec + 0.000001 * startingtime.tv_usec;
     for (unsigned int i = 0; i < TimeProfileIndex; i++)
-      lProfileOutput << " " << TimeProfileTS[i] - dST << " " << TimeProfile[i] << std::endl;
+      lProfileOutput << " " << TimeProfileTS[i] - dST << " " << TimeProfile[i]
+                     << std::endl;
 
     lProfileOutput.close();
   }
 
-  if (DebugConfiguration) aofq.close();
+  if (DebugConfiguration)
+    aofq.close();
 
-  if (DebugFGPI) aof.close();
+  if (DebugFGPI)
+    aof.close();
 
   delete aPGI;
 
   cout << "Number of iterations " << NbOfIt << " " << NbOfItToCompute << endl;
-  cout << "Time consumption: " << (double)totaltime / (double)NbOfItToCompute << " max time: " << maxtime << endl;
-  cout << "Time for modif: " << (double)totaltimemodif / (double)nbofmodifs << " nb of modifs: " << nbofmodifs << endl;
-  cout << "Time on ZMP ref planning (Kajita policy): " << totaltimeinplanning << " "
-       << totaltimeinplanning * 4 / (double)NbOfIt << endl;
+  cout << "Time consumption: " << (double)totaltime / (double)NbOfItToCompute
+       << " max time: " << maxtime << endl;
+  cout << "Time for modif: " << (double)totaltimemodif / (double)nbofmodifs
+       << " nb of modifs: " << nbofmodifs << endl;
+  cout << "Time on ZMP ref planning (Kajita policy): " << totaltimeinplanning
+       << " " << totaltimeinplanning * 4 / (double)NbOfIt << endl;
 }

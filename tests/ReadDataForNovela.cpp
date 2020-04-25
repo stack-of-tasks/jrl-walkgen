@@ -35,20 +35,25 @@ using namespace ::PatternGeneratorJRL::TestSuite;
 using namespace std;
 
 class ReadDataForNovela : public TestObject {
- private:
+private:
   string m_FileName;
 
- public:
-  ReadDataForNovela(int argc, char *argv[], string &aString, string FileName) : TestObject(argc, argv, aString) {
+public:
+  ReadDataForNovela(int argc, char *argv[], string &aString, string FileName)
+      : TestObject(argc, argv, aString) {
     m_FileName = FileName;
   };
 
- protected:
-  virtual void SpecializedRobotConstructor(CjrlHumanoidDynamicRobot *&aHDR, CjrlHumanoidDynamicRobot *&aDebugHDR) {
+protected:
+  virtual void
+  SpecializedRobotConstructor(CjrlHumanoidDynamicRobot *&aHDR,
+                              CjrlHumanoidDynamicRobot *&aDebugHDR) {
     dynamicsJRLJapan::ObjectFactory aRobotDynamicsObjectConstructor;
-    Chrp2OptHumanoidDynamicRobot *aHRP2HDR = new Chrp2OptHumanoidDynamicRobot(&aRobotDynamicsObjectConstructor);
+    Chrp2OptHumanoidDynamicRobot *aHRP2HDR =
+        new Chrp2OptHumanoidDynamicRobot(&aRobotDynamicsObjectConstructor);
     aHDR = aHRP2HDR;
-    aDebugHDR = new Chrp2OptHumanoidDynamicRobot(&aRobotDynamicsObjectConstructor);
+    aDebugHDR =
+        new Chrp2OptHumanoidDynamicRobot(&aRobotDynamicsObjectConstructor);
   }
 
   void ReadDataFromFile(PatternGeneratorInterface &aPGI) {
@@ -66,7 +71,8 @@ class ReadDataForNovela : public TestObject {
 
     ifstream aif;
     aif.open(m_FileName.c_str(), ifstream::in);
-    if (!aif.is_open()) throw std::string("Not able to open file.");
+    if (!aif.is_open())
+      throw std::string("Not able to open file.");
 
     ostringstream ostrm;
 
@@ -103,7 +109,8 @@ class ReadDataForNovela : public TestObject {
       ostrm << lTss / 200.0;
       ostrm << " ";
       ostrm << lTds / 200.0;
-      if (!aif.eof()) ostrm << " ";
+      if (!aif.eof())
+        ostrm << " ";
     }
 
     cout << "ostrm gives:" << endl << ostrm.str() << endl;

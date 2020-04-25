@@ -35,8 +35,9 @@ using namespace std;
 int PerformTests(int, char *[]) {
   // Test Bspline without way point
   /////////////////////////////////
-  double testIP(0.0), testIS(0.0), testIA(0.0), testMP(0.0), testMS(0.0), testMA(0.0), testMP2(0.0), testMS2(0.0),
-      testMA2(0.0), testFP(0.0), testFS(0.0), testFA(0.0);
+  double testIP(0.0), testIS(0.0), testIA(0.0), testMP(0.0), testMS(0.0),
+      testMA(0.0), testMP2(0.0), testMS2(0.0), testMA2(0.0), testFP(0.0),
+      testFS(0.0), testFA(0.0);
   double FT = 1.0;
   double IP = 0.209;
   double IS = 0.009;
@@ -50,7 +51,8 @@ int PerformTests(int, char *[]) {
   ToMP.clear();
 
   PatternGeneratorJRL::BSplinesFoot *bsplineNoWayPoint;
-  bsplineNoWayPoint = new PatternGeneratorJRL::BSplinesFoot(FT, IP, FP, ToMP, MP, IS, IA, FS, FA);
+  bsplineNoWayPoint = new PatternGeneratorJRL::BSplinesFoot(FT, IP, FP, ToMP,
+                                                            MP, IS, IA, FS, FA);
 
   // results
   bsplineNoWayPoint->Compute(0.0, testIP, testIS, testIA);
@@ -62,7 +64,8 @@ int PerformTests(int, char *[]) {
   bool test_FS = sqrt((FS - testFS) * (FS - testFS)) < 1e-08;
   bool test_FA = sqrt((FA - testFA) * (FA - testFA)) < 1e-08;
 
-  bool testBsplinenowayPoint = test_IP && test_IS && test_IA && test_FP && test_FS && test_FA;
+  bool testBsplinenowayPoint =
+      test_IP && test_IS && test_IA && test_FP && test_FS && test_FA;
 
   if (!testBsplinenowayPoint) {
     std::cerr << "Error unexpected behaviour of bspline generation\n"
@@ -85,7 +88,8 @@ int PerformTests(int, char *[]) {
   FS = 0.0;
   FA = 0.0;
   PatternGeneratorJRL::BSplinesFoot *bsplineOneWayPoint;
-  bsplineOneWayPoint = new PatternGeneratorJRL::BSplinesFoot(FT, IP, FP, ToMP, MP, IS, IA, FS, FA);
+  bsplineOneWayPoint = new PatternGeneratorJRL::BSplinesFoot(
+      FT, IP, FP, ToMP, MP, IS, IA, FS, FA);
 
   bsplineOneWayPoint->Compute(0.0, testIP, testIS, testIA);
   bsplineOneWayPoint->Compute(FT / 2, testMP, testMS, testMA);
@@ -97,7 +101,8 @@ int PerformTests(int, char *[]) {
   test_FS = sqrt((FS - testFS) * (FS - testFS)) < 1e-08;
   test_FA = sqrt((FA - testFA) * (FA - testFA)) < 1e-08;
   bool test_MP = sqrt((MP[0] - testMP) * (MP[0] - testMP)) < 1e-08;
-  bool testBsplineOneWayPoint = test_IP && test_IS && test_IA && test_MP && test_FP && test_FS && test_FA;
+  bool testBsplineOneWayPoint =
+      test_IP && test_IS && test_IA && test_MP && test_FP && test_FS && test_FA;
 
   if (!bsplineOneWayPoint) {
     std::cerr << "Error unexpected behaviour of bspline generation\n"
@@ -122,7 +127,8 @@ int PerformTests(int, char *[]) {
   ToMP.push_back(FT / 3.0);
   ToMP.push_back(2.0 * FT / 3.0);
   PatternGeneratorJRL::BSplinesFoot *bsplineTwoWayPoint;
-  bsplineTwoWayPoint = new PatternGeneratorJRL::BSplinesFoot(FT, IP, FP, ToMP, MP, IS, IA, FS, FA);
+  bsplineTwoWayPoint = new PatternGeneratorJRL::BSplinesFoot(
+      FT, IP, FP, ToMP, MP, IS, IA, FS, FA);
 
   bsplineTwoWayPoint->Compute(0.0, testIP, testIS, testIA);
   bsplineTwoWayPoint->Compute(FT / 3.0, testMP, testMS, testMA);
@@ -136,7 +142,8 @@ int PerformTests(int, char *[]) {
   test_FA = sqrt((FA - testFA) * (FA - testFA)) < 1e-08;
   test_MP = sqrt((MP[0] - testMP) * (MP[0] - testMP)) < 1e-08;
   bool test_MP2 = sqrt((MP[1] - testMP2) * (MP[1] - testMP2)) < 1e-08;
-  bool testBsplineTwoWayPoint = test_IP && test_IS && test_IA && test_MP && test_MP2 && test_FP && test_FS && test_FA;
+  bool testBsplineTwoWayPoint = test_IP && test_IS && test_IA && test_MP &&
+                                test_MP2 && test_FP && test_FS && test_FA;
 
   if (!testBsplineTwoWayPoint) {
     std::cerr << "Error unexpected behaviour of bspline generation\n"
@@ -157,7 +164,8 @@ int PerformTests(int, char *[]) {
   aof.setf(ios::scientific, ios::floatfield);
   // aof << filterprecision(m_OneStep.NbOfIt*0.005 ) << " "
   PatternGeneratorJRL::BSplinesFoot *bsplineKnotsControl;
-  bsplineKnotsControl = new PatternGeneratorJRL::BSplinesFoot(1.4, IP, FP, ToMP, MP, IS, IA, FS, FA);
+  bsplineKnotsControl = new PatternGeneratorJRL::BSplinesFoot(
+      1.4, IP, FP, ToMP, MP, IS, IA, FS, FA);
 
   deque<double> knot;
   double TimeInterval = 1.4;
@@ -203,7 +211,8 @@ int PerformTests(int, char *[]) {
   FS = 0.0;
   FA = 0.0;
   bsplineKnotsControl->Compute(0.0, testIP, testIS, testIA);
-  bsplineKnotsControl->Compute(TimeInterval * pourcentTime, testMP, testMS, testMA);
+  bsplineKnotsControl->Compute(TimeInterval * pourcentTime, testMP, testMS,
+                               testMA);
   bsplineKnotsControl->Compute(TimeInterval, testFP, testFS, testFA);
   test_IP = sqrt((IP - testIP) * (IP - testIP)) < 1e-08;
   test_IS = sqrt((IS - testIS) * (IS - testIS)) < 1e-08;
@@ -211,9 +220,12 @@ int PerformTests(int, char *[]) {
   test_FP = sqrt((FP - testFP) * (FP - testFP)) < 1e-08;
   test_FS = sqrt((FS - testFS) * (FS - testFS)) < 1e-08;
   test_FA = sqrt((FA - testFA) * (FA - testFA)) < 1e-08;
-  bool testbsplineKnotsControl = test_IP && test_IS && test_IA && test_FP && test_FS && test_FA;
-  std::cout << "testFP : " << testFP << "testbsplineKnotsControl " << testbsplineKnotsControl << std::endl;
-  std::cout << "MP : [" << TimeInterval << ";" << FinalPosition << "]" << std::endl;
+  bool testbsplineKnotsControl =
+      test_IP && test_IS && test_IA && test_FP && test_FS && test_FA;
+  std::cout << "testFP : " << testFP << "testbsplineKnotsControl "
+            << testbsplineKnotsControl << std::endl;
+  std::cout << "MP : [" << TimeInterval << ";" << FinalPosition << "]"
+            << std::endl;
 
   for (double i = 0; i < 1400; ++i) {
     bsplineKnotsControl->Compute(FT * i / 1400.0, testMP, testMS, testMA);
@@ -227,7 +239,10 @@ int PerformTests(int, char *[]) {
   delete bsplineKnotsControl;
   bsplineKnotsControl = NULL;
 
-  return (testBsplinenowayPoint && testBsplineOneWayPoint && testBsplineTwoWayPoint) ? 1 : 0;
+  return (testBsplinenowayPoint && testBsplineOneWayPoint &&
+          testBsplineTwoWayPoint)
+             ? 1
+             : 0;
 }
 
 int main(int argc, char *argv[]) {

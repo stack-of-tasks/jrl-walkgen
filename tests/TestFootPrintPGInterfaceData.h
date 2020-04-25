@@ -28,25 +28,25 @@
 #include <string>
 
 enum Profiles_t {
-  PROFIL_PB_FLORENT,                                //  0
-  PROFIL_STEPPING_OVER,                             //  1
-  PROFIL_SHORT_STRAIGHT_WALKING,                    //  2
-  PROFIL_SHORT_STRAIGHT_WALKING_ONE_STAGE,          //  3
-  PROFIL_CURVED_WALKING_PBW2,                       //  4
-  PROFIL_KINEOWORKS,                                //  5
-  PROFIL_STRAIGHT_WALKING,                          //  6
-  PROFIL_ANALYTICAL_SHORT_STRAIGHT_WALKING,         //  7
-  PROFIL_CURVED_WALKING_PBW,                        //  8
-  PROFIL_STRAIGHT_WALKING_DIMITROV,                 //  9
-  PROFIL_CURVED_WALKING_DIMITROV,                   // 10
-  PROFIL_TURN_90D,                                  // 11
-  PROFIL_TURNING_ON_THE_CIRCLE,                     // 12
-  PROFIL_TURNING_ON_THE_CIRCLE_TOWARDS_THE_CENTER,  // 13
-  PROFIL_ANALYTICAL_ONLINE_WALKING,                 // 14
-  PROFIL_ONLINE_WALKING,                            // 15
-  PROFIL_SIMU_ONLINE_WALKING,                       // 16
-  PROFIL_HERDT,                                     // 17
-  PROFIL_HERDT_ONLINE                               // 18
+  PROFIL_PB_FLORENT,                               //  0
+  PROFIL_STEPPING_OVER,                            //  1
+  PROFIL_SHORT_STRAIGHT_WALKING,                   //  2
+  PROFIL_SHORT_STRAIGHT_WALKING_ONE_STAGE,         //  3
+  PROFIL_CURVED_WALKING_PBW2,                      //  4
+  PROFIL_KINEOWORKS,                               //  5
+  PROFIL_STRAIGHT_WALKING,                         //  6
+  PROFIL_ANALYTICAL_SHORT_STRAIGHT_WALKING,        //  7
+  PROFIL_CURVED_WALKING_PBW,                       //  8
+  PROFIL_STRAIGHT_WALKING_DIMITROV,                //  9
+  PROFIL_CURVED_WALKING_DIMITROV,                  // 10
+  PROFIL_TURN_90D,                                 // 11
+  PROFIL_TURNING_ON_THE_CIRCLE,                    // 12
+  PROFIL_TURNING_ON_THE_CIRCLE_TOWARDS_THE_CENTER, // 13
+  PROFIL_ANALYTICAL_ONLINE_WALKING,                // 14
+  PROFIL_ONLINE_WALKING,                           // 15
+  PROFIL_SIMU_ONLINE_WALKING,                      // 16
+  PROFIL_HERDT,                                    // 17
+  PROFIL_HERDT_ONLINE                              // 18
 };
 
 enum InitialPoses_t {

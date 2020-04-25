@@ -49,7 +49,7 @@ namespace PatternGeneratorJRL {
 
 */
 class AnalyticalMorisawaAbstract : public ZMPRefTrajectoryGeneration {
- public:
+public:
   const static unsigned int SINGLE_SUPPORT = 0;
   const static unsigned int DOUBLE_SUPPORT = 1;
 
@@ -107,13 +107,14 @@ class AnalyticalMorisawaAbstract : public ZMPRefTrajectoryGeneration {
     the right foot.
 
   */
-  virtual void GetZMPDiscretization(deque<ZMPPosition> &ZMPPositions, deque<COMState> &CoMStates,
-                                    deque<RelativeFootPosition> &RelativeFootPositions,
-                                    deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-                                    deque<FootAbsolutePosition> &RightFootAbsolutePositions, double Xmax,
-                                    COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
-                                    FootAbsolutePosition &InitLeftFootAbsolutePosition,
-                                    FootAbsolutePosition &InitRightFootAbsolutePosition) = 0;
+  virtual void GetZMPDiscretization(
+      deque<ZMPPosition> &ZMPPositions, deque<COMState> &CoMStates,
+      deque<RelativeFootPosition> &RelativeFootPositions,
+      deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+      deque<FootAbsolutePosition> &RightFootAbsolutePositions, double Xmax,
+      COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
+      FootAbsolutePosition &InitLeftFootAbsolutePosition,
+      FootAbsolutePosition &InitRightFootAbsolutePosition) = 0;
 
   /*! Methods for on-line generation. (First version)
     The queues will be updated as follows:
@@ -126,33 +127,43 @@ class AnalyticalMorisawaAbstract : public ZMPRefTrajectoryGeneration {
     Returns the number of steps which has been completely put inside
     the queue of ZMP, and foot positions.
   */
-  virtual std::size_t InitOnLine(deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
-                                 deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-                                 deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
-                                 FootAbsolutePosition &InitLeftFootAbsolutePosition,
-                                 FootAbsolutePosition &InitRightFootAbsolutePosition,
-                                 deque<RelativeFootPosition> &RelativeFootPositions, COMState &lStartingCOMState,
-                                 Eigen::Vector3d &aStartingZMPPosition) = 0;
+  virtual std::size_t
+  InitOnLine(deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
+             deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+             deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
+             FootAbsolutePosition &InitLeftFootAbsolutePosition,
+             FootAbsolutePosition &InitRightFootAbsolutePosition,
+             deque<RelativeFootPosition> &RelativeFootPositions,
+             COMState &lStartingCOMState,
+             Eigen::Vector3d &aStartingZMPPosition) = 0;
 
   /* ! \brief Method to update the stacks on-line */
-  virtual void OnLine(double time, deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
-                      deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-                      deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions) = 0;
+  virtual void
+  OnLine(double time, deque<ZMPPosition> &FinalZMPPositions,
+         deque<COMState> &CoMStates,
+         deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+         deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions) = 0;
 
   /* ! Methods to update the stack on-line by
      inserting a new foot position. */
-  virtual void OnLineAddFoot(RelativeFootPosition &NewRelativeFootPosition, deque<ZMPPosition> &FinalZMPPositions,
-                             deque<COMState> &CoMStates, deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-                             deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions, bool EndSequence) = 0;
+  virtual void
+  OnLineAddFoot(RelativeFootPosition &NewRelativeFootPosition,
+                deque<ZMPPosition> &FinalZMPPositions,
+                deque<COMState> &CoMStates,
+                deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+                deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
+                bool EndSequence) = 0;
 
   /* ! \brief Method to change on line the landing position of a foot.
      @return If the method failed it returns -1, 0 otherwise.
   */
-  virtual int OnLineFootChange(double time, FootAbsolutePosition &aFootAbsolutePosition,
-                               deque<ZMPPosition> &FinalZMPPositions, deque<COMState> &CoMStates,
-                               deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-                               deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
-                               StepStackHandler *aStepStackHandler) = 0;
+  virtual int
+  OnLineFootChange(double time, FootAbsolutePosition &aFootAbsolutePosition,
+                   deque<ZMPPosition> &FinalZMPPositions,
+                   deque<COMState> &CoMStates,
+                   deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+                   deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
+                   StepStackHandler *aStepStackHandler) = 0;
 
   /*! \brief Method to stop walking.
     @param[out] ZMPPositions: The queue of ZMP reference positions.
@@ -162,9 +173,10 @@ class AnalyticalMorisawaAbstract : public ZMPRefTrajectoryGeneration {
     @param[out] RightFootAbsolutePositions:
     The queue of right foot absolute positions.
   */
-  virtual void EndPhaseOfTheWalking(deque<ZMPPosition> &ZMPPositions, deque<COMState> &FinalCOMStates,
-                                    deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-                                    deque<FootAbsolutePosition> &RightFootAbsolutePositions) = 0;
+  virtual void EndPhaseOfTheWalking(
+      deque<ZMPPosition> &ZMPPositions, deque<COMState> &FinalCOMStates,
+      deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+      deque<FootAbsolutePosition> &RightFootAbsolutePositions) = 0;
   /*! @} */
 
   /*! \name Methods specifics to our current implementation.
@@ -202,7 +214,8 @@ class AnalyticalMorisawaAbstract : public ZMPRefTrajectoryGeneration {
     @param lCoM: Profile of CoM for each interval.
     @param lZMP: Profile of ZMP for each interval.
   */
-  virtual void BuildingTheZMatrix(std::vector<double> &lCoM, std::vector<double> &lZMP) = 0;
+  virtual void BuildingTheZMatrix(std::vector<double> &lCoM,
+                                  std::vector<double> &lZMP) = 0;
 
   /*! \brief Building the w vector.
     It is currently assume that all ZMP's speed will be
@@ -217,8 +230,9 @@ class AnalyticalMorisawaAbstract : public ZMPRefTrajectoryGeneration {
     @param[in] aAZCT: The analytical trajectory from which some coefficients
     have to be extracted to compute appropriatly the vector \f[ w \f] .
   */
-  virtual void ComputeW(double InitialCoMPos, double InitialComSpeed, std::vector<double> &ZMPPosSequence,
-                        double FinalCoMPos, AnalyticalZMPCOGTrajectory &aAZCT) = 0;
+  virtual void ComputeW(double InitialCoMPos, double InitialComSpeed,
+                        std::vector<double> &ZMPPosSequence, double FinalCoMPos,
+                        AnalyticalZMPCOGTrajectory &aAZCT) = 0;
 
   /*! \brief Transfert the computed weights to an Analytical ZMP COG
     Trajectory able to generate the appropriate intermediates values.
@@ -234,9 +248,10 @@ class AnalyticalMorisawaAbstract : public ZMPRefTrajectoryGeneration {
     the initialization
     of the object aAZCT, does nothing otherwise.
   */
-  virtual void TransfertTheCoefficientsToTrajectories(AnalyticalZMPCOGTrajectory &aAZCT, std::vector<double> &lCoMZ,
-                                                      std::vector<double> &lZMPZ, double &lZMPInit, double &lZMPEnd,
-                                                      bool InitializeaAZCT) = 0;
+  virtual void TransfertTheCoefficientsToTrajectories(
+      AnalyticalZMPCOGTrajectory &aAZCT, std::vector<double> &lCoMZ,
+      std::vector<double> &lZMPZ, double &lZMPInit, double &lZMPEnd,
+      bool InitializeaAZCT) = 0;
 
   /*! @} */
 
@@ -256,17 +271,19 @@ class AnalyticalMorisawaAbstract : public ZMPRefTrajectoryGeneration {
     this method. */
   void GetPolynomialDegrees(std::vector<unsigned int> &lPolynomialDegrees);
 
-  friend std::ostream &operator<<(std::ostream &os, const AnalyticalMorisawaAbstract &obj);
+  friend std::ostream &operator<<(std::ostream &os,
+                                  const AnalyticalMorisawaAbstract &obj);
 
   /*! \brief Compute the preview control time window. */
   void ComputePreviewControlTimeWindow() {
     m_PreviewControlTime = 0.0;
-    for (unsigned int i = 0; i < m_DeltaTj.size(); i++) m_PreviewControlTime += m_DeltaTj[i];
+    for (unsigned int i = 0; i < m_DeltaTj.size(); i++)
+      m_PreviewControlTime += m_DeltaTj[i];
   }
 
   /*! @} */
 
- protected:
+protected:
   /*! \name Store the matrices used for compution.
     @{
   */
@@ -324,14 +341,16 @@ class AnalyticalMorisawaAbstract : public ZMPRefTrajectoryGeneration {
     @param[in] intervalindex: Index of the interval,
     @param[in] colindex: Index of the column inside the matrix,
     @param[in] rowindex: Index of the row inside the matrix. */
-  virtual void ComputeZj(unsigned int intervalindex, unsigned int &colindex, unsigned int &rowindex) = 0;
+  virtual void ComputeZj(unsigned int intervalindex, unsigned int &colindex,
+                         unsigned int &rowindex) = 0;
 
   /*! \brief Building the Zm Matrix
     @param[in] intervalindex: Index of the interval,
     @param[in] colindex: Index of the column inside the matrix,
     @param[in] rowindex: Index of the row inside the matrix.
   */
-  virtual void ComputeZm(unsigned int intervalindex, unsigned int &colindex, unsigned int &rowindex) = 0;
+  virtual void ComputeZm(unsigned int intervalindex, unsigned int &colindex,
+                         unsigned int &rowindex) = 0;
 
   /*! @} */
 
@@ -356,14 +375,16 @@ class AnalyticalMorisawaAbstract : public ZMPRefTrajectoryGeneration {
 
   int m_isStepStairOn;
 
- public:
+public:
   /*! \brief Get the absolute reference time of
     the system */
   double GetAbsoluteTimeReference() const { return m_AbsoluteTimeReference; }
 
   /*! \brief Set the absolute reference time of
     the system */
-  void SetAbsoluteTimeReference(double anAbsoluteTimeReference) { m_AbsoluteTimeReference = anAbsoluteTimeReference; }
+  void SetAbsoluteTimeReference(double anAbsoluteTimeReference) {
+    m_AbsoluteTimeReference = anAbsoluteTimeReference;
+  }
 
   /*! \brief Get the reference to the object handling the
     humanoid specificities */
@@ -373,5 +394,5 @@ class AnalyticalMorisawaAbstract : public ZMPRefTrajectoryGeneration {
     humanoid specificities */
   void SetHumanoidSpecificities(PinocchioRobot *aPR) { m_PR = aPR; };
 };
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 #endif

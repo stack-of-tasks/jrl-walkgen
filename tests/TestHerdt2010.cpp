@@ -34,25 +34,27 @@ using namespace ::PatternGeneratorJRL::TestSuite;
 using namespace std;
 
 enum Profiles_t {
-  PROFIL_HERDT_ONLINE_WALKING,  // 1
-  PROFIL_HERDT_EMERGENCY_STOP   // 2
+  PROFIL_HERDT_ONLINE_WALKING, // 1
+  PROFIL_HERDT_EMERGENCY_STOP  // 2
 };
 
 class TestHerdt2010 : public TestObject {
- private:
- public:
-  TestHerdt2010(int argc, char *argv[], string &aString, int TestProfile) : TestObject(argc, argv, aString) {
+private:
+public:
+  TestHerdt2010(int argc, char *argv[], string &aString, int TestProfile)
+      : TestObject(argc, argv, aString) {
     m_TestProfile = TestProfile;
   };
 
-  typedef void (TestHerdt2010::*localeventHandler_t)(PatternGeneratorInterface &);
+  typedef void (TestHerdt2010::*localeventHandler_t)(
+      PatternGeneratorInterface &);
 
   struct localEvent {
     unsigned time;
     localeventHandler_t Handler;
   };
 
- protected:
+protected:
   void startOnLineWalking(PatternGeneratorInterface &aPGI) {
     CommonInitialization(aPGI);
 
@@ -186,15 +188,15 @@ class TestHerdt2010 : public TestObject {
 
   void chooseTestProfile() {
     switch (m_TestProfile) {
-      case PROFIL_HERDT_ONLINE_WALKING:
-        startOnLineWalking(*m_PGI);
-        break;
-      case PROFIL_HERDT_EMERGENCY_STOP:
-        startEmergencyStop(*m_PGI);
-        break;
-      default:
-        throw("No correct test profile");
-        break;
+    case PROFIL_HERDT_ONLINE_WALKING:
+      startOnLineWalking(*m_PGI);
+      break;
+    case PROFIL_HERDT_EMERGENCY_STOP:
+      startEmergencyStop(*m_PGI);
+      break;
+    default:
+      throw("No correct test profile");
+      break;
     }
   }
 
@@ -205,18 +207,19 @@ class TestHerdt2010 : public TestObject {
     };
 
 #define localNbOfEvents 12
-    struct localEvent events[localNbOfEvents] = {{5 * 200, &TestHerdt2010::walkForward},
-                                                 {10 * 200, &TestHerdt2010::walkSidewards},
-                                                 {25 * 200, &TestHerdt2010::startTurningRightOnSpot},
-                                                 {35 * 200, &TestHerdt2010::walkForward},
-                                                 {45 * 200, &TestHerdt2010::startTurningLeftOnSpot},
-                                                 {55 * 200, &TestHerdt2010::walkForward},
-                                                 {65 * 200, &TestHerdt2010::startTurningRightOnSpot},
-                                                 {75 * 200, &TestHerdt2010::walkForward},
-                                                 {85 * 200, &TestHerdt2010::startTurningLeft},
-                                                 {95 * 200, &TestHerdt2010::startTurningRight},
-                                                 {105 * 200, &TestHerdt2010::stop},
-                                                 {110 * 200, &TestHerdt2010::stopOnLineWalking}};
+    struct localEvent events[localNbOfEvents] = {
+        {5 * 200, &TestHerdt2010::walkForward},
+        {10 * 200, &TestHerdt2010::walkSidewards},
+        {25 * 200, &TestHerdt2010::startTurningRightOnSpot},
+        {35 * 200, &TestHerdt2010::walkForward},
+        {45 * 200, &TestHerdt2010::startTurningLeftOnSpot},
+        {55 * 200, &TestHerdt2010::walkForward},
+        {65 * 200, &TestHerdt2010::startTurningRightOnSpot},
+        {75 * 200, &TestHerdt2010::walkForward},
+        {85 * 200, &TestHerdt2010::startTurningLeft},
+        {95 * 200, &TestHerdt2010::startTurningRight},
+        {105 * 200, &TestHerdt2010::stop},
+        {110 * 200, &TestHerdt2010::stopOnLineWalking}};
 
     // Test when triggering event.
     for (unsigned int i = 0; i < localNbOfEvents; i++) {
@@ -229,10 +232,11 @@ class TestHerdt2010 : public TestObject {
 
   void generateEventEmergencyStop() {
 #define localNbOfEventsEMS 4
-    struct localEvent events[localNbOfEventsEMS] = {{5 * 200, &TestHerdt2010::startTurningLeft2},
-                                                    {10 * 200, &TestHerdt2010::startTurningRight2},
-                                                    {16 * 200, &TestHerdt2010::stop},
-                                                    {22 * 200, &TestHerdt2010::stopOnLineWalking}};
+    struct localEvent events[localNbOfEventsEMS] = {
+        {5 * 200, &TestHerdt2010::startTurningLeft2},
+        {10 * 200, &TestHerdt2010::startTurningRight2},
+        {16 * 200, &TestHerdt2010::stop},
+        {22 * 200, &TestHerdt2010::stopOnLineWalking}};
 
     // Test when triggering event.
     for (unsigned int i = 0; i < localNbOfEventsEMS; i++) {
@@ -245,14 +249,14 @@ class TestHerdt2010 : public TestObject {
 
   void generateEvent() {
     switch (m_TestProfile) {
-      case PROFIL_HERDT_ONLINE_WALKING:
-        generateEventOnLineWalking();
-        break;
-      case PROFIL_HERDT_EMERGENCY_STOP:
-        generateEventEmergencyStop();
-        break;
-      default:
-        break;
+    case PROFIL_HERDT_ONLINE_WALKING:
+      generateEventOnLineWalking();
+      break;
+    case PROFIL_HERDT_EMERGENCY_STOP:
+      generateEventEmergencyStop();
+      break;
+    default:
+      break;
     }
   }
 };
@@ -262,16 +266,20 @@ int PerformTests(int argc, char *argv[]) {
   std::string CompleteName = string(argv[0]);
   unsigned found = CompleteName.find_last_of("/\\");
   std::string TestName = CompleteName.substr(found + 1);
-  int TestProfiles[NB_PROFILES] = {PROFIL_HERDT_ONLINE_WALKING, PROFIL_HERDT_EMERGENCY_STOP};
+  int TestProfiles[NB_PROFILES] = {PROFIL_HERDT_ONLINE_WALKING,
+                                   PROFIL_HERDT_EMERGENCY_STOP};
   int indexProfile = -1;
 
-  if (TestName.compare(13, 6, "OnLine") == 0) indexProfile = 0;
-  if (TestName.compare(13, 13, "EmergencyStop") == 0) indexProfile = 1;
+  if (TestName.compare(13, 6, "OnLine") == 0)
+    indexProfile = 0;
+  if (TestName.compare(13, 13, "EmergencyStop") == 0)
+    indexProfile = 1;
 
   if (indexProfile == -1) {
     std::cerr << "CompleteName: " << CompleteName << std::endl;
     std::cerr << " TestName: " << TestName << std::endl;
-    std::cerr << "Failure to find the proper indexFile:" << TestName.substr(13, 6) << endl;
+    std::cerr << "Failure to find the proper indexFile:"
+              << TestName.substr(13, 6) << endl;
     exit(-1);
   }
 

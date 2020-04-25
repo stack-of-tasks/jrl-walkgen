@@ -37,24 +37,25 @@ frame work */
 namespace PatternGeneratorJRL {
 struct PinocchioRobotFoot_t {
   pinocchio::JointIndex associatedAnkle;
-  double soleDepth;   // z axis
-  double soleWidth;   // y axis
-  double soleHeight;  // x axis
+  double soleDepth;  // z axis
+  double soleWidth;  // y axis
+  double soleHeight; // x axis
   Eigen::Vector3d anklePosition;
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
   inline PinocchioRobotFoot_t()
-      : associatedAnkle(0), soleDepth(0.0), soleWidth(0.0), soleHeight(0.0), anklePosition(0.0, 0.0, 0.0) {}
+      : associatedAnkle(0), soleDepth(0.0), soleWidth(0.0), soleHeight(0.0),
+        anklePosition(0.0, 0.0, 0.0) {}
 };
 typedef PinocchioRobotFoot_t PRFoot;
 
 namespace pinocchio_robot {
 const int RPY_SIZE = 6;
 const int QUATERNION_SIZE = 7;
-}  // namespace pinocchio_robot
+} // namespace pinocchio_robot
 
 class PinocchioRobot {
- public:
+public:
   // overload the new[] eigen operator
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
@@ -71,13 +72,15 @@ class PinocchioRobot {
   /// of the free floating base (usually the waist), \f$theta\f$ the
   /// free floating
   /// orientation in RPY format, $\hat{q}$ the motor angles position.
-  void computeInverseDynamics(Eigen::VectorXd &q, Eigen::VectorXd &v, Eigen::VectorXd &a);
+  void computeInverseDynamics(Eigen::VectorXd &q, Eigen::VectorXd &v,
+                              Eigen::VectorXd &a);
 
   /// Compute the geometry of the robot.
   void computeForwardKinematics();
 
-  void RPYToSpatialFreeFlyer(Eigen::Vector3d &rpy, Eigen::Vector3d &drpy, Eigen::Vector3d &ddrpy,
-                             Eigen::Quaterniond &quat, Eigen::Vector3d &omega, Eigen::Vector3d &domega);
+  void RPYToSpatialFreeFlyer(Eigen::Vector3d &rpy, Eigen::Vector3d &drpy,
+                             Eigen::Vector3d &ddrpy, Eigen::Quaterniond &quat,
+                             Eigen::Vector3d &omega, Eigen::Vector3d &domega);
 
   /// \brief ComputeSpecializedInverseKinematics :
   /// compute POSITION (not velocity) of the joints from end effector pose
@@ -95,10 +98,12 @@ class PinocchioRobot {
   /// param root joint homogenous matrix index,
   /// param 6D vector output, filled with zeros if the robot is not compatible
   ///
-  virtual bool ComputeSpecializedInverseKinematics(const pinocchio::JointIndex &jointRoot,
-                                                   const pinocchio::JointIndex &jointEnd,
-                                                   const Eigen::Matrix4d &jointRootPosition,
-                                                   const Eigen::Matrix4d &jointEndPosition, Eigen::VectorXd &q);
+  virtual bool
+  ComputeSpecializedInverseKinematics(const pinocchio::JointIndex &jointRoot,
+                                      const pinocchio::JointIndex &jointEnd,
+                                      const Eigen::Matrix4d &jointRootPosition,
+                                      const Eigen::Matrix4d &jointEndPosition,
+                                      Eigen::VectorXd &q);
 
   ///
   /// \brief testArmsInverseKinematics :
@@ -127,8 +132,9 @@ class PinocchioRobot {
   /// to be overloaded if the user wants another inverse kinematics
   /// \return
   ///
-  virtual bool testOneModeOfLegsInverseKinematics(std::vector<std::string> &leftLegJointNames,
-                                                  std::vector<std::string> &rightLegJointNames);
+  virtual bool testOneModeOfLegsInverseKinematics(
+      std::vector<std::string> &leftLegJointNames,
+      std::vector<std::string> &rightLegJointNames);
 
   ///
   /// \brief initializeInverseKinematics :
@@ -138,20 +144,24 @@ class PinocchioRobot {
   ///
   virtual void initializeLegsInverseKinematics();
 
- public:
+public:
   /// tools :
-  std::vector<pinocchio::JointIndex> jointsBetween(pinocchio::JointIndex first, pinocchio::JointIndex second);
+  std::vector<pinocchio::JointIndex>
+  jointsBetween(pinocchio::JointIndex first, pinocchio::JointIndex second);
   std::vector<pinocchio::JointIndex> fromRootToIt(pinocchio::JointIndex it);
 
- private:
+private:
   // needed for the inverse geometry (ComputeSpecializedInverseKinematics)
-  void getWaistFootKinematics(const Eigen::Matrix4d &jointRootPosition, const Eigen::Matrix4d &jointEndPosition,
+  void getWaistFootKinematics(const Eigen::Matrix4d &jointRootPosition,
+                              const Eigen::Matrix4d &jointEndPosition,
                               Eigen::VectorXd &q, Eigen::Vector3d &Dt) const;
   double ComputeXmax(double &Z);
-  void getShoulderWristKinematics(const Eigen::Matrix4d &jointRootPosition, const Eigen::Matrix4d &jointEndPosition,
+  void getShoulderWristKinematics(const Eigen::Matrix4d &jointRootPosition,
+                                  const Eigen::Matrix4d &jointEndPosition,
                                   Eigen::VectorXd &q, int side);
   void DetectAutomaticallyShoulders();
-  void DetectAutomaticallyOneShoulder(pinocchio::JointIndex aWrist, pinocchio::JointIndex &aShoulder);
+  void DetectAutomaticallyOneShoulder(pinocchio::JointIndex aWrist,
+                                      pinocchio::JointIndex &aShoulder);
 
   /*! \brief Computes the size of the free flyer/root robot
     loads by the urdf.
@@ -159,11 +169,13 @@ class PinocchioRobot {
   */
   void ComputeRootSize();
 
- public:
+public:
   /// Getters
   /// ///////
   inline pinocchio::Data *Data() { return m_robotData; }
-  inline pinocchio::Data *DataInInitialePose() { return m_robotDataInInitialePose; }
+  inline pinocchio::Data *DataInInitialePose() {
+    return m_robotDataInInitialePose;
+  }
   inline pinocchio::Model *Model() { return m_robotModel; }
 
   inline PRFoot *leftFoot() { return &m_leftFoot; }
@@ -177,7 +189,9 @@ class PinocchioRobot {
 
   inline double mass() { return m_mass; }
 
-  inline pinocchio::JointModelVector &getActuatedJoints() { return m_robotModel->joints; }
+  inline pinocchio::JointModelVector &getActuatedJoints() {
+    return m_robotModel->joints;
+  }
 
   inline Eigen::VectorXd &currentPinoConfiguration() { return m_qpino; }
   inline Eigen::VectorXd &currentRPYConfiguration() { return m_qrpy; }
@@ -197,7 +211,7 @@ class PinocchioRobot {
     m_n = m_externalForces.angular();
     zmp(0) = -m_n(1) / m_f(2);
     zmp(1) = m_n(0) / m_f(2);
-    zmp(2) = 0.0;  // by default
+    zmp(2) = 0.0; // by default
   }
 
   inline void positionCenterOfMass(Eigen::Vector3d &com) {
@@ -206,7 +220,8 @@ class PinocchioRobot {
     com(1) = m_com(1);
     com(2) = m_com(2);
   }
-  inline void CenterOfMass(Eigen::Vector3d &com, Eigen::Vector3d &dcom, Eigen::Vector3d &ddcom) {
+  inline void CenterOfMass(Eigen::Vector3d &com, Eigen::Vector3d &dcom,
+                           Eigen::Vector3d &ddcom) {
     m_com = m_robotData->acom[0];
     ddcom(0) = m_com(0);
     ddcom(1) = m_com(1);
@@ -232,24 +247,31 @@ class PinocchioRobot {
   inline void currentRPYVelocity(Eigen::VectorXd &vel) { m_vrpy = vel; }
   inline void currentRPYAcceleration(Eigen::VectorXd &acc) { m_arpy = acc; }
 
-  inline pinocchio::JointIndex getFreeFlyerSize() const { return m_PinoFreeFlyerSize; }
+  inline pinocchio::JointIndex getFreeFlyerSize() const {
+    return m_PinoFreeFlyerSize;
+  }
 
-  inline pinocchio::JointIndex getFreeFlyerVelSize() const { return m_PinoFreeFlyerVelSize; }
+  inline pinocchio::JointIndex getFreeFlyerVelSize() const {
+    return m_PinoFreeFlyerVelSize;
+  }
 
   /// Initialization functions
   /// ////////////////////////
-  inline bool isInitialized() { return m_boolModel && m_boolData && m_boolLeftFoot && m_boolRightFoot; }
+  inline bool isInitialized() {
+    return m_boolModel && m_boolData && m_boolLeftFoot && m_boolRightFoot;
+  }
   bool checkModel(pinocchio::Model *robotModel);
-  bool initializeRobotModelAndData(pinocchio::Model *robotModel, pinocchio::Data *robotData);
+  bool initializeRobotModelAndData(pinocchio::Model *robotModel,
+                                   pinocchio::Data *robotData);
   bool initializeLeftFoot(PRFoot leftFoot);
   bool initializeRightFoot(PRFoot rightFoot);
 
   const std::string &getName() const;
   /// Attributes
   /// //////////
- private:
+private:
   pinocchio::Model *m_robotModel;
-  pinocchio::Data *m_robotDataInInitialePose;  // internal variable
+  pinocchio::Data *m_robotDataInInitialePose; // internal variable
   pinocchio::Data *m_robotData;
   PRFoot m_leftFoot, m_rightFoot;
   double m_mass;
@@ -274,10 +296,10 @@ class PinocchioRobot {
   // tmp variables
   Eigen::Quaterniond m_quat;
   Eigen::Matrix3d m_rot;
-  pinocchio::Force m_externalForces;  // external forces and torques
-  Eigen::VectorXd m_tau;              // external forces and torques
-  Eigen::Vector3d m_f, m_n;           // external forces and torques
-  Eigen::Vector3d m_com;              // multibody CoM
+  pinocchio::Force m_externalForces; // external forces and torques
+  Eigen::VectorXd m_tau;             // external forces and torques
+  Eigen::Vector3d m_f, m_n;          // external forces and torques
+  Eigen::Vector3d m_com;             // multibody CoM
   Eigen::Matrix3d m_S;
   Eigen::Vector3d m_rpy, m_drpy, m_ddrpy, m_omega, m_domega;
 
@@ -304,6 +326,6 @@ class PinocchioRobot {
   /// \brief Size of the free flyer velocity space.
   pinocchio::JointIndex m_PinoFreeFlyerVelSize;
 
-};  // PinocchioRobot
-}  // namespace PatternGeneratorJRL
-#endif  // PinocchioRobot_HH
+}; // PinocchioRobot
+} // namespace PatternGeneratorJRL
+#endif // PinocchioRobot_HH

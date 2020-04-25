@@ -44,7 +44,7 @@ class MPCTrajectoryGeneration : public SimplePlugin {
   //
   // Protected members
   //
- protected:
+protected:
   /* ! \brief Time for single support. */
   double Tsingle_;
 
@@ -94,7 +94,7 @@ class MPCTrajectoryGeneration : public SimplePlugin {
   //
   // Public methods
   //
- public:
+public:
   /// \brief Default constructor
   MPCTrajectoryGeneration(SimplePluginManager *lSPM);
 
@@ -123,7 +123,9 @@ class MPCTrajectoryGeneration : public SimplePlugin {
   inline const double &TSingleSupport() const { return Tsingle_; };
 
   /// \brief Set the single support time.
-  inline void TSingleSupport(double TSingleSupport) { Tsingle_ = TSingleSupport; };
+  inline void TSingleSupport(double TSingleSupport) {
+    Tsingle_ = TSingleSupport;
+  };
 
   /// \brief Return the double support time.
   inline const double &TDoubleSupport() const { return Tdble_; };
@@ -136,13 +138,17 @@ class MPCTrajectoryGeneration : public SimplePlugin {
   inline const double &SamplingPeriodControl() const { return Tctr_; };
 
   /// \brief Set the sampling period for the control. */
-  inline void SamplingPeriodControl(double SamplingPeriod) { Tctr_ = SamplingPeriod; };
+  inline void SamplingPeriodControl(double SamplingPeriod) {
+    Tctr_ = SamplingPeriod;
+  };
 
   /// \brief Get the sampling period for the preview, set to 0.100 by default.
   inline const double &SamplingPeriodPreview() const { return Tprw_; };
 
   /// \brief Set the sampling period for the preview.
-  inline void SamplingPeriodPreview(double SamplingPeriod) { Tprw_ = SamplingPeriod; };
+  inline void SamplingPeriodPreview(double SamplingPeriod) {
+    Tprw_ = SamplingPeriod;
+  };
 
   /// \brief Get the sampling period for the preview, set to 0.100 by default.
   inline const unsigned int &NbPrwSamplings() const { return N_; };
@@ -170,10 +176,14 @@ class MPCTrajectoryGeneration : public SimplePlugin {
   inline void StepHeight(double aSSH) { StepHeight_ = aSSH; };
 
   /// \brief Returns the ModulationSupportCoefficient.
-  inline const double &ModulationSupportCoefficient() const { return ModulationSupportCoefficient_; }
+  inline const double &ModulationSupportCoefficient() const {
+    return ModulationSupportCoefficient_;
+  }
 
   /// \brief Specify the modulation support coefficient.
-  inline void ModulationSupportCoefficient(double af) { ModulationSupportCoefficient_ = af; }
+  inline void ModulationSupportCoefficient(double af) {
+    ModulationSupportCoefficient_ = af;
+  }
 
   /// \brief Set the pitch angle of foot when landing and taking off.
   inline void setOmega(double anOmega) { Omega_ = anOmega; };
@@ -196,6 +206,6 @@ class MPCTrajectoryGeneration : public SimplePlugin {
   bool GetOnLineMode();
   /// @}  */
 };
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 
 #endif /* _TRAJ_GEN_H_ */

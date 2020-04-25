@@ -33,7 +33,7 @@
 
 namespace PatternGeneratorJRL {
 class SupportFSM {
- public:
+public:
   /*! Constructor */
   SupportFSM(const double &SamplingPeriod);
 
@@ -41,7 +41,8 @@ class SupportFSM {
   ~SupportFSM();
 
   /*! \brief Initialize the previewed state. */
-  void setSupportState(const double &Time, const int &pi, SupportState_t &Support,
+  void setSupportState(const double &Time, const int &pi,
+                       SupportState_t &Support,
                        const ReferenceAbsoluteVelocity &RefVel);
 
   ///*! \brief Numerical precision */
@@ -53,7 +54,7 @@ class SupportFSM {
   // Number of steps done before DS
   unsigned int m_NbOfStepsSSDS;
 
- private:
+private:
   /*! \Brief Sampling duration */
   double m_T;
 
@@ -61,6 +62,6 @@ class SupportFSM {
 
   int m_FullDebug;
 };
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 
 #endif /* _SUPPORT_FSM_ */

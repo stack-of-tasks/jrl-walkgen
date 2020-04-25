@@ -37,19 +37,23 @@
 
 namespace PatternGeneratorJRL {
 class NMPCgenerator {
- public:
+public:
   NMPCgenerator(SimplePluginManager *aSPM, PinocchioRobot *aPR);
 
   ~NMPCgenerator();
 
-  void initNMPCgenerator(bool useLineSearch, support_state_t &currentSupport, COMState &lStartingCOMState,
-                         reference_t &local_vel_ref, unsigned N, unsigned nf, double T, double T_step);
-  void updateInitialCondition(double time, FootAbsolutePosition &currentLeftFootAbsolutePosition,
-                              FootAbsolutePosition &currentRightFootAbsolutePosition, COMState &currentCOMState,
-                              reference_t &local_vel_ref);
+  void initNMPCgenerator(bool useLineSearch, support_state_t &currentSupport,
+                         COMState &lStartingCOMState,
+                         reference_t &local_vel_ref, unsigned N, unsigned nf,
+                         double T, double T_step);
+  void
+  updateInitialCondition(double time,
+                         FootAbsolutePosition &currentLeftFootAbsolutePosition,
+                         FootAbsolutePosition &currentRightFootAbsolutePosition,
+                         COMState &currentCOMState, reference_t &local_vel_ref);
   void solve();
 
- private:
+private:
   //////////////////////
   // Solve the Problem :
   //////////////////////
@@ -66,8 +70,10 @@ class NMPCgenerator {
   //    void updateFinalStateMachine(double time,
   //        FootAbsolutePosition &FinalLeftFoot,
   //        FootAbsolutePosition &FinalRightFoot);
-  void updateCurrentSupport(double time, FootAbsolutePosition &FinalLeftFoot, FootAbsolutePosition &FinalRightFoot);
-  void updateSupportdeque(double time, FootAbsolutePosition &FinalLeftFoot, FootAbsolutePosition &FinalRightFoot);
+  void updateCurrentSupport(double time, FootAbsolutePosition &FinalLeftFoot,
+                            FootAbsolutePosition &FinalRightFoot);
+  void updateSupportdeque(double time, FootAbsolutePosition &FinalLeftFoot,
+                          FootAbsolutePosition &FinalRightFoot);
   void computeFootSelectionMatrix();
   void updateInitialConditionDependentMatrices();
   void guessWarmStart();
@@ -115,23 +121,31 @@ class NMPCgenerator {
 
   // construct the constant matrix depending
   // on the Euler integration scheme and the com height
-  void buildCoMCoPIntegrationMatrix();  // depend on c_k_z_
+  void buildCoMCoPIntegrationMatrix(); // depend on c_k_z_
   void updateCoMCoPIntegrationMatrix();
-  void buildConvexHullSystems();  // depend on the robot
+  void buildConvexHullSystems(); // depend on the robot
 
- public:
+public:
   // Getter and Setter
   ////////////////////
   void setLocalVelocityReference(reference_t local_vel_ref);
   void setGlobalVelocityReference(reference_t global_vel_ref);
 
-  inline support_state_t const &currentSupport() const { return currentSupport_; }
+  inline support_state_t const &currentSupport() const {
+    return currentSupport_;
+  }
   inline support_state_t &currentSupport() { return currentSupport_; }
-  inline void setNbStepsLeft(unsigned NbStepsLeft) { currentSupport_.NbStepsLeft = NbStepsLeft; }
+  inline void setNbStepsLeft(unsigned NbStepsLeft) {
+    currentSupport_.NbStepsLeft = NbStepsLeft;
+  }
 
-  void getSolution(std::vector<double> &JerkX, std::vector<double> &JerkY, std::vector<double> &FootStepX,
-                   std::vector<double> &FootStepY, std::vector<double> &FootStepYaw);
-  inline std::deque<support_state_t> const &SupportStates_deq() const { return SupportStates_deq_; }
+  void getSolution(std::vector<double> &JerkX, std::vector<double> &JerkY,
+                   std::vector<double> &FootStepX,
+                   std::vector<double> &FootStepY,
+                   std::vector<double> &FootStepYaw);
+  inline std::deque<support_state_t> const &SupportStates_deq() const {
+    return SupportStates_deq_;
+  }
 
   inline void addOneObstacle(double x, double y, double r) {
     Circle newObstacle;
@@ -172,9 +186,11 @@ class NMPCgenerator {
   inline double T_step() { return T_step_; }
   inline void T_step(double T_step) { T_step_ = T_step; }
 
-  std::deque<RelativeFootPosition> &relativeSupportDeque() { return desiredNextSupportFootRelativePosition; }
+  std::deque<RelativeFootPosition> &relativeSupportDeque() {
+    return desiredNextSupportFootRelativePosition;
+  }
 
- private:
+private:
   SimplePluginManager *SPM_;
   PinocchioRobot *PR_;
 
@@ -215,7 +231,8 @@ class NMPCgenerator {
   Eigen::VectorXd UBcop_;
   Eigen::MatrixXd D_kp1_xy_, D_kp1_theta_, Pzuv_, derv_Acop_map_;
   Eigen::MatrixXd derv_Acop_map2_;
-  Eigen::VectorXd b_kp1_, Pzsc_, Pzsc_x_, Pzsc_y_, v_kp1f_, v_kp1f_x_, v_kp1f_y_;
+  Eigen::VectorXd b_kp1_, Pzsc_, Pzsc_x_, Pzsc_y_, v_kp1f_, v_kp1f_x_,
+      v_kp1f_y_;
   Eigen::VectorXd v_kf_x_, v_kf_y_;
   Eigen::MatrixXd diffMat_;
   Eigen::MatrixXd rotMat_xy_, rotMat_theta_, rotMat_;
@@ -261,8 +278,8 @@ class NMPCgenerator {
 
   // Obstacle constraint
   unsigned nc_obs_;
-  std::vector<std::vector<Eigen::MatrixXd>> Hobs_;
-  std::vector<std::vector<Eigen::VectorXd>> Aobs_;
+  std::vector<std::vector<Eigen::MatrixXd> > Hobs_;
+  std::vector<std::vector<Eigen::VectorXd> > Aobs_;
   std::vector<Eigen::VectorXd> UBobs_;
   std::vector<Circle> obstacles_;
   Eigen::VectorXd qp_J_obs_i_;
@@ -281,7 +298,7 @@ class NMPCgenerator {
   Eigen::VectorXd gU_obs_, gU_rot_, gU_stan_;
 
   // Cost Function
-  unsigned nv_;  // number of degrees of freedom
+  unsigned nv_; // number of degrees of freedom
   // initial problem matrix
   Eigen::MatrixXd Q_theta_, I_NN_, I_FF_;
 
@@ -294,17 +311,17 @@ class NMPCgenerator {
   // Q_x = ( Q_x_XX Q_x_XF ) = Q_y
   //       ( Q_x_FX Q_x_FF )
   Eigen::MatrixXd Q_x_XX_, Q_x_XF_, Q_x_FX_, Q_x_FF_;
-  Eigen::MatrixXd Q_y_XX_;  // Q_x_XX_ != Q_y_XX_
+  Eigen::MatrixXd Q_y_XX_; // Q_x_XX_ != Q_y_XX_
 
   // Line Search
   bool useLineSearch_;
   Eigen::VectorXd p_, U_n_, selectActiveConstraint;
   Eigen::VectorXd JdU_, contraintValue;
   Eigen::VectorXd HUn_;
-  double lineStep_, lineStep0_, stepParam_;  // step searched
-  double mu_;                                // weight between cost function and constraints
-  double cm_, c_;                            // Merit Function Jacobian
-  double L_n_, L_;                           // Merit function of the next step and Merit function
+  double lineStep_, lineStep0_, stepParam_; // step searched
+  double mu_;      // weight between cost function and constraints
+  double cm_, c_;  // Merit Function Jacobian
+  double L_n_, L_; // Merit function of the next step and Merit function
   unsigned maxLineSearchIteration_;
   bool oneMoreStep_;
   unsigned maxSolverIteration_;
@@ -315,8 +332,8 @@ class NMPCgenerator {
   unsigned nc_;
   Eigen::MatrixXd qp_H_;
   Eigen::VectorXd qp_g_;
-  Eigen::MatrixXd qp_J_;    // constraint Jacobian
-  Eigen::VectorXd qp_ubJ_;  // constraint Jacobian
+  Eigen::MatrixXd qp_J_;   // constraint Jacobian
+  Eigen::VectorXd qp_ubJ_; // constraint Jacobian
   // temporary usefull variable for matrix manipulation
   Eigen::VectorXd qp_g_x_, qp_g_y_, qp_g_theta_;
 
@@ -436,6 +453,6 @@ class NMPCgenerator {
 //    void jacobian();
 //  };
 
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 
-#endif  // NMPC_GENERATOR_H
+#endif // NMPC_GENERATOR_H

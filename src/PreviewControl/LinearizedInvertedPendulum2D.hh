@@ -39,7 +39,7 @@
 
 namespace PatternGeneratorJRL {
 class LinearizedInvertedPendulum2D {
- public:
+public:
   /*! Constructor */
   LinearizedInvertedPendulum2D();
 
@@ -65,8 +65,9 @@ class LinearizedInvertedPendulum2D {
     \param[in]: CX: command parameter in the forward direction.
     \param[in]: CY: command parameter in the perpendicular direction.
   */
-  int Interpolation(std::deque<COMState> &COMStates, std::deque<ZMPPosition> &ZMPRefPositions, int CurrentPosition,
-                    double CX, double CY);
+  int Interpolation(std::deque<COMState> &COMStates,
+                    std::deque<ZMPPosition> &ZMPRefPositions,
+                    int CurrentPosition, double CX, double CY);
 
   /*! \brief Simulate one iteration of the LIPM
     \param[in] CX: control value in the forward direction.
@@ -75,7 +76,7 @@ class LinearizedInvertedPendulum2D {
   */
   com_t OneIteration(double CX, double CY);
 
- private:
+private:
   /*! \name Internal parameters.
     @{
   */
@@ -113,7 +114,7 @@ class LinearizedInvertedPendulum2D {
 
   /* ! @} */
 
- public:
+public:
   /*! \name Getter and setter of variables
     @{
   */
@@ -152,5 +153,5 @@ class LinearizedInvertedPendulum2D {
   void setState(COMState &aCoM);
   /*! @} */
 };
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 #endif /* _LINEAR_INVERTED_PENDULUM_2D_H_ */

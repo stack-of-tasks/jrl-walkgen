@@ -46,10 +46,12 @@ namespace PatternGeneratorJRL {
     \brief Class to implement the preview control
 */
 class PreviewControl : public SimplePlugin {
- public:
+public:
   /*! Constructor */
-  PreviewControl(SimplePluginManager *lSPM, unsigned int defaultMode = OptimalControllerSolver::MODE_WITH_INITIALPOS,
-                 bool computeWeightsAutomatically = false);
+  PreviewControl(
+      SimplePluginManager *lSPM,
+      unsigned int defaultMode = OptimalControllerSolver::MODE_WITH_INITIALPOS,
+      bool computeWeightsAutomatically = false);
 
   /*! Destructor */
   ~PreviewControl();
@@ -60,14 +62,17 @@ class PreviewControl : public SimplePlugin {
   void ReadPrecomputedFile(string aFileName);
 
   /*! \brief One iteration of the preview control. */
-  int OneIterationOfPreview(Eigen::MatrixXd &x, Eigen::MatrixXd &y, double &sxzmp, double &syzmp,
-                            deque<PatternGeneratorJRL::ZMPPosition> &ZMPPositions, unsigned long int lindex,
-                            double &zmpx2, double &zmpy2, bool Simulation);
+  int OneIterationOfPreview(
+      Eigen::MatrixXd &x, Eigen::MatrixXd &y, double &sxzmp, double &syzmp,
+      deque<PatternGeneratorJRL::ZMPPosition> &ZMPPositions,
+      unsigned long int lindex, double &zmpx2, double &zmpy2, bool Simulation);
 
   /*! \brief One iteration of the preview control
     along one axis (using queues)*/
-  int OneIterationOfPreview1D(Eigen::MatrixXd &x, double &sxzmp, deque<double> &ZMPPositions, unsigned long int lindex,
-                              double &zmpx2, bool Simulation);
+  int OneIterationOfPreview1D(Eigen::MatrixXd &x, double &sxzmp,
+                              deque<double> &ZMPPositions,
+                              unsigned long int lindex, double &zmpx2,
+                              bool Simulation);
 
   /*! \brief One iteration of the preview control along one axis
     (using vectors)
@@ -79,8 +84,10 @@ class PreviewControl : public SimplePlugin {
     \param [out] zmpx2: Resulting ZMP value.
     \param [in] Simulation: This should be set to false.
   */
-  int OneIterationOfPreview1D(Eigen::MatrixXd &x, double &sxzmp, vector<double> &ZMPPositions,
-                              unsigned long int lindex, double &zmpx2, bool Simulation);
+  int OneIterationOfPreview1D(Eigen::MatrixXd &x, double &sxzmp,
+                              vector<double> &ZMPPositions,
+                              unsigned long int lindex, double &zmpx2,
+                              bool Simulation);
 
   /*! \name Methods to access the basic variables of the preview control.
     @{
@@ -121,7 +128,7 @@ class PreviewControl : public SimplePlugin {
   /*! \brief Overloading method of SimplePlugin */
   virtual void CallMethod(std::string &Method, std::istringstream &astrm);
 
- private:
+private:
   /*! \brief Matrices for preview control. */
   Eigen::MatrixXd m_A;
   Eigen::MatrixXd m_B;
@@ -162,6 +169,6 @@ class PreviewControl : public SimplePlugin {
   /*! \brief Default Mode. */
   unsigned int m_DefaultWeightComputationMode;
 };
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 #include <ZMPRefTrajectoryGeneration/ZMPDiscretization.hh>
 #endif /* _PREVIEW_CONTROL_H_ */

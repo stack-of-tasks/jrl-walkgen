@@ -45,22 +45,27 @@ class SimplePlugin;
 
 */
 class SimplePluginManager {
- public:
+public:
   struct ltstr {
-    bool operator()(const std::string s1, const std::string s2) const { return strcmp(s1.c_str(), s2.c_str()) < 0; }
+    bool operator()(const std::string s1, const std::string s2) const {
+      return strcmp(s1.c_str(), s2.c_str()) < 0;
+    }
   };
 
- protected:
+protected:
   /*! Set of plugins sorted by names */
   std::multimap<std::string, SimplePlugin *, ltstr> m_SimplePlugins;
 
- public:
+public:
   /*! \brief Pointer towards the PGI which is handling this object. */
   SimplePluginManager();
   virtual ~SimplePluginManager();
 
   /*! Get the map of plugins. */
-  const std::multimap<std::string, SimplePlugin *, ltstr> &getSimplePlugins() const { return m_SimplePlugins; };
+  const std::multimap<std::string, SimplePlugin *, ltstr> &
+  getSimplePlugins() const {
+    return m_SimplePlugins;
+  };
 
   /*! \name Register the method for which this object can be called
     by a higher parser. */
@@ -75,7 +80,7 @@ class SimplePluginManager {
   /*! \name Operator to display in cout. */
   void Print();
 };
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 
 #include <SimplePlugin.hh>
 

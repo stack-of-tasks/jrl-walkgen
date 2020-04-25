@@ -45,14 +45,15 @@ namespace PatternGeneratorJRL {
   matrix \$f{\bf A} \f$ of size \f$(m,\|u\|)\f$.
 */
 class OptCholesky {
- public:
+public:
   /*! \brief Constructor
     @param[in] lNbMaxOfConstraints \f$ m \f$ the number
     of constraints of matrix \f$ \bf A \f$
     @param[in] lCardU \f$ \|{\bf u}\| \f$ the size of
     vector \f$ {\bf u} \f$.
   */
-  OptCholesky(unsigned int lNbMaxOfConstraints, unsigned int lCardU, unsigned int mode);
+  OptCholesky(unsigned int lNbMaxOfConstraints, unsigned int lCardU,
+              unsigned int mode);
 
   /*! \brief Destructor */
   ~OptCholesky();
@@ -99,7 +100,7 @@ class OptCholesky {
   static const unsigned int MODE_NORMAL = 0;
   static const unsigned int MODE_FORTRAN = 1;
 
- private:
+private:
   /*! \brief Size of the constraints,
     i.e. maximum number of rows for \f$ E E^{\top} \f$ */
   unsigned int m_NbMaxOfConstraints;
@@ -142,6 +143,6 @@ class OptCholesky {
   /*! \brief Initialization of the internal variables. */
   void InitializeInternalVariables();
 };
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 
 #endif /* _CHOLESKY_DEC_H_ */

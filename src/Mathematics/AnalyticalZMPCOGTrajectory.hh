@@ -40,7 +40,7 @@ namespace PatternGeneratorJRL {
 
 */
 class AnalyticalZMPCOGTrajectory {
- public:
+public:
   /*! Constructor */
   AnalyticalZMPCOGTrajectory(int lNbOfIntervals = 0);
 
@@ -137,10 +137,12 @@ class AnalyticalZMPCOGTrajectory {
 
   /*! \brief Set the coefficients for the sinuse and cosinues
     function. */
-  void SetCoGHyperbolicCoefficients(std::vector<double> &lV, std::vector<double> &lW);
+  void SetCoGHyperbolicCoefficients(std::vector<double> &lV,
+                                    std::vector<double> &lW);
 
   /*! \brief Set the starting point and the height variation. */
-  void SetStartingTimeIntervalsAndHeightVariation(std::vector<double> &lDeltaTj, std::vector<double> &lomegaj);
+  void SetStartingTimeIntervalsAndHeightVariation(std::vector<double> &lDeltaTj,
+                                                  std::vector<double> &lomegaj);
 
   /*! \brief Set the degree of each polynomials for the CoG
     Remark: the size of the vector of degrees should match the number
@@ -158,10 +160,12 @@ class AnalyticalZMPCOGTrajectory {
 
   /*! \brief Get the coefficients for the sinuse and cosinues
     function. */
-  void GetHyperbolicCoefficients(std::vector<double> &lV, std::vector<double> &lW) const;
+  void GetHyperbolicCoefficients(std::vector<double> &lV,
+                                 std::vector<double> &lW) const;
 
   /*! \brief Get the starting point and the height variation. */
-  void GetStartingPointAndHeightVariation(std::vector<double> &lTj, std::vector<double> &lomegaj);
+  void GetStartingPointAndHeightVariation(std::vector<double> &lTj,
+                                          std::vector<double> &lomegaj);
 
   /*! \brief Get the polynomial at interval j for the CoG
     Remark: The call to this function assume that the
@@ -181,20 +185,23 @@ class AnalyticalZMPCOGTrajectory {
     @param lCOMZ: Profile of the height CoM for each interval.
     @param lZMPZ: Profile of the height ZMP for each interval.
   */
-  void TransfertCoefficientsFromCOGTrajectoryToZMPOne(std::vector<double> &lCOMZ, std::vector<double> &lZMPZ);
+  void
+  TransfertCoefficientsFromCOGTrajectoryToZMPOne(std::vector<double> &lCOMZ,
+                                                 std::vector<double> &lZMPZ);
 
   /*! \brief Transfert the coefficients from the COG trajectory to the ZMP.
     @param IntervalIndex: Number of the interval.
     @param lCOMZ: Value of the CoM height for this interval.
     @param lZMPZ: Value of the ZMP height for this interval.
   */
-  void TransfertOneIntervalCoefficientsFromCOGTrajectoryToZMPOne(unsigned int IntervalIndex, double &lCOMZ,
-                                                                 double &lZMPZ);
+  void TransfertOneIntervalCoefficientsFromCOGTrajectoryToZMPOne(
+      unsigned int IntervalIndex, double &lCOMZ, double &lZMPZ);
 
   /*! Build the coefficients of a third order COG polynomial according
     to  the OmegaC and the value of the ZMP at the beginning and the end
     of the interval, and assuming that the speed is set to zero.  */
-  void Building3rdOrderPolynomial(unsigned int anIntervalj, double pjTjm1, double pjTj);
+  void Building3rdOrderPolynomial(unsigned int anIntervalj, double pjTjm1,
+                                  double pjTj);
 
   /*@} */
 
@@ -202,22 +209,26 @@ class AnalyticalZMPCOGTrajectory {
     trajectory. */
   double FluctuationMaximal();
 
-  friend std::ostream &operator<<(std::ostream &os, const AnalyticalZMPCOGTrajectory &obj);
+  friend std::ostream &operator<<(std::ostream &os,
+                                  const AnalyticalZMPCOGTrajectory &obj);
 
   /*! \brief Absolute Time reference of this trajectory. */
   double GetAbsoluteTimeReference() const { return m_AbsoluteTimeReference; }
 
   /*! \brief Set Absolute time reference of this trajectory */
-  void SetAbsoluteTimeReference(double anAbsoluteTimeReference) { m_AbsoluteTimeReference = anAbsoluteTimeReference; }
+  void SetAbsoluteTimeReference(double anAbsoluteTimeReference) {
+    m_AbsoluteTimeReference = anAbsoluteTimeReference;
+  }
 
   /*! \brief Get the index of the interval according to the time. */
   bool GetIntervalIndexFromTime(double t, unsigned int &j);
 
   /*! \brief Get the index of the interval according to the time,
     and the previous value of the interval. */
-  bool GetIntervalIndexFromTime(double t, unsigned int &j, unsigned int &prev_j);
+  bool GetIntervalIndexFromTime(double t, unsigned int &j,
+                                unsigned int &prev_j);
 
- protected:
+protected:
   /*! Number of intervals */
   int m_NbOfIntervals;
 
@@ -258,6 +269,7 @@ class AnalyticalZMPCOGTrajectory {
   double m_Sensitivity;
 };
 
-std::ostream &operator<<(std::ostream &os, const AnalyticalZMPCOGTrajectory &obj);
-}  // namespace PatternGeneratorJRL
+std::ostream &operator<<(std::ostream &os,
+                         const AnalyticalZMPCOGTrajectory &obj);
+} // namespace PatternGeneratorJRL
 #endif /* _ANALYTICAL_COG_H_ */

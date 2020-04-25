@@ -50,7 +50,7 @@ class PatternGeneratorInterfacePrivate;
 
 */
 class ComAndFootRealization : public SimplePlugin {
- private:
+private:
   /*! \brief Store the dynamic robot. */
   PinocchioRobot *m_PinocchioRobot;
 
@@ -63,17 +63,17 @@ class ComAndFootRealization : public SimplePlugin {
   /*! Object which handles a Stack of steps */
   StepStackHandler *m_StepStackHandler;
 
- public:
+public:
   /* \name Constructor and destructor.*/
 
   /*! \brief Constructor
 
    */
-  inline ComAndFootRealization(PatternGeneratorInterfacePrivate *aPatternGeneratorInterface)
-      : SimplePlugin((PatternGeneratorJRL::SimplePluginManager *)aPatternGeneratorInterface),
-        m_PinocchioRobot(0),
-        m_HeightOfCoM(0),
-        m_SamplingPeriod(0.005),
+  inline ComAndFootRealization(
+      PatternGeneratorInterfacePrivate *aPatternGeneratorInterface)
+      : SimplePlugin((PatternGeneratorJRL::SimplePluginManager *)
+                         aPatternGeneratorInterface),
+        m_PinocchioRobot(0), m_HeightOfCoM(0), m_SamplingPeriod(0.005),
         m_StepStackHandler(0){};
 
   /*! \brief virtual destructor */
@@ -114,9 +114,11 @@ class ComAndFootRealization : public SimplePlugin {
     @param Stage: indicates which stage is reach by the Pattern Generator.
   */
   virtual bool ComputePostureForGivenCoMAndFeetPosture(
-      Eigen::VectorXd &COMPOSITION, Eigen::VectorXd &CoMSpeed, Eigen::VectorXd &CoMAcc, Eigen::VectorXd &LeftFoot,
-      Eigen::VectorXd &RightFoot, Eigen::VectorXd &CurrentConfiguration, Eigen::VectorXd &CurrentVelocity,
-      Eigen::VectorXd &CurrentAcceleration, unsigned long int IterationNumber, int Stage) = 0;
+      Eigen::VectorXd &COMPOSITION, Eigen::VectorXd &CoMSpeed,
+      Eigen::VectorXd &CoMAcc, Eigen::VectorXd &LeftFoot,
+      Eigen::VectorXd &RightFoot, Eigen::VectorXd &CurrentConfiguration,
+      Eigen::VectorXd &CurrentVelocity, Eigen::VectorXd &CurrentAcceleration,
+      unsigned long int IterationNumber, int Stage) = 0;
 
   /*! Returns the waist position associate to the current
     @} */
@@ -145,16 +147,19 @@ class ComAndFootRealization : public SimplePlugin {
     IMPORTANT: The jrlHumanoidDynamicRobot must have been properly set up.
 
   */
-  virtual bool InitializationCoM(Eigen::VectorXd &BodyAnglesIni, Eigen::Vector3d &lStartingCOMPosition,
-                                 Eigen::Matrix<double, 6, 1> &lStartingWaistPose,
-                                 FootAbsolutePosition &InitLeftFootAbsPos,
-                                 FootAbsolutePosition &InitRightFootAbsPos) = 0;
+  virtual bool
+  InitializationCoM(Eigen::VectorXd &BodyAnglesIni,
+                    Eigen::Vector3d &lStartingCOMPosition,
+                    Eigen::Matrix<double, 6, 1> &lStartingWaistPose,
+                    FootAbsolutePosition &InitLeftFootAbsPos,
+                    FootAbsolutePosition &InitRightFootAbsPos) = 0;
 
   /*! This initialization phase, make sure that the needed buffers
     for the upper body motion are correctly setup.
   */
-  virtual bool InitializationUpperBody(deque<ZMPPosition> &inZMPPositions, deque<COMPosition> &inCOMBuffer,
-                                       deque<RelativeFootPosition> lRelativeFootPositions) = 0;
+  virtual bool InitializationUpperBody(
+      deque<ZMPPosition> &inZMPPositions, deque<COMPosition> &inCOMBuffer,
+      deque<RelativeFootPosition> lRelativeFootPositions) = 0;
 
   /* @} */
 
@@ -168,7 +173,9 @@ class ComAndFootRealization : public SimplePlugin {
     @{
   */
 
-  void SetHeightOfTheCoM(double theHeightOfTheCoM) { m_HeightOfCoM = theHeightOfTheCoM; }
+  void SetHeightOfTheCoM(double theHeightOfTheCoM) {
+    m_HeightOfCoM = theHeightOfTheCoM;
+  }
 
   const double &GetHeightOfTheCoM() const { return m_HeightOfCoM; }
   /*! @} */
@@ -177,13 +184,17 @@ class ComAndFootRealization : public SimplePlugin {
     @{
   */
   /*! Setter for the sampling period. */
-  inline void setSamplingPeriod(double aSamplingPeriod) { m_SamplingPeriod = aSamplingPeriod; }
+  inline void setSamplingPeriod(double aSamplingPeriod) {
+    m_SamplingPeriod = aSamplingPeriod;
+  }
   /*! Getter for the sampling period. */
   inline const double &getSamplingPeriod() const { return m_SamplingPeriod; }
   /* @} */
 
   /*! \name Getter and setter for the handler of step stack  @{ */
-  void SetStepStackHandler(StepStackHandler *lStepStackHandler) { m_StepStackHandler = lStepStackHandler; }
+  void SetStepStackHandler(StepStackHandler *lStepStackHandler) {
+    m_StepStackHandler = lStepStackHandler;
+  }
 
   StepStackHandler *GetStepStackHandler() const { return m_StepStackHandler; }
   /*! @} */
@@ -198,6 +209,6 @@ class ComAndFootRealization : public SimplePlugin {
   virtual Eigen::Vector3d GetCOGInitialAnkles() = 0;
 };
 
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 
 #endif

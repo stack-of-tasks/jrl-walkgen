@@ -42,7 +42,7 @@ typedef std::vector<CH_Point> ConvexHullList;
 
 /*! This class compute the convex hull in 2D. */
 class ComputeConvexHull {
- public:
+public:
   ComputeConvexHull();
   ~ComputeConvexHull();
 
@@ -52,7 +52,8 @@ class ComputeConvexHull {
     The set of 2D points on which the convex hull is computed.
     @param TheConvexHull:
     The set of 2D points which give the convex hull. */
-  void DoComputeConvexHull(std::vector<CH_Point> aVecOfPoints, std::vector<CH_Point> &TheConvexHull);
+  void DoComputeConvexHull(std::vector<CH_Point> aVecOfPoints,
+                           std::vector<CH_Point> &TheConvexHull);
 };
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 #endif

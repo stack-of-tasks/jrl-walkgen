@@ -52,11 +52,12 @@ namespace PatternGeneratorJRL {
 
 */
 class ComAndFootRealizationByGeometry : public ComAndFootRealization {
- public:
+public:
   /*! \name Constructor and destructor */
 
   /*! Constructor */
-  ComAndFootRealizationByGeometry(PatternGeneratorInterfacePrivate *aPatternGeneratorInterface);
+  ComAndFootRealizationByGeometry(
+      PatternGeneratorInterfacePrivate *aPatternGeneratorInterface);
   /*! Destructor */
   ~ComAndFootRealizationByGeometry();
   /** @} */
@@ -95,11 +96,12 @@ class ComAndFootRealizationByGeometry : public ComAndFootRealization {
     last stage, we store some information.
 
   */
-  bool ComputePostureForGivenCoMAndFeetPosture(Eigen::VectorXd &CoMPosition, Eigen::VectorXd &aCoMSpeed,
-                                               Eigen::VectorXd &aCoMAcc, Eigen::VectorXd &LeftFoot,
-                                               Eigen::VectorXd &RightFoot, Eigen::VectorXd &CurrentConfiguration,
-                                               Eigen::VectorXd &CurrentVelocity, Eigen::VectorXd &CurrentAcceleration,
-                                               unsigned long int IterationNumber, int Stage);
+  bool ComputePostureForGivenCoMAndFeetPosture(
+      Eigen::VectorXd &CoMPosition, Eigen::VectorXd &aCoMSpeed,
+      Eigen::VectorXd &aCoMAcc, Eigen::VectorXd &LeftFoot,
+      Eigen::VectorXd &RightFoot, Eigen::VectorXd &CurrentConfiguration,
+      Eigen::VectorXd &CurrentVelocity, Eigen::VectorXd &CurrentAcceleration,
+      unsigned long int IterationNumber, int Stage);
 
   /*! \name Initialization of the walking.
     @{
@@ -111,7 +113,8 @@ class ComAndFootRealizationByGeometry : public ComAndFootRealization {
     \param[out] lStartingWaistPose: The waist pose according to the user
     configuration vector.
   */
-  bool InitializationHumanoid(Eigen::VectorXd &BodyAnglesIni, Eigen::Matrix<double, 6, 1> &lStartingWaistPose);
+  bool InitializationHumanoid(Eigen::VectorXd &BodyAnglesIni,
+                              Eigen::Matrix<double, 6, 1> &lStartingWaistPose);
 
   /*! \brief Initialize the foot position.
     \param[in] aFoot: Pointer to the foot to be updated.
@@ -119,7 +122,8 @@ class ComAndFootRealizationByGeometry : public ComAndFootRealization {
     \param[out] InitFootPosition: The foot position according to the
     free flyer (set to 0.0 0.0 0.0)
   */
-  bool InitializationFoot(PRFoot *aFoot, Eigen::Vector3d &m_AnklePosition, FootAbsolutePosition &InitFootPosition);
+  bool InitializationFoot(PRFoot *aFoot, Eigen::Vector3d &m_AnklePosition,
+                          FootAbsolutePosition &InitFootPosition);
 
   /*! This initialization phase does the following:
     1/ we take the current state of the robot
@@ -130,15 +134,19 @@ class ComAndFootRealizationByGeometry : public ComAndFootRealization {
     IMPORTANT: The jrlHumanoidDynamicRobot must have been properly set up.
 
   */
-  bool InitializationCoM(Eigen::VectorXd &BodyAnglesIni, Eigen::Vector3d &lStartingCOMPosition,
-                         Eigen::Matrix<double, 6, 1> &lStartingWaistPosition, FootAbsolutePosition &InitLeftFootAbsPos,
+  bool InitializationCoM(Eigen::VectorXd &BodyAnglesIni,
+                         Eigen::Vector3d &lStartingCOMPosition,
+                         Eigen::Matrix<double, 6, 1> &lStartingWaistPosition,
+                         FootAbsolutePosition &InitLeftFootAbsPos,
                          FootAbsolutePosition &InitRightFootAbsPos);
 
   /*! This initialization phase, make sure that the needed buffers
     for the upper body motion are correctly setup.
   */
-  bool InitializationUpperBody(deque<ZMPPosition> &inZMPPositions, deque<COMPosition> &inCOMBuffer,
-                               deque<RelativeFootPosition> lRelativeFootPositions);
+  bool
+  InitializationUpperBody(deque<ZMPPosition> &inZMPPositions,
+                          deque<COMPosition> &inCOMBuffer,
+                          deque<RelativeFootPosition> lRelativeFootPositions);
 
   /* @} */
 
@@ -146,24 +154,32 @@ class ComAndFootRealizationByGeometry : public ComAndFootRealization {
     Assuming that the waist is at (0,0,0)
     It returns the associate initial values for the left and right foot.
   */
-  int EvaluateCOMForStartingPosition(Eigen::VectorXd &BodyAngles, double omega, double theta,
-                                     Eigen::Vector3d &lCOMPosition, FootAbsolutePosition &LeftFootPosition,
+  int EvaluateCOMForStartingPosition(Eigen::VectorXd &BodyAngles, double omega,
+                                     double theta,
+                                     Eigen::Vector3d &lCOMPosition,
+                                     FootAbsolutePosition &LeftFootPosition,
                                      FootAbsolutePosition &RightFootPosition);
 
   /*! Evaluate CoM for a given position.
     Assuming that the waist is at (0,0,0)
     It returns the associate initial values for the left and right foot.*/
 
-  int EvaluateStartingCoM(Eigen::VectorXd &BodyAngles, Eigen::Vector3d &aStartingCOMPosition,
-                          FootAbsolutePosition &InitLeftFootPosition, FootAbsolutePosition &InitRightFootPosition);
+  int EvaluateStartingCoM(Eigen::VectorXd &BodyAngles,
+                          Eigen::Vector3d &aStartingCOMPosition,
+                          FootAbsolutePosition &InitLeftFootPosition,
+                          FootAbsolutePosition &InitRightFootPosition);
 
-  int EvaluateStartingCoM(Eigen::VectorXd &BodyAngles, Eigen::Vector3d &aStartingCOMPosition,
-                          Eigen::Matrix<double, 6, 1> &aWaistPose, FootAbsolutePosition &InitLeftFootPosition,
+  int EvaluateStartingCoM(Eigen::VectorXd &BodyAngles,
+                          Eigen::Vector3d &aStartingCOMPosition,
+                          Eigen::Matrix<double, 6, 1> &aWaistPose,
+                          FootAbsolutePosition &InitLeftFootPosition,
                           FootAbsolutePosition &InitRightFootPosition);
 
   /*! Method to compute the heuristic for the arms. */
-  void ComputeUpperBodyHeuristicForNormalWalking(Eigen::VectorXd &qArmr, Eigen::VectorXd &qArml,
-                                                 Eigen::VectorXd &aCOMPosition, Eigen::VectorXd &RFP,
+  void ComputeUpperBodyHeuristicForNormalWalking(Eigen::VectorXd &qArmr,
+                                                 Eigen::VectorXd &qArml,
+                                                 Eigen::VectorXd &aCOMPosition,
+                                                 Eigen::VectorXd &RFP,
                                                  Eigen::VectorXd &LFP);
 
   /*! This method returns the final COM pose matrix
@@ -171,7 +187,8 @@ class ComAndFootRealizationByGeometry : public ComAndFootRealization {
   Eigen::MatrixXd GetFinalDesiredCOMPose();
 
   /*! Returns the position of the Waist in the the COM Frame . */
-  void GetCurrentPositionofWaistInCOMFrame(Eigen::VectorXd &CurPosWICF_homogeneous);
+  void
+  GetCurrentPositionofWaistInCOMFrame(Eigen::VectorXd &CurPosWICF_homogeneous);
 
   /*! Reimplementation of the setter of the HumanoidDynamicRobot. */
   bool setPinocchioRobot(PinocchioRobot *aHumanoidDynamicRobot);
@@ -189,9 +206,11 @@ class ComAndFootRealizationByGeometry : public ComAndFootRealization {
     @param[in] LeftOrRight: -1 for the right leg, 1 for the left.
     @param[out] lq : Values of the leg which realize the position asked for.
   */
-  bool KinematicsForOneLeg(Eigen::Matrix3d &Body_R, Eigen::Vector3d &Body_P, Eigen::VectorXd &aFoot,
-                           Eigen::Vector3d &lDt, Eigen::VectorXd &aCoMPosition, Eigen::Vector3d &ToTheHip,
-                           int LeftOrRight, Eigen::VectorXd &lq, int Stage);
+  bool KinematicsForOneLeg(Eigen::Matrix3d &Body_R, Eigen::Vector3d &Body_P,
+                           Eigen::VectorXd &aFoot, Eigen::Vector3d &lDt,
+                           Eigen::VectorXd &aCoMPosition,
+                           Eigen::Vector3d &ToTheHip, int LeftOrRight,
+                           Eigen::VectorXd &lq, int Stage);
 
   /*! Compute the angles values considering two 6DOF legs for a given
     configuration
@@ -204,8 +223,10 @@ class ComAndFootRealizationByGeometry : public ComAndFootRealization {
     @param qr: Angles for the right leg to achieve the positions.
     @param AbsoluteWaistPosition: The waist position.
   */
-  bool KinematicsForTheLegs(Eigen::VectorXd &aCoMPosition, Eigen::VectorXd &aLeftFoot, Eigen::VectorXd &aRightFoot,
-                            int Stage, Eigen::VectorXd &ql, Eigen::VectorXd &qr,
+  bool KinematicsForTheLegs(Eigen::VectorXd &aCoMPosition,
+                            Eigen::VectorXd &aLeftFoot,
+                            Eigen::VectorXd &aRightFoot, int Stage,
+                            Eigen::VectorXd &ql, Eigen::VectorXd &qr,
                             Eigen::Vector3d &AbsoluteWaistPosition);
 
   /*! \brief Implement the Plugin part to receive information from
@@ -221,61 +242,91 @@ class ComAndFootRealizationByGeometry : public ComAndFootRealization {
 
   /*! \brief Getter and setter for the previous
     configurations and velocities */
-  inline void SetPreviousConfigurationStage0(Eigen::VectorXd &prev_Configuration) {
+  inline void
+  SetPreviousConfigurationStage0(Eigen::VectorXd &prev_Configuration) {
     m_prev_Configuration = prev_Configuration;
   }
-  inline void SetPreviousVelocityStage0(Eigen::VectorXd &prev_Velocity) { m_prev_Velocity = prev_Velocity; }
+  inline void SetPreviousVelocityStage0(Eigen::VectorXd &prev_Velocity) {
+    m_prev_Velocity = prev_Velocity;
+  }
 
-  inline void SetPreviousConfigurationStage1(Eigen::VectorXd &prev_Configuration) {
+  inline void
+  SetPreviousConfigurationStage1(Eigen::VectorXd &prev_Configuration) {
     m_prev_Configuration1 = prev_Configuration;
   }
-  inline void SetPreviousVelocityStage1(Eigen::VectorXd &prev_Velocity) { m_prev_Velocity1 = prev_Velocity; }
+  inline void SetPreviousVelocityStage1(Eigen::VectorXd &prev_Velocity) {
+    m_prev_Velocity1 = prev_Velocity;
+  }
 
-  inline void SetPreviousConfigurationStage2(Eigen::VectorXd &prev_Configuration) {
+  inline void
+  SetPreviousConfigurationStage2(Eigen::VectorXd &prev_Configuration) {
     m_prev_Configuration2 = prev_Configuration;
   }
-  inline void SetPreviousVelocityStage2(Eigen::VectorXd &prev_Velocity) { m_prev_Velocity2 = prev_Velocity; }
+  inline void SetPreviousVelocityStage2(Eigen::VectorXd &prev_Velocity) {
+    m_prev_Velocity2 = prev_Velocity;
+  }
 
   /*! \brief Getter and setter for the
     previous configurations and velocities */
-  inline void SetPreviousConfigurationStage0(const Eigen::VectorXd &prev_Configuration) {
+  inline void
+  SetPreviousConfigurationStage0(const Eigen::VectorXd &prev_Configuration) {
     m_prev_Configuration = prev_Configuration;
   }
-  inline void SetPreviousVelocityStage0(const Eigen::VectorXd &prev_Velocity) { m_prev_Velocity = prev_Velocity; }
+  inline void SetPreviousVelocityStage0(const Eigen::VectorXd &prev_Velocity) {
+    m_prev_Velocity = prev_Velocity;
+  }
 
-  inline void SetPreviousConfigurationStage1(const Eigen::VectorXd &prev_Configuration) {
+  inline void
+  SetPreviousConfigurationStage1(const Eigen::VectorXd &prev_Configuration) {
     m_prev_Configuration1 = prev_Configuration;
   }
-  inline void SetPreviousVelocityStage1(const Eigen::VectorXd &prev_Velocity) { m_prev_Velocity1 = prev_Velocity; }
+  inline void SetPreviousVelocityStage1(const Eigen::VectorXd &prev_Velocity) {
+    m_prev_Velocity1 = prev_Velocity;
+  }
 
-  inline void SetPreviousConfigurationStage2(const Eigen::VectorXd &prev_Configuration) {
+  inline void
+  SetPreviousConfigurationStage2(const Eigen::VectorXd &prev_Configuration) {
     m_prev_Configuration2 = prev_Configuration;
   }
-  inline void SetPreviousVelocityStage2(const Eigen::VectorXd &prev_Velocity) { m_prev_Velocity2 = prev_Velocity; }
+  inline void SetPreviousVelocityStage2(const Eigen::VectorXd &prev_Velocity) {
+    m_prev_Velocity2 = prev_Velocity;
+  }
 
   /*! \brief Getter and setter for the previous
     configurations and velocities */
-  inline Eigen::VectorXd &GetPreviousConfigurationStage0() { return m_prev_Configuration; };
+  inline Eigen::VectorXd &GetPreviousConfigurationStage0() {
+    return m_prev_Configuration;
+  };
 
-  inline Eigen::VectorXd &GetPreviousConfigurationStage1() { return m_prev_Configuration1; };
+  inline Eigen::VectorXd &GetPreviousConfigurationStage1() {
+    return m_prev_Configuration1;
+  };
 
-  inline Eigen::VectorXd &GetPreviousVelocityStage0() { return m_prev_Velocity; };
+  inline Eigen::VectorXd &GetPreviousVelocityStage0() {
+    return m_prev_Velocity;
+  };
 
-  inline Eigen::VectorXd &GetPreviousVelocityStage1() { return m_prev_Velocity1; };
+  inline Eigen::VectorXd &GetPreviousVelocityStage1() {
+    return m_prev_Velocity1;
+  };
 
   inline void leftLegIndexinConfiguration(std::vector<int> &leftLegMaps) const {
     leftLegMaps = m_LeftLegIndexinConfiguration;
   }
-  inline void rightLegIndexinConfiguration(std::vector<int> &rightLegMaps) const {
+  inline void
+  rightLegIndexinConfiguration(std::vector<int> &rightLegMaps) const {
     rightLegMaps = m_RightLegIndexinConfiguration;
   }
   inline void leftArmIndexinConfiguration(std::vector<int> &leftArmMaps) const {
     leftArmMaps = m_LeftArmIndexinConfiguration;
   }
-  inline void rightArmIndexinConfiguration(std::vector<int> &rightArmMaps) const {
+  inline void
+  rightArmIndexinConfiguration(std::vector<int> &rightArmMaps) const {
     rightArmMaps = m_RightArmIndexinConfiguration;
   }
-  inline void chestIndexinConfiguration(std::vector<int> &chestMaps) const { chestMaps = m_ChestIndexinConfiguration; }
+  inline void chestIndexinConfiguration(std::vector<int> &chestMaps) const {
+    chestMaps = m_ChestIndexinConfiguration;
+  }
 
   inline void leftLegIndexinVelocity(std::vector<int> &leftLegMaps) const {
     leftLegMaps = m_LeftLegIndexinConfiguration;
@@ -289,7 +340,9 @@ class ComAndFootRealizationByGeometry : public ComAndFootRealization {
   inline void rightArmIndexinVelocity(std::vector<int> &rightArmMaps) const {
     rightArmMaps = m_RightArmIndexinConfiguration;
   }
-  inline void chestIndexinVelocity(std::vector<int> &chestMaps) const { chestMaps = m_ChestIndexinConfiguration; }
+  inline void chestIndexinVelocity(std::vector<int> &chestMaps) const {
+    chestMaps = m_ChestIndexinConfiguration;
+  }
 
   inline bool ShiftFoot() { return ShiftFoot_; }
   inline void ShiftFoot(bool ShiftFoot) { ShiftFoot_ = ShiftFoot; }
@@ -299,10 +352,11 @@ class ComAndFootRealizationByGeometry : public ComAndFootRealization {
 
   friend ostream &operator<<(ostream &os, const ComAndFootRealization &obj);
 
- protected:
+protected:
   /*! \brief Initialization of internal maps of indexes */
   void InitializationMaps(std::vector<pinocchio::JointIndex> &FromRootToFoot,
-                          pinocchio::JointModelVector &ActuatedJoints, std::vector<int> &IndexinConfiguration,
+                          pinocchio::JointModelVector &ActuatedJoints,
+                          std::vector<int> &IndexinConfiguration,
                           std::vector<int> &IndexinVelocity);
 
   /*! Map shoulders and wrist
@@ -315,8 +369,10 @@ class ComAndFootRealizationByGeometry : public ComAndFootRealization {
     \param[out] associateShoulder: The shoulder extracted from
     the kinematic chain.
   */
-  void InitializeMapsForAHand(pinocchio::JointIndex aWrist, pinocchio::JointModelVector &ActuatedJoints,
-                              vector<int> &IndexesInConfiguration, vector<int> &IndexesInVelocity,
+  void InitializeMapsForAHand(pinocchio::JointIndex aWrist,
+                              pinocchio::JointModelVector &ActuatedJoints,
+                              vector<int> &IndexesInConfiguration,
+                              vector<int> &IndexesInVelocity,
                               pinocchio::JointIndex &associateShoulder);
 
   /*! Create the map of indexes for the shoulders and wrist */
@@ -325,7 +381,7 @@ class ComAndFootRealizationByGeometry : public ComAndFootRealization {
   /* Register methods. */
   void RegisterMethods();
 
- private:
+private:
   /*! \name Objects for stepping over.
     @{
   */
@@ -461,5 +517,5 @@ class ComAndFootRealizationByGeometry : public ComAndFootRealization {
 
 ostream &operator<<(ostream &os, const ComAndFootRealization &obj);
 
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 #endif

@@ -76,16 +76,16 @@ int RigidBody::initialize() {
 // ----------
 linear_dynamics_t const &RigidBody::Dynamics(dynamics_e type) const {
   switch (type) {
-    case POSITION:
-      return PositionDynamics_;
-    case VELOCITY:
-      return VelocityDynamics_;
-    case ACCELERATION:
-      return AccelerationDynamics_;
-    case JERK:
-      return JerkDynamics_;
-    case COP_POSITION:
-      return CoPDynamics_;
+  case POSITION:
+    return PositionDynamics_;
+  case VELOCITY:
+    return VelocityDynamics_;
+  case ACCELERATION:
+    return AccelerationDynamics_;
+  case JERK:
+    return JerkDynamics_;
+  case COP_POSITION:
+    return CoPDynamics_;
   }
 
   return VelocityDynamics_;
@@ -93,16 +93,16 @@ linear_dynamics_t const &RigidBody::Dynamics(dynamics_e type) const {
 
 linear_dynamics_t &RigidBody::Dynamics(dynamics_e type) {
   switch (type) {
-    case POSITION:
-      return PositionDynamics_;
-    case VELOCITY:
-      return VelocityDynamics_;
-    case ACCELERATION:
-      return AccelerationDynamics_;
-    case JERK:
-      return JerkDynamics_;
-    case COP_POSITION:
-      return CoPDynamics_;
+  case POSITION:
+    return PositionDynamics_;
+  case VELOCITY:
+    return VelocityDynamics_;
+  case ACCELERATION:
+    return AccelerationDynamics_;
+  case JERK:
+    return JerkDynamics_;
+  case COP_POSITION:
+    return CoPDynamics_;
   }
 
   return VelocityDynamics_;
@@ -117,7 +117,8 @@ linear_dynamics_t &RigidBody::Dynamics(dynamics_e type) {
 //
 rigid_body_state_s::rigid_body_state_s() { reset(); }
 
-struct rigid_body_state_s &rigid_body_state_t::operator=(const rigid_body_state_s &RB) {
+struct rigid_body_state_s &rigid_body_state_t::
+operator=(const rigid_body_state_s &RB) {
   for (unsigned int i = 0; i < 3; i++) {
     X[i] = RB.X[i];
     Y[i] = RB.Y[i];

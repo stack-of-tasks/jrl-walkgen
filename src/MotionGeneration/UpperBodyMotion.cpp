@@ -62,16 +62,22 @@ void UpperBodyMotion::GenerateDataFile(string aFileName, int LenghtDataArray) {
                       << -10.0*M_PI/180.0<< " " //lhand
                       << endl;
 #else
-      aof << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " "  // chest
-          << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " "  // head
-          << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0
-          << " " << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " "  // rarm
-          << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0
-          << " " << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " "  // larm
-          << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0
-          << " " << 0.0 * M_PI / 180.0 << " "  // rhand
-          << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0
-          << " " << 0.0 * M_PI / 180.0 << " "  // lhand
+      aof << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " " // chest
+          << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " " // head
+          << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " "
+          << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " "
+          << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " "
+          << 0.0 * M_PI / 180.0 << " " // rarm
+          << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " "
+          << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " "
+          << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " "
+          << 0.0 * M_PI / 180.0 << " " // larm
+          << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " "
+          << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " "
+          << 0.0 * M_PI / 180.0 << " " // rhand
+          << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " "
+          << 0.0 * M_PI / 180.0 << " " << 0.0 * M_PI / 180.0 << " "
+          << 0.0 * M_PI / 180.0 << " " // lhand
           << endl;
 #endif
     }
@@ -80,7 +86,8 @@ void UpperBodyMotion::GenerateDataFile(string aFileName, int LenghtDataArray) {
   }
 }
 
-void UpperBodyMotion::ReadDataFile(string aFileName, Eigen::MatrixXd &UpperBodyAngles) {
+void UpperBodyMotion::ReadDataFile(string aFileName,
+                                   Eigen::MatrixXd &UpperBodyAngles) {
   std::ifstream aif;
 
   auto NumberRows = UpperBodyAngles.rows();
@@ -101,7 +108,8 @@ void UpperBodyMotion::ReadDataFile(string aFileName, Eigen::MatrixXd &UpperBodyA
     std::cerr << "UpperBodyMotion - Unable to open " << aFileName << endl;
 }
 
-void UpperBodyMotion::WriteDataFile(string aFileName, Eigen::MatrixXd &UpperBodyAngles) {
+void UpperBodyMotion::WriteDataFile(string aFileName,
+                                    Eigen::MatrixXd &UpperBodyAngles) {
   ofstream aof;
   auto NumberRows = UpperBodyAngles.rows();
   auto NumberColumns = UpperBodyAngles.cols();

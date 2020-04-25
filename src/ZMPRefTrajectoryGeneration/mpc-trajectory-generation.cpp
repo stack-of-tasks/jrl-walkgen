@@ -32,23 +32,16 @@
 using namespace PatternGeneratorJRL;
 
 MPCTrajectoryGeneration::MPCTrajectoryGeneration(SimplePluginManager *lSPM)
-    : SimplePlugin(lSPM),
-      Tsingle_(0.),
-      Tdble_(0.),
-      Tctr_(0.),
-      Tprw_(0.),
-      PreviewControlTime_(0.),
-      N_(0),
-      NbVariables_(0),
-      StepHeight_(0.),
-      CurrentTime_(0.),
-      OnLineMode_(false),
-      CoMHeight_(0.),
-      SecurityMargin_(0.),
-      ModulationSupportCoefficient_(0.),
-      Omega_(0.) {
-  std::string aMethodName[6] = {":omega",     ":stepheight",    ":singlesupporttime", ":doublesupporttime",
-                                ":comheight", ":samplingperiod"};
+    : SimplePlugin(lSPM), Tsingle_(0.), Tdble_(0.), Tctr_(0.), Tprw_(0.),
+      PreviewControlTime_(0.), N_(0), NbVariables_(0), StepHeight_(0.),
+      CurrentTime_(0.), OnLineMode_(false), CoMHeight_(0.), SecurityMargin_(0.),
+      ModulationSupportCoefficient_(0.), Omega_(0.) {
+  std::string aMethodName[6] = {":omega",
+                                ":stepheight",
+                                ":singlesupporttime",
+                                ":doublesupporttime",
+                                ":comheight",
+                                ":samplingperiod"};
 
   for (int i = 0; i < 6; i++) {
     if (!RegisterMethod(aMethodName[i])) {
@@ -59,7 +52,8 @@ MPCTrajectoryGeneration::MPCTrajectoryGeneration(SimplePluginManager *lSPM)
   }
 }
 
-void MPCTrajectoryGeneration::CallMethod(std::string &Method, std::istringstream &strm) {
+void MPCTrajectoryGeneration::CallMethod(std::string &Method,
+                                         std::istringstream &strm) {
   ODEBUG("Calling me (" << this << ") with Method: " << Method);
   if (Method == ":omega") {
     strm >> Omega_;

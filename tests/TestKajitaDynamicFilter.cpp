@@ -35,7 +35,7 @@ using namespace ::PatternGeneratorJRL::TestSuite;
 using namespace std;
 
 class TestInverseKinematics : public TestObject {
- private:
+private:
   DynamicFilter *dynamicfilter_;
   SimplePluginManager *SPM_;
   double dInitX, dInitY;
@@ -53,8 +53,9 @@ class TestInverseKinematics : public TestObject {
 
   deque<ZMPPosition> delta_zmp;
 
- public:
-  TestInverseKinematics(int argc, char *argv[], string &aString) : TestObject(argc, argv, aString) {
+public:
+  TestInverseKinematics(int argc, char *argv[], string &aString)
+      : TestObject(argc, argv, aString) {
     SPM_ = NULL;
     dynamicfilter_ = NULL;
     once = true;
@@ -73,7 +74,8 @@ class TestInverseKinematics : public TestObject {
     }
   }
 
-  typedef void (TestInverseKinematics::*localeventHandler_t)(PatternGeneratorInterface &);
+  typedef void (TestInverseKinematics::*localeventHandler_t)(
+      PatternGeneratorInterface &);
 
   struct localEvent {
     unsigned time;
@@ -81,27 +83,32 @@ class TestInverseKinematics : public TestObject {
   };
 
   bool doTest(ostream &os) {
-    os << "<===============================================================>" << endl;
+    os << "<===============================================================>"
+       << endl;
     os << "Initialization..." << endl;
 
     double endTime = 8.0;
     double previewWindowSize = 1.6;
     double samplingPeriod = 0.005;
     unsigned int N = (unsigned int)round(endTime / samplingPeriod);
-    unsigned int Nctrl = (unsigned int)round((endTime - previewWindowSize) / samplingPeriod);
+    unsigned int Nctrl =
+        (unsigned int)round((endTime - previewWindowSize) / samplingPeriod);
     COMState com_init;
     com_init.z[0] = lStartingCOMState(2);
-    dynamicfilter_->init(samplingPeriod, samplingPeriod, endTime - previewWindowSize, endTime, previewWindowSize,
-                         com_init);
+    dynamicfilter_->init(samplingPeriod, samplingPeriod,
+                         endTime - previewWindowSize, endTime,
+                         previewWindowSize, com_init);
 
-    os << "<===============================================================>" << endl;
+    os << "<===============================================================>"
+       << endl;
     os << "Filtering..." << endl;
     delta_zmp.resize(N);
     delta_com.resize(Nctrl);
     MAL_VECTOR_FILL(InitialVelocity, 0.0);
     MAL_VECTOR_FILL(InitialAcceleration, 0.0);
     MAL_S3_VECTOR_TYPE(double) zmpmb;
-    dynamicfilter_->zmpmb(m_CurrentConfiguration, InitialVelocity, InitialAcceleration, zmpmb);
+    dynamicfilter_->zmpmb(m_CurrentConfiguration, InitialVelocity,
+                          InitialAcceleration, zmpmb);
     for (unsigned int i = 0; i < N; ++i) {
       delta_zmp[i].px = 0.0 - zmpmb[0];
       delta_zmp[i].py = 0.0 - zmpmb[1];
@@ -113,7 +120,8 @@ class TestInverseKinematics : public TestObject {
 
     dynamicfilter_->OptimalControl(delta_zmp, delta_com);
 
-    os << "<===============================================================>" << endl;
+    os << "<===============================================================>"
+       << endl;
     os << "Dumping..." << endl;
     /// \brief Create file .hip .pos .zmp
     /// --------------------
@@ -129,12 +137,14 @@ class TestInverseKinematics : public TestObject {
     aof.precision(8);
     aof.setf(ios::scientific, ios::floatfield);
     for (unsigned int i = 0; i < delta_com.size(); i++) {
-      aof << filterprecision(lStartingCOMState(0) + delta_com[i].x[0]) << " ";  // 1
-      aof << filterprecision(lStartingCOMState(1) + delta_com[i].y[0]) << " ";  // 2
-      aof << filterprecision(lStartingCOMState(0)) << " ";                      // 3
-      aof << filterprecision(delta_com[i].x[0]) << " ";                         // 4
-      aof << filterprecision(lStartingCOMState(1)) << " ";                      // 5
-      aof << filterprecision(delta_com[i].x[1]) << " ";                         // 6
+      aof << filterprecision(lStartingCOMState(0) + delta_com[i].x[0])
+          << " "; // 1
+      aof << filterprecision(lStartingCOMState(1) + delta_com[i].y[0])
+          << " ";                                          // 2
+      aof << filterprecision(lStartingCOMState(0)) << " "; // 3
+      aof << filterprecision(delta_com[i].x[0]) << " ";    // 4
+      aof << filterprecision(lStartingCOMState(1)) << " "; // 5
+      aof << filterprecision(delta_com[i].x[1]) << " ";    // 6
       aof << endl;
     }
 
@@ -149,7 +159,8 @@ class TestInverseKinematics : public TestObject {
     TestObject::init();
 
     dynamicfilter_ = new DynamicFilter(m_SPM, m_PR);
-    ComAndFootRealizationByGeometry *cfr = dynamicfilter_->getComAndFootRealization();
+    ComAndFootRealizationByGeometry *cfr =
+        dynamicfilter_->getComAndFootRealization();
     cfr->setPinocchioRobot(m_PR);
     cfr->SetStepStackHandler(new StepStackHandler(m_SPM));
     cfr->SetHeightOfTheCoM(0.814);
@@ -165,7 +176,8 @@ class TestInverseKinematics : public TestObject {
     lStartingCOMState(2) = m_OneStep.finalCOMPosition.z[0];
     cfr->setSamplingPeriod(0.005);
     cfr->Initialization();
-    cfr->InitializationCoM(m_HalfSitting, lStartingCOMState, waist, m_OneStep.LeftFootPosition,
+    cfr->InitializationCoM(m_HalfSitting, lStartingCOMState, waist,
+                           m_OneStep.LeftFootPosition,
                            m_OneStep.RightFootPosition);
     m_CurrentConfiguration(0) = waist(0);
     m_CurrentConfiguration(1) = waist(1);
@@ -178,17 +190,19 @@ class TestInverseKinematics : public TestObject {
     MAL_VECTOR_TYPE(double) UpperVel = m_CurrentVelocity;
     MAL_VECTOR_TYPE(double) UpperAcc = m_CurrentAcceleration;
     dynamicfilter_->setRobotUpperPart(UpperConfig, UpperVel, UpperAcc);
-    dynamicfilter_->InverseKinematics(m_OneStep.finalCOMPosition, m_OneStep.LeftFootPosition,
-                                      m_OneStep.RightFootPosition, m_CurrentConfiguration, m_CurrentVelocity,
-                                      m_CurrentAcceleration, 0.005, 1, 0);
+    dynamicfilter_->InverseKinematics(
+        m_OneStep.finalCOMPosition, m_OneStep.LeftFootPosition,
+        m_OneStep.RightFootPosition, m_CurrentConfiguration, m_CurrentVelocity,
+        m_CurrentAcceleration, 0.005, 1, 0);
   }
 
- protected:
+protected:
   void chooseTestProfile() { return; }
   void generateEvent() { return; }
 
   double filterprecision(double adb) {
-    if (fabs(adb) < 1e-7) return 0.0;
+    if (fabs(adb) < 1e-7)
+      return 0.0;
 
     double ladb2 = adb * 1e7;
     double lintadb2 = trunc(ladb2);

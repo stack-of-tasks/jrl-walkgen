@@ -57,7 +57,7 @@
 namespace PatternGeneratorJRL {
 
 class WaistPolynome : public Polynome {
- public:
+public:
   /// Constructor:
   /// boundCond: the different boundary conditions begin,
   /// intermediate and end of polynomial
@@ -76,7 +76,7 @@ class WaistPolynome : public Polynome {
 /// Object to compute new foot trajectories for the height of the waist
 /// with waist differnces as input for each step
 class WaistHeightVariation {
- public:
+public:
   /// Constructor
   WaistHeightVariation();
 
@@ -84,10 +84,11 @@ class WaistHeightVariation {
   ~WaistHeightVariation();
 
   /// call for polynomial planning of both steps during the obstacle stepover
-  void PolyPlanner(deque<COMPosition> &aCOMBuffer, deque<RelativeFootPosition> &aFootHolds,
+  void PolyPlanner(deque<COMPosition> &aCOMBuffer,
+                   deque<RelativeFootPosition> &aFootHolds,
                    deque<ZMPPosition> aZMPPosition);
 
- protected:
+protected:
   deque<RelativeFootPosition> m_FootHolds;
 
   Eigen::MatrixXd mBoundCond;
@@ -111,6 +112,6 @@ class WaistHeightVariation {
   bool m_StartingNewSequence;
 };
 
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 
 #endif /*_WAISTHEIGHT_VARIATION_H_ */

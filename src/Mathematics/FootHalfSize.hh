@@ -31,7 +31,7 @@ namespace PatternGeneratorJRL {
 /*! This class handles the size and the constraints related to the feet
  */
 class FootHalfSize {
- public:
+public:
   FootHalfSize();
   ~FootHalfSize();
 
@@ -39,11 +39,11 @@ class FootHalfSize {
 
   void setConstraints(double OnX, double OnY, double DSFeetDistance);
 
- protected:
+protected:
   void updateHalfHeightDS(double DSFeetDistance);
   void updateHalfSize();
 
- private:
+private:
   double m_HalfHeight;
   double m_HalfWidth;
   double m_HalfHeightDS;
@@ -53,11 +53,11 @@ class FootHalfSize {
   double m_ConstraintsOnX;
   double m_ConstraintsOnY;
 
- public:
+public:
   double getHalfHeight() const;
   double getHalfWidth() const;
   double getHalfHeightDS() const;
 };
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 
 #endif /*  _FOOT_HALF_SIZE_H_*/

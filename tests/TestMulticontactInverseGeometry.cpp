@@ -37,7 +37,7 @@ using namespace ::PatternGeneratorJRL::TestSuite;
 using namespace std;
 
 class TestMulticontactInverseGeometry : public TestObject {
- private:
+private:
   ComAndFootRealizationByGeometry *CFRG_;
   SimplePluginManager *SPM_;
   bool once_;
@@ -53,10 +53,10 @@ class TestMulticontactInverseGeometry : public TestObject {
   deque<MAL_VECTOR_TYPE(double)> dq_;
   deque<MAL_VECTOR_TYPE(double)> ddq_;
 
-  vector<MAL_VECTOR_TYPE(double)> lfs_;  // support foort deque
-  vector<MAL_VECTOR_TYPE(double)> rfs_;  // support foort deque
-  vector<MAL_VECTOR_TYPE(double)> rhs_;  // support foort deque
-  vector<double> timing_;                // support foort deque
+  vector<MAL_VECTOR_TYPE(double)> lfs_; // support foort deque
+  vector<MAL_VECTOR_TYPE(double)> rfs_; // support foort deque
+  vector<MAL_VECTOR_TYPE(double)> rhs_; // support foort deque
+  vector<double> timing_;               // support foort deque
   deque<double> data_time_;
 
   BSplinesFoot *LFX_;
@@ -83,8 +83,9 @@ class TestMulticontactInverseGeometry : public TestObject {
   double finalTime_;
   double samplingPeriod_;
 
- public:
-  TestMulticontactInverseGeometry(int argc, char *argv[], string &aString) : TestObject(argc, argv, aString) {
+public:
+  TestMulticontactInverseGeometry(int argc, char *argv[], string &aString)
+      : TestObject(argc, argv, aString) {
     SPM_ = NULL;
     once_ = true;
     movingPeriod_ = 1.4;
@@ -103,7 +104,8 @@ class TestMulticontactInverseGeometry : public TestObject {
     m_DebugHDR = 0;
   }
 
-  typedef void (TestMulticontactInverseGeometry::*localeventHandler_t)(PatternGeneratorInterface &);
+  typedef void (TestMulticontactInverseGeometry::*localeventHandler_t)(
+      PatternGeneratorInterface &);
 
   struct localEvent {
     unsigned time;
@@ -121,7 +123,8 @@ class TestMulticontactInverseGeometry : public TestObject {
     cout << "comPos_.size() = " << comPos_.size() << endl;
     cout << "lfoot_.size()  = " << lfoot_.size() << endl;
     cout << "comSpeed_.size()  = " << comSpeed_.size() << endl;
-    assert(comPos_.size() == lfoot_.size() && lfoot_.size() == comSpeed_.size() &&
+    assert(comPos_.size() == lfoot_.size() &&
+           lfoot_.size() == comSpeed_.size() &&
            comPos_.size() == comSpeed_.size() && 19 / samplingPeriod_);
     ofstream aof;
     string aFileName;
@@ -139,35 +142,35 @@ class TestMulticontactInverseGeometry : public TestObject {
     aof.setf(ios::scientific, ios::floatfield);
 
     for (unsigned int i = 0; i < lfoot_.size(); i++) {
-      aof << filterprecision(data_time_[i]) << " ";  // 1
-      aof << filterprecision(rfoot_[i](0)) << " ";   // 2   x
-      aof << filterprecision(rfoot_[i](1)) << " ";   // 3   y
-      aof << filterprecision(rfoot_[i](2)) << " ";   // 4   z
+      aof << filterprecision(data_time_[i]) << " "; // 1
+      aof << filterprecision(rfoot_[i](0)) << " ";  // 2   x
+      aof << filterprecision(rfoot_[i](1)) << " ";  // 3   y
+      aof << filterprecision(rfoot_[i](2)) << " ";  // 4   z
 
-      aof << filterprecision(lfoot_[i](0)) << " ";  // 5   x
-      aof << filterprecision(lfoot_[i](1)) << " ";  // 6   y
-      aof << filterprecision(lfoot_[i](2)) << " ";  // 7   z
+      aof << filterprecision(lfoot_[i](0)) << " "; // 5   x
+      aof << filterprecision(lfoot_[i](1)) << " "; // 6   y
+      aof << filterprecision(lfoot_[i](2)) << " "; // 7   z
 
-      aof << filterprecision(rhand_[i](0)) << " ";  // 8  x
-      aof << filterprecision(rhand_[i](1)) << " ";  // 9  y
-      aof << filterprecision(rhand_[i](2)) << " ";  // 10  z
-      aof << filterprecision(rhand_[i](3)) << " ";  // 11  roll angle
-      aof << filterprecision(rhand_[i](4)) << " ";  // 12  pitch angle
-      aof << filterprecision(rhand_[i](5)) << " ";  // 13  yaw angle
+      aof << filterprecision(rhand_[i](0)) << " "; // 8  x
+      aof << filterprecision(rhand_[i](1)) << " "; // 9  y
+      aof << filterprecision(rhand_[i](2)) << " "; // 10  z
+      aof << filterprecision(rhand_[i](3)) << " "; // 11  roll angle
+      aof << filterprecision(rhand_[i](4)) << " "; // 12  pitch angle
+      aof << filterprecision(rhand_[i](5)) << " "; // 13  yaw angle
 
-      aof << filterprecision(comPos_[i](0)) << " ";  // 14  x
-      aof << filterprecision(comPos_[i](1)) << " ";  // 15  y
-      aof << filterprecision(comPos_[i](2)) << " ";  // 16  z
-      aof << filterprecision(comPos_[i](3)) << " ";  // 17  roll
-      aof << filterprecision(comPos_[i](4)) << " ";  // 18  pitch
-      aof << filterprecision(comPos_[i](5)) << " ";  // 19  yaw
+      aof << filterprecision(comPos_[i](0)) << " "; // 14  x
+      aof << filterprecision(comPos_[i](1)) << " "; // 15  y
+      aof << filterprecision(comPos_[i](2)) << " "; // 16  z
+      aof << filterprecision(comPos_[i](3)) << " "; // 17  roll
+      aof << filterprecision(comPos_[i](4)) << " "; // 18  pitch
+      aof << filterprecision(comPos_[i](5)) << " "; // 19  yaw
 
-      aof << filterprecision(comSpeed_[i](0)) << " ";  // 14  x
-      aof << filterprecision(comSpeed_[i](1)) << " ";  // 15  y
-      aof << filterprecision(comSpeed_[i](2)) << " ";  // 16  z
-      aof << filterprecision(comSpeed_[i](3)) << " ";  // 17  roll
-      aof << filterprecision(comSpeed_[i](4)) << " ";  // 18  pitch
-      aof << filterprecision(comSpeed_[i](5)) << " ";  // 19  yaw
+      aof << filterprecision(comSpeed_[i](0)) << " "; // 14  x
+      aof << filterprecision(comSpeed_[i](1)) << " "; // 15  y
+      aof << filterprecision(comSpeed_[i](2)) << " "; // 16  z
+      aof << filterprecision(comSpeed_[i](3)) << " "; // 17  roll
+      aof << filterprecision(comSpeed_[i](4)) << " "; // 18  pitch
+      aof << filterprecision(comSpeed_[i](5)) << " "; // 19  yaw
 
       aof << endl;
     }
@@ -189,18 +192,21 @@ class TestMulticontactInverseGeometry : public TestObject {
       std::ifstream file(RobotFileName.c_str());
       fileExist = !file.fail();
     }
-    if (!fileExist) throw std::string("failed to open robot model");
+    if (!fileExist)
+      throw std::string("failed to open robot model");
 
     // Creating the humanoid robot.
     SpecializedRobotConstructor(m_HDR);
     if (m_HDR == 0) {
-      if (m_HDR != 0) delete m_HDR;
+      if (m_HDR != 0)
+        delete m_HDR;
       dynamicsJRLJapan::ObjectFactory aRobotDynamicsObjectConstructor;
       m_HDR = aRobotDynamicsObjectConstructor.createHumanoidDynamicRobot();
     }
 
     // Parsing the file.
-    dynamicsJRLJapan::parseOpenHRPVRMLFile(*m_HDR, RobotFileName, m_LinkJointRank, m_SpecificitiesFileName);
+    dynamicsJRLJapan::parseOpenHRPVRMLFile(
+        *m_HDR, RobotFileName, m_LinkJointRank, m_SpecificitiesFileName);
     // Create Pattern Generator Interface
     m_PGI = patternGeneratorInterfaceFactory(m_HDR);
 
@@ -210,7 +216,8 @@ class TestMulticontactInverseGeometry : public TestObject {
     ifstream aif;
     aif.open(m_InitConfig.c_str(), ifstream::in);
     if (aif.is_open()) {
-      for (unsigned int i = 0; i < lNbActuatedJoints; i++) aif >> dInitPos[i];
+      for (unsigned int i = 0; i < lNbActuatedJoints; i++)
+        aif >> dInitPos[i];
     }
     aif.close();
 
@@ -233,7 +240,8 @@ class TestMulticontactInverseGeometry : public TestObject {
       for (unsigned int i = 0; i < MAL_VECTOR_SIZE(InitialPosition); i++)
         InitialPosition(i) = dInitPos[i] * M_PI / 180.0;
     else
-      for (unsigned int i = 0; i < MAL_VECTOR_SIZE(InitialPosition); i++) InitialPosition(i) = dInitPos[i];
+      for (unsigned int i = 0; i < MAL_VECTOR_SIZE(InitialPosition); i++)
+        InitialPosition(i) = dInitPos[i];
 
     // This is a vector corresponding to ALL the DOFS of the robot:
     // free flyer + actuated DOFS.
@@ -245,7 +253,8 @@ class TestMulticontactInverseGeometry : public TestObject {
     MAL_VECTOR_DIM(PreviousVelocity, double, lNbDofs);
     MAL_VECTOR_DIM(PreviousAcceleration, double, lNbDofs);
     for (int i = 0; i < 6; i++) {
-      PreviousConfiguration[i] = PreviousVelocity[i] = PreviousAcceleration[i] = 0.0;
+      PreviousConfiguration[i] = PreviousVelocity[i] = PreviousAcceleration[i] =
+          0.0;
     }
 
     for (unsigned int i = 6; i < lNbDofs; i++) {
@@ -271,7 +280,7 @@ class TestMulticontactInverseGeometry : public TestObject {
     init_interpolation();
   }
 
- protected:
+protected:
   int interpolate_support(int it) {
     if (it == 0) {
       for (int i = 0; i < (int)round(timing_[0] / samplingPeriod_); ++i) {
@@ -506,7 +515,8 @@ class TestMulticontactInverseGeometry : public TestObject {
 
     comAcc_.resize(comPos_.size());
     data_time_.resize(comPos_.size());
-    for (unsigned int i = 0; i < data_time_.size(); ++i) data_time_[i] = (double)i * samplingPeriod_;
+    for (unsigned int i = 0; i < data_time_.size(); ++i)
+      data_time_[i] = (double)i * samplingPeriod_;
 
     return 1;
   }
@@ -545,12 +555,18 @@ class TestMulticontactInverseGeometry : public TestObject {
     RHX_->SetParameters(timing_[0], rhs_[0](0), rhs_[0](0), ToMP, MP);
     RHY_->SetParameters(timing_[0], rhs_[0](1), rhs_[0](1), ToMP, MP);
     RHZ_->SetParameters(timing_[0], rhs_[0](2), rhs_[0](2), ToMP, MP);
-    RHroll_cs->SetParameters(timing_[0], cos(rhs_[0](3)), cos(rhs_[0](3)), ToMP, MP);
-    RHpitch_cs->SetParameters(timing_[0], cos(rhs_[0](4)), cos(rhs_[0](4)), ToMP, MP);
-    RHyaw_cs->SetParameters(timing_[0], cos(rhs_[0](5)), cos(rhs_[0](5)), ToMP, MP);
-    RHroll_sn->SetParameters(timing_[0], sin(rhs_[0](3)), sin(rhs_[0](3)), ToMP, MP);
-    RHpitch_sn->SetParameters(timing_[0], sin(rhs_[0](4)), sin(rhs_[0](4)), ToMP, MP);
-    RHyaw_sn->SetParameters(timing_[0], sin(rhs_[0](5)), sin(rhs_[0](5)), ToMP, MP);
+    RHroll_cs->SetParameters(timing_[0], cos(rhs_[0](3)), cos(rhs_[0](3)), ToMP,
+                             MP);
+    RHpitch_cs->SetParameters(timing_[0], cos(rhs_[0](4)), cos(rhs_[0](4)),
+                              ToMP, MP);
+    RHyaw_cs->SetParameters(timing_[0], cos(rhs_[0](5)), cos(rhs_[0](5)), ToMP,
+                            MP);
+    RHroll_sn->SetParameters(timing_[0], sin(rhs_[0](3)), sin(rhs_[0](3)), ToMP,
+                             MP);
+    RHpitch_sn->SetParameters(timing_[0], sin(rhs_[0](4)), sin(rhs_[0](4)),
+                              ToMP, MP);
+    RHyaw_sn->SetParameters(timing_[0], sin(rhs_[0](5)), sin(rhs_[0](5)), ToMP,
+                            MP);
     return 1;
   }
 
@@ -598,10 +614,10 @@ class TestMulticontactInverseGeometry : public TestObject {
     //    double hz_2 = 0.892 ;
 
     // 15cm handrill ///////////////////////////
-    double sth = 0.15;                  // stair height
-    double sta = -0.47123889803846897;  // stair angle
+    double sth = 0.15;                 // stair height
+    double sta = -0.47123889803846897; // stair angle
     double init_hx = 0.0418343;
-    double init_hy = -0.331008;  // right hand
+    double init_hy = -0.331008; // right hand
     double init_hz = 0.704285;
     double init_hroll = -0.17418019;
     double init_hpitch = -0.25421091;
@@ -689,7 +705,8 @@ class TestMulticontactInverseGeometry : public TestObject {
     timing_.push_back(supportPeriod_);
 
     // 3     0.7 s
-    init_lfx = 0.0;  ///////////////////////////////////////////////////////////////
+    init_lfx =
+        0.0; ///////////////////////////////////////////////////////////////
     aSLF(0) = init_lfx + 0.3;
     aSRF(0) = init_rfx;
     aSRH(0) = hx_1;
@@ -738,7 +755,8 @@ class TestMulticontactInverseGeometry : public TestObject {
     timing_.push_back(supportPeriod_);
 
     // 5    0.7 s
-    init_rfx = 0.0;  //////////////////////////////////////////////////////////////
+    init_rfx =
+        0.0; //////////////////////////////////////////////////////////////
     aSLF(0) = init_lfx + 0.3;
     aSRF(0) = init_rfx + 0.3;
     aSRH(0) = hx_1;
@@ -935,12 +953,15 @@ class TestMulticontactInverseGeometry : public TestObject {
   }
 
   int readData() {
-    std::string dataPath = "/home/mnaveau/devel/mkudruss_data/2015_07_03_10h16m/";
-    std::string dataFile = dataPath + "conv_sd_walking_stair_climbing_2_steps_15cm_ds.csv";
+    std::string dataPath =
+        "/home/mnaveau/devel/mkudruss_data/2015_07_03_10h16m/";
+    std::string dataFile =
+        dataPath + "conv_sd_walking_stair_climbing_2_steps_15cm_ds.csv";
 
     std::ifstream dataStream;
     dataStream.open(dataFile.c_str(), std::ifstream::in);
-    if (!dataStream.good()) cout << "cannot open the file" << endl;
+    if (!dataStream.good())
+      cout << "cannot open the file" << endl;
     MAL_VECTOR_DIM(acomPos, double, 6);
     MAL_VECTOR_DIM(acomVel, double, 6);
     MAL_VECTOR_DIM(acomAcc, double, 6);
@@ -997,7 +1018,8 @@ class TestMulticontactInverseGeometry : public TestObject {
 
   void SpecializedRobotConstructor(CjrlHumanoidDynamicRobot *&aHDR) {
     dynamicsJRLJapan::ObjectFactory aRobotDynamicsObjectConstructor;
-    Chrp2OptHumanoidDynamicRobot *aHRP2HDR = new Chrp2OptHumanoidDynamicRobot(&aRobotDynamicsObjectConstructor);
+    Chrp2OptHumanoidDynamicRobot *aHRP2HDR =
+        new Chrp2OptHumanoidDynamicRobot(&aRobotDynamicsObjectConstructor);
     aHDR = aHRP2HDR;
   }
 
@@ -1011,13 +1033,15 @@ class TestMulticontactInverseGeometry : public TestObject {
       BodyAngles(i) = InitialPosition(i);
     }
     MAL_S3_VECTOR(lStartingCOMState, double);
-    CFRG_ = new ComAndFootRealizationByGeometry((PatternGeneratorInterfacePrivate *)(SPM_));
+    CFRG_ = new ComAndFootRealizationByGeometry(
+        (PatternGeneratorInterfacePrivate *)(SPM_));
     CFRG_->setHumanoidDynamicRobot(m_HDR);
     CFRG_->SetHeightOfTheCoM(0.814);
     CFRG_->setSamplingPeriod(samplingPeriod_);
     CFRG_->SetStepStackHandler(new StepStackHandler(SPM_));
     CFRG_->Initialization();
-    CFRG_->InitializationCoM(BodyAngles, lStartingCOMState, waist, m_OneStep.LeftFootPosition,
+    CFRG_->InitializationCoM(BodyAngles, lStartingCOMState, waist,
+                             m_OneStep.LeftFootPosition,
                              m_OneStep.RightFootPosition);
     CFRG_->Initialization();
     CFRG_->SetPreviousConfigurationStage0(m_HDR->currentConfiguration());
@@ -1047,9 +1071,9 @@ class TestMulticontactInverseGeometry : public TestObject {
     aof.open(aFileName.c_str(), ofstream::app);
     aof.precision(8);
     aof.setf(ios::scientific, ios::floatfield);
-    aof << filterprecision(iteration * 0.005) << " ";  // 1
+    aof << filterprecision(iteration * 0.005) << " "; // 1
     for (unsigned int i = 6; i < m_CurrentConfiguration.size(); i++) {
-      aof << filterprecision(m_CurrentConfiguration(i)) << " ";  // 2
+      aof << filterprecision(m_CurrentConfiguration(i)) << " "; // 2
     }
     for (unsigned int i = 0; i < 9; i++) {
       aof << 0.0 << " ";
@@ -1070,10 +1094,12 @@ class TestMulticontactInverseGeometry : public TestObject {
     aof.open(aFileName.c_str(), ofstream::app);
     aof.precision(8);
     aof.setf(ios::scientific, ios::floatfield);
-    aof << filterprecision(iteration * 0.005) << " ";                                 // 1
-    aof << filterprecision(m_OneStep.finalCOMPosition.roll[0] * M_PI / 180) << " ";   // 2
-    aof << filterprecision(m_OneStep.finalCOMPosition.pitch[0] * M_PI / 180) << " ";  // 3
-    aof << filterprecision(m_OneStep.finalCOMPosition.yaw[0] * M_PI / 180);           // 4
+    aof << filterprecision(iteration * 0.005) << " "; // 1
+    aof << filterprecision(m_OneStep.finalCOMPosition.roll[0] * M_PI / 180)
+        << " "; // 2
+    aof << filterprecision(m_OneStep.finalCOMPosition.pitch[0] * M_PI / 180)
+        << " ";                                                             // 3
+    aof << filterprecision(m_OneStep.finalCOMPosition.yaw[0] * M_PI / 180); // 4
     aof << endl;
     aof.close();
 
@@ -1097,25 +1123,31 @@ class TestMulticontactInverseGeometry : public TestObject {
     aof.open(aFileName.c_str(), ofstream::app);
     aof.precision(8);
     aof.setf(ios::scientific, ios::floatfield);
-    aof << filterprecision(iteration * 0.005) << " ";                                   // 1
-    aof << filterprecision(m_OneStep.ZMPTarget(0) - m_CurrentConfiguration(0)) << " ";  // 2
-    aof << filterprecision(m_OneStep.ZMPTarget(1) - m_CurrentConfiguration(1)) << " ";  // 3
-    aof << filterprecision(aSupportState.z - m_CurrentConfiguration(2));                // 4
+    aof << filterprecision(iteration * 0.005) << " "; // 1
+    aof << filterprecision(m_OneStep.ZMPTarget(0) - m_CurrentConfiguration(0))
+        << " "; // 2
+    aof << filterprecision(m_OneStep.ZMPTarget(1) - m_CurrentConfiguration(1))
+        << " ";                                                          // 3
+    aof << filterprecision(aSupportState.z - m_CurrentConfiguration(2)); // 4
     aof << endl;
     aof.close();
 
     iteration++;
   }
 
-  void SpecializedRobotConstructor(CjrlHumanoidDynamicRobot *&aHDR, CjrlHumanoidDynamicRobot *&aDebugHDR) {
+  void SpecializedRobotConstructor(CjrlHumanoidDynamicRobot *&aHDR,
+                                   CjrlHumanoidDynamicRobot *&aDebugHDR) {
     dynamicsJRLJapan::ObjectFactory aRobotDynamicsObjectConstructor;
-    Chrp2OptHumanoidDynamicRobot *aHRP2HDR = new Chrp2OptHumanoidDynamicRobot(&aRobotDynamicsObjectConstructor);
+    Chrp2OptHumanoidDynamicRobot *aHRP2HDR =
+        new Chrp2OptHumanoidDynamicRobot(&aRobotDynamicsObjectConstructor);
     aHDR = aHRP2HDR;
-    aDebugHDR = new Chrp2OptHumanoidDynamicRobot(&aRobotDynamicsObjectConstructor);
+    aDebugHDR =
+        new Chrp2OptHumanoidDynamicRobot(&aRobotDynamicsObjectConstructor);
   }
 
   double filterprecision(double adb) {
-    if (fabs(adb) < 1e-7) return 0.0;
+    if (fabs(adb) < 1e-7)
+      return 0.0;
 
     double ladb2 = adb * 1e7;
     double lintadb2 = trunc(ladb2);

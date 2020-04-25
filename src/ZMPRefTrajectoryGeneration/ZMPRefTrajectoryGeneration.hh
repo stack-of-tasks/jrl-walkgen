@@ -56,7 +56,7 @@ class StepStackHandler;
 
 */
 class ZMPRefTrajectoryGeneration : public SimplePlugin {
- protected:
+protected:
   /* ! \brief Time for single support. */
   double m_Tsingle;
 
@@ -88,7 +88,7 @@ class ZMPRefTrajectoryGeneration : public SimplePlugin {
   /*! \brief Specifies Com Height. */
   double m_ComHeight;
 
- public:
+public:
   /* ! \brief Default constructor */
   ZMPRefTrajectoryGeneration(SimplePluginManager *lSPM);
 
@@ -96,10 +96,14 @@ class ZMPRefTrajectoryGeneration : public SimplePlugin {
   virtual ~ZMPRefTrajectoryGeneration(){};
 
   /* ! \brief Set the Preview control time window. */
-  inline void SetTimeWindowPreviewControl(const double &aTW) { m_PreviewControlTime = aTW; };
+  inline void SetTimeWindowPreviewControl(const double &aTW) {
+    m_PreviewControlTime = aTW;
+  };
 
   /* ! \brief Get the preview control time window. */
-  inline const double &GetTimeWindowPreviewControl() const { return m_PreviewControlTime; };
+  inline const double &GetTimeWindowPreviewControl() const {
+    return m_PreviewControlTime;
+  };
 
   /* ! \brief Set for the foot angle on landing and taking off. */
   inline void SetOmega(const double &anOmega) { m_Omega = anOmega; };
@@ -111,13 +115,17 @@ class ZMPRefTrajectoryGeneration : public SimplePlugin {
   inline const double &GetComHeight() const { return m_ComHeight; };
 
   /* ! \brief Returns the Com Height. */
-  inline void SetComHeight(const double &aComHeight) { m_ComHeight = aComHeight; };
+  inline void SetComHeight(const double &aComHeight) {
+    m_ComHeight = aComHeight;
+  };
 
   /* ! \brief Returns the single support time. */
   inline const double &GetTSingleSupport() const { return m_Tsingle; };
 
   /* ! \brief Set the single support time. */
-  inline void SetTSingleSupport(const double &aTSingleSupport) { m_Tsingle = aTSingleSupport; };
+  inline void SetTSingleSupport(const double &aTSingleSupport) {
+    m_Tsingle = aTSingleSupport;
+  };
 
   /* ! \brief Returns the double support time. */
   inline const double &GetTDoubleSupport() const { return m_Tdble; };
@@ -130,7 +138,9 @@ class ZMPRefTrajectoryGeneration : public SimplePlugin {
   inline const double &GetSamplingPeriod() const { return m_SamplingPeriod; };
 
   /* ! \brief Set the sampling period for the control. */
-  inline void SetSamplingPeriod(const double &aSamplingPeriod) { m_SamplingPeriod = aSamplingPeriod; };
+  inline void SetSamplingPeriod(const double &aSamplingPeriod) {
+    m_SamplingPeriod = aSamplingPeriod;
+  };
 
   /* ! \brief Returns the step height. */
   inline const double &GetStepHeight() const { return m_StepHeight; };
@@ -139,10 +149,14 @@ class ZMPRefTrajectoryGeneration : public SimplePlugin {
   inline void SetStepHeight(const double &aSSH) { m_StepHeight = aSSH; };
 
   /* ! \brief Returns the ModulationSupportCoefficient. */
-  inline const double &GetModulationSupportCoefficient() const { return m_ModulationSupportCoefficient; }
+  inline const double &GetModulationSupportCoefficient() const {
+    return m_ModulationSupportCoefficient;
+  }
 
   /* !  \brief Specifies the modulation support coefficient. */
-  inline void SetModulationSupportCoefficient(const double &af) { m_ModulationSupportCoefficient = af; }
+  inline void SetModulationSupportCoefficient(const double &af) {
+    m_ModulationSupportCoefficient = af;
+  }
 
   /* !  \brief Set the ModulationSupportCoefficient.*/
   void SetModulationSupportCoefficient(double);
@@ -194,13 +208,14 @@ class ZMPRefTrajectoryGeneration : public SimplePlugin {
 
 
   */
-  virtual void GetZMPDiscretization(std::deque<ZMPPosition> &ZMPPositions, std::deque<COMState> &COMStates,
-                                    std::deque<RelativeFootPosition> &RelativeFootPositions,
-                                    std::deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-                                    std::deque<FootAbsolutePosition> &RightFootAbsolutePositions, double Xmax,
-                                    COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
-                                    FootAbsolutePosition &InitLeftFootAbsolutePosition,
-                                    FootAbsolutePosition &InitRightFootAbsolutePosition) = 0;
+  virtual void GetZMPDiscretization(
+      std::deque<ZMPPosition> &ZMPPositions, std::deque<COMState> &COMStates,
+      std::deque<RelativeFootPosition> &RelativeFootPositions,
+      std::deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+      std::deque<FootAbsolutePosition> &RightFootAbsolutePositions, double Xmax,
+      COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition,
+      FootAbsolutePosition &InitLeftFootAbsolutePosition,
+      FootAbsolutePosition &InitRightFootAbsolutePosition) = 0;
 
   /*! Methods for on-line generation. (First version)
     The queues will be updated as follows:
@@ -230,13 +245,14 @@ class ZMPRefTrajectoryGeneration : public SimplePlugin {
     @param[in] lStartingZMPPosition: The initial position of the
     ZMP given as a 3D vector.
   */
-  virtual std::size_t InitOnLine(std::deque<ZMPPosition> &ZMPPositions, std::deque<COMState> &COMStates,
-                                 std::deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-                                 std::deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
-                                 FootAbsolutePosition &InitLeftFootAbsolutePosition,
-                                 FootAbsolutePosition &InitRightFootAbsolutePosition,
-                                 std::deque<RelativeFootPosition> &RelativeFootPositions, COMState &lStartingCOMState,
-                                 Eigen::Vector3d &lStartingZMPPosition) = 0;
+  virtual std::size_t InitOnLine(
+      std::deque<ZMPPosition> &ZMPPositions, std::deque<COMState> &COMStates,
+      std::deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+      std::deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
+      FootAbsolutePosition &InitLeftFootAbsolutePosition,
+      FootAbsolutePosition &InitRightFootAbsolutePosition,
+      std::deque<RelativeFootPosition> &RelativeFootPositions,
+      COMState &lStartingCOMState, Eigen::Vector3d &lStartingZMPPosition) = 0;
 
   /* ! Methods to update the stack on-line by inserting a new foot position.
      This method is only ADDING a new step position, this is not a
@@ -254,10 +270,13 @@ class ZMPRefTrajectoryGeneration : public SimplePlugin {
      trajectory
      obtained from the new foot trajectories.
   */
-  virtual void OnLineAddFoot(RelativeFootPosition &NewRelativeFootPosition, std::deque<ZMPPosition> &FinalZMPPositions,
-                             std::deque<COMState> &COMStates,
-                             std::deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-                             std::deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions, bool EndSequence) = 0;
+  virtual void OnLineAddFoot(
+      RelativeFootPosition &NewRelativeFootPosition,
+      std::deque<ZMPPosition> &FinalZMPPositions,
+      std::deque<COMState> &COMStates,
+      std::deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+      std::deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
+      bool EndSequence) = 0;
 
   /* ! \brief Method to change to update on line the queues necessary
      of the system.
@@ -274,9 +293,11 @@ class ZMPRefTrajectoryGeneration : public SimplePlugin {
 
      @return If the method failed it returns -1, 0 otherwise.
   */
-  virtual void OnLine(double time, std::deque<ZMPPosition> &FinalZMPPositions, std::deque<COMState> &COMStates,
-                      std::deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-                      std::deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions) = 0;
+  virtual void
+  OnLine(double time, std::deque<ZMPPosition> &FinalZMPPositions,
+         std::deque<COMState> &COMStates,
+         std::deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+         std::deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions) = 0;
 
   /*! \brief Method to stop walking.
     @param[out] ZMPPositions: The queue of ZMP reference positions.
@@ -286,9 +307,11 @@ class ZMPRefTrajectoryGeneration : public SimplePlugin {
     @param[out] RightFootAbsolutePositions: The queue of right
     foot absolute positions.
   */
-  virtual void EndPhaseOfTheWalking(std::deque<ZMPPosition> &ZMPPositions, std::deque<COMState> &FinalCOMStates,
-                                    std::deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
-                                    std::deque<FootAbsolutePosition> &RightFootAbsolutePositions) = 0;
+  virtual void EndPhaseOfTheWalking(
+      std::deque<ZMPPosition> &ZMPPositions,
+      std::deque<COMState> &FinalCOMStates,
+      std::deque<FootAbsolutePosition> &LeftFootAbsolutePositions,
+      std::deque<FootAbsolutePosition> &RightFootAbsolutePositions) = 0;
 
   /* ! \brief Method to change on line the landing position of a foot.
      @param[in] time : Current time.
@@ -303,11 +326,13 @@ class ZMPRefTrajectoryGeneration : public SimplePlugin {
 
      @return If the method failed it returns -1, 0 otherwise.
   */
-  virtual int OnLineFootChange(double time, FootAbsolutePosition &aFootAbsolutePosition,
-                               std::deque<ZMPPosition> &FinalZMPPositions, std::deque<COMState> &COMStates,
-                               std::deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
-                               std::deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
-                               StepStackHandler *aStepStackHandler) = 0;
+  virtual int OnLineFootChange(
+      double time, FootAbsolutePosition &aFootAbsolutePosition,
+      std::deque<ZMPPosition> &FinalZMPPositions,
+      std::deque<COMState> &COMStates,
+      std::deque<FootAbsolutePosition> &FinalLeftFootAbsolutePositions,
+      std::deque<FootAbsolutePosition> &FinalRightFootAbsolutePositions,
+      StepStackHandler *aStepStackHandler) = 0;
 
   /*! \brief Return the time at which it is optimal to regenerate
     a step in online mode.
@@ -339,7 +364,7 @@ class ZMPRefTrajectoryGeneration : public SimplePlugin {
   bool GetOnLineMode();
   /*! @}  */
 };
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 
 #include <StepStackHandler.hh>
 #endif /* _ZMPREF_TRAJ_GEN_H_ */

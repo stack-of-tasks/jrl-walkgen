@@ -37,7 +37,8 @@
 
 using namespace ::PatternGeneratorJRL;
 
-StepStackHandler::StepStackHandler(SimplePluginManager *lSPM) : SimplePlugin(lSPM) {
+StepStackHandler::StepStackHandler(SimplePluginManager *lSPM)
+    : SimplePlugin(lSPM) {
   m_OnLineSteps = false;
   m_SingleSupportTime = 0.0;
   m_DoubleSupportTime = 0.0;
@@ -47,9 +48,14 @@ StepStackHandler::StepStackHandler(SimplePluginManager *lSPM) : SimplePlugin(lSP
   m_RelativeFootPositions.clear();
   m_TransitionFinishOnLine = false;
 
-  std::string aMethodName[8] = {
-      ":walkmode", ":singlesupporttime",     ":doublesupporttime", ":supportfoot", ":lastsupport",
-      ":arc",      ":addstandardonlinestep", ":arccentered"};
+  std::string aMethodName[8] = {":walkmode",
+                                ":singlesupporttime",
+                                ":doublesupporttime",
+                                ":supportfoot",
+                                ":lastsupport",
+                                ":arc",
+                                ":addstandardonlinestep",
+                                ":arccentered"};
 
   for (int i = 0; i < 7; i++) {
     if (!RegisterMethod(aMethodName[i])) {
@@ -61,7 +67,9 @@ StepStackHandler::StepStackHandler(SimplePluginManager *lSPM) : SimplePlugin(lSP
 
 StepStackHandler::~StepStackHandler() {}
 
-RelativeFootPosition StepStackHandler::ReturnBackFootPosition() { return m_RelativeFootPositions.back(); }
+RelativeFootPosition StepStackHandler::ReturnBackFootPosition() {
+  return m_RelativeFootPositions.back();
+}
 
 bool StepStackHandler::ReturnFrontFootPosition(RelativeFootPosition &aRFP) {
   if (m_RelativeFootPositions.size() > 0) {
@@ -71,25 +79,31 @@ bool StepStackHandler::ReturnFrontFootPosition(RelativeFootPosition &aRFP) {
   return false;
 }
 
-std::size_t StepStackHandler::ReturnStackSize() { return m_RelativeFootPositions.size(); }
+std::size_t StepStackHandler::ReturnStackSize() {
+  return m_RelativeFootPositions.size();
+}
 
-void StepStackHandler::CopyRelativeFootPosition(deque<RelativeFootPosition> &lRelativeFootPositions,
-                                                bool PerformClean) {
+void StepStackHandler::CopyRelativeFootPosition(
+    deque<RelativeFootPosition> &lRelativeFootPositions, bool PerformClean) {
   ODEBUG(m_RelativeFootPositions.size());
   lRelativeFootPositions.resize(m_RelativeFootPositions.size());
   for (unsigned int i = 0; i < m_RelativeFootPositions.size(); i++) {
     lRelativeFootPositions[i] = m_RelativeFootPositions[i];
   }
-  if (PerformClean) m_RelativeFootPositions.clear();
+  if (PerformClean)
+    m_RelativeFootPositions.clear();
 }
 
-void StepStackHandler::SetStepOverPlanner(StepOverPlanner *lStOvPl) { m_StOvPl = lStOvPl; }
+void StepStackHandler::SetStepOverPlanner(StepOverPlanner *lStOvPl) {
+  m_StOvPl = lStOvPl;
+}
 
 void StepStackHandler::SetWalkMode(int lWalkMode) { m_WalkMode = lWalkMode; }
 
 int StepStackHandler::GetWalkMode() { return m_WalkMode; }
 
-void StepStackHandler::ReadStepStairSequenceAccordingToWalkMode(istringstream &strm)
+void StepStackHandler::ReadStepStairSequenceAccordingToWalkMode(
+    istringstream &strm)
 
 {
   ODEBUG("Standard Stepping on the Stairs Mode Selected");
@@ -118,8 +132,10 @@ void StepStackHandler::ReadStepStairSequenceAccordingToWalkMode(istringstream &s
     aFootPosition.SStime = m_SingleSupportTime;
     aFootPosition.DStime = m_DoubleSupportTime;
     aFootPosition.stepType = 1;
-    ODEBUG5(aFootPosition.sx << " " << aFootPosition.sy << " " << aFootPosition.sz << " " << aFootPosition.theta << " "
-                             << aFootPosition.SStime << " " << aFootPosition.DStime << " "
+    ODEBUG5(aFootPosition.sx << " " << aFootPosition.sy << " "
+                             << aFootPosition.sz << " " << aFootPosition.theta
+                             << " " << aFootPosition.SStime << " "
+                             << aFootPosition.DStime << " "
                              << aFootPosition.DeviationHipHeight << " ",
             "DebugGMFKW.dat");
 
@@ -132,164 +148,172 @@ void StepStackHandler::ReadStepStairSequenceAccordingToWalkMode(istringstream &s
   ODEBUG("m_RelativeFootPositions: " << m_RelativeFootPositions.size());
 }
 
-void StepStackHandler::ReadStepSequenceAccordingToWalkMode(istringstream &strm) {
+void StepStackHandler::ReadStepSequenceAccordingToWalkMode(
+    istringstream &strm) {
   ODEBUG("m_WalkMode: " << m_WalkMode);
   m_RelativeFootPositions.clear();
   switch (m_WalkMode) {
-    case 0:
+  case 0:
 
-    case 4: {
-      ODEBUG("Standard Walk Mode Selected");
-      RelativeFootPosition aFootPosition;
+  case 4: {
+    ODEBUG("Standard Walk Mode Selected");
+    RelativeFootPosition aFootPosition;
 
-      while (!strm.eof()) {
-        if (!strm.eof())
-          strm >> aFootPosition.sx;
-        else
-          break;
-        if (!strm.eof())
-          strm >> aFootPosition.sy;
-        else
-          break;
-        if (!strm.eof())
-          strm >> aFootPosition.theta;
-        else
-          break;
-        if (!strm.eof())
-          strm >> aFootPosition.sz;
-        else
-          break;
+    while (!strm.eof()) {
+      if (!strm.eof())
+        strm >> aFootPosition.sx;
+      else
+        break;
+      if (!strm.eof())
+        strm >> aFootPosition.sy;
+      else
+        break;
+      if (!strm.eof())
+        strm >> aFootPosition.theta;
+      else
+        break;
+      if (!strm.eof())
+        strm >> aFootPosition.sz;
+      else
+        break;
 
-        aFootPosition.DeviationHipHeight = 0;
-        aFootPosition.SStime = m_SingleSupportTime;
-        aFootPosition.DStime = m_DoubleSupportTime;
-        aFootPosition.stepType = 1;
-        ODEBUG5(aFootPosition.sx << " " << aFootPosition.sy << " " << aFootPosition.sz << " " << aFootPosition.theta
-                                 << " " << aFootPosition.SStime << " " << aFootPosition.DStime << " "
-                                 << aFootPosition.DeviationHipHeight << " ",
-                "DebugGMFKW.dat");
+      aFootPosition.DeviationHipHeight = 0;
+      aFootPosition.SStime = m_SingleSupportTime;
+      aFootPosition.DStime = m_DoubleSupportTime;
+      aFootPosition.stepType = 1;
+      ODEBUG5(aFootPosition.sx << " " << aFootPosition.sy << " "
+                               << aFootPosition.sz << " " << aFootPosition.theta
+                               << " " << aFootPosition.SStime << " "
+                               << aFootPosition.DStime << " "
+                               << aFootPosition.DeviationHipHeight << " ",
+              "DebugGMFKW.dat");
 
-        m_RelativeFootPositions.push_back(aFootPosition);
-        if (aFootPosition.sy > 0)
-          m_KeepLastCorrectSupportFoot = -1;
-        else
-          m_KeepLastCorrectSupportFoot = 1;
-      }
-
-      ODEBUG("m_RelativeFootPositions: " << m_RelativeFootPositions.size());
-      break;
+      m_RelativeFootPositions.push_back(aFootPosition);
+      if (aFootPosition.sy > 0)
+        m_KeepLastCorrectSupportFoot = -1;
+      else
+        m_KeepLastCorrectSupportFoot = 1;
     }
-    case 3:
-    case 1: {
-      ODEBUG4("Walk Mode with HipHeight Variation Selected", "DebugGMFKW.dat");
-      RelativeFootPosition aFootPosition;
 
-      ODEBUG4("Inside StepStack Handler", "DebugGMFKW.dat");
-      while (!strm.eof()) {
-        if (!strm.eof())
-          strm >> aFootPosition.sx;
-        else
-          break;
-        if (!strm.eof())
-          strm >> aFootPosition.sy;
-        else
-          break;
-        if (!strm.eof())
-          strm >> aFootPosition.theta;
-        else
-          break;
-        if (!strm.eof())
-          strm >> aFootPosition.DeviationHipHeight;
-        else
-          break;
-        aFootPosition.SStime = m_SingleSupportTime;
-        aFootPosition.DStime = m_DoubleSupportTime;
-        aFootPosition.stepType = 1;
-        ODEBUG5(aFootPosition.sx << " " << aFootPosition.sy << " " << aFootPosition.sz << " " << aFootPosition.theta
-                                 << " " << aFootPosition.SStime << " " << aFootPosition.DStime << " "
-                                 << aFootPosition.DeviationHipHeight << " ",
-                "DebugFootPrint.dat");
+    ODEBUG("m_RelativeFootPositions: " << m_RelativeFootPositions.size());
+    break;
+  }
+  case 3:
+  case 1: {
+    ODEBUG4("Walk Mode with HipHeight Variation Selected", "DebugGMFKW.dat");
+    RelativeFootPosition aFootPosition;
 
-        m_RelativeFootPositions.push_back(aFootPosition);
-        if (aFootPosition.sy > 0)
-          m_KeepLastCorrectSupportFoot = -1;
-        else
-          m_KeepLastCorrectSupportFoot = 1;
-      }
-      ODEBUG5("Finito for the reading.  StepStack Handler", "DebugGMFKW.dat");
-      break;
+    ODEBUG4("Inside StepStack Handler", "DebugGMFKW.dat");
+    while (!strm.eof()) {
+      if (!strm.eof())
+        strm >> aFootPosition.sx;
+      else
+        break;
+      if (!strm.eof())
+        strm >> aFootPosition.sy;
+      else
+        break;
+      if (!strm.eof())
+        strm >> aFootPosition.theta;
+      else
+        break;
+      if (!strm.eof())
+        strm >> aFootPosition.DeviationHipHeight;
+      else
+        break;
+      aFootPosition.SStime = m_SingleSupportTime;
+      aFootPosition.DStime = m_DoubleSupportTime;
+      aFootPosition.stepType = 1;
+      ODEBUG5(aFootPosition.sx << " " << aFootPosition.sy << " "
+                               << aFootPosition.sz << " " << aFootPosition.theta
+                               << " " << aFootPosition.SStime << " "
+                               << aFootPosition.DStime << " "
+                               << aFootPosition.DeviationHipHeight << " ",
+              "DebugFootPrint.dat");
+
+      m_RelativeFootPositions.push_back(aFootPosition);
+      if (aFootPosition.sy > 0)
+        m_KeepLastCorrectSupportFoot = -1;
+      else
+        m_KeepLastCorrectSupportFoot = 1;
     }
-    case 2: {
-      ODEBUG(
-          "Walk Mode with Obstacle StepOver Selected \
+    ODEBUG5("Finito for the reading.  StepStack Handler", "DebugGMFKW.dat");
+    break;
+  }
+  case 2: {
+    ODEBUG("Walk Mode with Obstacle StepOver Selected \
                (obstacle parameters have to be set first, \
                if not standard dimensions are used)");
-      m_StOvPl->CalculateFootHolds(m_RelativeFootPositions);
+    m_StOvPl->CalculateFootHolds(m_RelativeFootPositions);
 
-      break;
+    break;
+  }
+    // With a varying double support time and a single support time.
+  case 5: {
+    ODEBUG("Standard Walk Mode Selected");
+    RelativeFootPosition aFootPosition;
+
+    while (!strm.eof()) {
+      if (!strm.eof())
+        strm >> aFootPosition.sx;
+      else
+        break;
+      if (!strm.eof())
+        strm >> aFootPosition.sy;
+      else
+        break;
+      if (!strm.eof())
+        strm >> aFootPosition.theta;
+      else
+        break;
+
+      if (!strm.eof())
+        strm >> aFootPosition.SStime;
+      else
+        break;
+      if (!strm.eof())
+        strm >> aFootPosition.DStime;
+      else
+        break;
+
+      aFootPosition.DeviationHipHeight = 0;
+      aFootPosition.stepType = 1;
+      ODEBUG("FootPositions:"
+             << aFootPosition.sx << " " << aFootPosition.sy << " "
+             << aFootPosition.sz << " " << aFootPosition.theta << " "
+             << aFootPosition.SStime << " " << aFootPosition.DStime << " "
+             << aFootPosition.DeviationHipHeight << " ");
+
+      ODEBUG5(aFootPosition.sx << " " << aFootPosition.sy << " "
+                               << aFootPosition.sz << " " << aFootPosition.theta
+                               << " " << aFootPosition.SStime << " "
+                               << aFootPosition.DStime << " "
+                               << aFootPosition.DeviationHipHeight << " ",
+              "DebugGMFKW.dat");
+
+      m_RelativeFootPositions.push_back(aFootPosition);
+      if (aFootPosition.sy > 0)
+        m_KeepLastCorrectSupportFoot = -1;
+      else
+        m_KeepLastCorrectSupportFoot = 1;
     }
-      // With a varying double support time and a single support time.
-    case 5: {
-      ODEBUG("Standard Walk Mode Selected");
-      RelativeFootPosition aFootPosition;
 
-      while (!strm.eof()) {
-        if (!strm.eof())
-          strm >> aFootPosition.sx;
-        else
-          break;
-        if (!strm.eof())
-          strm >> aFootPosition.sy;
-        else
-          break;
-        if (!strm.eof())
-          strm >> aFootPosition.theta;
-        else
-          break;
+    ODEBUG("m_RelativeFootPositions: " << m_RelativeFootPositions.size());
+    break;
+  }
 
-        if (!strm.eof())
-          strm >> aFootPosition.SStime;
-        else
-          break;
-        if (!strm.eof())
-          strm >> aFootPosition.DStime;
-        else
-          break;
-
-        aFootPosition.DeviationHipHeight = 0;
-        aFootPosition.stepType = 1;
-        ODEBUG("FootPositions:" << aFootPosition.sx << " " << aFootPosition.sy << " " << aFootPosition.sz << " "
-                                << aFootPosition.theta << " " << aFootPosition.SStime << " " << aFootPosition.DStime
-                                << " " << aFootPosition.DeviationHipHeight << " ");
-
-        ODEBUG5(aFootPosition.sx << " " << aFootPosition.sy << " " << aFootPosition.sz << " " << aFootPosition.theta
-                                 << " " << aFootPosition.SStime << " " << aFootPosition.DStime << " "
-                                 << aFootPosition.DeviationHipHeight << " ",
-                "DebugGMFKW.dat");
-
-        m_RelativeFootPositions.push_back(aFootPosition);
-        if (aFootPosition.sy > 0)
-          m_KeepLastCorrectSupportFoot = -1;
-        else
-          m_KeepLastCorrectSupportFoot = 1;
-      }
-
-      ODEBUG("m_RelativeFootPositions: " << m_RelativeFootPositions.size());
-      break;
-    }
-
-    default: {
-      ODEBUG(
-          "PLease select proper walk mode. \
+  default: {
+    ODEBUG("PLease select proper walk mode. \
           (0 for normal walking ; \
            1 for walking with waistheight variation ; \
            2 for walking with obstacle stepover)");
-      return;
-    }
+    return;
+  }
   }
 }
 
-void StepStackHandler::CreateArcInStepStack(double x, double y, double R, double arc_deg, int SupportFoot) {
+void StepStackHandler::CreateArcInStepStack(double x, double y, double R,
+                                            double arc_deg, int SupportFoot) {
   RelativeFootPosition aFootPosition;
   double StepMax = 0.15;
   double LastStep = 0.0;
@@ -330,7 +354,8 @@ void StepStackHandler::CreateArcInStepStack(double x, double y, double R, double
     LastOmegaStep = -LastOmegaStep;
   }
 
-  ODEBUG4(NumberOfStep << " " << LastStep << " " << arc_deg, "DebugFootPrint.dat");
+  ODEBUG4(NumberOfStep << " " << LastStep << " " << arc_deg,
+          "DebugFootPrint.dat");
 
   double Omegakp = 0.0, Omegak = 0.0;
 
@@ -368,15 +393,17 @@ void StepStackHandler::CreateArcInStepStack(double x, double y, double R, double
 
       Eigen::Matrix<double, 2, 1> lv;
       Eigen::Matrix<double, 2, 1> lv2;
-      lv(0) = (R + DirectionRay * SupportFoot * 0.095) * s - (R - DirectionRay * SupportFoot * 0.095) * sp;
-      lv(1) = -((R + DirectionRay * SupportFoot * 0.095) * c - (R - DirectionRay * SupportFoot * 0.095) * cp);
+      lv(0) = (R + DirectionRay * SupportFoot * 0.095) * s -
+              (R - DirectionRay * SupportFoot * 0.095) * sp;
+      lv(1) = -((R + DirectionRay * SupportFoot * 0.095) * c -
+                (R - DirectionRay * SupportFoot * 0.095) * cp);
       lv2 = A * lv;
       ODEBUG(" X: " << (R + DirectionRay * SupportFoot * 0.095) * s << " "
-                    << (R - DirectionRay * SupportFoot * 0.095) * sp << " " << StepMax << " " << lv(0) << " "
-                    << lv2(0));
+                    << (R - DirectionRay * SupportFoot * 0.095) * sp << " "
+                    << StepMax << " " << lv(0) << " " << lv2(0));
       ODEBUG(" Y: " << (R + DirectionRay * SupportFoot * 0.095) * c << " "
-                    << (R - DirectionRay * SupportFoot * 0.095) * cp << " " << SupportFoot * 0.19 << " " << lv(1)
-                    << " " << lv2(1));
+                    << (R - DirectionRay * SupportFoot * 0.095) * cp << " "
+                    << SupportFoot * 0.19 << " " << lv(1) << " " << lv2(1));
 
       aFootPosition.sx = lv2(0);
       aFootPosition.sy = lv2(1);
@@ -386,7 +413,9 @@ void StepStackHandler::CreateArcInStepStack(double x, double y, double R, double
     aFootPosition.DStime = m_DoubleSupportTime;
     m_RelativeFootPositions.push_back(aFootPosition);
 
-    ODEBUG4(aFootPosition.sx << " " << aFootPosition.sy << " " << aFootPosition.theta, "DebugFootPrint.dat");
+    ODEBUG4(aFootPosition.sx << " " << aFootPosition.sy << " "
+                             << aFootPosition.theta,
+            "DebugFootPrint.dat");
 
     SupportFoot = -SupportFoot;
   }
@@ -417,13 +446,17 @@ void StepStackHandler::CreateArcInStepStack(double x, double y, double R, double
       A(1, 1) = c;
       Eigen::Matrix<double, 2, 1> lv;
       Eigen::Matrix<double, 2, 1> lv2;
-      lv(0) = (R + DirectionRay * SupportFoot * 0.095) * s - (R - DirectionRay * SupportFoot * 0.095) * sp;
-      lv(1) = -((R + DirectionRay * SupportFoot * 0.095) * c - (R - DirectionRay * SupportFoot * 0.095) * cp);
+      lv(0) = (R + DirectionRay * SupportFoot * 0.095) * s -
+              (R - DirectionRay * SupportFoot * 0.095) * sp;
+      lv(1) = -((R + DirectionRay * SupportFoot * 0.095) * c -
+                (R - DirectionRay * SupportFoot * 0.095) * cp);
       lv2 = A * lv;
       ODEBUG(" X: " << (R + DirectionRay * SupportFoot * 0.095) * s << " "
-                    << (R - DirectionRay * SupportFoot * 0.095) * sp << " " << lv(0) << " " << lv2(0));
+                    << (R - DirectionRay * SupportFoot * 0.095) * sp << " "
+                    << lv(0) << " " << lv2(0));
       ODEBUG(" Y: " << (R + DirectionRay * SupportFoot * 0.095) * c << " "
-                    << (R - DirectionRay * SupportFoot * 0.095) * cp << " " << lv(1) << " " << lv2(1));
+                    << (R - DirectionRay * SupportFoot * 0.095) * cp << " "
+                    << lv(1) << " " << lv2(1));
 
       aFootPosition.sx = lv2(0);
       aFootPosition.sy = lv2(1);
@@ -434,14 +467,17 @@ void StepStackHandler::CreateArcInStepStack(double x, double y, double R, double
 
     m_RelativeFootPositions.push_back(aFootPosition);
 
-    ODEBUG4(aFootPosition.sx << " " << aFootPosition.sy << " " << aFootPosition.theta, "DebugFootPrint.dat");
+    ODEBUG4(aFootPosition.sx << " " << aFootPosition.sy << " "
+                             << aFootPosition.theta,
+            "DebugFootPrint.dat");
 
     SupportFoot = -SupportFoot;
   }
   m_KeepLastCorrectSupportFoot = SupportFoot;
 }
 
-void StepStackHandler::CreateArcCenteredInStepStack(double R, double arc_deg, int SupportFoot) {
+void StepStackHandler::CreateArcCenteredInStepStack(double R, double arc_deg,
+                                                    int SupportFoot) {
   RelativeFootPosition aFootPosition;
   double StepMax = 0.10;
   //  double StepMax = 0.225;
@@ -539,9 +575,11 @@ void StepStackHandler::CreateArcCenteredInStepStack(double R, double arc_deg, in
   for (int i = 0; i < 3; i++)
     for (int j = 0; j < 3; j++)
       if (i == j) {
-        MFNSF(i, j) = MFSF(i, j) = Romega(i, j) = Mtmp(i, j) = iRomega(i, j) = 1.0;
+        MFNSF(i, j) = MFSF(i, j) = Romega(i, j) = Mtmp(i, j) = iRomega(i, j) =
+            1.0;
       } else {
-        MFNSF(i, j) = MFSF(i, j) = Romega(i, j) = Mtmp(i, j) = Mtmp2(i, j) = iRomega(i, j) = 0.0;
+        MFNSF(i, j) = MFSF(i, j) = Romega(i, j) = Mtmp(i, j) = Mtmp2(i, j) =
+            iRomega(i, j) = 0.0;
       }
 
   MFSF(0, 2) = -R;
@@ -743,7 +781,8 @@ void StepStackHandler::StopOnLineStep() {
 
   // Correct the last support foot before cleaning up the
   // stack.
-  if (m_RelativeFootPositions.size() % 2 == 0) m_KeepLastCorrectSupportFoot = -m_KeepLastCorrectSupportFoot;
+  if (m_RelativeFootPositions.size() % 2 == 0)
+    m_KeepLastCorrectSupportFoot = -m_KeepLastCorrectSupportFoot;
 
   m_RelativeFootPositions.clear();
 }
@@ -755,10 +794,12 @@ void StepStackHandler::StartOnLineStep() {
 
 bool StepStackHandler::IsOnLineSteppingOn() { return m_OnLineSteps; }
 
-void StepStackHandler::AddStandardOnLineStep(bool NewStep, double NewStepX, double NewStepY, double NewTheta) {
+void StepStackHandler::AddStandardOnLineStep(bool NewStep, double NewStepX,
+                                             double NewStepY, double NewTheta) {
   RelativeFootPosition aFootPosition;
   ODEBUG("m_OnLineSteps: " << m_OnLineSteps);
-  if (!m_OnLineSteps) return;
+  if (!m_OnLineSteps)
+    return;
 
   ODEBUG("m_KeepLastCorrectSupportFoot" << m_KeepLastCorrectSupportFoot);
   if (!NewStep) {
@@ -776,7 +817,8 @@ void StepStackHandler::AddStandardOnLineStep(bool NewStep, double NewStepX, doub
     aFootPosition.SStime = m_SingleSupportTime;
     aFootPosition.DStime = m_DoubleSupportTime;
     aFootPosition.stepType = 0;
-    ODEBUG(aFootPosition.sx << " " << aFootPosition.sy << " " << aFootPosition.theta);
+    ODEBUG(aFootPosition.sx << " " << aFootPosition.sy << " "
+                            << aFootPosition.theta);
   }
 
   ODEBUG("m_RelativeFootPositions:" << m_RelativeFootPositions.size());
@@ -789,7 +831,8 @@ void StepStackHandler::AddStandardOnLineStep(bool NewStep, double NewStepX, doub
 bool StepStackHandler::RemoveFirstStepInTheStack() {
   ODEBUG("RemoveFirstStepInTheStack:: " << m_RelativeFootPositions.size());
   m_RelativeFootPositions.pop_front();
-  if ((m_RelativeFootPositions.size() == 0) && m_TransitionFinishOnLine && m_OnLineSteps) {
+  if ((m_RelativeFootPositions.size() == 0) && m_TransitionFinishOnLine &&
+      m_OnLineSteps) {
     m_OnLineSteps = false;
     m_TransitionFinishOnLine = false;
     return true;
@@ -797,7 +840,8 @@ bool StepStackHandler::RemoveFirstStepInTheStack() {
   return false;
 }
 
-void StepStackHandler::AddStepInTheStack(double sx, double sy, double theta, double sstime, double dstime) {
+void StepStackHandler::AddStepInTheStack(double sx, double sy, double theta,
+                                         double sstime, double dstime) {
   RelativeFootPosition aFootPosition;
   aFootPosition.sx = sx;
   aFootPosition.sy = sy;
@@ -827,11 +871,15 @@ void StepStackHandler::FinishOnTheLastCorrectSupportFoot() {
   m_RelativeFootPositions.push_back(aFootPosition);
 }
 
-void StepStackHandler::SetSingleTimeSupport(double lTSsupport) { m_SingleSupportTime = lTSsupport; }
+void StepStackHandler::SetSingleTimeSupport(double lTSsupport) {
+  m_SingleSupportTime = lTSsupport;
+}
 
 double StepStackHandler::GetSingleTimeSupport() { return m_SingleSupportTime; }
 
-void StepStackHandler::SetDoubleTimeSupport(double lTDsupport) { m_DoubleSupportTime = lTDsupport; }
+void StepStackHandler::SetDoubleTimeSupport(double lTDsupport) {
+  m_DoubleSupportTime = lTDsupport;
+}
 
 double StepStackHandler::GetDoubleTimeSupport() { return m_DoubleSupportTime; }
 
@@ -860,7 +908,8 @@ void StepStackHandler::m_PartialStepSequence(istringstream &strm) {
 }
 
 /* Implementation of the plugin methods. */
-void StepStackHandler::CallMethod(std::string &Method, std::istringstream &strm) {
+void StepStackHandler::CallMethod(std::string &Method,
+                                  std::istringstream &strm) {
   if (Method == ":singlesupporttime") {
     strm >> m_SingleSupportTime;
   } else if (Method == ":doublesupporttime") {

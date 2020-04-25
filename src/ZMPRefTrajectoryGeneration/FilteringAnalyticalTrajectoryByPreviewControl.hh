@@ -36,11 +36,12 @@ namespace PatternGeneratorJRL {
   trajectory using a preview control model. */
 
 class FilteringAnalyticalTrajectoryByPreviewControl : public SimplePlugin {
- public:
+public:
   /*! \brief Default constructor */
-  FilteringAnalyticalTrajectoryByPreviewControl(SimplePluginManager *lSPM,
-                                                AnalyticalZMPCOGTrajectory *lAnalyticalZMPCOGTrajectory = 0,
-                                                PreviewControl *lPreviewControl = 0);
+  FilteringAnalyticalTrajectoryByPreviewControl(
+      SimplePluginManager *lSPM,
+      AnalyticalZMPCOGTrajectory *lAnalyticalZMPCOGTrajectory = 0,
+      PreviewControl *lPreviewControl = 0);
 
   /*! \brief Set Analytical trajectory */
   void SetAnalyticalTrajectory(AnalyticalZMPCOGTrajectory *lAZCT);
@@ -63,7 +64,8 @@ class FilteringAnalyticalTrajectoryByPreviewControl : public SimplePlugin {
     \param[in] t: The new time to be add.
     \return false if a problem occured, true otherwise.
   */
-  bool UpdateOneStep(double t, double &ZMPValue, double &CoMValue, double &CoMSpeedValue);
+  bool UpdateOneStep(double t, double &ZMPValue, double &CoMValue,
+                     double &CoMSpeedValue);
 
   /*! \brief Overloading method of SimplePlugin */
   virtual void CallMethod(std::string &Method, std::istringstream &astrm);
@@ -71,7 +73,7 @@ class FilteringAnalyticalTrajectoryByPreviewControl : public SimplePlugin {
   /*! \brief Default destructor */
   ~FilteringAnalyticalTrajectoryByPreviewControl();
 
- private:
+private:
   /*! \brief The trajectory used for filtering. */
   AnalyticalZMPCOGTrajectory *m_AnalyticalZMPCOGTrajectory;
 
@@ -112,5 +114,5 @@ class FilteringAnalyticalTrajectoryByPreviewControl : public SimplePlugin {
     preview control time. */
   void Resize();
 };
-}  // namespace PatternGeneratorJRL
+} // namespace PatternGeneratorJRL
 #endif /* _FILTERING_ANALYTICAL_TRAJECTORY_BY_PREVIEW_CONTROL_H_ */
