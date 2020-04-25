@@ -348,8 +348,7 @@ int PLDPSolver::BackwardSubstitution() {
   for (std::vector<unsigned int>::size_type i = SizeOfL - 1;; i--) {
     double tmp = 0.0;
     m_v2[i] = m_y[i];
-    for (std::vector<unsigned int>::size_type k = i + 1;
-         k < SizeOfL; k++) {
+    for (std::vector<unsigned int>::size_type k = i + 1; k < SizeOfL; k++) {
       if (k == SizeOfL - 1)
         tmp = m_v2[i];
 
