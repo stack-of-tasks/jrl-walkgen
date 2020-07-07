@@ -54,6 +54,11 @@ public:
                                   std::vector<double> &next,
                                   std::vector<double> &prev);
 
+  virtual void
+  fillFileWithFillingSubsamplingAndClose(FillingFileArgs_t &aSetOfFillingFileArgs,
+                                         std::vector<double> &next,
+                                         std::vector<double> &prev);
+
   std::vector<double> m_prevCoMp, m_prevCoMpF2;
   std::vector<double> m_prevdCoMp;
   std::vector<double> m_prevddCoMp;

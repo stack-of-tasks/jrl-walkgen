@@ -87,6 +87,32 @@ void DumpReferencesObjects::fillFileWithSubsamplingAndClose(
   prev = next;
 }
 
+void DumpReferencesObjects::fillFileWithFillingSubsamplingAndClose(
+    FillingFileArgs_t &aSetOfFillingFileArgs, std::vector<double> &next,
+    std::vector<double> &prev) {
+  for (double subsampling = 1.0;
+       subsampling <= aSetOfFillingFileArgs.nb_subsampling;
+       subsampling += 1.0) {
+    if (m_TimeOption) {
+      aSetOfFillingFileArgs.aof
+          << filterprecision(
+                 ((double)aSetOfFillingFileArgs.anOneStep.m_NbOfIt) *
+                     aSetOfFillingFileArgs.dt +
+                 subsampling * aSetOfFillingFileArgs.dt /
+                     aSetOfFillingFileArgs.nb_subsampling)
+          << " "; // 1
+    }
+    for (unsigned int i = 0; i < next.size(); i++) {
+      double intermediate = next[i] ;
+      aSetOfFillingFileArgs.aof << intermediate;
+      if (i < next.size() - 1)
+        aSetOfFillingFileArgs.aof << " ";
+    }
+    aSetOfFillingFileArgs.aof << std::endl;
+  }
+  aSetOfFillingFileArgs.aof.close();
+  prev = next;
+}
 void DumpReferencesObjects::fillInTests(
     std::string &aTestName, OneStep &anOneStep,
     Eigen::VectorXd &aCurrentConfiguration) {
@@ -421,7 +447,7 @@ void DumpReferencesObjects::fillInTestsFormat2(
     m_prevPhase.resize(3);
   aof.unsetf(std::ios::floatfield );
   aof.precision(1);
-  fillFileWithSubsamplingAndClose(aSetOfFillingFileArgs, vec_db,
-                                  m_prevPhase);
+  fillFileWithFillingSubsamplingAndClose(aSetOfFillingFileArgs, vec_db,
+                                         m_prevPhase);
 
 }
