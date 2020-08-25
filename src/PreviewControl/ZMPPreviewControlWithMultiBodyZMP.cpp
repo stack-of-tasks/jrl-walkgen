@@ -44,7 +44,9 @@ using namespace PatternGeneratorJRL;
 
 ZMPPreviewControlWithMultiBodyZMP::ZMPPreviewControlWithMultiBodyZMP(
     SimplePluginManager *lSPM)
-    : SimplePlugin(lSPM) {
+    : SimplePlugin(lSPM),
+      m_PreviewControlTime(0)
+{
 
   m_ComAndFootRealization = 0;
   m_PinocchioRobot = 0;
