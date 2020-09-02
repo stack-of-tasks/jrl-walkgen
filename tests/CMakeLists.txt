@@ -13,8 +13,8 @@
 # received a copy of the GNU Lesser General Public License along with
 # jrl-walkgen. If not, see <http://www.gnu.org/licenses/>.
 
-SET(urdfpath ${TALOS_DATA_PREFIX}/share/talos_data/urdf/talos_reduced_wpg.urdf)
-SET(srdfpath ${TALOS_DATA_PREFIX}/share/talos_data/srdf/talos_wpg.srdf)
+SET(urdfpath ${CMAKE_SOURCE_DIR}/urdf/talos_reduced_wpg.urdf)
+SET(srdfpath ${CMAKE_SOURCE_DIR}/srdf/talos_wpg.srdf)
 
 
 ADD_LIBRARY(${PROJECT_NAME}-test SHARED
