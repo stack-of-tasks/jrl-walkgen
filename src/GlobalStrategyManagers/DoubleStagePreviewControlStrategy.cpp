@@ -37,8 +37,7 @@ using namespace PatternGeneratorJRL;
 
 DoubleStagePreviewControlStrategy::DoubleStagePreviewControlStrategy(
     SimplePluginManager *aSPM)
-    : GlobalStrategyManager(aSPM),
-      m_PreviewControlTime(0) {
+    : GlobalStrategyManager(aSPM), m_PreviewControlTime(0) {
   m_ZMPFrame = ZMPFRAME_WAIST;
 
   // The object to realize the global stage of preview control.
