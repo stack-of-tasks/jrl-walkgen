@@ -1,10 +1,10 @@
 <package format="2">
   <name>jrl-walkgen</name>
-  <version>4.2.6</version>
+  <version>4.2.7</version>
   <description>
     jrl-walkgen library
   </description>
-  <maintainer email="ostasse@laas.fr">Olivier Stasse</maintainer>
+  <maintainer email="guilhem.saurel@laas.fr">Guilhem Saurel</maintainer>
   <license>BSDv2</license>
 
   <url>http://github.com/stack-of-tasks/sot-talos</url>
