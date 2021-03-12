@@ -1,5 +1,4 @@
-jrl-walkgen
-===========
+# jrl-walkgen
 
 [![Building Status](https://travis-ci.org/stack-of-tasks/jrl-walkgen.svg?branch=master)](https://travis-ci.org/stack-of-tasks/jrl-walkgen)
 [![Pipeline status](https://gitlab.laas.fr/stack-of-tasks/jrl-walkgen/badges/master/pipeline.svg)](https://gitlab.laas.fr/stack-of-tasks/jrl-walkgen/commits/master)
@@ -11,8 +10,7 @@ It relies on the [StackOfTasks/Pinocchio][StackOfTasks/Pinocchio]
 specification to realize dynamics computation.
 
 
-Setup
------
+## Setup
 
 To compile this package, it is recommended to create a separate build
 directory:
@@ -35,22 +33,15 @@ have to be available on your machine.
    - [pinocchio][https://github.com/stack-of-tasks/pinocchio] (>= 1.1.0)
      The pattern generator uses dynamics provided by the pinocchio template
    programming interface.
-   - [jrl-mal][https://github.com/jrl-umi3218/jrl-mal] (>= 1.9.0)
-   - [qpOASES][https://projects.coin-or.org/qpOASES] (normally compatible with
-   the last version)
-   - [simple-humanoid-description][https://github.com/MaximilienNaveau/simple_humanoid_description.git] ( >= 1.0.1)
-   - Boost
-   - Eigen
+   - [eigen-quadprog][https://github.com/jrl-umi3218/eigen-quadprog]
 
  - System tools:
-   - CMake (>=2.6)
-   - pkg-config
+   - CMake (>=3.1)
    - usual compilation tools (GCC/G++, make, etc.)
 
 
 
-Additional notes regarding compilation on Microsoft Windows
------------------------------------------------------------
+## Additional notes regarding compilation on Microsoft Windows
 
 This package has been tested using Microsoft Visual Studio 8.
 
