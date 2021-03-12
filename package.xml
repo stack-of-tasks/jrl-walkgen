@@ -5,7 +5,7 @@
     jrl-walkgen library
   </description>
   <maintainer email="guilhem.saurel@laas.fr">Guilhem Saurel</maintainer>
-  <license>BSDv2</license>
+  <license>BSD</license>
 
   <url>http://github.com/stack-of-tasks/sot-talos</url>
   <author>Olivier Stasse</author>
