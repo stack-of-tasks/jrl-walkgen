@@ -35,7 +35,7 @@ using namespace std;
 namespace PatternGeneratorJRL {
 CH_Point HRP2CIO_GlobalP0;
 struct ltCH_Point {
-  bool operator()(const CH_Point &s1, const CH_Point &s2) {
+  bool operator()(const CH_Point &s1, const CH_Point &s2) const {
     double x1, x2, y1, y2;
     x1 = s1.col - HRP2CIO_GlobalP0.col;
     x2 = s2.col - HRP2CIO_GlobalP0.col;
